@@ -1,1 +1,3 @@
-# teamwork
+# Teamwork Suite
+
+Decentralized Collaborative Tools.
