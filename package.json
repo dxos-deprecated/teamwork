@@ -12,8 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/dxos/teamwork.git"
   },
-  "license": "ISC",
-  "author": "",
+  "license": "GPL-3.0",
+  "author": "DxOS.org",
   "workspaces": {
     "packages": [
       "apps/*",
