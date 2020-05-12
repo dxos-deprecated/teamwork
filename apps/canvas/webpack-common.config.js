@@ -54,12 +54,12 @@ module.exports = {
               return 'dxos';
             }
 
-            if (packageName.startsWith('@material-ui')) {
-              return 'material-ui';
-            }
-
             if (packageName.startsWith('@wireline')) {
               return 'wireline';
+            }
+
+            if (packageName.startsWith('@material-ui')) {
+              return 'material-ui';
             }
 
             return 'vendor';

@@ -3,7 +3,7 @@
 #
 
 id: 'wrn:app:dxos.io/canvas'
-name: wireline.io/canvas
+name: dxos.io/canvas
 displayName: "Canvas"
 version: 0.0.1
 baseUrl: /canvas

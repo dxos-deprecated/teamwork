@@ -13,11 +13,10 @@ import {
   DefaultRouter,
   Registration,
   RequireWallet,
-  SystemRoutes
+  SystemRoutes,
+  Theme
 } from '@dxos/react-appkit';
 import { ClientContextProvider } from '@dxos/react-client';
-
-import Theme from '../components/Theme';
 
 import App from './App';
 
