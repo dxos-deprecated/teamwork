@@ -11,10 +11,10 @@ import { keyToString } from '@dxos/crypto';
 import { PartyTreeAddItemButton, PartyTree, PartyTreeItem, useAppRouter } from '@dxos/react-appkit';
 import { useClient, useParties } from '@dxos/react-client';
 
-import { useDocumentList, useDocument } from '../model';
+import { useDocumentList, useDocumentMetadata } from '../model';
 
 const TreeItem = ({ document, topic, active, onSelect }) => {
-  const [, updateDocument] = useDocument(topic, document.id);
+  const [, updateDocument] = useDocumentMetadata(topic, document.id);
   return (
     <PartyTreeItem
       key={document.id}

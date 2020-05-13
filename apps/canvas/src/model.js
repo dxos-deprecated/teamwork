@@ -3,40 +3,50 @@
 //
 
 import assert from 'assert';
-import { useState, useEffect } from 'react';
 
-import { useModel, useProfile } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
+import { EchoModel } from '@dxos/echodb';
+import { useModel } from '@dxos/react-client';
 
-// TODO(burdon): Factor out to echodb.
-
-// TODO(burdon): Define types.
-const TYPE_CANVAS_DOCUMENT = 'testing.canvas.Drawing';
-const TYPE_CANVAS_MESSAGE = 'testing.canvas.Message';
+// TODO(burdon): Standardize "document" for all apps (or item?)
+// TODO(burdon): Slashes not allowed.
+const TYPE_CANVAS_DOCUMENT = 'wrn_dxos_org_canvas_echo_document';
+const TYPE_CANVAS_ECHO_OBJECT = 'wrn_dxos_org_canvas_echo_object';
 
 /**
- * Provides document list and document creator.
+ * Document list.
+ *
  * @param {string} topic
  * @returns {[Object[], function]}
  */
 export const useDocumentList = (topic) => {
+  // TODO(burdon): Covert to use EchoModel.
+  // const model = useModel({ model: EchoModel, options: { type: TYPE_CANVAS_DOCUMENT, topic } });
   const model = useModel({ options: { type: TYPE_CANVAS_DOCUMENT, topic } });
   if (!model) {
     return [[]];
   }
 
-  // TODO(burdon): CRDT.
   const { messages = [] } = model;
   const documents = Object.values(messages.reduce((map, document) => {
     map[document.id] = document;
     return map;
   }, {}));
 
+  // const objects = model.getObjectsByType(TYPE_CANVAS_DOCUMENT);
+  // console.log(objects);
+  console.log(documents);
+
   return [
     documents,
 
+    // TODO(burdon): Fails since id must not have slashes (breaks URL).
+    // objects.map(({ id, properties: { title } }) => ({ id, title })),
+
     // Create chanel.
     title => {
+      // return model.createItem(TYPE_CANVAS_DOCUMENT, { title });
+
       const id = createId();
       model.appendMessage({ __type_url: TYPE_CANVAS_DOCUMENT, id, title });
       return id;
@@ -45,18 +55,19 @@ export const useDocumentList = (topic) => {
 };
 
 /**
- * Provides document metadata and updater.
+ * Document metadata.
+ *
  * @param {string} topic
  * @param {string} documentId
  * @returns {[{title}, function]}
  */
-export const useDocument = (topic, documentId) => {
+export const useDocumentMetadata = (topic, documentId) => {
+  // TODO(burdon): Covert to use EchoModel.
   const model = useModel({ options: { type: TYPE_CANVAS_DOCUMENT, topic, id: documentId } });
   if (!model) {
     return [[]];
   }
 
-  // TODO(burdon): CRDT.
   const { messages = [] } = model;
   const { title } = messages.length > 0 ? messages[messages.length - 1] : {};
 
@@ -69,44 +80,38 @@ export const useDocument = (topic, documentId) => {
 };
 
 /**
- * Provides document messages and appender.
+ * Document state.
+ *
  * @param topic
  * @param documentId
- * @returns {[Object[], function]}
+ * @returns {{ objects: Object[] }}
  */
-export const useDocumentMessages = (topic, documentId) => {
+export const useDocument = (topic, documentId) => {
   assert(topic);
   assert(documentId);
 
-  const { username } = useProfile();
+  // TODO(burdon): Don't return null.
+  // TODO(burdon): Why do we specify type in createItem AND here?
+  const model = useModel({ model: EchoModel, options: { type: TYPE_CANVAS_ECHO_OBJECT, topic, documentId } });
+  if (!model) {
+    return { objects: [] };
+  }
 
-  const model = useModel({ options: { type: TYPE_CANVAS_MESSAGE, topic, documentId } });
+  const objects = model.getObjectsByType(TYPE_CANVAS_ECHO_OBJECT);
 
-  const [messages, setMessages] = useState([]);
-  useEffect(() => {
-    if (model) {
-      model.on('update', () => {
-        setMessages(
-          [...model.messages]
-            .sort((a, b) => (a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0))
-        );
-      });
+  return {
+    objects,
+
+    createObject: (properties) => {
+      return model.createItem(TYPE_CANVAS_ECHO_OBJECT, properties);
+    },
+
+    updateObject: (id, properties) => {
+      model.updateItem(id, properties);
+    },
+
+    deleteObject: (id) => {
+      model.deleteItem(id);
     }
-  }, [model]);
-
-  return [
-    messages,
-
-    text => {
-      const id = createId();
-      model.appendMessage({
-        __type_url: TYPE_CANVAS_MESSAGE,
-        id,
-        timestamp: Date.now(),                      // TODO(burdon): Format?
-        sender: username,                           // TODO(burdon): Asscoiate with feed (not each message?)
-        text,
-      });
-      return id;
-    }
-  ];
+  };
 };

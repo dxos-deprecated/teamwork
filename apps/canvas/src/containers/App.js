@@ -13,7 +13,7 @@ import { useClient } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
-import { useDocument } from '../model';
+import { useDocumentMetadata } from '../model';
 import Canvas from './Canvas';
 import Sidebar from './Sidebar';
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: documentId } = useParams();
-  const [document, updateDocument] = useDocument(topic, documentId);
+  const [document, updateDocument] = useDocumentMetadata(topic, documentId);
   const client = useClient();
 
   // TODO(burdon): Create hook.

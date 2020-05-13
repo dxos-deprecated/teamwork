@@ -27,10 +27,10 @@
     "@dxos/config": "^1.0.0-beta.20",
     "@dxos/crypto": "^0.0.1",
     "@dxos/debug": "^1.0.0-beta.20",
-    "@dxos/echodb": "^1.0.0-beta.1",
-    "@dxos/gem-canvas": "^1.0.0-beta.1",
-    "@dxos/react-appkit": "^1.0.0-beta.32",
-    "@dxos/react-client": "^1.0.0-beta.32",
+    "@dxos/echodb": "^1.0.0-beta.3",
+    "@dxos/gem-canvas": "^1.0.0-beta.7",
+    "@dxos/react-appkit": "^1.0.0-beta.34",
+    "@dxos/react-client": "^1.0.0-beta.34",
     "@dxos/react-ux": "^1.0.0-beta.32",
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
@@ -39,6 +39,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hotkeys": "^2.0.0",
+    "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
