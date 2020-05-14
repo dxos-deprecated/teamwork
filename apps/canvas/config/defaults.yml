@@ -1,0 +1,14 @@
+#
+# App-specific constants and defaults.
+#
+
+app:
+  name: 'Canvas'
+  rootElement: 'root'
+
+client:
+  keyStorage:
+    root: "dxos/incubator/keys"
+
+  feedStorage:
+    root: "dxos/incubator/feeds"
