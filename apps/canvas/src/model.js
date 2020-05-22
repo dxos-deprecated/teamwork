@@ -52,6 +52,11 @@ export const useDocumentMetadata = (topic, documentId) => {
   // assert(topic);
   // assert(documentId);
 
+  // TODO(dboreham): When we're called with documentId == undefined, fail safe for now:
+  if (!documentId) {
+    return [{}];
+  }
+
   // TODO(burdon): Cannot filter by documentId.
   const model = useModel({ model: EchoModel, options: { type: TYPE_CANVAS_DOCUMENT, topic } });
   if (!model) {
