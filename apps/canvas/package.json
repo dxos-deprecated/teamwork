@@ -16,6 +16,7 @@
   "module": "dist/es/index.js",
   "scripts": {
     "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\"",
+    "dist": "rm -rf dist && webpack -p",
     "clean": "rm -rf ./dist",
     "lint": "eslint ./src --ignore-path ../../.eslintignore",
     "start": "VERBOSE=true webpack-dev-server --mode development",
@@ -46,6 +47,8 @@
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
+    "@dxos/cli": "^1.0.0-beta.50",
+    "@dxos/app-cli": "^1.0.0-beta.50",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "babel-jest": "^25.5.1",
