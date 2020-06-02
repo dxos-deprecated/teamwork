@@ -21,6 +21,7 @@ jobs:
       #     key: ${{ runner.os }}-cache-node-modules-${{ hashFiles('**/yarn.lock') }}
       #     restore-keys: |
       #       ${{ runner.os }}-cache-node-modules-
+      - run: yarn cache clean
       - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn build
