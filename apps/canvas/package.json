@@ -64,5 +64,8 @@
     "webpack-version-file-plugin": "^0.4.0",
     "yaml-loader": "^0.5.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "gitHead": "f29a1e902d31583c95240e2bb8afc9286eff1a76"
 }
