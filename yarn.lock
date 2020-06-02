@@ -15993,9 +15993,27 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk=
 
-protobufjs@^6.8.8, "protobufjs@https://github.com/protobufjs/protobuf.js":
+protobufjs@^6.8.8:
   version "6.9.0"
   resolved "https://github.com/protobufjs/protobuf.js#4ecfbcedaa4a9a85b9e896f38608519643390db4"
+  dependencies:
+    "@protobufjs/aspromise" "^1.1.2"
+    "@protobufjs/base64" "^1.1.2"
+    "@protobufjs/codegen" "^2.0.4"
+    "@protobufjs/eventemitter" "^1.1.0"
+    "@protobufjs/fetch" "^1.1.0"
+    "@protobufjs/float" "^1.0.2"
+    "@protobufjs/inquire" "^1.1.0"
+    "@protobufjs/path" "^1.1.2"
+    "@protobufjs/pool" "^1.1.0"
+    "@protobufjs/utf8" "^1.1.0"
+    "@types/long" "^4.0.1"
+    "@types/node" "^13.7.0"
+    long "^4.0.0"
+
+"protobufjs@https://github.com/protobufjs/protobuf.js.git":
+  version "6.9.0"
+  resolved "https://github.com/protobufjs/protobuf.js.git#1b8aa8f4826d6dc2943c112535f6dab31c64afaf"
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
