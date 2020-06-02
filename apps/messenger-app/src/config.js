@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DxOS, Inc.
 //
 
 import { Config, LocalStorage, Dynamics, Envs, Defaults } from '@dxos/config';

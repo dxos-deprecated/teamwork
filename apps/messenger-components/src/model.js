@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DxOS, Inc.
 //
 
 import { useState, useEffect } from 'react';

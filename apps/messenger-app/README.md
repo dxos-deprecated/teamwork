@@ -26,5 +26,5 @@ yarn wire register
 And finally test locally:
 
 ```
-yarn wire app serve --app wrn:app:wireline.io/messenger --path /messenger
+yarn wire app serve --app wrn:app:DxOS.io/messenger --path /messenger
 ```
