@@ -1,7 +1,6 @@
 {
   "name": "@dxos/messenger-components",
   "version": "1.0.1-beta.4",
-  "private": true,
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
