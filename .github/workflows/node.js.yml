@@ -23,8 +23,8 @@ jobs:
           
           # See: https://github.com/yarnpkg/yarn/issues/7212
           yarn policies set-version 1.21.1
+          yarn install --network-concurrency 1 --ignore-scripts --mutex file --verbose
           
-          yarn
           yarn lint
           yarn build
           yarn test
