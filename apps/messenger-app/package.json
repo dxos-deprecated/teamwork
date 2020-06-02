@@ -1,6 +1,6 @@
 {
   "name": "@dxos/messenger-app",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.1-beta.2",
   "private": true,
   "description": "DxOS messenger app",
   "keywords": [],
@@ -27,7 +27,7 @@
     "@dxos/data-client": "^1.0.0-beta.56",
     "@dxos/debug": "^1.0.0-beta.56",
     "@dxos/echodb": "^0.0.3",
-    "@dxos/messenger-components": "^1.0.0-beta.2",
+    "@dxos/messenger-components": "^1.0.1-beta.2",
     "@dxos/react-appkit": "^1.0.0-beta.56",
     "@dxos/react-client": "^1.0.0-beta.56",
     "@dxos/react-router": "^1.0.0-beta.56",
