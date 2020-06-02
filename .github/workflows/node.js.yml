@@ -20,7 +20,7 @@ jobs:
         run: |
           git config --global user.email "npm@dxos.network"
           git config --global user.name "DxOS"
-          yarn
+          yarn install --network-concurrency 1
           yarn lint
           yarn build
           yarn test
