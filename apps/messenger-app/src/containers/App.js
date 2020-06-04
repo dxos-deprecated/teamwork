@@ -29,7 +29,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const App = () => {
   const classes = useStyles();
   const { topic, item: channelId } = useParams();
