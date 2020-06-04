@@ -12,7 +12,7 @@ import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
-import { useChannel, Channel } from '@dxos/messenger-components';
+import MessengerPad, { useChannel } from '@dxos/messenger-pad';
 
 import Sidebar from './Sidebar';
 
@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText
   }
 }));
+
 
 const App = () => {
   const classes = useStyles();
@@ -55,7 +56,8 @@ const App = () => {
       sidebarContent={<Sidebar topic={topic} />}
     >
       <div className={classes.main}>
-        {channelId && <Channel />}
+        {/* eslint-disable-next-line react/jsx-pascal-case */}
+        {channelId && <MessengerPad.main />}
       </div>
     </AppContainer>
   );

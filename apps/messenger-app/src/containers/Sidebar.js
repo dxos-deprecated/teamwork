@@ -11,7 +11,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { keyToString } from '@dxos/crypto';
 import { PartyTreeAddItemButton, PartyTree, PartyTreeItem, useAppRouter } from '@dxos/react-appkit';
 import { useClient, useParties } from '@dxos/react-client';
-import { useChannelList, useChannel } from '@dxos/messenger-components';
+import { useChannelList, useChannel } from '@dxos/messenger-pad';
 
 const chance = new Chance();
 

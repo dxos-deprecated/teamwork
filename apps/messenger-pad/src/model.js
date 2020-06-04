@@ -10,7 +10,7 @@ import { createId } from '@dxos/crypto';
 import { DefaultPartiallyOrderedModel } from '@dxos/echodb';
 
 // TODO(burdon): Define types.
-const TYPE_MESSENGER_CHANNEL = 'testing.messenger.Channel';
+export const TYPE_MESSENGER_CHANNEL = 'testing.messenger.Channel';
 const TYPE_MESSENGER_MESSAGE = 'testing.messenger.Message';
 
 /**
