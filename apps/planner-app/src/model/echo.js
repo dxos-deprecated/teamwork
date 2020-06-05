@@ -59,6 +59,7 @@ export class EchoModel extends Model {
   }
 
   onUpdate(messages) {
+    console.log(`onUpdate: ${JSON.stringify(messages)}`);
     this._model.applyMutations(messages);
   }
 

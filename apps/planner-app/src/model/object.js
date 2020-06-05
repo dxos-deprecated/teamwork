@@ -92,8 +92,8 @@ export class ObjectModel extends EventEmitter {
             object = { id: objectId, properties: {} };
             this._objectById.set(objectId, object);
           }
-
-          MutationUtil.applyMutation(object.properties, message);
+          console.log(`calling applyMutation: ${JSON.stringify(object)}`);
+          MutationUtil.applyMutation(object, message);
         }
       }
     });
