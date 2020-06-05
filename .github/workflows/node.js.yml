@@ -16,6 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Build and WNS publish
         run: |
+          [ -z "$NODE_AUTH_TOKEN" ] && echo "NODE_AUTH_TOKEN is empty" && exit -1
           git config --global user.email "npm@dxos.network"
           git config --global user.name "DxOS"
           
