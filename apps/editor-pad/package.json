@@ -1,6 +1,6 @@
 {
   "name": "@wirelineio/editor-pad",
-  "version": "1.0.0-beta.64",
+  "version": "1.0.1-beta.6",
   "description": "Wireline editor pad",
   "private": true,
   "main": "dist/es/index.js",
@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@dxos/editor": "^1.0.0-beta.2",
-    "@wirelineio/document-model": "^1.0.0-beta.64",
+    "@wirelineio/document-model": "^1.0.1-beta.6",
     "clsx": "^1.0.4"
   },
   "peerDependencies": {
