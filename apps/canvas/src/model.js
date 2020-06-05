@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { EchoModel } from '@dxos/echodb';
+import { EchoModel } from '@dxos/echo-db';
 import { useModel } from '@dxos/react-client';
 
 // TODO(burdon): Slashes not allowed.

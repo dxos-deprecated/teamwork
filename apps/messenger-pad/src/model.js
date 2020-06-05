@@ -7,7 +7,7 @@ import assert from 'assert';
 
 import { useModel, useProfile } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
-import { DefaultPartiallyOrderedModel } from '@dxos/echodb';
+import { DefaultPartiallyOrderedModel } from '@dxos/echo-db';
 
 // TODO(burdon): Define types.
 export const TYPE_MESSENGER_CHANNEL = 'testing.messenger.Channel';

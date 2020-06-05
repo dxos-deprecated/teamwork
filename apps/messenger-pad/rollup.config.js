@@ -42,7 +42,7 @@ const plugins = [
   commonjs({
     include: /node_modules/,
     namedExports: {
-      'node_modules/@dxos/echodb/dist/index.js': ['DefaultPartiallyOrderedModel']
+      'node_modules/@dxos/echo-db/dist/index.js': ['DefaultPartiallyOrderedModel']
     },
     ignore: (id) => externalsMap[id] || id.startsWith('@material-ui' || external.includes(id))
   }),

@@ -1,7 +1,7 @@
 {
   "build": {
     "name":      "@dxos/messenger-app",
-    "buildDate": "2020-06-04T14:35:43.332Z",
-    "version":   "1.0.1-beta.5"
+    "buildDate": "2020-06-05T20:24:45.479Z",
+    "version":   "1.0.1-beta.6"
   }
 }

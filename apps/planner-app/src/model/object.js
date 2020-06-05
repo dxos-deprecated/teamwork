@@ -5,7 +5,7 @@
 import { EventEmitter } from 'events';
 import uuid from 'uuid/v4';
 
-import { MutationUtil, KeyValueUtil } from '@dxos/echodb';
+import { MutationUtil, KeyValueUtil } from '@dxos/echo-db';
 
 /**
  * Simple Object Datastore composed from log mutations.

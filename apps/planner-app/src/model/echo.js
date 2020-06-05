@@ -2,7 +2,7 @@
 // Copyright 2019 Wireline, Inc.
 //
 
-import { MutationUtil } from '@dxos/echodb';
+import { MutationUtil } from '@dxos/echo-db';
 import { Model } from '@dxos/data-client';
 
 import { ObjectModel } from './object';
