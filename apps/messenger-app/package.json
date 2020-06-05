@@ -1,6 +1,6 @@
 {
   "name": "@dxos/messenger-app",
-  "version": "1.0.1-beta.5",
+  "version": "1.0.1-beta.6",
   "description": "DxOS messenger app",
   "keywords": [],
   "license": "GPL-3.0",
@@ -25,7 +25,7 @@
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/data-client": "^1.0.0-beta.56",
     "@dxos/debug": "^1.0.0-beta.56",
-    "@dxos/messenger-pad": "^1.0.1-beta.5",
+    "@dxos/messenger-pad": "^1.0.1-beta.6",
     "@dxos/react-appkit": "^1.0.0-beta.56",
     "@dxos/react-client": "^1.0.0-beta.56",
     "@dxos/react-router": "^1.0.0-beta.56",
