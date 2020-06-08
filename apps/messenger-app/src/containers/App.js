@@ -37,8 +37,10 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: itemId } = useParams();
-  const [item, editItem] = useItem(topic, 'testing.messenger.Channel', itemId);
+  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
+
+  const pad = pads.find(pad => pad.type === item.__type_url);
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -61,7 +63,7 @@ const App = () => {
     >
       <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
-        {itemId && <MessengerPad.main />}
+        {pad && <pad.main />}
       </div>
     </AppContainer>
   );

@@ -37,18 +37,19 @@ export const useItemList = (topic, types) => {
  * @param {string} itemId
  * @returns {[{title}, function]}
  */
-export const useItem = (topic, type, itemId) => {
-  const model = useModel({ options: { type, topic, itemId } });
+export const useItem = (topic, types, itemId) => {
+  const model = useModel({ options: { type: types, topic, itemId } });
   if (!model) {
     return [[]];
   }
 
   // TODO(burdon): CRDT.
   const { messages = [] } = model;
-  const { title } = messages.length > 0 ? messages[messages.length - 1] : {};
+  const item = messages.length > 0 ? messages[messages.length - 1] : {};
+  const type = messages[0]?.__type_url;
 
   return [
-    { title },
+    item,
     ({ title }) => {
       model.appendMessage({ __type_url: type, itemId, title });
     }
