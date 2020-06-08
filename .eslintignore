@@ -74,3 +74,5 @@ webpack.zip
 
 # TODO(burdon): Why?
 **/*.test.js
+
+**/rollup.config.js

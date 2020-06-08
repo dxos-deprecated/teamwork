@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "composite": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "target": "ES5",
+    "outDir": "dist"
+  },
+  "exclude": [
+    "**/dist",
+  ]
+}
