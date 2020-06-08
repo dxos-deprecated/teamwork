@@ -1,7 +1,7 @@
 {
   "build": {
     "name":      "@dxos/canvas",
-    "buildDate": "2020-05-28T23:04:07.538Z",
-    "version":   "1.0.0-beta.1"
+    "buildDate": "2020-06-05T20:45:02.693Z",
+    "version":   "1.0.1-beta.6"
   }
 }

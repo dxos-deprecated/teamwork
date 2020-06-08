@@ -1393,7 +1393,7 @@
     unified "^9.0.0"
     yjs "^13.0.8"
 
-"@dxos/echo-db@^1.0.0-beta.8":
+"@dxos/echo-db@^1.0.0-beta.1", "@dxos/echo-db@^1.0.0-beta.8":
   version "1.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.8.tgz#e70853ea291b06a90311ce484e9b9eab027cc107"
   integrity sha512-FNXzuwBdUGBfMZ2eiqpkB7MKczkn4J4zU2h+js5LxGp/aiNMJYI6zrBlVPRaUsqXl/zV+PQS9ESZjUR3/E1rtQ==
@@ -1408,34 +1408,6 @@
     "@types/through2" "^2.0.36"
     debug "^4.1.1"
     protobufjs "^6.9.0"
-    source-map-support "^0.5.12"
-
-"@dxos/echodb@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@dxos/echodb/-/echodb-0.0.3.tgz#86082d9147a75b76b0e4dbe6844153e9fd4fa58b"
-  integrity sha512-d0RwnsJVcMGEAxkbD8oC7vlY4gg1u9jTPpAbuFOdmMw1+AUvIUiLHjtaEN3JR8ST4f0/83hp7LdKrDnMDZDwfA==
-  dependencies:
-    "@dxos/codec-protobuf" "^1.1.0-beta.0"
-    "@dxos/data-client" "^1.0.0-beta.0"
-    debug "^4.1.1"
-    hypercore-crypto "^1.0.0"
-    lodash.merge "^4.6.1"
-    protobufjs "^6.8.8"
-    source-map-support "^0.5.12"
-    uuid "^3.3.3"
-
-"@dxos/echodb@^1.0.0-beta.3":
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@dxos/echodb/-/echodb-1.0.0-beta.7.tgz#b6037bd371a67fb64f481abf47e0fb4979b1583e"
-  integrity sha512-fBV2gsL7eGrjwCCIhMuOEhkt1yxsCE83ZLEY3wN5UrBIldg+DO0FOS4JfMudY5vFEkdY6tHeEaTvCDFNNyzH5A==
-  dependencies:
-    "@dxos/codec-protobuf" "^1.1.0-beta.0"
-    "@dxos/crypto" "^0.0.1"
-    "@dxos/data-client" "^1.0.0-beta.0"
-    debug "^4.1.1"
-    hypercore-crypto "^1.0.0"
-    lodash.merge "^4.6.1"
-    protobufjs "^6.8.8"
     source-map-support "^0.5.12"
 
 "@dxos/editor@^1.0.0-beta.2":
@@ -12895,7 +12867,7 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha1-vMbEmkKihA7Zl/Mj6tpezRguC/4=
 
-lodash.merge@^4.6.1, lodash.merge@^4.6.2:
+lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
@@ -15820,7 +15792,7 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk=
 
-protobufjs@^6.8.8, protobufjs@^6.9.0:
+protobufjs@^6.9.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.9.0.tgz#c08b2bf636682598e6fabbf0edb0b1256ff090bd"
   integrity sha512-LlGVfEWDXoI/STstRDdZZKb/qusoAWUnmLg9R8OLSO473mBLWHowx8clbX5/+mKDEI+v7GzjoK9tRPZMMcoTrg==

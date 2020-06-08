@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { EchoModel } from '@dxos/echodb';
+import { EchoModel } from '@dxos/echo-db';
 import { useModel } from '@dxos/react-client';
 
 // TODO(burdon): Slashes not allowed.
@@ -51,11 +51,6 @@ export const useDocumentMetadata = (topic, documentId) => {
   // TODO(burdon): Should not be called with null.
   // assert(topic);
   // assert(documentId);
-
-  // TODO(dboreham): When we're called with documentId == undefined, fail safe for now:
-  if (!documentId) {
-    return [{}];
-  }
 
   // TODO(burdon): Cannot filter by documentId.
   const model = useModel({ model: EchoModel, options: { type: TYPE_CANVAS_DOCUMENT, topic } });

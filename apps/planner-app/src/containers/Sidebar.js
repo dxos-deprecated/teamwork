@@ -10,12 +10,11 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import PlannerIcon from '@material-ui/icons/AssessmentOutlined';
 
+import { keyToString } from '@dxos/crypto';
 import { PartyTree, PartyTreeAddItemButton, PartyTreeItem, useAppRouter } from '@dxos/react-appkit';
 import { useClient, useParties } from '@dxos/react-client';
-import { keyToString } from '@dxos/crypto';
 
 import { useArrayModel } from '../model/useArrayModel';
-import { ObjectModel } from '../model/object';
 import { BOARD_TYPE } from './Board';
 
 const chance = new Chance();
@@ -41,13 +40,20 @@ const Documents = ({ topic }) => {
     return null;
   }
 
-  const activeBoardId = ObjectModel.createId(BOARD_TYPE, item);
+  const activeBoardId = item;
   const boards = boardModel
     .getItems()
     .filter(board => !board.deleted);
 
+  // TODO(dboreham): This fn doesn't belong here.
+  const parseId = (id) => {
+    const parts = id.split('/');
+    console.assert(parts.length === 2 ? parts[0] : parts[1]);
+    return { type: parts[0], id: parts[1] };
+  };
+
   const handleSelect = documentId => {
-    const { id: item } = ObjectModel.parseId(documentId);
+    const { id: item } = parseId(documentId);
     router.push({ topic, item });
   };
 
@@ -63,12 +69,12 @@ const Documents = ({ topic }) => {
 
   return (
     <Fragment>
-      {boards.map(({ id, title }) => (
+      {boards.map(({ id, properties }) => (
         <PartyTreeItem
           key={id}
           id={id}
           icon={props => <PlannerIcon className={clsx(props.className, classes.plannerIcon)} />}
-          label={title || id}
+          label={properties.title || id}
           isSelected={activeBoardId === id}
           onSelect={() => handleSelect(id)}
           onUpdate={title => handleUpdateTitle(id, title)}

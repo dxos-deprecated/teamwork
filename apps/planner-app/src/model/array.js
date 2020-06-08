@@ -2,7 +2,7 @@
 // Copyright 2019 Wireline, Inc.
 //
 
-import { EchoModel } from './echo';
+import { EchoModel } from '@dxos/echo-db';
 
 export function mergeFeeds(feeds) {
   if (feeds.length === 1) {
@@ -115,8 +115,11 @@ export class ArrayModel extends EchoModel {
    */
   _itemCache = undefined;
 
+  _objectType;
+
   constructor(type) {
     super(type);
+    this._objectType = type;
     this.on('update', () => this.invalidateItemCache());
   }
 
@@ -126,7 +129,7 @@ export class ArrayModel extends EchoModel {
 
   getItems() {
     if (this._itemCache === undefined) {
-      this._itemCache = sortByPosition(this.getObjects());
+      this._itemCache = sortByPosition(this.getObjectsByType(this._objectType));
     }
     return this._itemCache;
   }
@@ -152,7 +155,7 @@ export class ArrayModel extends EchoModel {
 
   insertItemAtIndex(index, properties) {
     const position = this.prepareForInsertion(index);
-    return this.createItem({ ...properties, position });
+    return this.createItem(this._objectType, { ...properties, position });
   }
 
   push(properties) {
