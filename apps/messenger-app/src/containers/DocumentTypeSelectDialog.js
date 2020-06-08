@@ -21,4 +21,4 @@ export const DocumentTypeSelectDialog = ({ open, pads, onSelect }) => (
       ))}
     </List>
   </Dialog>
-)
+);

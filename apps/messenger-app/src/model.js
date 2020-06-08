@@ -46,7 +46,7 @@ export const useItem = (topic, types, itemId) => {
   // TODO(burdon): CRDT.
   const { messages = [] } = model;
   const item = messages.length > 0 ? messages[messages.length - 1] : {};
-  const type = messages[0]?.__type_url;
+  const type = messages[0]?.['__type_url'];
 
   return [
     item,

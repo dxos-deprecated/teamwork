@@ -19,7 +19,7 @@ import Sidebar from './Sidebar';
 
 const pads = [
   MessengerPad,
-]
+];
 
 const useStyles = makeStyles(theme => ({
   main: {

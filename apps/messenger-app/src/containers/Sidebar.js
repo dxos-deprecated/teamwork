@@ -48,7 +48,7 @@ const Items = ({ topic, pads }) => {
 
   const handleCreate = (type) => {
     setTypeSelectDialogOpen(false);
-    if(!type) return;
+    if (!type) return;
     const title = `item-${chance.word()}`;
     const documentId = createItem({ __type_url: type, title });
     handleSelect(documentId);
