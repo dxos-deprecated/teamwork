@@ -17,6 +17,10 @@ import { useItem } from '../model';
 
 import Sidebar from './Sidebar';
 
+const pads = [
+  MessengerPad,
+]
+
 const useStyles = makeStyles(theme => ({
   main: {
     display: 'flex',
@@ -53,7 +57,7 @@ const App = () => {
           onUpdate={title => editItem({ title })}
         />
       )}
-      sidebarContent={<Sidebar topic={topic} />}
+      sidebarContent={<Sidebar topic={topic} pads={pads} />}
     >
       <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
