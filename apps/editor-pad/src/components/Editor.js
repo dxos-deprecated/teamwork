@@ -2,25 +2,17 @@
 // Copyright 2020 Wireline, Inc.
 //
 
-import React, { Fragment, useState, useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { createId } from '@dxos/crypto';
+import { Editor as DxOSEditor } from '@dxos/editor';
 
-import { Editor, Channel } from '@dxos/editor';
+import { useProfile } from '@dxos/react-client';
 
 import { useDocumentUpdateModel } from '../model';
-
-import {
-  PadNodeView,
-  createPadNodeView,
-  padSchemaEnhancer,
-  createPadNode
-} from '../lib/prosemirror-pad-view';
-
-import EmbeddedPads from './EmbeddedPads';
+import Pad from './Pad';
 
 const useEditorClasses = makeStyles(() => ({
   root: {
@@ -29,55 +21,24 @@ const useEditorClasses = makeStyles(() => ({
     height: '100%'
   },
   editor: {
-    '& pad.pad': {
+    '& reactelement': {
       display: 'inline-block'
     }
   }
 }));
 
-const EditorComponent = ({
-  topic,
-  itemId,
-  userId,
-  statusChannel,
-  nodeViews,
-  pads,
-  items,
-  onCreateItem
-}) => {
-  const classes = useEditorClasses();
-  const editor = useRef(null);
-  const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
-  const [document, setDocument] = useState(documentUpdateModel?.document);
-
-  useEffect(() => {
-    if (!documentUpdateModel) return;
-
-    setDocument(documentUpdateModel.document);
-
-    if (editor.current) {
-      editor.current.reset();
-    }
-
-    return () => {
-      if (!editor.current) return;
-      editor.current.destroy();
-    };
-  }, [documentUpdateModel]);
-
+const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) => {
   const handleContextMenuGetOptions = useCallback(() => {
     let insertOptions = items.map(item => ({
       id: item.id,
       label: item.title,
-      fn: view => {
-        const { tr, selection, schema } = view.state;
-        selection.replaceWith(tr, createPadNode(schema, {
+      fn: () => {
+        editor.createReactElement({
           type: item.__type_url,
           itemId: item.id,
           title: item.title,
           topic
-        }));
-        view.dispatch(tr);
+        });
       }
     }));
 
@@ -89,17 +50,15 @@ const EditorComponent = ({
       id: `create-${pad.type}`,
       label: `New ${pad.displayName}`,
       create: true,
-      fn: async view => {
-        const { tr, selection, schema } = view.state;
-
+      fn: async () => {
         const item = await onCreateItem(pad.type);
-        selection.replaceWith(tr, createPadNode(schema, {
+
+        editor.createReactElement({
           type: pad.type,
           itemId: item.id,
           title: item.title,
           topic
-        }));
-        view.dispatch(tr);
+        });
       }
     }));
 
@@ -108,7 +67,7 @@ const EditorComponent = ({
     }
 
     return [...insertOptions, ...createItemOptions];
-  }, [topic, pads, items, onCreateItem]);
+  }, [topic, pads, items, onCreateItem, editor]);
 
   const handleContextMenuRenderItem = useCallback(({ option }) => {
     return (
@@ -118,27 +77,91 @@ const EditorComponent = ({
     );
   }, []);
 
-  const handleContextMenuOptionSelect = useCallback((option, view) => {
+  const handleContextMenuOptionSelect = useCallback(option => {
     if (option.fn) {
-      return option.fn(view);
+      return option.fn();
     }
   }, []);
 
-  const handleEditorCreated = useCallback(editorInstance => {
-    editor.current = editorInstance;
-  }, []);
+  return {
+    handleContextMenuGetOptions,
+    handleContextMenuRenderItem,
+    handleContextMenuOptionSelect
+  };
+};
 
-  if (!document) return null;
+const Editor = (
+  { topic, itemId, pads = [], items = [], onCreateItem }
+) => {
+  const { publicKey } = useProfile();
+  const classes = useEditorClasses();
+  const [editor, setEditor] = useState();
+
+  const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
+
+  useEffect(() => {
+    if (!documentUpdateModel || !editor) return;
+
+    // Remote updates handler: update current doc
+    const modelUpdateHandler = (model, messages) => {
+      messages.forEach(({ update, origin }) => {
+        if (origin.docClientId !== editor.sync.doc.clientID) {
+          editor.sync.processRemoteUpdate(update, origin);
+        }
+      });
+    };
+
+    // Apply initial messages
+    documentUpdateModel.on('update', modelUpdateHandler);
+
+    return () => {
+      if (!editor) return;
+
+      documentUpdateModel.off('update', modelUpdateHandler);
+
+      editor.destroy();
+    };
+  }, [itemId, publicKey, editor, documentUpdateModel]);
+
+  const handleLocalUpdate = useCallback((update, doc) => {
+    documentUpdateModel.appendMessage({
+      __type_url: 'testing.document.Update',
+      update,
+      origin: { author: publicKey, docClientId: doc.clientID }
+    });
+  }, [publicKey, documentUpdateModel]);
+
+  const handleEditorCreated = useCallback(setEditor, [setEditor]);
+
+  const handleReactElementRender = useCallback(props => {
+    const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
+
+
+    return (
+      <Pad title={props.title} icon={icon}>
+        <PadComponent {...props} />
+      </Pad>
+    );
+  }, [pads]);
+
+  const {
+    handleContextMenuGetOptions,
+    handleContextMenuRenderItem,
+    handleContextMenuOptionSelect
+  } = useContextMenuHandlers({ topic, pads, items, onCreateItem, editor });
+
+  const handleLocalStatusUpdate = () => null;
+
+  if (!documentUpdateModel) return null;
 
   return (
-    <Editor
+    <DxOSEditor
       toolbar
       sync={{
-        id: userId,
-        document,
+        id: publicKey,
+        onLocalUpdate: handleLocalUpdate,
         status: {
-          getUsername: () => userId.toString(),
-          channel: statusChannel
+          onLocalUpdate: handleLocalStatusUpdate
         }
       }}
       contextMenu={{
@@ -146,48 +169,11 @@ const EditorComponent = ({
         onSelect: handleContextMenuOptionSelect,
         renderItem: handleContextMenuRenderItem
       }}
-      schemaEnhancers={[padSchemaEnhancer]}
-      nodeViews={nodeViews}
       onCreated={handleEditorCreated}
+      reactElementRenderFn={handleReactElementRender}
       classes={classes}
     />
   );
 };
 
-const EditorContainer = ({ topic, itemId, pads = [], items = [], onCreateItem }) => {
-  const [id] = useState(createId());
-  const [statusChannel] = useState(new Channel());
-  const [embeddedPads, setEmbeddedPads] = useState([]);
-
-  const handleRenderPadNodeView = useCallback(node => {
-    const padNodeView = new PadNodeView(node);
-
-    setEmbeddedPads(embeddedPads => ([
-      ...embeddedPads,
-      {
-        domNode: padNodeView.dom,
-        node: padNodeView.node
-      }
-    ]));
-
-    return padNodeView;
-  }, []);
-
-  return (
-    <Fragment>
-      <EmbeddedPads embeddedPads={embeddedPads} pads={pads} />
-      <EditorComponent
-        topic={topic}
-        itemId={itemId}
-        userId={id}
-        statusChannel={statusChannel}
-        nodeViews={createPadNodeView(handleRenderPadNodeView)}
-        pads={pads}
-        items={items}
-        onCreateItem={onCreateItem}
-      />
-    </Fragment>
-  );
-};
-
-export default EditorContainer;
+export default Editor;

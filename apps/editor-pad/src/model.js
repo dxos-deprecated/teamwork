@@ -6,7 +6,6 @@ import assert from 'assert';
 
 import { useModel } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
-import { DocumentModel } from '@wirelineio/document-model';
 
 // TODO(burdon): Define types.
 export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
@@ -76,7 +75,6 @@ export const useDocumentUpdateModel = (topic, documentId) => {
   assert(documentId);
 
   const model = useModel({
-    model: DocumentModel,
     options: { type: TYPE_EDITOR_UPDATE, topic, documentId, disableUpdateHandler: true }
   });
 

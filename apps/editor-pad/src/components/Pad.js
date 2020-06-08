@@ -12,6 +12,9 @@ export const useStyles = makeStyles(() => ({
     padding: 4,
     borderRadius: 4
   },
+  padContent: {
+    backgroundColor: 'inherit'
+  },
   padInfo: {
     display: 'flex',
     paddingTop: 4
@@ -26,7 +29,7 @@ const Pad = ({ title, icon: Icon, children }) => {
 
   return (
     <div className={classes.padContainer}>
-      {children}
+      <div className={classes.padContent}>{children}</div>
       <div className={classes.padInfo}>
         <Icon className={classes.padInfoIcon} />
         <Typography variant="button">{title}</Typography>
