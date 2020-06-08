@@ -99,13 +99,31 @@ module.exports = {
 
   module: {
     rules: [
-      // js
+      // js & ts
       {
-        test: /\.js$/,
-        exclude: /(node_modules)/,
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
-        }
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            babelrc: false,
+            presets: [
+              '@babel/preset-typescript',
+              [
+                '@babel/preset-env',
+                { targets: { browsers: '> 5%, not IE <= 11' } },
+              ],
+              '@babel/preset-react',
+            ],
+            plugins: [
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              '@babel/plugin-proposal-nullish-coalescing-operator',
+              '@babel/plugin-proposal-optional-chaining',
+              'babel-plugin-styled-components',
+            ],
+          },
+        },
       },
 
       // config
