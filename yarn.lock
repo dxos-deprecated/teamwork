@@ -1356,6 +1356,47 @@
     through2 "^3.0.1"
     wrtc "^0.4.3"
 
+"@dxos/data-client@^1.0.0-beta.70":
+  version "1.0.0-beta.70"
+  resolved "https://registry.yarnpkg.com/@dxos/data-client/-/data-client-1.0.0-beta.70.tgz#14bcd1e822c9cb95a0344524ab420e8453edce3b"
+  integrity sha512-7T65Un6WJ6OzBYxVxkfhVR57B2ZekO9EnbKODNrb8AUAoEz/XOmbbZ6kDB1Iw0iUXdmTyO3ptkyCwcsFT6jgqQ==
+  dependencies:
+    "@babel/runtime" "^7.8.7"
+    "@dxos/async" "^1.0.0-beta.1"
+    "@dxos/credentials" "^1.0.1-beta.4"
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/debug" "^1.0.0-beta.70"
+    "@dxos/feed-level-indexer" "^1.0.0-beta.11"
+    "@dxos/feed-store" "1.2.0-beta.14"
+    "@dxos/metrics" "^1.0.0-beta.6"
+    "@dxos/network-manager" "^1.0.0-beta.70"
+    "@dxos/party-manager" "^1.0.1-beta.4"
+    "@dxos/protocol" "^1.1.0-alpha.4"
+    "@dxos/protocol-plugin-replicator" "^1.1.0-alpha.4"
+    "@geut/discovery-swarm-webrtc" "^3.0.0-beta.3"
+    assert "^2.0.0"
+    buffer-json-encoding "^1.0.2"
+    canonicalize "^1.0.1"
+    debug "^4.1.1"
+    del "^5.1.0"
+    end-of-stream "^1.4.4"
+    hypertrie "^3.8.0"
+    level-mem "^5.0.1"
+    lodash.debounce "^4.0.8"
+    lodash.defaults "^4.2.0"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.pickby "^4.6.0"
+    lodash.set "^4.3.2"
+    lodash.unset "^4.5.2"
+    multi-read-stream "^2.0.0"
+    p-limit "^2.3.0"
+    pify "^4.0.1"
+    pump "^3.0.0"
+    pumpify "^2.0.1"
+    through2 "^3.0.1"
+    wrtc "^0.4.3"
+
 "@dxos/debug@^1.0.0-beta.20":
   version "1.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.20.tgz#a0ad7b532a7baabdb11430d3b1f4d86a47bd8cbc"
@@ -1367,6 +1408,13 @@
   version "1.0.0-beta.69"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.69.tgz#842a803f83234c1a0f5c983f17561feaf6a88a9d"
   integrity sha512-ClakqGbWwFttM38ejhcvWIyvhfFCmaeUWt0mJaeUz69DKHMNIfBbTuPq+pk+EExUk/Kh043OZDExuHoRTuXUSQ==
+  dependencies:
+    debug "^4.1.1"
+
+"@dxos/debug@^1.0.0-beta.70":
+  version "1.0.0-beta.70"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.70.tgz#547278f0139ee9d60c59930cb9432f6d3abd90c3"
+  integrity sha512-hqvTu+YW/wNKcewCtj0cdAr96RdcqlttgKjiq/tdAbzrMwEeOf3Uo5hNuha2XOLq0nJrozL2a68tmKHKnacRbw==
   dependencies:
     debug "^4.1.1"
 
@@ -1410,12 +1458,11 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/editor@^1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@dxos/editor/-/editor-1.0.0-beta.2.tgz#8924c8203fa03e39392f1ec9830f4808a68d353a"
-  integrity sha512-kcp+uXb8nd2rRNfGh6wh73x7FOn+a4CeQKcXjEVHj4T866/zBvop2y7HsjItw3IOsKlD7Nt6P8DppdJrRjs4vQ==
+"@dxos/editor@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@dxos/editor/-/editor-1.0.0-beta.3.tgz#4c7c1e6ad77cedd97c8f8df1e2ad43e103085523"
+  integrity sha512-hORIJO+lpXLyN6gzYvxJrTwBHETxP0Mzk/jtiQTbs139+ACq6mhiXdGLyVg670DS+9e5X7t2nMHWgMMY9OJ/GQ==
   dependencies:
-    "@dxos/document" "^1.0.0-beta.2"
     classnames "^2.2.6"
     color-hash "^1.0.3"
     lib0 "^0.2.26"
@@ -1434,7 +1481,7 @@
     prosemirror-view "^1.14.11"
     y-prosemirror "^0.3.5"
     y-protocols "^0.2.3"
-    yjs "^13.0.8"
+    yjs "^13.1.0"
 
 "@dxos/feed-level-indexer@^1.0.0-beta.11":
   version "1.0.0-beta.11"
@@ -1583,6 +1630,20 @@
     debug "^4.1.1"
     wrtc "^0.4.3"
 
+"@dxos/network-manager@^1.0.0-beta.70":
+  version "1.0.0-beta.70"
+  resolved "https://registry.yarnpkg.com/@dxos/network-manager/-/network-manager-1.0.0-beta.70.tgz#30cd75ed7e75f8c8e8aca1dc9e7f62ecce770df7"
+  integrity sha512-lrj9idzDOPDk13Mza0uGm17as8BUa2IzO159gKYhWjfJMwI4iknhBPRyzLYT2GM8/s34IEOxhwlluwRncp/tJQ==
+  dependencies:
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/metrics" "^1.0.0-beta.6"
+    "@dxos/protocol" "^1.1.0-alpha.4"
+    "@geut/discovery-swarm-webrtc" "^3.0.0-beta.3"
+    "@wirelineio/discovery-swarm-memory" "^0.2.17"
+    assert "^2.0.0"
+    debug "^4.1.1"
+    wrtc "^0.4.3"
+
 "@dxos/party-manager@^1.0.0-beta.20":
   version "1.0.0-beta.35"
   resolved "https://registry.yarnpkg.com/@dxos/party-manager/-/party-manager-1.0.0-beta.35.tgz#9f66f470a9a6bdeca02f3468ba36847b3beb759e"
@@ -1709,6 +1770,25 @@
     "@dxos/crypto" "^1.0.0-beta.0"
     "@dxos/data-client" "^1.0.0-beta.69"
     "@dxos/debug" "^1.0.0-beta.69"
+    "@dxos/metrics" "^1.0.0-beta.6"
+    "@dxos/random-access-multi-storage" "^1.1.0-beta.2"
+    level-js "^5.0.1"
+    memdown "^5.1.0"
+    pify "^4.0.1"
+    react-display-name "^0.2.5"
+    react-router-dom "^5.1.2"
+    use-deep-compare-effect "^1.3.0"
+
+"@dxos/react-client@^1.0.0-beta.70":
+  version "1.0.0-beta.70"
+  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-1.0.0-beta.70.tgz#5c6d616b5d357455f302c484a0304f062c082b9e"
+  integrity sha512-eq8finlx1V8HyV1RkO8ChMX5Rikq/D9s7MsE+kM+cFiZxmJkPCZkxYUzSSyHm++Mc63GLDu2gGhTGGL4mAnn6g==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.1"
+    "@dxos/credentials" "^1.0.1-beta.4"
+    "@dxos/crypto" "^1.0.0-beta.0"
+    "@dxos/data-client" "^1.0.0-beta.70"
+    "@dxos/debug" "^1.0.0-beta.70"
     "@dxos/metrics" "^1.0.0-beta.6"
     "@dxos/random-access-multi-storage" "^1.1.0-beta.2"
     level-js "^5.0.1"
@@ -20578,7 +20658,14 @@ yeast@0.1.2:
   resolved "https://registry.yarnpkg.com/yeast/-/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 
-yjs@^13.0.8:
+yjs@13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.1.0.tgz#38c5fc985d530d2d7136b3995524e63fd7332e69"
+  integrity sha512-nquVeaYyQfQmA4jbgXM6uzYul5afywe7eBYoEwQAG8crMcdRvgxVqVaomAIlBsLZWrQt3odD9lvtNsAF0txAMA==
+  dependencies:
+    lib0 "^0.2.27"
+
+yjs@^13.0.8, yjs@^13.1.0:
   version "13.1.1"
   resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.1.1.tgz#6b1371c2dd6985bbddcee44c1ffa8398aa6c0743"
   integrity sha512-h2c0Qnvjc4lYQdcHqW9G8q/US6as+0uiKhmQyO7TwLdxqFhiwowMfCh0D5f6zwuHyBIIQOTuvyzohwgtAxoHVA==

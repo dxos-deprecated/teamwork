@@ -1,7 +1,7 @@
 {
   "name": "@dxos/editor-pad",
   "version": "1.0.1-beta.7",
-  "description": "Wireline editor pad",
+  "description": "DxOs editor pad",
   "private": true,
   "main": "dist/es/index.js",
   "scripts": {
