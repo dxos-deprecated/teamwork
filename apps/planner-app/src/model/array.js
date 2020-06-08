@@ -4,8 +4,6 @@
 
 import { EchoModel } from '@dxos/echo-db';
 
-const TYPE_CHANGEME_ECHO_OBJECT = 'wrn_dxos_org_test_echo_object';
-
 export function mergeFeeds(feeds) {
   if (feeds.length === 1) {
     return feeds[0].messages;
@@ -117,8 +115,11 @@ export class ArrayModel extends EchoModel {
    */
   _itemCache = undefined;
 
+  _objectType;
+
   constructor(type) {
     super(type);
+    this._objectType = type;
     this.on('update', () => this.invalidateItemCache());
   }
 
@@ -128,7 +129,7 @@ export class ArrayModel extends EchoModel {
 
   getItems() {
     if (this._itemCache === undefined) {
-      this._itemCache = sortByPosition(this.getObjectsByType(TYPE_CHANGEME_ECHO_OBJECT));
+      this._itemCache = sortByPosition(this.getObjectsByType(this._objectType));
     }
     return this._itemCache;
   }
@@ -154,7 +155,7 @@ export class ArrayModel extends EchoModel {
 
   insertItemAtIndex(index, properties) {
     const position = this.prepareForInsertion(index);
-    return this.createItem(TYPE_CHANGEME_ECHO_OBJECT, { ...properties, position });
+    return this.createItem(this._objectType, { ...properties, position });
   }
 
   push(properties) {
