@@ -42,7 +42,7 @@ const plugins = [
   commonjs({
     include: /node_modules/,
     namedExports: {
-      'node_modules/@dxos/echo-db/dist/index.js': ['DefaultPartiallyOrderedModel']
+      '../../node_modules/@dxos/echo-db/dist/src/index.js': ['DefaultPartiallyOrderedModel'],
     },
     ignore: (id) => externalsMap[id] || id.startsWith('@material-ui' || external.includes(id))
   }),
@@ -68,7 +68,7 @@ const plugins = [
 
 export default {
   preserveSymlinks: true,
-  input: './src/index.js',
+  input: './src/index.ts',
   external,
   plugins,
   output: {
