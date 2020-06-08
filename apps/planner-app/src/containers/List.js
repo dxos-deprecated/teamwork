@@ -74,13 +74,14 @@ const List = props => {
     </div>
   );
 
+  // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
 
   return (
     <div className={clsx(classes.root, className)}>
       <div className={classes.header}>
         <EditableText
-          key={list.title}
-          value={list.title || 'untitled list'}
+          key={list.properties.title}
+          value={list.properties.title || 'untitled list'}
           onUpdate={handleTitleUpdate}
         />
       </div>
@@ -94,7 +95,7 @@ const List = props => {
                   {(provided, snapshot) => (
                     <Card
                       key={card.id}
-                      card={card}
+                      card={card.properties}
                       index={index}
                       provided={provided}
                       snapshot={snapshot}
