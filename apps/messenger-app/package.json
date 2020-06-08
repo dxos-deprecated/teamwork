@@ -26,6 +26,7 @@
     "@dxos/data-client": "^1.0.0-beta.56",
     "@dxos/debug": "^1.0.0-beta.56",
     "@dxos/messenger-pad": "^1.0.1-beta.6",
+    "@dxos/editor-pad": "^1.0.1-beta.6",
     "@dxos/react-appkit": "^1.0.0-beta.56",
     "@dxos/react-client": "^1.0.0-beta.56",
     "@dxos/react-router": "^1.0.0-beta.56",

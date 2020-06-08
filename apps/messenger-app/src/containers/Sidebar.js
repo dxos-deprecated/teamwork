@@ -11,24 +11,22 @@ import ChatIcon from '@material-ui/icons/Chat';
 import { keyToString } from '@dxos/crypto';
 import { PartyTreeAddItemButton, PartyTree, PartyTreeItem, useAppRouter } from '@dxos/react-appkit';
 import { useClient, useParties } from '@dxos/react-client';
-import { useChannelList, useChannel } from '@dxos/messenger-pad';
+
+import { useItemList } from '../model';
 
 const chance = new Chance();
 
-const TreeItem = ({ document, topic, active, onSelect }) => {
-  const [, updateChannel] = useChannel(topic, document.id);
-  return (
-    <PartyTreeItem
-      key={document.id}
-      id={document.id}
-      label={document.title || document.id}
-      icon={ChatIcon}
-      isSelected={active === document.id}
-      onSelect={onSelect}
-      onUpdate={title => updateChannel({ title })}
-    />
-  );
-};
+const TreeItem = ({ document, active, onSelect, editItem }) => (
+  <PartyTreeItem
+    key={document.itemId}
+    id={document.itemId}
+    label={document.title || document.itemId}
+    icon={ChatIcon}
+    isSelected={active === document.itemId}
+    onSelect={onSelect}
+    onUpdate={title => editItem({ __type_url: document.__type_url, itemId: document.itemId, title })}
+  />
+);
 
 /**
  * Channels list.
@@ -37,7 +35,7 @@ const TreeItem = ({ document, topic, active, onSelect }) => {
 const Channels = ({ topic }) => {
   const router = useAppRouter();
   const { item: active } = useParams();
-  const [documents, createDocument] = useChannelList(topic);
+  const { items, createItem, editItem } = useItemList(topic, ['testing.messenger.Channel']);
 
   if (!topic) {
     return null;
@@ -49,19 +47,19 @@ const Channels = ({ topic }) => {
 
   const handleCreate = () => {
     const title = `channel-${chance.word()}`;
-    const documentId = createDocument(title);
+    const documentId = createItem({ __type_url: 'testing.messenger.Channel', title });
     handleSelect(documentId);
   };
 
   return (
     <Fragment>
-      {documents.map(document => (
+      {items.map(document => (
         <TreeItem
-          key={document.id}
+          key={document.itemId}
           document={document}
           active={active}
-          topic={topic}
-          onSelect={() => handleSelect(document.id)}
+          onSelect={() => handleSelect(document.itemId)}
+          editItem={editItem}
         />
       ))}
 
