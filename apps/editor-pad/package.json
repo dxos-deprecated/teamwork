@@ -1,6 +1,6 @@
 {
   "name": "@wirelineio/editor-pad",
-  "version": "1.0.1-beta.6",
+  "version": "1.0.1-beta.7",
   "description": "Wireline editor pad",
   "private": true,
   "main": "dist/es/index.js",
@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dxos/editor": "^1.0.0-beta.2",
-    "@wirelineio/document-model": "^1.0.1-beta.6",
-    "clsx": "^1.0.4"
+    "@dxos/editor": "^1.0.0-beta.3",
+    "clsx": "^1.0.4",
+    "yjs": "13.1.0"
   },
   "peerDependencies": {
     "@dxos/crypto": "^1.0.0-beta.1",
@@ -37,7 +37,7 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@dxos/react-client": "^1.0.0-beta.64",
+    "@dxos/react-client": "^1.0.0-beta.70",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "@rollup/plugin-json": "^4.0.3",
