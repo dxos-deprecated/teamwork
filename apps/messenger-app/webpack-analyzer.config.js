@@ -9,7 +9,7 @@ const baseConfig = require('./webpack-common.config');
 
 module.exports = merge(baseConfig, {
 
-  entry: './src/main',
+  entry: './src/main.tsx',
 
   plugins: [
     // http://127.0.0.1:8888
