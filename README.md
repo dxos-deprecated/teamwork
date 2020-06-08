@@ -1,5 +1,7 @@
 # Teamwork Suite
 
+![Github Actions](https://github.com/dxos/teamwork/workflows/Build%20and%20Publish%20to%20WNS/badge.svg)
+
 Decentralized Collaborative Tools.
 
 
