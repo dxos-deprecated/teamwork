@@ -12,9 +12,14 @@ import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
-import MessengerPad, { useChannel } from '@dxos/messenger-pad';
+import MessengerPad from '@dxos/messenger-pad';
+import { useItem } from '../model';
 
 import Sidebar from './Sidebar';
+
+const pads = [
+  MessengerPad,
+];
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -31,9 +36,11 @@ const useStyles = makeStyles(theme => ({
 
 const App = () => {
   const classes = useStyles();
-  const { topic, item: channelId } = useParams();
-  const [channel, updateChannel] = useChannel(topic, channelId);
+  const { topic, item: itemId } = useParams();
+  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
+
+  const pad = pads.find(pad => pad.type === item.__type_url);
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -44,19 +51,19 @@ const App = () => {
 
   return (
     <AppContainer
-      appBarContent={channel && (
+      appBarContent={item && (
         <EditableText
-          value={channel.title}
+          value={item.title}
           variant="h6"
           classes={{ root: classes.titleRoot }}
-          onUpdate={title => updateChannel({ title })}
+          onUpdate={title => editItem({ title })}
         />
       )}
-      sidebarContent={<Sidebar topic={topic} />}
+      sidebarContent={<Sidebar topic={topic} pads={pads} />}
     >
       <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
-        {channelId && <MessengerPad.main />}
+        {pad && <pad.main />}
       </div>
     </AppContainer>
   );
