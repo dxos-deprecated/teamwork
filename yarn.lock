@@ -1369,6 +1369,23 @@
     unified "^9.0.0"
     yjs "^13.0.8"
 
+"@dxos/echo-db@^1.0.0-beta.8":
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.8.tgz#e70853ea291b06a90311ce484e9b9eab027cc107"
+  integrity sha512-FNXzuwBdUGBfMZ2eiqpkB7MKczkn4J4zU2h+js5LxGp/aiNMJYI6zrBlVPRaUsqXl/zV+PQS9ESZjUR3/E1rtQ==
+  dependencies:
+    "@dxos/codec-protobuf" "^1.1.0-beta.0"
+    "@dxos/crypto" "^0.0.1"
+    "@dxos/data-client" "^1.0.0-beta.0"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
 "@dxos/echodb@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@dxos/echodb/-/echodb-0.0.3.tgz#86082d9147a75b76b0e4dbe6844153e9fd4fa58b"
@@ -1383,7 +1400,7 @@
     source-map-support "^0.5.12"
     uuid "^3.3.3"
 
-"@dxos/echodb@^1.0.0-beta.3", "@dxos/echodb@^1.0.0-beta.7":
+"@dxos/echodb@^1.0.0-beta.3":
   version "1.0.0-beta.7"
   resolved "https://registry.yarnpkg.com/@dxos/echodb/-/echodb-1.0.0-beta.7.tgz#b6037bd371a67fb64f481abf47e0fb4979b1583e"
   integrity sha512-fBV2gsL7eGrjwCCIhMuOEhkt1yxsCE83ZLEY3wN5UrBIldg+DO0FOS4JfMudY5vFEkdY6tHeEaTvCDFNNyzH5A==
@@ -3751,6 +3768,18 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
+"@types/debug@^4.1.1":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
+  integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
+
+"@types/end-of-stream@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@types/end-of-stream/-/end-of-stream-1.4.0.tgz#4e73ac87d15b6cc89cdaf2d26a59f617c778cb07"
+  integrity sha512-d0FD2A4vpFI8wyQeQbr9VDVKtA1PmeGO3Ntn+6j626QTtAQ9HSqWFACP7rTHaV2cspVhLijl00Vvkf/U2UZGWA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
@@ -3838,7 +3867,7 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
   integrity sha1-aaI6OtKcrwCX8G7aWbNh7i8GOfY=
 
-"@types/node@*", "@types/node@>= 8":
+"@types/node@*", "@types/node@>= 8", "@types/node@^14.0.9":
   version "14.0.11"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.11.tgz#61d4886e2424da73b7b25547f59fdcb534c165a3"
   integrity sha512-lCvvI24L21ZVeIiyIUHZ5Oflv1hhHQ5E1S25IRlKIXaRkVgmXpJMI3wUJkmym2bTbCe+WoIibQnMVAU3FguaOg==
@@ -3949,6 +3978,13 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
+"@types/stream-buffers@^3.0.2":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/stream-buffers/-/stream-buffers-3.0.3.tgz#34e565bf64e3e4bdeee23fd4aa58d4636014a02b"
+  integrity sha512-NeFeX7YfFZDYsCfbuaOmFQ0OjSmHreKBpp7MQ4alWQBHeh2USLsj7qyMyn9t82kjqIX516CR/5SRHnARduRtbQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/styled-jsx@^2.2.8":
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/@types/styled-jsx/-/styled-jsx-2.2.8.tgz#b50d13d8a3c34036282d65194554cf186bab7234"
@@ -3960,6 +3996,13 @@
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@types/tapable/-/tapable-1.0.5.tgz#9adbc12950582aa65ead76bffdf39fe0c27a3c02"
   integrity sha512-/gG2M/Imw7cQFp8PGvz/SwocNrmKFjFsm5Pb8HdbHkZ1K8pmuPzOX4VeVoiEecFCVf4CsN1r3/BRvx+6sNqwtQ==
+
+"@types/through2@^2.0.36":
+  version "2.0.36"
+  resolved "https://registry.yarnpkg.com/@types/through2/-/through2-2.0.36.tgz#35fda0db635827d44c0e08e2c94653e647574a00"
+  integrity sha512-vuifQksQHJXhV9McpVsXKuhnf3lsoX70PnhcqIAbs9dqLH2NgrGz0DzZPDY3+Yh6eaRqcE1gnCQ6QhBn1/PT5A==
+  dependencies:
+    "@types/node" "*"
 
 "@types/uglify-js@*":
   version "3.9.2"
@@ -16016,14 +16059,7 @@ ramda@^0.21.0:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.21.0.tgz#a001abedb3ff61077d4ff1d577d44de77e8d0a35"
   integrity sha1-oAGr7bP/YQd9T/HVd9RN536NCjU=
 
-random-access-chrome-file@^1.1.2:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/random-access-chrome-file/-/random-access-chrome-file-1.1.4.tgz#059bdada8429203f284d9aa48b3c0f6819701fed"
-  integrity sha512-xZW1BT26g+gl8AF1kC/oXX97jCMVoLIbf6yx4eVMwLgOddGhhkJygimnfERSEmhUKiGs3DTymNao6wf/P23Nkg==
-  dependencies:
-    random-access-storage "^1.3.0"
-
-random-access-chrome-file@dxos/random-access-chrome-file#tinchoz49/improve-performance:
+random-access-chrome-file@^1.1.2, random-access-chrome-file@dxos/random-access-chrome-file#tinchoz49/improve-performance:
   version "1.1.4"
   resolved "https://codeload.github.com/dxos/random-access-chrome-file/tar.gz/fa10329091074ed24dcfdac5bd744bfbf54ffd30"
   dependencies:
