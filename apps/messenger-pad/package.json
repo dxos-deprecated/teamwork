@@ -1,10 +1,10 @@
 {
   "name": "@dxos/messenger-pad",
   "version": "1.0.1-beta.6",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
-    "build:babel": "babel src -d dist --extensions '.js,.ts'",
-    "build:ts": "tsc",
+    "build": "tsc",
     "lint": "eslint ./src --ignore-path ../../.eslintignore",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "dist": "rollup -c"
