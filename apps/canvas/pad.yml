@@ -1,0 +1,4 @@
+name: example.com/canvas
+displayName: Canvas 
+build: yarn dist
+version: 0.0.0

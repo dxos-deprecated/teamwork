@@ -2,6 +2,8 @@
   "name": "@dxos/canvas",
   "version": "1.0.1-beta.6",
   "description": "Canvas app.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "homepage": "https://github.com/dxos/teamwork#readme",
   "bugs": {
     "url": "https://github.com/dxos/teamwork/issues"
@@ -12,10 +14,9 @@
   },
   "license": "GPL-3.0",
   "author": "DxOS.org",
-  "main": "dist/es/index.js",
   "module": "dist/es/index.js",
   "scripts": {
-    "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\"",
+    "build": "tsc",
     "dist": "rm -rf dist && webpack -p",
     "clean": "rm -rf ./dist",
     "lint": "eslint ./src --ignore-path ../../.eslintignore",

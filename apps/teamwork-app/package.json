@@ -28,6 +28,7 @@
     "@dxos/editor-pad": "^1.0.1-beta.6",
     "@dxos/messenger-pad": "^1.0.1-beta.6",
     "@dxos/planner-app": "^1.0.1-beta.6",
+    "@dxos/canvas": "^1.0.1-beta.6",
     "@dxos/react-appkit": "^1.0.0-beta.76",
     "@dxos/react-client": "^1.0.0-beta.76",
     "@dxos/react-router": "^1.0.0-beta.76",
