@@ -1380,7 +1380,7 @@
   dependencies:
     debug "^4.1.1"
 
-"@dxos/echo-db@^1.0.0-beta.1":
+"@dxos/echo-db@^1.0.0-beta.1", "@dxos/echo-db@^1.0.0-beta.8":
   version "1.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.8.tgz#e70853ea291b06a90311ce484e9b9eab027cc107"
   integrity sha512-FNXzuwBdUGBfMZ2eiqpkB7MKczkn4J4zU2h+js5LxGp/aiNMJYI6zrBlVPRaUsqXl/zV+PQS9ESZjUR3/E1rtQ==
