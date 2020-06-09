@@ -22,7 +22,7 @@
   "peerDependencies": {
     "react": "*",
     "react-router": "*",
-    "@dxos/async": "^1.0.0-beta.0",
+    "@dxos/async": "^1.0.0-beta.1",
     "@dxos/botkit-client": "^1.0.0-beta.76",
     "@dxos/config": "^1.0.0-beta.73",
     "@dxos/credentials": "^1.0.1-beta.15",
@@ -76,7 +76,7 @@
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-styled-components": "^1.10.7",
     "dotenv-webpack": "^1.7.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^4.3.0",
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
