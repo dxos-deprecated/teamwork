@@ -16,7 +16,7 @@ import { EditableText } from '@dxos/react-ux';
 import MessengerPad from '@dxos/messenger-pad';
 import EditorPad from '@dxos/editor-pad';
 import PlannerPad from '@dxos/planner-pad';
-import CanvasApp from '@dxos/canvas';
+import CanvasApp from '@dxos/canvas-pad';
 
 import { useItem, useItemList } from '../model';
 import Sidebar from './Sidebar';
