@@ -35,20 +35,20 @@ const Input = props => {
     const { value } = target;
 
     switch (key) {
-      case 'Enter': {
-        if (!multiline || event.metaKey) {
-          setText(value);
-          onUpdate(value);
-        }
-        break;
+    case 'Enter': {
+      if (!multiline || event.metaKey) {
+        setText(value);
+        onUpdate(value);
       }
+      break;
+    }
 
-      case 'Escape': {
-        setText(original);
-        break;
-      }
+    case 'Escape': {
+      setText(original);
+      break;
+    }
 
-      default:
+    default:
     }
   };
 

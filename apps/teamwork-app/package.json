@@ -1,7 +1,7 @@
 {
-  "name": "@dxos/messenger-app",
+  "name": "@dxos/teamwork-app",
   "version": "1.0.1-beta.6",
-  "description": "DxOS messenger app",
+  "description": "DxOS teamwork app",
   "keywords": [],
   "license": "GPL-3.0",
   "author": "DxOS.org",
