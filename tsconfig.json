@@ -13,5 +13,6 @@
   },
   "exclude": [
     "**/dist",
+    "**/rollup.config.js"
   ]
 }

@@ -17,7 +17,8 @@ const externalsMap = {
   'react': 'React',
   'react-dom': 'ReactDOM',
   '@dxos/react-client': 'DXOSReactClient',
-  '@dxos/crypto': 'DXOSCrypto'
+  '@dxos/crypto': 'DXOSCrypto',
+  '@dxos/editor': 'DXOSEditor'
 };
 
 const PORT = process.env.SERVE_PORT || 5000;
@@ -69,7 +70,7 @@ const plugins = [
 
 export default {
   preserveSymlinks: true,
-  input: './src/index.js',
+  input: './src/index.ts',
   external,
   plugins,
   output: {

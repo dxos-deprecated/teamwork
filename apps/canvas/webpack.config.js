@@ -9,7 +9,7 @@ const commonConfig = require('./webpack-common.config');
 
 module.exports = merge(commonConfig, {
 
-  entry: './src/main',
+  entry: './src/main.tsx',
 
   plugins: [
     // https://github.com/jantimon/html-webpack-plugin#options
