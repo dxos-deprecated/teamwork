@@ -50,7 +50,7 @@ const Items = ({ topic, pads }) => {
     setTypeSelectDialogOpen(false);
     if (!type) return;
     const title = `item-${chance.word()}`;
-    const documentId = createItem({ __type_url: type, title });
+    const documentId = createItem({ __type_url: type, title, mutations: [] });
     handleSelect(documentId);
   };
 

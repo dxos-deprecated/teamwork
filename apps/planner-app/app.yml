@@ -1,8 +1,0 @@
-#
-# Copyright 2018 DxOS, Inc.
-#
-
-name: example.com/planner
-displayName: Planner App
-build: yarn dist
-version: 0.0.2

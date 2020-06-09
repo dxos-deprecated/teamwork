@@ -1,5 +1,6 @@
 import { useModel } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
+import { createObjectId } from '@dxos/echo-db';
 
 /**
  * Provides item list and item creator.
@@ -21,7 +22,8 @@ export const useItemList = (topic, types) => {
     items,
     createItem: opts => {
       const itemId = createId();
-      model.appendMessage({ itemId, ...opts });
+      const objectId = createObjectId(opts.__type_url, itemId);
+      model.appendMessage({ itemId, objectId, ...opts });
       return itemId;
     },
     editItem: (itemId, opts) => {

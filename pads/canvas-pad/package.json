@@ -1,7 +1,9 @@
 {
-  "name": "@dxos/canvas",
+  "name": "@dxos/canvas-pad",
   "version": "1.0.1-beta.6",
-  "description": "Canvas app.",
+  "description": "Canvas pad.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "homepage": "https://github.com/dxos/teamwork#readme",
   "bugs": {
     "url": "https://github.com/dxos/teamwork/issues"
@@ -12,36 +14,35 @@
   },
   "license": "GPL-3.0",
   "author": "DxOS.org",
-  "main": "dist/es/index.js",
   "module": "dist/es/index.js",
   "scripts": {
-    "build": "npm run clean && babel ./src --out-dir ./dist/es --ignore \"**/*.test.js\"",
-    "dist": "rm -rf dist && webpack -p",
+    "build": "tsc",
+    "dist": "rollup -c",
     "clean": "rm -rf ./dist",
     "lint": "eslint ./src --ignore-path ../../.eslintignore",
-    "start": "VERBOSE=true webpack-dev-server --mode development",
-    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "dependencies": {
-    "@dxos/async": "^1.0.0-beta.0",
+    "@dxos/async": "^1.0.0-beta.1",
     "@dxos/config": "^1.0.0-beta.73",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "^1.0.0-beta.1",
     "@dxos/gem-canvas": "^1.0.0-beta.7",
     "@dxos/react-appkit": "^1.0.0-beta.76",
-    "@dxos/react-client": "^1.0.0-beta.76",
     "@dxos/react-ux": "^1.0.0-beta.76",
-    "@material-ui/core": "^4.9.10",
-    "@material-ui/icons": "^4.9.1",
     "clsx": "^1.1.0",
     "debug": "^4.1.1",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-hotkeys": "^2.0.0",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2"
+    "react-hotkeys": "^2.0.0"
+  },
+  "peerDependencies": {
+    "@dxos/crypto": "^1.0.0-beta.1",
+    "@dxos/react-client": "^1.0.0-beta.76",
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
+    "react": "*",
+    "react-router": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

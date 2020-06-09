@@ -15,6 +15,8 @@ import { AppContainer } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 import MessengerPad from '@dxos/messenger-pad';
 import EditorPad from '@dxos/editor-pad';
+import PlannerPad from '@dxos/planner-pad';
+import CanvasApp from '@dxos/canvas-pad';
 
 import { useItem, useItemList } from '../model';
 import Sidebar from './Sidebar';
@@ -24,6 +26,8 @@ const chance = new Chance();
 const pads = [
   MessengerPad,
   EditorPad,
+  PlannerPad,
+  CanvasApp
 ];
 
 const useStyles = makeStyles(theme => ({

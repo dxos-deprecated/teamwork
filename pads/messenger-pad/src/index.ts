@@ -1,4 +1,4 @@
-import Icon from '@material-ui/icons/Subject'; // TODO(marik-d) Change
+import Icon from '@material-ui/icons/Chat';
 
 import { Channel } from './containers/Channel';
 import { TYPE_MESSENGER_CHANNEL } from './model';

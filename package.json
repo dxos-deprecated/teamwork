@@ -25,8 +25,7 @@
     "build": "lerna run build",
     "dist": "lerna run dist",
     "clean": "lerna run clean",
-    "lint": "lerna run lint",
-    "lint:fix": "lerna run lint -- --fix",
+    "lint": "lerna run lint --",
     "lint:staged": "lint-staged",
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test"
