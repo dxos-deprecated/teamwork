@@ -1,5 +1,4 @@
-
-import Icon from '@material-ui/icons/Subject';
+import Icon from '@material-ui/icons/Description';
 
 import Main from './Main';
 import { TYPE_EDITOR_DOCUMENT } from './model';

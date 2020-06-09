@@ -1,4 +1,4 @@
-import Icon from '@material-ui/icons/Subject'; // TODO(marik-d) Change
+import Icon from '@material-ui/icons/Brush';
 
 import { TYPE_CANVAS_DOCUMENT } from './model';
 import Canvas from './containers/Canvas';

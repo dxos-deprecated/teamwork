@@ -1,4 +1,4 @@
-import Icon from '@material-ui/icons/Subject'; // TODO(marik-d) Change
+import Icon from '@material-ui/icons/AssignmentTurnedIn';
 
 import Board, { BOARD_TYPE } from './containers/Board';
 
