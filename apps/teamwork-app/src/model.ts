@@ -3,7 +3,7 @@ import { createId } from '@dxos/crypto';
 import { createObjectId } from '@dxos/echo-db';
 
 export interface Item {
-  __type_url: string
+  ['__type_url']: string
   itemId: string
 }
 

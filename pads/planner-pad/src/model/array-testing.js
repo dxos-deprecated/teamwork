@@ -26,12 +26,12 @@ const TYPE = 'ArrayModel.test';
  */
 
 let nextId = 0;
-function mockIdProvider() {
+function mockIdProvider () {
   return `${TYPE}/X/${nextId++}`;
 }
 
 // Helper to create range of numbers.
-function range(from, to, step = 1, inclusive = false) {
+function range (from, to, step = 1, inclusive = false) {
   const out = [];
   let i = from;
   for (; i < to; i += step) out.push(i);
@@ -39,7 +39,7 @@ function range(from, to, step = 1, inclusive = false) {
   return out;
 }
 
-function checkItems(models, expected, isEqual) {
+function checkItems (models, expected, isEqual) {
   models.forEach(model => {
     const recon = model
       .getItems()
@@ -51,7 +51,7 @@ function checkItems(models, expected, isEqual) {
   });
 }
 
-function setupSwarm(nrOfFeeds, nrOfClientsPerFeed, branchOf = []) {
+function setupSwarm (nrOfFeeds, nrOfClientsPerFeed, branchOf = []) {
   const feeds = [];
 
   const messages = mergeFeeds(branchOf);
@@ -91,8 +91,7 @@ function setupSwarm(nrOfFeeds, nrOfClientsPerFeed, branchOf = []) {
  * the move actions we encode using messages in our CRDT have the right effect.
  */
 
-export function arrayMove(xs, src, dest) {
-
+export function arrayMove (xs, src, dest) {
   // Out of bounds
   if (dest < 0 || dest > xs.length || src < 0 || src > xs.length - 1) {
     return xs;
@@ -118,7 +117,7 @@ export function arrayMove(xs, src, dest) {
 // Track global move iteration, for easier debugging of failures.
 let IT = 0;
 
-function moveItem(models, ix, from, to, isEqual) {
+function moveItem (models, ix, from, to, isEqual) {
   const model = models[ix];
   const before = model.getItems();
 
@@ -150,7 +149,7 @@ function moveItem(models, ix, from, to, isEqual) {
 
 // Perform a bunch of random item moves and test every step.
 
-function randomMoves(models, count, isEqual) {
+function randomMoves (models, count, isEqual) {
   const items = models[0].getItems();
 
   for (let i = 0; i < count; i++) {
@@ -165,7 +164,7 @@ function randomMoves(models, count, isEqual) {
  * easily run and debug them from the browser.
  */
 
-export function testArrayMain(isEqual) {
+export function testArrayMain (isEqual) {
   nextId = 0;
 
   // Create two separate mock message feeds with two clients each.

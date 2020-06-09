@@ -104,9 +104,9 @@ export const useChannelMessages = (topic, channelId) => {
       model.appendMessage({
         __type_url: TYPE_MESSENGER_MESSAGE,
         id,
-        timestamp: Date.now(),                      // TODO(burdon): Format?
-        sender: username,                           // TODO(burdon): Asscoiate with feed (not each message?)
-        text,
+        timestamp: Date.now(), // TODO(burdon): Format?
+        sender: username, // TODO(burdon): Asscoiate with feed (not each message?)
+        text
       });
       return id;
     }

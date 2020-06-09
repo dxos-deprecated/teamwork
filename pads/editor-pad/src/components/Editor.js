@@ -136,11 +136,10 @@ const Editor = (
   const handleReactElementRender = useCallback(props => {
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
 
-
     return (
-      <Pad title={props.title} icon={icon}>
+      <Pad title={props.title} icon={icon} >
         <PadComponent {...props} />
-      </Pad>
+      </Pad >
     );
   }, [pads]);
 

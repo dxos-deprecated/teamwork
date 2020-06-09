@@ -63,11 +63,11 @@ const AddCard = props => {
       onClick={() => setOpen(true)}
     >
       Add Card
-    </Button>
+    </Button >
   );
 
   const Form = () => (
-    <Card className={classes.card}>
+    <Card className={classes.card} >
       <TextField
         label="Card Title"
         className={classes.textField}
@@ -77,7 +77,7 @@ const AddCard = props => {
         onBlur={handleBlur}
         onChange={ev => setTitle(ev.target.value)}
       />
-      <div className={classes.buttonContainer}>
+      <div className={classes.buttonContainer} >
         <Button
           size="small"
           color="primary"
@@ -87,15 +87,15 @@ const AddCard = props => {
           onClick={handleAdd}
         >
           Add
-        </Button>
-      </div>
-    </Card>
+        </Button >
+      </div >
+    </Card >
   );
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       {isOpen ? <Form /> : <AddButton />}
-    </div>
+    </div >
   );
 };
 

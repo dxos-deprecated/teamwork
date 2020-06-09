@@ -71,27 +71,27 @@ const List = props => {
         onOpenCard={() => onOpenCard(card.id)}
         style={provided.draggableProps.style}
       />
-    </div>
+    </div >
   );
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
 
   return (
-    <div className={clsx(classes.root, className)}>
-      <div className={classes.header}>
+    <div className={clsx(classes.root, className)} >
+      <div className={classes.header} >
         <EditableText
           key={list.properties.title}
           value={list.properties.title || 'untitled list'}
           onUpdate={handleTitleUpdate}
         />
-      </div>
-      <Droppable direction="vertical" type="list" droppableId={list.id}>
+      </div >
+      <Droppable direction="vertical" type="list" droppableId={list.id} >
         {({ innerRef, placeholder }) => (
-          <div ref={innerRef}>
+          <div ref={innerRef} >
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
-                <Draggable key={card.id} draggableId={card.id} index={index} direction="top">
+                <Draggable key={card.id} draggableId={card.id} index={index} direction="top" >
                   {(provided, snapshot) => (
                     <Card
                       key={card.id}
@@ -101,14 +101,14 @@ const List = props => {
                       snapshot={snapshot}
                     />
                   )}
-                </Draggable>
+                </Draggable >
               ))}
             {placeholder}
-          </div>
+          </div >
         )}
-      </Droppable>
+      </Droppable >
       <AddCard onAddCard={handleAddCard} />
-    </div>
+    </div >
   );
 };
 

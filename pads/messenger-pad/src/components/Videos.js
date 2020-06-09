@@ -26,19 +26,19 @@ const useStyles = makeStyles(() => ({
   videoCell: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   container: {
     display: 'flex',
     height: '100%',
     flexDirection: 'column',
-    borderBottom: '1px solid rgba(224, 224, 224, 1)',
+    borderBottom: '1px solid rgba(224, 224, 224, 1)'
   },
   videos: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    overflowY: 'auto',
+    overflowY: 'auto'
   },
   gallery: {
     position: 'fixed',
@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   bottomOverlay: {
     left: 0,
@@ -63,11 +63,11 @@ const useStyles = makeStyles(() => ({
     height: 'fit-content',
     zIndex: 10001,
     pointedEvents: 'none',
-    cursor: 'default',
-  },
+    cursor: 'default'
+  }
 }));
 
-function isScreenSharingDeniedBySystem(error) {
+function isScreenSharingDeniedBySystem (error) {
   return error.message.includes('denied by system') || error.name === 'NotFoundError';
 }
 
@@ -157,7 +157,7 @@ const Videos = ({ connections, streamsWithMetaData }) => {
   if (galleryViewEnabled) {
     return (
       <>
-        <div className={classes.gallery}>
+        <div className={classes.gallery} >
           <Video
             self
             srcObject={stream}
@@ -165,19 +165,20 @@ const Videos = ({ connections, streamsWithMetaData }) => {
           />
           {streamsWithMetaData.map(stream => (
             <Video
+              key={stream.mediaStream.id}
               srcObject={stream.mediaStream}
               metaData={stream.metaData}
             />
           ))}
-        </div>
-        <div className={classes.bottomOverlay}>{videoControls}</div>
+        </div >
+        <div className={classes.bottomOverlay} >{videoControls}</div >
       </>
     );
   }
 
   return (
-    <div className={classes.container}>
-      <div className={classes.videos}>
+    <div className={classes.container} >
+      <div className={classes.videos} >
         {stream && (
           <Video
             self
@@ -187,13 +188,14 @@ const Videos = ({ connections, streamsWithMetaData }) => {
         )}
         {streamsWithMetaData.map(stream => (
           <Video
+            key={stream.mediaStream.id}
             srcObject={stream.mediaStream}
             metaData={stream.metaData}
           />
         ))}
-      </div>
+      </div >
       {videoControls}
-    </div>
+    </div >
   );
 };
 

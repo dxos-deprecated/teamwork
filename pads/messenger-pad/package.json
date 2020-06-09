@@ -5,7 +5,7 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint ./src --ignore-path ../../.eslintignore",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "dist": "rollup -c"
   },

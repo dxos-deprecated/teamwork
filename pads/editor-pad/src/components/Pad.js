@@ -28,13 +28,13 @@ const Pad = ({ title, icon: Icon, children }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.padContainer}>
-      <div className={classes.padContent}>{children}</div>
-      <div className={classes.padInfo}>
+    <div className={classes.padContainer} >
+      <div className={classes.padContent} >{children}</div >
+      <div className={classes.padInfo} >
         <Icon className={classes.padInfoIcon} />
-        <Typography variant="button">{title}</Typography>
-      </div>
-    </div>
+        <Typography variant="button" >{title}</Typography >
+      </div >
+    </div >
   );
 };
 

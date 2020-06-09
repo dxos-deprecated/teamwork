@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     flex: 1,
     overflow: 'hidden',
-    height: '100%',
+    height: '100%'
   },
 
   rootNarrow: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column-reverse',
-    minWidth: 420,
+    minWidth: 420
   },
 
   videos: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
     borderLeft: '1px solid rgba(224, 224, 224, 1)',
     backgroundColor: '#222',
-    height: '80%',
+    height: '80%'
   },
 
   input: {
@@ -96,38 +96,38 @@ export const Channel = ({ narrow }) => {
   };
 
   return (
-    <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })}>
-      <div className={classes.content}>
-        <TableContainer className={classes.messages}>
+    <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })} >
+      <div className={classes.content} >
+        <TableContainer className={classes.messages} >
           <Messages messages={messages} />
-        </TableContainer>
+        </TableContainer >
 
-        <FormControl className={classes.input}>
+        <FormControl className={classes.input} >
           <OutlinedInput
             value={content}
             onChange={event => setContent(event.target.value)}
             onKeyDown={handleKeyDown}
             endAdornment={(
-              <InputAdornment position="end">
-                <IconButton onClick={handleSubmit}>
+              <InputAdornment position="end" >
+                <IconButton onClick={handleSubmit} >
                   <Send />
-                </IconButton>
-                <IconButton onClick={() => setVideoEnabled(current => !current)}>
+                </IconButton >
+                <IconButton onClick={() => setVideoEnabled(current => !current)} >
                   {videoEnabled
                     ? <VideocamOffIcon />
-                    : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
-                </IconButton>
-              </InputAdornment>
+                    : <Badge badgeContent={streams.length} color="primary" ><VideocamIcon /></Badge >}
+                </IconButton >
+              </InputAdornment >
             )}
           />
-        </FormControl>
-      </div>
+        </FormControl >
+      </div >
 
       {videoEnabled && (
-        <div className={classes.videos}>
+        <div className={classes.videos} >
           <Videos connections={connections} streamsWithMetaData={streamsWithMetaData} />
-        </div>
+        </div >
       )}
-    </div>
+    </div >
   );
 };

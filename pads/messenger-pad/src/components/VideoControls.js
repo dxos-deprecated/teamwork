@@ -36,37 +36,37 @@ const VideoControls = ({
   screenShareEnabled,
   onScreenShareEnabledChange,
   galleryViewEnabled,
-  onGalleryViewEnabledChange,
+  onGalleryViewEnabledChange
 }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.controls}>
+    <div className={classes.controls} >
       <Fab
         color={audioEnabled ? 'default' : 'secondary'}
         onClick={() => onAudioEnabledChange(!audioEnabled)}
       >
         {audioEnabled ? <MicIcon /> : <MicOffIcon />}
-      </Fab>
+      </Fab >
       <Fab
         color={cameraEnabled ? 'default' : 'secondary'}
         onClick={() => onCameraEnabledChange(!cameraEnabled)}
       >
         {cameraEnabled ? <VideocamIcon /> : <VideocamOffIcon />}
-      </Fab>
+      </Fab >
       <Fab
         color={screenShareEnabled ? 'secondary' : 'default'}
         onClick={() => onScreenShareEnabledChange(!screenShareEnabled)}
       >
         {screenShareEnabled ? <ScreenShareIcon /> : <StopScreenShareIcon />}
-      </Fab>
+      </Fab >
       <Fab
         color={galleryViewEnabled ? 'secondary' : 'default'}
         onClick={() => onGalleryViewEnabledChange(!galleryViewEnabled)}
       >
         {galleryViewEnabled ? <FullscreenExitIcon /> : <FullscreenIcon />}
-      </Fab>
-    </div>
+      </Fab >
+    </div >
   );
 };
 

@@ -35,19 +35,19 @@ const Messages = ({ messages }) => {
   // TODO(burdon): Add date if not today.
 
   return (
-    <Table size="small">
-      <TableBody>
-        {messages.map(({ id, timestamp, sender, text, }) => (
-          <TableRow key={id}>
-            <TableCell className={classes.timestamp}>
+    <Table size="small" >
+      <TableBody >
+        {messages.map(({ id, timestamp, sender, text }) => (
+          <TableRow key={id} >
+            <TableCell className={classes.timestamp} >
               <Typography
                 component="span"
                 variant="caption"
               >
                 {moment(timestamp).format('LT')}
-              </Typography>
-            </TableCell>
-            <TableCell>
+              </Typography >
+            </TableCell >
+            <TableCell >
               <Typography
                 component="span"
                 variant="body1"
@@ -55,18 +55,18 @@ const Messages = ({ messages }) => {
                 style={{ color: colorHash.hex(sender) }}
               >
                 {sender}
-              </Typography>
+              </Typography >
               <Typography
                 component="span"
                 variant="body1"
               >
                 {text}
-              </Typography>
-            </TableCell>
-          </TableRow>
+              </Typography >
+            </TableCell >
+          </TableRow >
         ))}
-      </TableBody>
-    </Table>
+      </TableBody >
+    </Table >
   );
 };
 

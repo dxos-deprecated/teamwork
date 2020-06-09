@@ -10,7 +10,7 @@
     "debug": "DOT_ENV=.env.debug webpack-dev-server --mode development",
     "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
     "dist": "webpack",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' --ignore-path ../../.eslintignore",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "start": "VERBOSE=true webpack-dev-server --mode development",
     "start:public": "VERBOSE=true PUBLIC_URL=/messenger npm run start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"

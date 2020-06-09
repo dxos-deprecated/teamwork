@@ -30,15 +30,15 @@ const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
   const { title, description } = board;
 
   const Header = () => (
-    <div className={classes.drawerBox}>
-      <Typography variant="h6" color="inherit">
+    <div className={classes.drawerBox} >
+      <Typography variant="h6" color="inherit" >
         Board Settings
-      </Typography>
-    </div>
+      </Typography >
+    </div >
   );
 
   const Metadata = () => (
-    <div className={classes.drawerBox}>
+    <div className={classes.drawerBox} >
       <Input
         label="Board Name"
         className={classes.drawerField}
@@ -54,11 +54,11 @@ const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
         value={description ?? ''}
         onUpdate={description => onUpdateBoard({ description })}
       />
-    </div>
+    </div >
   );
 
   const Deletion = () => (
-    <div className={classes.drawerBox}>
+    <div className={classes.drawerBox} >
       <DeleteConfirmation
         deleteLabel="Archive Board..."
         confirmLabel="Archive"
@@ -69,19 +69,19 @@ const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
         onDelete={() => onUpdateBoard({ deleted: true })}
         onRestore={() => onUpdateBoard({ deleted: false })}
       />
-    </div>
+    </div >
   );
 
   return (
-    <Drawer open={isOpen} anchor="right" onClose={onClose}>
-      <div className={classes.drawer}>
+    <Drawer open={isOpen} anchor="right" onClose={onClose} >
+      <div className={classes.drawer} >
         <Header />
         <Divider />
         <Metadata />
         <Divider />
         <Deletion />
-      </div>
-    </Drawer>
+      </div >
+    </Drawer >
   );
 };
 
