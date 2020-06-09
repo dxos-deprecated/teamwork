@@ -86,12 +86,12 @@ export const Channel = ({ narrow }) => {
 
   const handleKeyDown = ({ key }) => {
     switch (key) {
-    case 'Enter': {
-      handleSubmit();
-      break;
-    }
+      case 'Enter': {
+        handleSubmit();
+        break;
+      }
 
-    default:
+      default:
     }
   };
 
