@@ -50,7 +50,7 @@ const App = () => {
   const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
-  const pad = itemId ? pads.find(pad => pad.type === item.__type_url) : undefined;
+  const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
   const handleCreate = (type) => {
     const title = `item-${chance.word()}`;
