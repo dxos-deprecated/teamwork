@@ -46,7 +46,7 @@ const App = () => {
   const [item] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
-  const pad = pads.find(pad => pad.type === item.__type_url);
+  const pad = itemId ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
   const handleCreate = (type) => {
     setTypeSelectDialogOpen(false);
