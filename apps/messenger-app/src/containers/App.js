@@ -4,6 +4,7 @@
 
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Chance } from 'chance';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,12 +14,16 @@ import { useClient } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 import MessengerPad from '@dxos/messenger-pad';
-import { useItem } from '../model';
+import EditorPad from '@dxos/editor-pad';
 
+import { useItem, useItemList } from '../model';
 import Sidebar from './Sidebar';
+
+const chance = new Chance();
 
 const pads = [
   MessengerPad,
+  EditorPad,
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -37,10 +42,19 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: itemId } = useParams();
-  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
+  const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
+  const [item] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
   const pad = pads.find(pad => pad.type === item.__type_url);
+
+  const handleCreate = (type) => {
+    setTypeSelectDialogOpen(false);
+    if (!type) return;
+    const title = `item-${chance.word()}`;
+    const documentId = createItem({ __type_url: type, title });
+    handleSelect(documentId);
+  };
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -63,7 +77,13 @@ const App = () => {
     >
       <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
-        {pad && <pad.main />}
+        {pad && <pad.main
+          topic={topic}
+          itemId={itemId}
+          pads={pads}
+          items={items}
+          onCreateItem={handleCreate}
+        />}
       </div>
     </AppContainer>
   );
