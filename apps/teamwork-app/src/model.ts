@@ -30,7 +30,7 @@ export const useItemList = (topic: string, types: string[]) => {
     },
     editItem: (itemId: string, opts: any) => {
       model.appendMessage({ itemId, ...opts });
-    },
+    }
   };
 };
 

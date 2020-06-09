@@ -77,19 +77,19 @@ const App = () => {
       )}
       sidebarContent={<Sidebar topic={topic} pads={pads} />}
     >
-      <div className={classes.main}>
+      <div className={classes.main} >
         {/* eslint-disable-next-line react/jsx-pascal-case */}
         {pad && (
-        <pad.main
-          topic={topic}
-          itemId={itemId}
-          pads={pads}
-          items={items}
-          onCreateItem={handleCreate}
-        />
+          <pad.main
+            topic={topic}
+            itemId={itemId}
+            pads={pads}
+            items={items}
+            onCreateItem={handleCreate}
+          />
         )}
-      </div>
-    </AppContainer>
+      </div >
+    </AppContainer >
   );
 };
 

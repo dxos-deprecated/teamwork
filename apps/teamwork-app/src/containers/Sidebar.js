@@ -55,7 +55,7 @@ const Items = ({ topic, pads }) => {
   };
 
   return (
-    <Fragment>
+    <Fragment >
       {items.map(document => (
         <TreeItem
           key={document.itemId}
@@ -67,10 +67,10 @@ const Items = ({ topic, pads }) => {
         />
       ))}
 
-      <PartyTreeAddItemButton topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
+      <PartyTreeAddItemButton topic={topic} onClick={() => setTypeSelectDialogOpen(true)} >Item</PartyTreeAddItemButton >
 
       <DocumentTypeSelectDialog open={typeSelectDialogOpen} pads={pads} onSelect={handleCreate} />
-    </Fragment>
+    </Fragment >
   );
 };
 
