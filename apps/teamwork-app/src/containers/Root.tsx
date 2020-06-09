@@ -27,7 +27,11 @@ const initialState = {
   }
 };
 
-const Root = ({ config }) => {
+export interface RootProps {
+  config: any
+}
+
+export const Root = ({ config }: RootProps) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
   const { paths, routes } = router;
 
@@ -58,5 +62,3 @@ const Root = ({ config }) => {
     </Theme>
   );
 };
-
-export default Root;

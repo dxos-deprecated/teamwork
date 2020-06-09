@@ -5,6 +5,7 @@ import { createObjectId } from '@dxos/echo-db';
 export interface Item {
   ['__type_url']: string
   itemId: string
+  title: string
 }
 
 /**
@@ -28,8 +29,8 @@ export const useItemList = (topic: string, types: string[]) => {
       model.appendMessage({ itemId, objectId, ...opts });
       return itemId;
     },
-    editItem: (itemId: string, opts: any) => {
-      model.appendMessage({ itemId, ...opts });
+    editItem: (opts: any) => {
+      model.appendMessage(opts);
     }
   };
 };

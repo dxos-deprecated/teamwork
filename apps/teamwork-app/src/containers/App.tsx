@@ -19,11 +19,12 @@ import PlannerPad from '@dxos/planner-pad';
 import CanvasApp from '@dxos/canvas-pad';
 
 import { useItem, useItemList } from '../model';
-import Sidebar from './Sidebar';
+import { Sidebar } from './Sidebar';
+import { Pad } from '../common';
 
 const chance = new Chance();
 
-const pads = [
+const pads: Pad[] = [
   MessengerPad,
   EditorPad,
   PlannerPad,
@@ -52,7 +53,7 @@ const App = () => {
 
   const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
-  const handleCreate = (type) => {
+  const handleCreate = (type: string) => {
     const title = `item-${chance.word()}`;
     const itemId = createItem({ __type_url: type, title });
     return { __type_url: type, itemId, title };
@@ -72,13 +73,12 @@ const App = () => {
           value={item.title}
           variant="h6"
           classes={{ root: classes.titleRoot }}
-          onUpdate={title => editItem({ title })}
+          onUpdate={(title: string) => editItem({ title })}
         />
       )}
-      sidebarContent={<Sidebar topic={topic} pads={pads} />}
+      sidebarContent={<Sidebar pads={pads} />}
     >
       <div className={classes.main}>
-        {/* eslint-disable-next-line react/jsx-pascal-case */}
         {pad && (
           <pad.main
             topic={topic}
