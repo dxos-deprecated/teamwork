@@ -11,7 +11,7 @@ class VideoHandler {
   /**
    * @param {MediaStream} stream - The stream to distribute over connected peers
    */
-  setStream(stream) {
+  setStream (stream) {
     assert(!this._stream);
     this._stream = stream;
     this._publishStream();
@@ -20,7 +20,7 @@ class VideoHandler {
   /**
    * @param {MediaStream} stream - The screen share to distribute over connected peers
    */
-  setScreenShare(shareStream) {
+  setScreenShare (shareStream) {
     assert(!this._shareStream);
     this._shareStream = shareStream;
     this._publishScreenShare();
@@ -29,7 +29,7 @@ class VideoHandler {
   /**
    * @param {Object} metaData - The meta data to distribute over connected peers
    */
-  setMetaData(metaData) {
+  setMetaData (metaData) {
     this._metaData = metaData;
     this._publishMetaData();
   }
@@ -37,7 +37,7 @@ class VideoHandler {
   /**
    * @param  {Object} connections - Connected peers that should receive the stream
    */
-  setConnections(connections) {
+  setConnections (connections) {
     assert(connections);
     this._connections = connections;
     this._publishStream();
@@ -45,22 +45,22 @@ class VideoHandler {
     this._publishScreenShare();
   }
 
-  stop() {
+  stop () {
     this.clearStream();
     this.clearScreenShare();
   }
 
-  clearStream() {
+  clearStream () {
     this._clear(this._stream);
     this._stream = undefined;
   }
 
-  clearScreenShare() {
+  clearScreenShare () {
     this._clear(this._shareStream);
     this._shareStream = undefined;
   }
 
-  _clear(stream) {
+  _clear (stream) {
     if (!stream) {
       return;
     }
@@ -70,7 +70,7 @@ class VideoHandler {
     stream.getTracks().forEach(track => track.stop());
   }
 
-  _publish(stream) {
+  _publish (stream) {
     if (!stream || !this._connections) {
       return;
     }
@@ -85,15 +85,15 @@ class VideoHandler {
     });
   }
 
-  _publishStream() {
+  _publishStream () {
     this._publish(this._stream);
   }
 
-  _publishScreenShare() {
+  _publishScreenShare () {
     this._publish(this._shareStream);
   }
 
-  _publishMetaData() {
+  _publishMetaData () {
     if (!this._metaData || !this._connections) {
       return;
     }

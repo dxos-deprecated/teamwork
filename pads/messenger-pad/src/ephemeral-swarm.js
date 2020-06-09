@@ -34,7 +34,7 @@ export const useEphemeralSwarm = (channelId) => {
           iceServers: ice
         }
       },
-      maxPeers: 1024,
+      maxPeers: 1024
     });
 
     swarm.on('connection', () => console.log('We have a new ephemeral connection'));
@@ -59,7 +59,7 @@ export const useEphemeralSwarm = (channelId) => {
         // new meta data replaces old one from the same peer
         setMetaData(oldMetaData => ({
           ...oldMetaData,
-          [connectionId]: metaData,
+          [connectionId]: metaData
         }));
       });
     });
@@ -78,7 +78,7 @@ export const useEphemeralSwarm = (channelId) => {
 
   const streamsWithMetaData = streams.map(stream => ({
     ...stream,
-    metaData: metaData[stream.connectionId] || {},
+    metaData: metaData[stream.connectionId] || {}
   }));
 
   return [connections, streams, streamsWithMetaData];

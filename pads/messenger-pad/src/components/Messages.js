@@ -37,7 +37,7 @@ const Messages = ({ messages }) => {
   return (
     <Table size="small">
       <TableBody>
-        {messages.map(({ id, timestamp, sender, text, }) => (
+        {messages.map(({ id, timestamp, sender, text }) => (
           <TableRow key={id}>
             <TableCell className={classes.timestamp}>
               <Typography

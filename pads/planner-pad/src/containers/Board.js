@@ -139,7 +139,6 @@ const Board = () => {
     </div>
   );
 
-
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable direction="horizontal" type="column" droppableId={board.id}>

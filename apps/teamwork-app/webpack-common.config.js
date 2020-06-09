@@ -144,6 +144,7 @@ module.exports = {
   },
 
   resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@material-ui/styles': path.resolve(__dirname, '..', '..', 'node_modules/@material-ui/styles'),
       'react': path.resolve(__dirname, '..', '..', 'node_modules/react'),

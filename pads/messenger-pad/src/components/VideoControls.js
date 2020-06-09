@@ -36,7 +36,7 @@ const VideoControls = ({
   screenShareEnabled,
   onScreenShareEnabledChange,
   galleryViewEnabled,
-  onGalleryViewEnabledChange,
+  onGalleryViewEnabledChange
 }) => {
   const classes = useStyles();
 

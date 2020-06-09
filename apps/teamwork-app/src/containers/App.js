@@ -50,7 +50,7 @@ const App = () => {
   const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
-  const pad = itemId ? pads.find(pad => pad.type === item.__type_url) : undefined;
+  const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
   const handleCreate = (type) => {
     const title = `item-${chance.word()}`;
@@ -80,13 +80,13 @@ const App = () => {
       <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
         {pad && (
-        <pad.main
-          topic={topic}
-          itemId={itemId}
-          pads={pads}
-          items={items}
-          onCreateItem={handleCreate}
-        />
+          <pad.main
+            topic={topic}
+            itemId={itemId}
+            pads={pads}
+            items={items}
+            onCreateItem={handleCreate}
+          />
         )}
       </div>
     </AppContainer>

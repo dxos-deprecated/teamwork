@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     flex: 1,
     overflow: 'hidden',
-    height: '100%',
+    height: '100%'
   },
 
   rootNarrow: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column-reverse',
-    minWidth: 420,
+    minWidth: 420
   },
 
   videos: {
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
     borderLeft: '1px solid rgba(224, 224, 224, 1)',
     backgroundColor: '#222',
-    height: '80%',
+    height: '80%'
   },
 
   input: {

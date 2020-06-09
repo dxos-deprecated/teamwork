@@ -13,7 +13,7 @@
     "debug": "DOT_ENV=.env.debug webpack-dev-server --mode development",
     "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
     "dist": "rollup -c",
-    "lint": "eslint ./src --ignore-path ../../.eslintignore",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "peerDependencies": {

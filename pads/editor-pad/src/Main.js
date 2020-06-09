@@ -3,7 +3,7 @@ import React from 'react';
 
 import Editor from './components/Editor';
 
-export default function EditorPad(props) {
+export default function EditorPad (props) {
   const { topic, itemId, pads, items, onCreateItem } = props;
 
   return (

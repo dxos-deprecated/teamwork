@@ -4,7 +4,7 @@
 
 import { EchoModel } from '@dxos/echo-db';
 
-export function mergeFeeds(feeds) {
+export function mergeFeeds (feeds) {
   if (feeds.length === 1) {
     return feeds[0].messages;
   }
@@ -23,7 +23,7 @@ export function mergeFeeds(feeds) {
   return all;
 }
 
-function getPos(item) {
+function getPos (item) {
   return (item && item.position) || '';
 }
 
@@ -32,7 +32,7 @@ function getPos(item) {
  * fallback to comparing the IDs.
  */
 
-function comparePosition(posA, posB, idA, idB) {
+function comparePosition (posA, posB, idA, idB) {
   const len = Math.min(posA.length, posB.length);
 
   let i;
@@ -55,15 +55,15 @@ function comparePosition(posA, posB, idA, idB) {
   return idA < idB ? -1 : idA > idB ? 1 : 0;
 }
 
-function increase(pos) {
+function increase (pos) {
   return `${pos}1`;
 }
 
-function decrease(pos) {
+function decrease (pos) {
   return `${pos.slice(0, pos.length - 1)}01`;
 }
 
-function positionBetween(posA, posB) {
+function positionBetween (posA, posB) {
   if (!posA.length && !posB.length) {
     return '1';
   }
@@ -89,7 +89,7 @@ function positionBetween(posA, posB) {
   return increase(posA);
 }
 
-function sortByPosition(objects) {
+function sortByPosition (objects) {
   return objects.slice().sort((a, b) => {
     return comparePosition(
       getPos(a),
@@ -117,62 +117,62 @@ export class ArrayModel extends EchoModel {
 
   _objectType;
 
-  constructor(type) {
+  constructor (type) {
     super(type);
     this._objectType = type;
     this.on('update', () => this.invalidateItemCache());
   }
 
-  invalidateItemCache() {
+  invalidateItemCache () {
     this._itemCache = undefined;
   }
 
-  getItems() {
+  getItems () {
     if (this._itemCache === undefined) {
       this._itemCache = sortByPosition(this.getObjectsByType(this._objectType));
     }
     return this._itemCache;
   }
 
-  getByIndex(index) {
+  getByIndex (index) {
     return this.getItems()[index];
   }
 
-  findById(objectId) {
+  findById (objectId) {
     return this.getItems().find(item => item.id === objectId);
   }
 
-  findIndexById(objectId) {
+  findIndexById (objectId) {
     return this.getItems().findIndex(item => item.id === objectId);
   }
 
-  updateByIndex(index, properties) {
+  updateByIndex (index, properties) {
     const item = this.getByIndex(index);
     if (item) {
       this.updateItem(item.id, { ...item.properties, ...properties });
     }
   }
 
-  insertItemAtIndex(index, properties) {
+  insertItemAtIndex (index, properties) {
     const position = this.prepareForInsertion(index);
     return this.createItem(this._objectType, { ...properties, position });
   }
 
-  push(properties) {
+  push (properties) {
     const at = this.getItems().length;
     return this.insertItemAtIndex(at, properties);
   }
 
-  unshift(properties) {
+  unshift (properties) {
     return this.insertItemAtIndex(0, properties);
   }
 
-  deleteItemByIndex(index) {
+  deleteItemByIndex (index) {
     const item = this.getByIndex(index);
     this.deleteItem(item.id);
   }
 
-  moveItemByIndex(from, to) {
+  moveItemByIndex (from, to) {
     if (from === to) {
       return;
     }
@@ -202,7 +202,7 @@ export class ArrayModel extends EchoModel {
    * Returns the position at which we can now safely insert.
    */
 
-  prepareForInsertion(index) {
+  prepareForInsertion (index) {
     const items = this.getItems();
 
     const posBefore = getPos(items[index - 1]);

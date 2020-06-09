@@ -10,11 +10,11 @@ import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
 const useStyles = makeStyles(() => ({
   videoContainer: {
-    position: 'relative',
+    position: 'relative'
   },
   video: {
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   fullScreenVideo: {
     position: 'fixed',
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
     width: '100vw',
     height: '100vh',
     zIndex: 10000,
-    backgroundColor: 'black',
+    backgroundColor: 'black'
   },
   centeredUnderlay: {
     left: 0,
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
     width: 'fit-content',
     height: 'fit-content',
     zIndex: -1,
-    color: 'white',
+    color: 'white'
   },
   bottomOverlay: {
     left: 0,
@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
     height: 'fit-content',
     zIndex: 1,
     pointedEvents: 'none',
-    cursor: 'default',
+    cursor: 'default'
   },
   indicator: {
     display: 'inline-block',
@@ -55,11 +55,11 @@ const useStyles = makeStyles(() => ({
     padding: '7px 5px 3px 5px',
     backgroundColor: 'white',
     borderRadius: 50,
-    margin: 10,
+    margin: 10
   },
   hiddenIndicator: {
-    display: 'none',
-  },
+    display: 'none'
+  }
 }));
 
 const Video = ({ srcObject, metaData, self }) => {
@@ -104,7 +104,6 @@ const Video = ({ srcObject, metaData, self }) => {
   return (
     <div className={classes.videoContainer}>
       <div className={classes.centeredUnderlay}>Click here to play</div>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       <video
         autoPlay
         muted={self}
@@ -122,7 +121,7 @@ const Video = ({ srcObject, metaData, self }) => {
 };
 
 Video.propTypes = {
-  srcObject: PropTypes.object.isRequired,
+  srcObject: PropTypes.object.isRequired
 };
 
 export default Video;
