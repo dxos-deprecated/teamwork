@@ -43,17 +43,15 @@ const App = () => {
   const classes = useStyles();
   const { topic, item: itemId } = useParams();
   const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
-  const [item] = useItem(topic, pads.map(pad => pad.type), itemId);
+  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
   const pad = itemId ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
   const handleCreate = (type) => {
-    setTypeSelectDialogOpen(false);
-    if (!type) return;
     const title = `item-${chance.word()}`;
-    const documentId = createItem({ __type_url: type, title });
-    handleSelect(documentId);
+    const itemId = createItem({ __type_url: type, title });
+    return { __type_url: type, itemId, title };
   };
 
   // TODO(burdon): Create hook.
@@ -77,13 +75,15 @@ const App = () => {
     >
       <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
-        {pad && <pad.main
+        {pad && (
+        <pad.main
           topic={topic}
           itemId={itemId}
           pads={pads}
           items={items}
           onCreateItem={handleCreate}
-        />}
+        />
+        )}
       </div>
     </AppContainer>
   );
