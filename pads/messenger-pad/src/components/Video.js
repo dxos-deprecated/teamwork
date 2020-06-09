@@ -102,8 +102,8 @@ const Video = ({ srcObject, metaData, self }) => {
   };
 
   return (
-    <div className={classes.videoContainer} >
-      <div className={classes.centeredUnderlay} >Click here to play</div >
+    <div className={classes.videoContainer}>
+      <div className={classes.centeredUnderlay}>Click here to play</div>
       <video
         autoPlay
         muted={self}
@@ -112,11 +112,11 @@ const Video = ({ srcObject, metaData, self }) => {
         className={isFullScreen ? classes.fullScreenVideo : classes.video}
         style={self && { transform: 'scaleX(-1)' }}
       />
-      <div className={classes.bottomOverlay} >
-        <span className={isMuted ? classes.indicator : classes.hiddenIndicator} ><MicOffIcon /></span >
-        <span className={isHidden ? classes.indicator : classes.hiddenIndicator} ><VideocamOffIcon /></span >
-      </div >
-    </div >
+      <div className={classes.bottomOverlay}>
+        <span className={isMuted ? classes.indicator : classes.hiddenIndicator}><MicOffIcon /></span>
+        <span className={isHidden ? classes.indicator : classes.hiddenIndicator}><VideocamOffIcon /></span>
+      </div>
+    </div>
   );
 };
 

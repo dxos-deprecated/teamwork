@@ -31,9 +31,9 @@ const Canvas = () => {
   objects = objects.filter(o => !!(o.properties.type && o.properties.bounds));
 
   return (
-    <div className={classes.root} >
+    <div className={classes.root}>
       <GemCanvas objects={objects} model={model} />
-    </div >
+    </div>
   );
 };
 

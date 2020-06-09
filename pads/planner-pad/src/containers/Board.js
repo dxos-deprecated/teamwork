@@ -65,7 +65,7 @@ const Board = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   if (!boardsModel || !listsModel) {
-    return <div className={classes.root} >Loading board...</div >;
+    return <div className={classes.root}>Loading board...</div>;
   }
 
   const board = boardsModel.findById(boardId);
@@ -119,7 +119,7 @@ const Board = () => {
   };
 
   const Topbar = () => (
-    <div className={clsx(classes.topbar, 'MuiDrawer-paperAnchorDockedTop')} >
+    <div className={clsx(classes.topbar, 'MuiDrawer-paperAnchorDockedTop')}>
       <Button
         variant="outlined"
         size="small"
@@ -127,7 +127,7 @@ const Board = () => {
         onClick={handleAddList}
       >
         Add List
-      </Button >
+      </Button>
       <Button
         variant="outlined"
         size="small"
@@ -135,18 +135,18 @@ const Board = () => {
         onClick={() => setSettingsOpen(!settingsOpen)}
       >
         Settings
-      </Button >
-    </div >
+      </Button>
+    </div>
   );
 
   const Lists = () => (
-    <DragDropContext onDragEnd={onDragEnd} >
-      <Droppable direction="horizontal" type="column" droppableId={board.id} >
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable direction="horizontal" type="column" droppableId={board.id}>
         {provided => (
-          <div ref={provided.innerRef} className={classes.scrollBox} >
-            <div className={classes.root} >
+          <div ref={provided.innerRef} className={classes.scrollBox}>
+            <div className={classes.root}>
               {lists.map((list, index) => (
-                <Draggable key={list.id} draggableId={list.id} index={index} >
+                <Draggable key={list.id} draggableId={list.id} index={index}>
                   {provided => (
                     <div
                       {...provided.draggableProps}
@@ -162,19 +162,19 @@ const Board = () => {
                         onUpdateList={handleUpdateList(list.id)}
                         onOpenCard={() => { }}
                       />
-                    </div >
+                    </div>
                   )}
-                </Draggable >
+                </Draggable>
               ))}
-            </div >
-          </div >
+            </div>
+          </div>
         )}
-      </Droppable >
-    </DragDropContext >
+      </Droppable>
+    </DragDropContext>
   );
 
   return (
-    <Fragment >
+    <Fragment>
       <Topbar />
       {Lists()}
       <BoardSettings
@@ -183,7 +183,7 @@ const Board = () => {
         isOpen={settingsOpen}
         onClose={() => setSettingsOpen(false)}
       />
-    </Fragment >
+    </Fragment>
   );
 };
 

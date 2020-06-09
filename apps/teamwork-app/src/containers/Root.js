@@ -32,30 +32,30 @@ const Root = ({ config }) => {
   const { paths, routes } = router;
 
   return (
-    <Theme >
-      <ClientContextProvider config={config} >
+    <Theme>
+      <ClientContextProvider config={config}>
         <AppKitContextProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
           router={router}
         >
-          <CheckForErrors >
-            <HashRouter >
-              <Switch >
+          <CheckForErrors>
+            <HashRouter>
+              <Switch>
                 <Route exact path={routes.register} component={Registration} />
-                <RequireWallet redirect={routes.register} >
-                  <Switch >
+                <RequireWallet redirect={routes.register}>
+                  <Switch>
                     {SystemRoutes(router)}
                     <Route exact path={routes.app} component={App} />
                     <Redirect to={paths.home} />
-                  </Switch >
-                </RequireWallet >
-              </Switch >
-            </HashRouter >
-          </CheckForErrors >
-        </AppKitContextProvider >
-      </ClientContextProvider >
-    </Theme >
+                  </Switch>
+                </RequireWallet>
+              </Switch>
+            </HashRouter>
+          </CheckForErrors>
+        </AppKitContextProvider>
+      </ClientContextProvider>
+    </Theme>
   );
 };
 

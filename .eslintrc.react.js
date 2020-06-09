@@ -27,10 +27,10 @@ module.exports = {
     'react/prop-types': 'off',
     'react/display-name': 'off',
     'react/jsx-tag-spacing': [
-      "error",
+      'error',
       {
-        "beforeClosing": "always",
-        "beforeSelfClosing": "always"
+        beforeClosing: 'never',
+        beforeSelfClosing: 'always'
       }
     ]
   }

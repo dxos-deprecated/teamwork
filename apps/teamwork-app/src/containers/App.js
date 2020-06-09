@@ -77,7 +77,7 @@ const App = () => {
       )}
       sidebarContent={<Sidebar topic={topic} pads={pads} />}
     >
-      <div className={classes.main} >
+      <div className={classes.main}>
         {/* eslint-disable-next-line react/jsx-pascal-case */}
         {pad && (
           <pad.main
@@ -88,8 +88,8 @@ const App = () => {
             onCreateItem={handleCreate}
           />
         )}
-      </div >
-    </AppContainer >
+      </div>
+    </AppContainer>
   );
 };
 

@@ -96,38 +96,38 @@ export const Channel = ({ narrow }) => {
   };
 
   return (
-    <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })} >
-      <div className={classes.content} >
-        <TableContainer className={classes.messages} >
+    <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })}>
+      <div className={classes.content}>
+        <TableContainer className={classes.messages}>
           <Messages messages={messages} />
-        </TableContainer >
+        </TableContainer>
 
-        <FormControl className={classes.input} >
+        <FormControl className={classes.input}>
           <OutlinedInput
             value={content}
             onChange={event => setContent(event.target.value)}
             onKeyDown={handleKeyDown}
             endAdornment={(
-              <InputAdornment position="end" >
-                <IconButton onClick={handleSubmit} >
+              <InputAdornment position="end">
+                <IconButton onClick={handleSubmit}>
                   <Send />
-                </IconButton >
-                <IconButton onClick={() => setVideoEnabled(current => !current)} >
+                </IconButton>
+                <IconButton onClick={() => setVideoEnabled(current => !current)}>
                   {videoEnabled
                     ? <VideocamOffIcon />
-                    : <Badge badgeContent={streams.length} color="primary" ><VideocamIcon /></Badge >}
-                </IconButton >
-              </InputAdornment >
+                    : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
+                </IconButton>
+              </InputAdornment>
             )}
           />
-        </FormControl >
-      </div >
+        </FormControl>
+      </div>
 
       {videoEnabled && (
-        <div className={classes.videos} >
+        <div className={classes.videos}>
           <Videos connections={connections} streamsWithMetaData={streamsWithMetaData} />
-        </div >
+        </div>
       )}
-    </div >
+    </div>
   );
 };

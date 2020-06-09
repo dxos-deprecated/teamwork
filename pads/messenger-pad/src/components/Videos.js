@@ -157,7 +157,7 @@ const Videos = ({ connections, streamsWithMetaData }) => {
   if (galleryViewEnabled) {
     return (
       <>
-        <div className={classes.gallery} >
+        <div className={classes.gallery}>
           <Video
             self
             srcObject={stream}
@@ -170,15 +170,15 @@ const Videos = ({ connections, streamsWithMetaData }) => {
               metaData={stream.metaData}
             />
           ))}
-        </div >
-        <div className={classes.bottomOverlay} >{videoControls}</div >
+        </div>
+        <div className={classes.bottomOverlay}>{videoControls}</div>
       </>
     );
   }
 
   return (
-    <div className={classes.container} >
-      <div className={classes.videos} >
+    <div className={classes.container}>
+      <div className={classes.videos}>
         {stream && (
           <Video
             self
@@ -193,9 +193,9 @@ const Videos = ({ connections, streamsWithMetaData }) => {
             metaData={stream.metaData}
           />
         ))}
-      </div >
+      </div>
       {videoControls}
-    </div >
+    </div>
   );
 };
 

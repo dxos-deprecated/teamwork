@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 
 const InnerCard = props => {
   const { card } = props;
-  return <Typography variant="body1" >{card.title}</Typography >;
+  return <Typography variant="body1">{card.title}</Typography>;
 };
 
 const MiniCard = props => {
@@ -25,9 +25,9 @@ const MiniCard = props => {
   const { className, style, onOpenCard, card } = props;
 
   return (
-    <MuiCard className={clsx(classes.root, className)} onMouseUp={onOpenCard} >
+    <MuiCard className={clsx(classes.root, className)} onMouseUp={onOpenCard}>
       <InnerCard style={style} classes={classes} card={card} />
-    </MuiCard >
+    </MuiCard>
   );
 };
 
