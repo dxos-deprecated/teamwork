@@ -1,4 +1,4 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import externalGlobals from 'rollup-plugin-external-globals';
 import json from '@rollup/plugin-json';
 import nodeBuiltins from 'rollup-plugin-node-builtins';
@@ -32,7 +32,8 @@ const plugins = [
   nodeBuiltins(),
   babel({
     exclude: 'node_modules/**',
-    runtimeHelpers: true
+    babelHelpers: 'bundled',
+    extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
   }),
 
   resolve({

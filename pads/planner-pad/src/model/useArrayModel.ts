@@ -6,7 +6,7 @@ import { useModel } from '@dxos/react-client';
 
 import { ArrayModel } from './array';
 
-export const useArrayModel = (topic, type, options = {}) => useModel({
+export const useArrayModel = (topic: string, type: string, options = {}) => useModel({
   model: ArrayModel,
   options: {
     type,
