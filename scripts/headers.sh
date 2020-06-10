@@ -6,7 +6,7 @@ exit_code=0
 
 cd ../
 
-for file in {apps,pads,bots}/**/src/*.{js,ts,jsx,tsx}; do
+for file in {apps,pads,bots}/**/src/**/*.{js,ts,jsx,tsx}; do
   echo $file | grep -q 'node_modules/' && continue
   echo $file | grep -q 'dist/' && continue
   echo $file | grep -q 'build/' && continue
