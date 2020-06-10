@@ -25,7 +25,11 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Messages = ({ messages }) => {
+export interface MessagesProps {
+  messages: any[],
+}
+
+const Messages = ({ messages }: MessagesProps) => {
   const classes = useStyles();
   if (!messages) {
     return null;
