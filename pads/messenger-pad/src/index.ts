@@ -1,3 +1,7 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import Icon from '@material-ui/icons/Chat';
 
 import { Channel } from './containers/Channel';

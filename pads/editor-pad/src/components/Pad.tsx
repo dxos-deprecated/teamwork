@@ -1,9 +1,11 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import React, { ComponentType, ReactNode } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
-
 import grey from '@material-ui/core/colors/grey';
 
 export const useStyles = makeStyles(() => ({

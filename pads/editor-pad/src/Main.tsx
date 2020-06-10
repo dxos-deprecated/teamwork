@@ -1,3 +1,6 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
 
 import React from 'react';
 

@@ -1,3 +1,7 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import React from 'react';
 
 import List from '@material-ui/core/List';
