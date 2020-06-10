@@ -3,11 +3,13 @@
 //
 
 import React from 'react';
+import DefaultIcon from '@material-ui/icons/DescriptionOutlined';
 
 import { keyToString } from '@dxos/crypto';
 
 import { useItemList } from '../model';
 import { supportedPads } from '../common';
+import { PartyItem } from './PartyItem';
 
 export interface PartyGroupProps {
   party: any,
@@ -20,8 +22,6 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
   return (<>
     <div>Party: {party.displayName}</div>
     <div>Documents in this party:</div>
-    {items.map((item: any, i: number) => (
-      <div key={i}>Item number {i} is a ${item.__type_url}</div>
-    ))}
+    {items.map((item: any, i: number) => <PartyItem key={i} item={item} />)}
   </>);
 };
