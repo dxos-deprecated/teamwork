@@ -19,6 +19,7 @@ import {
 import { ClientContextProvider } from '@dxos/react-client';
 
 import App from './App';
+import { Landing } from './Landing';
 
 const initialState = {
   [SET_LAYOUT]: {
@@ -51,7 +52,8 @@ export const Root = ({ config }: RootProps) => {
                   <Switch>
                     {SystemRoutes(router)}
                     <Route exact path={routes.app} component={App} />
-                    <Redirect to={paths.home} />
+                    <Route exact path="/landing" component={Landing} />
+                    <Redirect to="/landing" />
                   </Switch>
                 </RequireWallet>
               </Switch>
