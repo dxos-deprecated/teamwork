@@ -1,3 +1,7 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import Icon from '@material-ui/icons/Brush';
 
 import { TYPE_CANVAS_DOCUMENT } from './model';

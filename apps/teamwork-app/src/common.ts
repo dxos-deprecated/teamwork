@@ -1,3 +1,7 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import { ComponentType } from 'react';
 
 export interface Pad {

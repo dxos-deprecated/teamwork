@@ -1,3 +1,7 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import { useModel } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
 import { createObjectId } from '@dxos/echo-db';
