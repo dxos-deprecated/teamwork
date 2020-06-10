@@ -13,23 +13,12 @@ import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
-import MessengerPad from '@dxos/messenger-pad';
-import EditorPad from '@dxos/editor-pad';
-import PlannerPad from '@dxos/planner-pad';
-import CanvasApp from '@dxos/canvas-pad';
 
 import { useItem, useItemList } from '../model';
 import { Sidebar } from './Sidebar';
-import { Pad } from '../common';
+import { supportedPads } from '../common';
 
 const chance = new Chance();
-
-const pads: Pad[] = [
-  MessengerPad,
-  EditorPad,
-  PlannerPad,
-  CanvasApp
-];
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -47,11 +36,11 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: itemId } = useParams();
-  const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
-  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
+  const { items, createItem } = useItemList(topic, supportedPads.map(pad => pad.type));
+  const [item, editItem] = useItem(topic, supportedPads.map(pad => pad.type), itemId);
   const client = useClient();
 
-  const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
+  const pad = item ? supportedPads.find(pad => pad.type === item.__type_url) : undefined;
 
   const handleCreate = (type: string) => {
     const title = `item-${chance.word()}`;
@@ -76,14 +65,14 @@ const App = () => {
           onUpdate={(title: string) => editItem({ title })}
         />
       )}
-      sidebarContent={<Sidebar pads={pads} />}
+      sidebarContent={<Sidebar pads={supportedPads} />}
     >
       <div className={classes.main}>
         {pad && (
           <pad.main
             topic={topic}
             itemId={itemId}
-            pads={pads}
+            pads={supportedPads}
             items={items}
             onCreateItem={handleCreate}
           />

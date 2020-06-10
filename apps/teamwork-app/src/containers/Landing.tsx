@@ -13,6 +13,9 @@ export const Landing = () => {
 
   return (<>
     <div>Welcome to DxOS</div>
-    {parties.map((party: any) => <PartyGroup key={party.publicKey.toString()} party={party} />)}
+    {parties.map((party: any) => (<>
+      <hr />
+      <PartyGroup key={party.publicKey.toString()} party={party} />
+    </>))}
   </>);
 };
