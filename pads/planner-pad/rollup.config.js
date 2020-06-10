@@ -38,7 +38,8 @@ const plugins = [
 
   resolve({
     browser: true,
-    preferBuiltins: false
+    preferBuiltins: false,
+    extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
   }),
   commonjs({
     ignore: (id) => externalsMap[id] || id.startsWith('@material-ui' || external.includes(id))
