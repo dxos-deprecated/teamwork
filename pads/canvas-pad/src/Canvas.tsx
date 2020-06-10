@@ -3,7 +3,6 @@
 //
 
 import React from 'react';
-import { useParams } from 'react-router';
 import assert from 'assert';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,13 +18,18 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Canvas = () => {
+export interface CanvasProps {
+  topic: string
+  itemId: string
+}
+
+export const Canvas = ({ topic, itemId }: CanvasProps) => {
+  assert(topic);
+  assert(itemId);
+
   const classes = useStyles();
 
-  const { topic, item: documentId } = useParams();
-  assert(topic);
-  assert(documentId);
-  const model = useDocument(topic, documentId);
+  const model = useDocument(topic, itemId);
 
   // TODO(burdon): Bug: create object, move it, then when revisit document it's in the original position...
   // Since the messages are out of order.
@@ -38,5 +42,3 @@ const Canvas = () => {
     </div>
   );
 };
-
-export default Canvas;

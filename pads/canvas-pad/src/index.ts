@@ -5,7 +5,7 @@
 import Icon from '@material-ui/icons/Brush';
 
 import { TYPE_CANVAS_DOCUMENT } from './model';
-import Canvas from './Canvas';
+import { Canvas } from './Canvas';
 
 export default {
   // TODO(elmasse): READ THIS FROM PAD.YML
