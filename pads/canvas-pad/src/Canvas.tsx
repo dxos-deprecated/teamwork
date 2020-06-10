@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router';
+import assert from 'assert';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,6 +23,8 @@ const Canvas = () => {
   const classes = useStyles();
 
   const { topic, item: documentId } = useParams();
+  assert(topic);
+  assert(documentId);
   const model = useDocument(topic, documentId);
 
   // TODO(burdon): Bug: create object, move it, then when revisit document it's in the original position...
