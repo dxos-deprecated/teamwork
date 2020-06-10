@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentType, ReactNode } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -24,7 +24,13 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-const Pad = ({ title, icon: Icon, children }) => {
+export interface PadProps {
+  title: string
+  icon: ComponentType<{ className?: string }>
+  children: ReactNode
+}
+
+export const Pad = ({ title, icon: Icon, children }: PadProps) => {
   const classes = useStyles();
 
   return (
