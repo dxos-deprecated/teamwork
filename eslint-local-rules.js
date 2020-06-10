@@ -1,11 +1,10 @@
 const REGEX = /Copyright/;
 const TEMPLATE = [
   '//',
-  '// Copyright 2020 DxOS, Inc.',
+  `// Copyright ${new Date().getFullYear()} DxOS, Inc.`,
   '//',
   '',
-  '',
-].join('\n')
+].join('\n') + '\n'
 
 module.exports = {
   'header': {
