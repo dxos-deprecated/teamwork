@@ -82,7 +82,7 @@ const Items = ({ topic, pads }: ItemsProps) => {
 
       <PartyTreeAddItemButton topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
 
-      <DocumentTypeSelectDialog open={typeSelectDialogOpen} pads={pads} onSelect={handleCreate} />
+      <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
     </Fragment>
   );
 };
