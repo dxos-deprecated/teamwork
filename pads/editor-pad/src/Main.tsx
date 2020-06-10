@@ -3,7 +3,15 @@ import React from 'react';
 
 import Editor from './components/Editor';
 
-export default function EditorPad (props) {
+export interface EditorPadProps {
+  topic: string,
+  itemId: string | number,
+  pads: any[],
+  items: any[],
+  onCreateItem: (item: any) => void,
+}
+
+export default function EditorPad (props: EditorPadProps) {
   const { topic, itemId, pads, items, onCreateItem } = props;
 
   return (
