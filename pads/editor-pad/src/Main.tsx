@@ -2,7 +2,6 @@
 // Copyright 2020 DxOS, Inc.
 //
 
-
 import React from 'react';
 
 import Editor from './components/Editor';
