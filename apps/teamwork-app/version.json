@@ -1,7 +1,7 @@
 {
   "build": {
-    "name":      "@dxos/messenger-app",
-    "buildDate": "2020-06-09T14:56:32.656Z",
+    "name":      "@dxos/teamwork-app",
+    "buildDate": "2020-06-10T09:51:34.040Z",
     "version":   "1.0.1-beta.6"
   }
 }
