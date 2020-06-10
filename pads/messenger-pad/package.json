@@ -11,11 +11,6 @@
   },
   "dependencies": {
     "@date-io/moment": "^1.3.11",
-    "assert": "^2.0.0",
-    "clsx": "^1.0.4",
-    "color-hash": "^1.0.3",
-    "moment": "^2.24.0",
-    "prop-types": "^15.7.2",
     "@dxos/async": "^1.0.0-beta.1",
     "@dxos/botkit-client": "^1.0.0-beta.76",
     "@dxos/config": "^1.0.0-beta.73",
@@ -26,18 +21,23 @@
     "@dxos/react-appkit": "^1.0.0-beta.76",
     "@dxos/react-router": "^1.0.0-beta.76",
     "@dxos/react-ux": "^1.0.0-beta.76",
+    "@geut/discovery-swarm-webrtc": "^3.0.0-beta.3",
     "@material-ui/lab": "^4.0.0-alpha.42",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.0",
-    "@geut/discovery-swarm-webrtc": "^3.0.0-beta.3"
+    "assert": "^2.0.0",
+    "clsx": "^1.0.4",
+    "color-hash": "^1.0.3",
+    "moment": "^2.24.0",
+    "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-router": "*",
-    "@dxos/react-client": "^1.0.0-beta.76",
     "@dxos/crypto": "^1.0.0-beta.1",
+    "@dxos/react-client": "^1.0.0-beta.76",
     "@material-ui/core": "^4.9.0",
-    "@material-ui/icons": "^4.5.1"
+    "@material-ui/icons": "^4.5.1",
+    "react": "*",
+    "react-router": "*"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -49,6 +49,7 @@
     "@babel/preset-react": "^7.9.4",
     "@babel/preset-typescript": "^7.10.1",
     "@rollup/plugin-json": "^4.0.3",
+    "@types/color-hash": "^1.0.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
