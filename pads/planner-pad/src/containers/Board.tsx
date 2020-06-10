@@ -5,7 +5,7 @@
 import clsx from 'clsx';
 import { useParams } from 'react-router-dom';
 import React, { useState, Fragment } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { makeStyles } from '@material-ui/core/styles';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -18,6 +18,8 @@ import { useArrayModel } from '../model/useArrayModel';
 import { ArrayModel } from '../model/array';
 import BoardSettings from './BoardSettings';
 import List, { LIST_TYPE, CARD_TYPE } from './List';
+import { ListItem } from '../model/ListItem';
+import { BoardItem } from '../model/BoardItem';
 
 export const BOARD_TYPE = 'testing.planner.Board';
 
@@ -68,14 +70,14 @@ const Board = () => {
     return <div className={classes.root}>Loading board...</div>;
   }
 
-  const board = boardsModel.findById(boardId);
-  const lists = listsModel.getItems();
+  const board: BoardItem = boardsModel.findById(boardId);
+  const lists: ListItem[] = listsModel.getItems();
 
   if (!board) {
     return <Fragment />;
   }
 
-  const handleUpdateBoard = properties => {
+  const handleUpdateBoard = (properties: Partial<BoardItem>) => {
     boardsModel.updateItem(boardId, properties);
   };
 
@@ -83,11 +85,11 @@ const Board = () => {
     listsModel.push({ boardId, title: 'New List' });
   };
 
-  const handleUpdateList = listId => properties => {
+  const handleUpdateList = (listId: string | number) => (properties: Partial<BoardItem>) => {
     listsModel.updateItem(listId, properties);
   };
 
-  const onDragEnd = async result => {
+  const onDragEnd = async (result: DropResult) => {
     const { source, destination } = result;
     console.log(source, destination);
 
@@ -142,12 +144,12 @@ const Board = () => {
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable direction="horizontal" type="column" droppableId={board.id}>
-        {provided => (
+        {(provided: any) => (
           <div ref={provided.innerRef} className={classes.scrollBox}>
             <div className={classes.root}>
               {lists.map((list, index) => (
                 <Draggable key={list.id} draggableId={list.id} index={index}>
-                  {provided => (
+                  {(provided: any) => (
                     <div
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}

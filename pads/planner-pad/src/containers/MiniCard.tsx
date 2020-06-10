@@ -7,6 +7,7 @@ import React from 'react';
 
 import { Typography, Card as MuiCard } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { CardProperties } from '../model/CardProperties';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -15,12 +16,25 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const InnerCard = props => {
+interface InnerCardProps {
+  card: CardProperties,
+  style?: string,
+  classes?: ReturnType<typeof useStyles>,
+}
+
+const InnerCard = (props: InnerCardProps) => {
   const { card } = props;
   return <Typography variant="body1">{card.title}</Typography>;
 };
 
-const MiniCard = props => {
+export interface MiniCardProps {
+  className?: string,
+  style?: string,
+  onOpenCard: () => void,
+  card: CardProperties,
+}
+
+const MiniCard = (props: MiniCardProps) => {
   const classes = useStyles();
   const { className, style, onOpenCard, card } = props;
 

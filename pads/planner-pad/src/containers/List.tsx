@@ -13,6 +13,7 @@ import { EditableText } from '@dxos/react-ux';
 import { useArrayModel } from '../model/useArrayModel';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
+import { CardItem } from '../model/CardItem';
 
 export const LIST_TYPE = 'testing.planner.List';
 export const CARD_TYPE = 'testing.planner.Card';
@@ -36,18 +37,33 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const List = props => {
+export interface CardProps {
+  card: CardItem,
+  provided: any,
+  index: number,
+  snapshot?: any,
+}
+
+export interface ListProps {
+  topic: string,
+  list: any,
+  onUpdateList: (list: {title: string}) => void,
+  onOpenCard: (id: string | number) => void,
+  className?: string,
+}
+
+const List = (props: ListProps) => {
   const classes = useStyles();
   const { topic, list, onUpdateList, onOpenCard, className } = props;
   const { id: listId } = list;
   const cardsModel = useArrayModel(topic, CARD_TYPE, { listId });
-  const cards = cardsModel ? cardsModel.getItems() : [];
+  const cards: CardItem[] = cardsModel ? cardsModel.getItems() : [];
 
-  const handleTitleUpdate = title => {
+  const handleTitleUpdate = (title: string) => {
     onUpdateList({ title });
   };
 
-  const handleAddCard = title => {
+  const handleAddCard = (title: string) => {
     cardsModel.push({ listId, title });
   };
 
@@ -59,7 +75,7 @@ const List = props => {
   //   cardsModel.moveItemByIndex(source.index, destination.index);
   // };
 
-  const Card = ({ card, provided }) => (
+  const Card = ({ card, provided }: CardProps) => (
     <div
       className={classes.cardContainer}
       {...provided.draggableProps}
@@ -67,7 +83,7 @@ const List = props => {
       ref={provided.innerRef}
     >
       <MiniCard
-        card={card}
+        card={card.properties}
         onOpenCard={() => onOpenCard(card.id)}
         style={provided.draggableProps.style}
       />
@@ -86,16 +102,16 @@ const List = props => {
         />
       </div>
       <Droppable direction="vertical" type="list" droppableId={list.id}>
-        {({ innerRef, placeholder }) => (
+        {({ innerRef, placeholder }: any) => (
           <div ref={innerRef}>
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
-                <Draggable key={card.id} draggableId={card.id} index={index} direction="top">
-                  {(provided, snapshot) => (
+                <Draggable key={card.id} draggableId={card.id} index={index}>
+                  {(provided: any, snapshot: any) => (
                     <Card
                       key={card.id}
-                      card={card.properties}
+                      card={card}
                       index={index}
                       provided={provided}
                       snapshot={snapshot}
