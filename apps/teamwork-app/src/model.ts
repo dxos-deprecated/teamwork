@@ -43,9 +43,9 @@ export const useItemList = (topic: string, types: string[]) => {
  * Provides item metadata and updater.
  * @returns {[{title}, function]}
  */
-export const useItem = (topic: string, types: string[], itemId: string): [Item | undefined, (opts: { title: string }) => void] => {
+export const useItem = (topic: string, types: string[], itemId: string | undefined): [Item | undefined, (opts: { title: string }) => void] => {
   const model = useModel({ options: { type: types, topic, itemId } });
-  if (!model) {
+  if (!model || !itemId) {
     return [undefined, () => {}];
   }
 

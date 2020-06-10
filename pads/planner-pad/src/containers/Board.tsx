@@ -3,7 +3,6 @@
 //
 
 import clsx from 'clsx';
-import { useParams } from 'react-router-dom';
 import React, { useState, Fragment } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
@@ -55,11 +54,15 @@ const useStyles = makeStyles(() => {
   };
 });
 
-const Board = () => {
+export interface BoardProps {
+  topic: string
+  itemId: string
+}
+
+export const Board = ({ topic, itemId }: BoardProps) => {
   const classes = useStyles();
   const client = useClient();
-  const { topic, item } = useParams();
-  const boardId = `${BOARD_TYPE}/${item}`;
+  const boardId = `${BOARD_TYPE}/${itemId}`;
 
   const boardsModel = useArrayModel(topic, BOARD_TYPE);
   const listsModel = useArrayModel(topic, LIST_TYPE, { boardId });
@@ -188,5 +191,3 @@ const Board = () => {
     </Fragment>
   );
 };
-
-export default Board;

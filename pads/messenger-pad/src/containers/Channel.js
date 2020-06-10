@@ -3,7 +3,7 @@
 //
 
 import React, { useState } from 'react';
-import { useParams } from 'react-router';
+import assert from 'assert';
 
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -68,11 +68,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Channel = ({ narrow }) => {
+export const Channel = ({ topic, itemId, narrow }) => {
+  assert(topic);
+  assert(itemId);
+
   const classes = useStyles();
-  const { topic, item: channelId } = useParams();
-  const [messages, createMessage] = useChannelMessages(topic, channelId);
-  const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(channelId);
+  const [messages, createMessage] = useChannelMessages(topic, itemId);
+  const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
   const [content, setContent] = useState('');
   const [videoEnabled, setVideoEnabled] = useState(false);
 
