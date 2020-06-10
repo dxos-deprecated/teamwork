@@ -3,7 +3,7 @@
 #
 
 app:
-  name: 'Messenger'
+  name: 'Teamwork'
   rootElement: 'root'
 
 client:

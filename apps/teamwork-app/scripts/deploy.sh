@@ -8,6 +8,6 @@ yarn wire app build
 yarn wire app publish
 yarn wire app register
 
-yarn wire app query --name DxOS.io/messenger
+yarn wire app query --name DxOS.io/teamwork
 
-yarn run wire app serve --app wrn:app:DxOS.io/messenger --path /messenger --port 8080
+yarn run wire app serve --app wrn:app:DxOS.io/teamwork --path /teamwork --port 8080

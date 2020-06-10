@@ -12,7 +12,7 @@
     "dist": "webpack",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "start": "VERBOSE=true webpack-dev-server --mode development",
-    "start:public": "VERBOSE=true PUBLIC_URL=/messenger npm run start",
+    "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "dependencies": {

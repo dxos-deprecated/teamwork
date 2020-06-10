@@ -16,7 +16,7 @@ module.exports = merge(commonConfig, {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'Messenger'
+        title: 'Teamwork'
       }
     })
   ]
