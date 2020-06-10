@@ -2,12 +2,10 @@
 // Copyright 2020 DxOS, Inc.
 //
 
-import React from 'react';
+import React, { ComponentType, ReactNode } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
-
 import grey from '@material-ui/core/colors/grey';
 
 export const useStyles = makeStyles(() => ({
@@ -28,7 +26,13 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-const Pad = ({ title, icon: Icon, children }) => {
+export interface PadProps {
+  title: string
+  icon: ComponentType<{ className?: string }>
+  children: ReactNode
+}
+
+export const Pad = ({ title, icon: Icon, children }: PadProps) => {
   const classes = useStyles();
 
   return (

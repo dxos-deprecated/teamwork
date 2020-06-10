@@ -4,14 +4,14 @@
 
 import React from 'react';
 
-import Editor from './components/Editor';
+import { Editor } from './components/Editor';
 
 export interface EditorPadProps {
   topic: string,
-  itemId: string | number,
+  itemId: string,
   pads: any[],
   items: any[],
-  onCreateItem: (item: any) => void,
+  onCreateItem: (type: string) => void,
 }
 
 export default function EditorPad (props: EditorPadProps) {
