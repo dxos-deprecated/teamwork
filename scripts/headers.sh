@@ -6,7 +6,7 @@ exit_code=0
 
 cd ../
 
-for file in ./**/*.{js,ts,jsx,tsx}; do
+for file in {apps,pads,bots}/**/src/*.{js,ts,jsx,tsx}; do
   echo $file | grep -q 'node_modules/' && continue
   echo $file | grep -q 'dist/' && continue
   echo $file | grep -q 'build/' && continue
@@ -19,7 +19,7 @@ for file in ./**/*.{js,ts,jsx,tsx}; do
     exit_code=1
     [ -n "$CI" ] && continue # no changes on CI
     echo -e "//\n" | cat - "$file" > /tmp/out_file && mv /tmp/out_file "$file"
-    echo "// Copyright 2020 Wireline, Inc." | cat - "$file" > /tmp/out_file && mv /tmp/out_file "$file"
+    echo "// Copyright 2020 DxOS, Inc." | cat - "$file" > /tmp/out_file && mv /tmp/out_file "$file"
     echo "//" | cat - "$file" > /tmp/out_file && mv /tmp/out_file "$file"
   fi
 done
