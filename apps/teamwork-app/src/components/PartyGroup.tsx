@@ -34,7 +34,7 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
   return (<>
     <div>Party: {party.displayName}</div>
     <div>Documents in this party:</div>
-    {items.map((item: any, i: number) => <PartyItem key={i} item={item} />)}
+    {items.map((item: any, i: number) => <PartyItem key={i} topic={topic} item={item} />)}
     <button onClick={() => setTypeSelectDialogOpen(true)}>Add</button>
     <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
   </>);
