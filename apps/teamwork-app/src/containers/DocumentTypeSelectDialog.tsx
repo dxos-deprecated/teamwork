@@ -37,4 +37,4 @@ export const DocumentTypeSelectDialog = ({ open, onSelect }: DocumentTypeSelectD
       </List>
     </Dialog>
   );
-}
+};

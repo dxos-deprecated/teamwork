@@ -36,7 +36,7 @@ const TreeItem = ({ document, active, onSelect, editItem }: TreeItemProps) => {
       onUpdate={(title: string) => editItem({ __type_url: document.__type_url, itemId: document.itemId, title })}
     />
   );
-}
+};
 
 interface ItemsProps {
   topic: string
@@ -87,7 +87,6 @@ const Items = ({ topic }: ItemsProps) => {
     </Fragment>
   );
 };
-
 
 export const Sidebar = () => {
   const client = useClient();
