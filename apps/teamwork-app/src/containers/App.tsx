@@ -16,7 +16,7 @@ import { EditableText } from '@dxos/react-ux';
 
 import { useItem, useItemList } from '../model';
 import { Sidebar } from './Sidebar';
-import { supportedPads } from '../common';
+import { Pad } from '../common';
 
 const chance = new Chance();
 
@@ -41,7 +41,7 @@ const App = () => {
   const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
-  const pad = item ? supportedPads.find(pad => pad.type === item.__type_url) : undefined;
+  const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
   const handleCreate = (type: string) => {
     const title = `item-${chance.word()}`;
@@ -73,7 +73,7 @@ const App = () => {
           <pad.main
             topic={topic}
             itemId={itemId}
-            pads={supportedPads}
+            pads={pads}
             items={items}
             onCreateItem={handleCreate}
           />
