@@ -17,9 +17,14 @@ import {
   Theme
 } from '@dxos/react-appkit';
 import { ClientContextProvider } from '@dxos/react-client';
+import MessengerPad from '@dxos/messenger-pad';
+import EditorPad from '@dxos/editor-pad';
+import PlannerPad from '@dxos/planner-pad';
+import CanvasApp from '@dxos/canvas-pad';
 
 import App from './App';
 import { Landing } from './Landing';
+import { Pad } from '../common';
 
 const initialState = {
   [SET_LAYOUT]: {
@@ -27,6 +32,13 @@ const initialState = {
     showDebug: false
   }
 };
+
+const pads: Pad[] = [
+  MessengerPad,
+  EditorPad,
+  PlannerPad,
+  CanvasApp
+];
 
 export interface RootProps {
   config: any
@@ -43,6 +55,7 @@ export const Root = ({ config }: RootProps) => {
           initialState={initialState}
           errorHandler={new ErrorHandler()}
           router={router}
+          pads={pads}
         >
           <CheckForErrors>
             <HashRouter>

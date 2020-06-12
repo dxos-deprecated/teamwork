@@ -7,7 +7,7 @@ import React, { Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { keyToString } from '@dxos/crypto';
-import { PartyTreeAddItemButton, PartyTree, PartyTreeItem, useAppRouter } from '@dxos/react-appkit';
+import { PartyTreeAddItemButton, PartyTree, PartyTreeItem, useAppRouter, usePads } from '@dxos/react-appkit';
 import { useClient, useParties } from '@dxos/react-client';
 
 import { useItemList, Item } from '../model';
@@ -21,32 +21,34 @@ interface TreeItemProps {
   active: string
   onSelect: () => void
   editItem: (opts: any) => void,
-  pads: Pad[],
 }
 
-const TreeItem = ({ document, active, onSelect, editItem, pads }: TreeItemProps) => (
-  <PartyTreeItem
-    key={document.itemId}
-    id={document.itemId}
-    label={document.title || document.itemId}
-    icon={pads.find(pad => pad.type === document.__type_url)?.icon}
-    isSelected={active === document.itemId}
-    onSelect={onSelect}
-    onUpdate={(title: string) => editItem({ __type_url: document.__type_url, itemId: document.itemId, title })}
-  />
-);
+const TreeItem = ({ document, active, onSelect, editItem }: TreeItemProps) => {
+  const [pads]: Pad[][] = usePads();
+  return (
+    <PartyTreeItem
+      key={document.itemId}
+      id={document.itemId}
+      label={document.title || document.itemId}
+      icon={pads.find(pad => pad.type === document.__type_url)?.icon}
+      isSelected={active === document.itemId}
+      onSelect={onSelect}
+      onUpdate={(title: string) => editItem({ __type_url: document.__type_url, itemId: document.itemId, title })}
+    />
+  );
+};
 
 interface ItemsProps {
   topic: string
-  pads: Pad[]
 }
 
 /**
  * Channels list.
  */
-const Items = ({ topic, pads }: ItemsProps) => {
+const Items = ({ topic }: ItemsProps) => {
   const router = useAppRouter();
   const { item: active } = useParams();
+  const [pads]: Pad[][] = usePads();
   const { items, createItem, editItem } = useItemList(topic, pads.map(pad => pad.type));
 
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
@@ -76,7 +78,6 @@ const Items = ({ topic, pads }: ItemsProps) => {
           active={active}
           onSelect={() => handleSelect(document.itemId)}
           editItem={editItem}
-          pads={pads}
         />
       ))}
 
@@ -87,11 +88,7 @@ const Items = ({ topic, pads }: ItemsProps) => {
   );
 };
 
-export interface SidebarProps {
-  pads: Pad[]
-}
-
-export const Sidebar = ({ pads }: SidebarProps) => {
+export const Sidebar = () => {
   const client = useClient();
   const parties = useParties();
   const router = useAppRouter();
@@ -109,7 +106,7 @@ export const Sidebar = ({ pads }: SidebarProps) => {
   return (
     <PartyTree
       parties={parties}
-      items={(topic: string) => <Items topic={topic} pads={pads} />}
+      items={(topic: string) => <Items topic={topic} />}
       selected={topic}
       onSelect={handleSelect}
       onCreate={handleCreate}

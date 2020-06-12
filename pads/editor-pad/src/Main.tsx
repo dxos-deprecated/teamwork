@@ -3,6 +3,7 @@
 //
 
 import React from 'react';
+import assert from 'assert';
 
 import { Editor } from './components/Editor';
 
@@ -16,6 +17,8 @@ export interface EditorPadProps {
 
 export default function EditorPad (props: EditorPadProps) {
   const { topic, itemId, pads, items, onCreateItem } = props;
+  assert(topic);
+  assert(itemId);
 
   return (
     <Editor

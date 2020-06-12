@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
-import { AppContainer } from '@dxos/react-appkit';
+import { AppContainer, usePads } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItem, useItemList } from '../model';
@@ -36,8 +36,9 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: itemId } = useParams();
-  const { items, createItem } = useItemList(topic, supportedPads.map(pad => pad.type));
-  const [item, editItem] = useItem(topic, supportedPads.map(pad => pad.type), itemId);
+  const [pads]: Pad[][] = usePads();
+  const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
+  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
 
   const pad = item ? supportedPads.find(pad => pad.type === item.__type_url) : undefined;
@@ -65,7 +66,7 @@ const App = () => {
           onUpdate={(title: string) => editItem({ title })}
         />
       )}
-      sidebarContent={<Sidebar pads={supportedPads} />}
+      sidebarContent={<Sidebar />}
     >
       <div className={classes.main}>
         {pad && (

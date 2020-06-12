@@ -11,25 +11,30 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 
-import { supportedPads } from '../common';
+import { usePads } from '@dxos/react-appkit';
+
+import { Pad } from '../common';
 
 export interface DocumentTypeSelectDialogProps {
   open: boolean
   onSelect: (type?: string) => void
 }
 
-export const DocumentTypeSelectDialog = ({ open, onSelect }: DocumentTypeSelectDialogProps) => (
-  <Dialog open={open} onClose={() => onSelect(undefined)}>
-    <DialogTitle>Choose app</DialogTitle>
-    <List>
-      {supportedPads.map(pad => (
-        <ListItem button key={pad.type} onClick={() => onSelect(pad.type)}>
-          <ListItemIcon>
-            <pad.icon />
-          </ListItemIcon>
-          <ListItemText primary={pad.displayName} />
-        </ListItem>
-      ))}
-    </List>
-  </Dialog>
-);
+export const DocumentTypeSelectDialog = ({ open, onSelect }: DocumentTypeSelectDialogProps) => {
+  const [pads]: Pad[][] = usePads();
+  return (
+    <Dialog open={open} onClose={() => onSelect(undefined)}>
+      <DialogTitle>Choose app</DialogTitle>
+      <List>
+        {pads.map(pad => (
+          <ListItem button key={pad.type} onClick={() => onSelect(pad.type)}>
+            <ListItemIcon>
+              <pad.icon />
+            </ListItemIcon>
+            <ListItemText primary={pad.displayName} />
+          </ListItem>
+        ))}
+      </List>
+    </Dialog>
+  );
+};
