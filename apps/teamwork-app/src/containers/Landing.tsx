@@ -20,10 +20,9 @@ export const Landing = () => {
 
   return (
     <AppContainer>
-      {parties.map((party: any) => (<div key={party.publicKey.toString()}>
-        <hr />
-        <PartyGroup party={party} />
-      </div>))}
+      {parties.map((party: any) => (
+        <PartyGroup key={party.publicKey.toString()} party={party} />
+      ))}
       <button onClick={createParty}>Create party</button>
     </AppContainer>
   );
