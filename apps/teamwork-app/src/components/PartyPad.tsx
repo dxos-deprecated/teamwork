@@ -3,7 +3,6 @@
 //
 
 import React from 'react';
-
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
@@ -11,11 +10,12 @@ import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/styles';
 
 import { useAppRouter } from '@dxos/react-appkit';
+
 import { Pad } from '../common';
 import { Item, useItemList } from '../model';
-import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
   card: {
