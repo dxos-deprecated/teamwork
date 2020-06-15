@@ -37,7 +37,8 @@ export const useItemList = (topic: string, types: string[]) => {
       return itemId;
     },
     editItem: (opts: any) => {
-      model.appendMessage(opts);
+      const objectId = createObjectId(opts.__type_url, opts.itemId);
+      model.appendMessage({ objectId, ...opts });
     }
   };
 };
