@@ -20,7 +20,8 @@ const useClasses = makeStyles({
     paddingLeft: 20
   },
   grid: {
-    paddingTop: 16
+    paddingTop: 16,
+    paddingBottom: 16
   }
 });
 
