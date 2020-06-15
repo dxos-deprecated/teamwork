@@ -1,3 +1,7 @@
+//
+// Copyright 2020 DxOS, Inc.
+//
+
 import babel from '@rollup/plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import externalGlobals from 'rollup-plugin-external-globals';
@@ -14,11 +18,12 @@ const external = Object.keys(pkg.peerDependencies)
   .concat(Object.keys(pkg.devDependencies));
 
 const externalsMap = {
-  'react': 'React',
+  react: 'React',
   'react-dom': 'ReactDOM',
   '@dxos/react-client': 'DXOSReactClient',
   '@dxos/crypto': 'DXOSCrypto',
-  '@dxos/editor': 'DXOSEditor'
+  '@dxos/editor': 'DXOSEditor',
+  '@dxos/echo-db': 'DXOSEchoDb'
 };
 
 const PORT = process.env.SERVE_PORT || 5000;
@@ -34,13 +39,13 @@ const plugins = [
   babel({
     exclude: 'node_modules/**',
     babelHelpers: 'bundled',
-    extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
+    extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx']
   }),
 
   resolve({
     browser: true,
     preferBuiltins: false,
-    extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx'],
+    extensions: ['.mjs', '.js', '.jsx', '.json', '.ts', '.tsx']
   }),
   commonjs({
     include: /node_modules/,
