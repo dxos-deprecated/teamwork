@@ -4,7 +4,6 @@
 
 import React from 'react';
 
-
 import Grid from '@material-ui/core/Grid';
 
 import { keyToString } from '@dxos/crypto';
@@ -21,9 +20,9 @@ const useClasses = makeStyles({
     paddingLeft: 20
   },
   grid: {
-    paddingTop: 16,
+    paddingTop: 16
   }
-})
+});
 
 export interface PartyGroupProps {
   party: any,
@@ -40,7 +39,7 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
       </Typography>
       <Grid container spacing={2} alignItems="stretch" className={classes.grid}>
         {pads.map(pad => (
-          <Grid item zeroMinWidth>
+          <Grid key={pad.type} item zeroMinWidth>
             <PartyPad key={pad.type} pad={pad} topic={keyToString(party.publicKey)} />
           </Grid>
         ))}

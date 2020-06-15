@@ -46,7 +46,7 @@ export interface RootProps {
 
 export const Root = ({ config }: RootProps) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
-  const { paths, routes } = router;
+  const { routes } = router;
 
   return (
     <Theme>

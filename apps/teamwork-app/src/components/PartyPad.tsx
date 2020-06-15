@@ -22,12 +22,12 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     height: 300,
-    width: 250,
+    width: 250
   },
   list: {
-    flex: 1,
+    flex: 1
   }
-})
+});
 
 export interface PartyPadProps {
   topic: string,
@@ -41,7 +41,7 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
   const classes = useStyles();
 
   const onSelect = (item: Item) => {
-    router.push({ topic, item: item.itemId ?? (item as any).objectId });
+    router.push({ topic, item: item.itemId ?? item.objectId });
   };
 
   return (
@@ -53,7 +53,7 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
       />
       <List className={classes.list}>
         {items.map(item => (
-          <ListItem button onClick={() => onSelect(item)}>{item.title}</ListItem>
+          <ListItem key={item.itemId ?? item.objectId} button onClick={() => onSelect(item)}>{item.title}</ListItem>
         ))}
       </List>
       <CardActions>

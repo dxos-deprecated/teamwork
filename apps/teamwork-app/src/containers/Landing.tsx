@@ -9,12 +9,11 @@ import { AppContainer } from '@dxos/react-appkit';
 
 import { PartyGroup } from '../components/PartyGroup';
 
-
 export const Landing = () => {
   const client = useClient();
   const parties = useParties();
 
-  async function createParty() {
+  async function createParty () {
     await client.partyManager.createParty();
   }
 
