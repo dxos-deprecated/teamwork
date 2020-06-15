@@ -26,7 +26,6 @@ export const useDocumentUpdateModel = (topic: string, documentId: string): any =
   return model;
 };
 
-
 // TODO(marik-d): Copied from teamwork-app. After item ids are standartized it should be replaced with a hook from appkit.
 
 export interface Item {
