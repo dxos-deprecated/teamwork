@@ -8,8 +8,11 @@ import { createObjectId } from '@dxos/echo-db';
 
 export interface Item {
   ['__type_url']: string
-  itemId: string
   title: string
+
+  // TODO(rzadp) - canvas uses objectId instead of itemId. If we change this than we can have itemId as non-optional property
+  itemId?: string
+  objectId?: string
 }
 
 /**
@@ -21,7 +24,7 @@ export const useItemList = (topic: string, types: string[]) => {
   // TODO(burdon): CRDT.
   const messages: Item[] = model?.messages ?? [];
   const items = Object.values(messages.reduce((map, item) => {
-    map[item.itemId] = item;
+    map[item.itemId ?? item.objectId!] = item;
     return map;
   }, {} as Record<string, Item>));
 
@@ -34,7 +37,8 @@ export const useItemList = (topic: string, types: string[]) => {
       return itemId;
     },
     editItem: (opts: any) => {
-      model.appendMessage(opts);
+      const objectId = createObjectId(opts.__type_url, opts.itemId);
+      model.appendMessage({ objectId, ...opts });
     }
   };
 };
@@ -57,7 +61,8 @@ export const useItem = (topic: string, types: string[], itemId: string | undefin
   return [
     item,
     ({ title }: { title: string }) => {
-      model.appendMessage({ __type_url: type, itemId, title });
+      const objectId = createObjectId(type, itemId);
+      model.appendMessage({ __type_url: type, itemId, objectId, title });
     }
   ];
 };

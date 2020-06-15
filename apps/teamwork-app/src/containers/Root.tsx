@@ -23,6 +23,7 @@ import PlannerPad from '@dxos/planner-pad';
 import CanvasApp from '@dxos/canvas-pad';
 
 import App from './App';
+import { Landing } from './Landing';
 import { Pad } from '../common';
 
 const initialState = {
@@ -45,7 +46,7 @@ export interface RootProps {
 
 export const Root = ({ config }: RootProps) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
-  const { paths, routes } = router;
+  const { routes } = router;
 
   return (
     <Theme>
@@ -64,7 +65,8 @@ export const Root = ({ config }: RootProps) => {
                   <Switch>
                     {SystemRoutes(router)}
                     <Route exact path={routes.app} component={App} />
-                    <Redirect to={paths.home} />
+                    <Route exact path="/landing" component={Landing} />
+                    <Redirect to="/landing" />
                   </Switch>
                 </RequireWallet>
               </Switch>

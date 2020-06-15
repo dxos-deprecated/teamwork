@@ -16,5 +16,6 @@ export default {
 
   icon: Icon,
   main: Channel,
-  type: TYPE_MESSENGER_CHANNEL
+  type: TYPE_MESSENGER_CHANNEL,
+  description: 'Chat with friends'
 };

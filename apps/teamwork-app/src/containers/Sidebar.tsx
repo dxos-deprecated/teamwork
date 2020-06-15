@@ -76,7 +76,7 @@ const Items = ({ topic }: ItemsProps) => {
           key={document.itemId}
           document={document}
           active={active}
-          onSelect={() => handleSelect(document.itemId)}
+          onSelect={() => handleSelect(document.itemId ?? document.objectId!)}
           editItem={editItem}
         />
       ))}

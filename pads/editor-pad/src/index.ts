@@ -14,5 +14,6 @@ export default {
 
   icon: Icon,
   main: Main,
-  type: TYPE_EDITOR_DOCUMENT
+  type: TYPE_EDITOR_DOCUMENT,
+  description: 'Write collaboratively'
 };

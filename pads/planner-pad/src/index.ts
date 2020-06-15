@@ -15,5 +15,6 @@ export default {
 
   icon: Icon,
   main: Board,
-  type: BOARD_TYPE
+  type: BOARD_TYPE,
+  description: 'Plan your projects'
 };
