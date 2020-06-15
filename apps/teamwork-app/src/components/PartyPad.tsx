@@ -28,7 +28,8 @@ const useStyles = makeStyles({
     width: 250
   },
   list: {
-    flex: 1
+    flex: 1,
+    overflowY: 'scroll'
   }
 });
 
