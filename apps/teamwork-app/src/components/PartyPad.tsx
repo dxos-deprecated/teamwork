@@ -3,6 +3,7 @@
 //
 
 import React from 'react';
+import { Chance } from 'chance';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,6 +17,8 @@ import { useAppRouter } from '@dxos/react-appkit';
 
 import { Pad } from '../common';
 import { Item, useItemList } from '../model';
+
+const chance = new Chance();
 
 const useStyles = makeStyles({
   card: {
@@ -36,12 +39,22 @@ export interface PartyPadProps {
 
 export const PartyPad = ({ pad, topic }: PartyPadProps) => {
   const router = useAppRouter();
-  const { items } = useItemList(topic, [pad.type]);
+  const { items, createItem } = useItemList(topic, [pad.type]);
 
   const classes = useStyles();
 
   const onSelect = (item: Item) => {
     router.push({ topic, item: item.itemId ?? item.objectId });
+  };
+
+  const handleSelect = (documentId: string) => {
+    router.push({ topic, item: documentId });
+  };
+
+  const handleCreate = () => {
+    const title = `item-${chance.word()}`;
+    const documentId = createItem({ __type_url: pad.type, title, mutations: [] });
+    handleSelect(documentId);
   };
 
   return (
@@ -57,7 +70,7 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
         ))}
       </List>
       <CardActions>
-        <Button size="small" color="primary">new item</Button>
+        <Button size="small" color="primary" onClick={handleCreate}>new item</Button>
       </CardActions>
     </Card>
   );
