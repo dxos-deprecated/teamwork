@@ -31,7 +31,7 @@ export const DocumentTypeSelectDialog = ({ open, onSelect }: DocumentTypeSelectD
             <ListItemIcon>
               <pad.icon />
             </ListItemIcon>
-            <ListItemText primary={pad.displayName} />
+            <ListItemText primary={pad.displayName} secondary={pad.description} />
           </ListItem>
         ))}
       </List>
