@@ -33,6 +33,7 @@ export const Landing = () => {
   const [inProgress, setInProgress] = useState(false);
 
   async function createParty () {
+    if (inProgress) return;
     setInProgress(true);
     try {
       await client.partyManager.createParty();
@@ -53,7 +54,7 @@ export const Landing = () => {
       </div>
       <Zoom in={true} timeout={500} unmountOnExit>
         <Tooltip title="Create party" aria-label="create party" placement="top">
-          <Fab color="primary" className={classes.fab} onClick={createParty} disabled={inProgress}>
+          <Fab color="primary" className={classes.fab} onClick={createParty}>
             {inProgress ? <CircularProgress color="secondary" /> : <Add /> }
           </Fab>
         </Tooltip>
