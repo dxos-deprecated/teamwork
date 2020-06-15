@@ -60,7 +60,8 @@ export const useItem = (topic: string, types: string[], itemId: string | undefin
   return [
     item,
     ({ title }: { title: string }) => {
-      model.appendMessage({ __type_url: type, itemId, title });
+      const objectId = createObjectId(type, itemId);
+      model.appendMessage({ __type_url: type, itemId, objectId, title });
     }
   ];
 };
