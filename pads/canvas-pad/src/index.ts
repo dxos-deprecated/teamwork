@@ -14,5 +14,6 @@ export default {
 
   icon: Icon,
   main: Canvas,
-  type: TYPE_CANVAS_DOCUMENT
+  type: TYPE_CANVAS_DOCUMENT,
+  description: 'Draw collaboratively'
 };

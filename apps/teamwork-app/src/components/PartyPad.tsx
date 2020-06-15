@@ -62,7 +62,7 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
       <CardHeader
         avatar={<Avatar><pad.icon /></Avatar>}
         title={pad.displayName}
-        subheader={pad.type}
+        subheader={pad.description ?? ''}
       />
       <List className={classes.list}>
         {items.map(item => (

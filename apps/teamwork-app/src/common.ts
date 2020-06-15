@@ -9,5 +9,6 @@ export interface Pad {
   displayName: string,
   icon: ComponentType
   main: ComponentType<any> // TODO(marik-d): refactor editor pad to not take any props
-  type: string
+  type: string,
+  description?: string,
 }
