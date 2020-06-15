@@ -7,11 +7,13 @@ import { useParams } from 'react-router-dom';
 import { Chance } from 'chance';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core';
+import { Home } from '@material-ui/icons';
 
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
-import { AppContainer, usePads } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItem, useItemList } from '../model';
@@ -29,7 +31,9 @@ const useStyles = makeStyles(theme => ({
   },
 
   titleRoot: {
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.contrastText,
+    display: 'inline-block',
+    lineHeight: '48px'
   }
 }));
 
@@ -40,6 +44,7 @@ const App = () => {
   const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
   const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
   const client = useClient();
+  const router = useAppRouter();
 
   const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
 
@@ -56,16 +61,23 @@ const App = () => {
     }
   }, [topic]);
 
+  const appBarContent = (<>
+    <IconButton aria-label="home" onClick={() => router.push({ path: '/landing' })} color="inherit">
+      <Home />
+    </IconButton>
+    {item && (
+      <EditableText
+        value={item.title}
+        variant="h6"
+        classes={{ root: classes.titleRoot }}
+        onUpdate={(title: string) => editItem({ title })}
+      />
+    )}
+  </>);
+
   return (
     <AppContainer
-      appBarContent={item && (
-        <EditableText
-          value={item.title}
-          variant="h6"
-          classes={{ root: classes.titleRoot }}
-          onUpdate={(title: string) => editItem({ title })}
-        />
-      )}
+      appBarContent={appBarContent}
       sidebarContent={<Sidebar />}
     >
       <div className={classes.main}>
