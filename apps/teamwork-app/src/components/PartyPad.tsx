@@ -71,7 +71,7 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
         ))}
       </List>
       <CardActions>
-        <Button size="small" color="primary" onClick={handleCreate}>new item</Button>
+        <Button size="small" color="primary" onClick={handleCreate}>{`new ${pad.displayName}`}</Button>
       </CardActions>
     </Card>
   );
