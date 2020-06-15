@@ -5,18 +5,20 @@
 import React from 'react';
 import assert from 'assert';
 
+import { usePads } from '@dxos/react-appkit';
+
 import { Editor } from './components/Editor';
 
 export interface EditorPadProps {
   topic: string,
   itemId: string,
-  pads: any[],
   items: any[],
   onCreateItem: (type: string) => void,
 }
 
 export default function EditorPad (props: EditorPadProps) {
-  const { topic, itemId, pads, items, onCreateItem } = props;
+  const { topic, itemId, items, onCreateItem } = props;
+  const [pads] = usePads();
   assert(topic);
   assert(itemId);
 
