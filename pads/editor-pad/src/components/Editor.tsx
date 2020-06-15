@@ -72,7 +72,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }: Co
 
         editor.createReactElement({
           type: pad.type,
-          itemId: item.id,
+          itemId: item.itemId,
           title: item.title,
           topic
         });
