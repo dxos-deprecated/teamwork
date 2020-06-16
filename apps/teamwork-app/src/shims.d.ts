@@ -9,3 +9,4 @@ declare module '@dxos/react-appkit';
 declare module '@dxos/async';
 declare module '@dxos/react-ux';
 declare module '@dxos/debug';
+declare module '@dxos/credentials';

@@ -24,20 +24,17 @@ const useStyles = makeStyles({
 
 export interface PartyMembersProps {
   party: any,
+  handleUserInvite: () => void,
 }
 
-export const PartyMembers = ({ party }: PartyMembersProps) => {
+export const PartyMembers = ({ party, handleUserInvite }: PartyMembersProps) => {
   const classes = useStyles();
-
-  const handleCreate = () => {
-
-  };
 
   return (
     <Card className={classes.card}>
       <div className={classes.memberList}><MemberList party={party} /></div>
       <CardActions>
-        <Button size="small" color="primary" onClick={handleCreate} disabled={true}>Invite member</Button>
+        <Button size="small" color="primary" onClick={handleUserInvite}>Invite member</Button>
       </CardActions>
     </Card>
   );
