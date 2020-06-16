@@ -5,6 +5,7 @@
 import { Chance } from 'chance';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import TreeView from '@material-ui/lab/TreeView';
 
 import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads } from '@dxos/react-appkit';
 
@@ -56,7 +57,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <div>
+    <TreeView>
       {items.map(document => (
         <TreeItem
           key={document.itemId}
@@ -70,6 +71,6 @@ export const Sidebar = () => {
       <PartyTreeAddItemButton topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
 
       <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
-    </div>
+    </TreeView>
   );
 };
