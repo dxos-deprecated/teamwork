@@ -82,7 +82,7 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
         passcode={passcode}
         title="Authorize Device"
         message={passcode ? 'The peer has connected.' : 'A passcode will be generated once the remote peer connects.'}
-        onClose={() => {}}
+        onClose={() => setInvitationDialogOpen(false)}
       />
     </div>
   );
