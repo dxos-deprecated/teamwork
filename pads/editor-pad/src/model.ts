@@ -6,7 +6,6 @@ import assert from 'assert';
 
 import { useModel } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
-import { createObjectId } from '@dxos/echo-db';
 
 // TODO(burdon): Define types.
 export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
