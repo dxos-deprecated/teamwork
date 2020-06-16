@@ -3,12 +3,10 @@
 //
 
 import { Chance } from 'chance';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { keyToString } from '@dxos/crypto';
-import { PartyTreeAddItemButton, PartyTree, PartyTreeItem, useAppRouter, usePads } from '@dxos/react-appkit';
-import { useClient, useParties } from '@dxos/react-client';
+import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads } from '@dxos/react-appkit';
 
 import { useItemList, Item } from '../model';
 import { DocumentTypeSelectDialog } from './DocumentTypeSelectDialog';
@@ -38,24 +36,12 @@ const TreeItem = ({ document, active, onSelect, editItem }: TreeItemProps) => {
   );
 };
 
-interface ItemsProps {
-  topic: string
-}
-
-/**
- * Channels list.
- */
-const Items = ({ topic }: ItemsProps) => {
+export const Sidebar = () => {
   const router = useAppRouter();
-  const { item: active } = useParams();
+  const { topic, item: active } = useParams();
   const [pads]: Pad[][] = usePads();
   const { items, createItem, editItem } = useItemList(topic, pads.map(pad => pad.type));
-
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
-
-  if (!topic) {
-    return null;
-  }
 
   const handleSelect = (documentId: string) => {
     router.push({ topic, item: documentId });
@@ -70,7 +56,7 @@ const Items = ({ topic }: ItemsProps) => {
   };
 
   return (
-    <Fragment>
+    <div>
       {items.map(document => (
         <TreeItem
           key={document.itemId}
@@ -84,32 +70,6 @@ const Items = ({ topic }: ItemsProps) => {
       <PartyTreeAddItemButton topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
 
       <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
-    </Fragment>
-  );
-};
-
-export const Sidebar = () => {
-  const client = useClient();
-  const parties = useParties();
-  const router = useAppRouter();
-  const { topic } = useParams();
-
-  const handleSelect = (topic: string) => {
-    router.push({ topic });
-  };
-
-  const handleCreate = async () => {
-    const party = await client.partyManager.createParty();
-    handleSelect(keyToString(party.publicKey));
-  };
-
-  return (
-    <PartyTree
-      parties={parties}
-      items={(topic: string) => <Items topic={topic} />}
-      selected={topic}
-      onSelect={handleSelect}
-      onCreate={handleCreate}
-    />
+    </div>
   );
 };
