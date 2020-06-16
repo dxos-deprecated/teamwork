@@ -37,7 +37,7 @@ export const PartyMembers = ({ party }: PartyMembersProps) => {
     <Card className={classes.card}>
       <div className={classes.memberList}><MemberList party={party} /></div>
       <CardActions>
-        <Button size="small" color="primary" onClick={handleCreate}>Invite member</Button>
+        <Button size="small" color="primary" onClick={handleCreate} disabled={true}>Invite member</Button>
       </CardActions>
     </Card>
   );
