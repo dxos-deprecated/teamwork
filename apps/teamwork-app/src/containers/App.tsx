@@ -60,7 +60,7 @@ const App = () => {
         value={item.title}
         variant="h6"
         classes={{ root: classes.titleRoot }}
-        onUpdate={(title: string) => editItem({ title })}
+        onUpdate={(title: string) => editItem(title)}
       />
     )}
   </>);
