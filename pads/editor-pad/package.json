@@ -17,13 +17,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dxos/editor": "^1.0.0-beta.3",
+    "@dxos/editor": "^1.0.0-beta.7",
     "clsx": "^1.0.4",
     "yjs": "13.1.0"
   },
   "peerDependencies": {
     "@dxos/crypto": "^1.0.0-beta.1",
-    "@dxos/react-client": "^1.0.0-beta.82",
+    "@dxos/react-client": "^1.0.0-beta.85",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "^16.13.1",
