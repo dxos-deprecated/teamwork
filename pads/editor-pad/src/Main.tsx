@@ -15,12 +15,12 @@ const chance = new Chance();
 
 export interface EditorPadProps {
   topic: string,
-  itemId: string,
+  viewId: string,
 }
 
-export default function EditorPad ({ topic, itemId }: EditorPadProps) {
+export default function EditorPad ({ topic, viewId }: EditorPadProps) {
   assert(topic);
-  assert(itemId);
+  assert(viewId);
 
   const [pads] = usePads();
   const { items, createItem } = useItemList(topic, pads.map((pad: any) => pad.type));
@@ -33,7 +33,7 @@ export default function EditorPad ({ topic, itemId }: EditorPadProps) {
   return (
     <Editor
       topic={topic}
-      itemId={itemId}
+      itemId={viewId}
       pads={pads}
       items={items}
       onCreateItem={onCreateItem}

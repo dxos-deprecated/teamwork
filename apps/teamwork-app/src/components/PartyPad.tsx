@@ -45,17 +45,13 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
   const classes = useStyles();
 
   const onSelect = (item: Item) => {
-    router.push({ topic, item: item.itemId ?? item.objectId });
-  };
-
-  const handleSelect = (documentId: string) => {
-    router.push({ topic, item: documentId });
+    router.push({ topic, item: item.viewId });
   };
 
   const handleCreate = () => {
     const title = `item-${chance.word()}`;
-    const documentId = createItem({ __type_url: pad.type, title, mutations: [] });
-    handleSelect(documentId);
+    const viewId = createItem({ __type_url: pad.type, title, mutations: [] });
+    router.push({ topic, item: viewId });
   };
 
   return (
@@ -67,7 +63,7 @@ export const PartyPad = ({ pad, topic }: PartyPadProps) => {
       />
       <List className={classes.list}>
         {items.map(item => (
-          <ListItem key={item.itemId ?? item.objectId} button onClick={() => onSelect(item)}>{item.title}</ListItem>
+          <ListItem key={item.viewId ?? item.objectId} button onClick={() => onSelect(item)}>{item.title}</ListItem>
         ))}
       </List>
       <CardActions>

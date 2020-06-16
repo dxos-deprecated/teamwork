@@ -34,7 +34,7 @@ const initialState = {
 };
 
 const pads: Pad[] = [
-  MessengerPad,
+  MessengerPad as any,
   EditorPad,
   PlannerPad,
   CanvasApp

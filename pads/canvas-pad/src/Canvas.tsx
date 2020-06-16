@@ -20,16 +20,16 @@ const useStyles = makeStyles(() => ({
 
 export interface CanvasProps {
   topic: string
-  itemId: string
+  viewId: string
 }
 
-export const Canvas = ({ topic, itemId }: CanvasProps) => {
+export const Canvas = ({ topic, viewId }: CanvasProps) => {
   assert(topic);
-  assert(itemId);
+  assert(viewId);
 
   const classes = useStyles();
 
-  const model = useDocument(topic, itemId);
+  const model = useDocument(topic, viewId);
 
   // TODO(burdon): Bug: create object, move it, then when revisit document it's in the original position...
   // Since the messages are out of order.

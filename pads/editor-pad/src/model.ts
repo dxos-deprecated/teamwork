@@ -30,7 +30,7 @@ export const useDocumentUpdateModel = (topic: string, documentId: string): any =
 
 export interface Item {
   ['__type_url']: string
-  itemId: string
+  viewId: string
   title: string
 }
 
@@ -43,17 +43,17 @@ export const useItemList = (topic: string, types: string[]) => {
   // TODO(burdon): CRDT.
   const messages: Item[] = model?.messages ?? [];
   const items = Object.values(messages.reduce((map, item) => {
-    map[item.itemId] = item;
+    map[item.viewId] = item;
     return map;
   }, {} as Record<string, Item>));
 
   return {
     items,
     createItem: (opts: any) => {
-      const itemId = createId();
-      const objectId = createObjectId(opts.__type_url, itemId);
-      model.appendMessage({ itemId, objectId, ...opts });
-      return itemId;
+      const viewId = createId();
+      const objectId = createObjectId(opts.__type_url, viewId);
+      model.appendMessage({ viewId, objectId, ...opts });
+      return viewId;
     },
     editItem: (opts: any) => {
       model.appendMessage(opts);
