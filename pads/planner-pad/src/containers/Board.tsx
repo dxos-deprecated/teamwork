@@ -18,9 +18,7 @@ import { ArrayModel } from '../model/array';
 import BoardSettings from './BoardSettings';
 import List, { LIST_TYPE, CARD_TYPE } from './List';
 import { ListItem } from '../model/ListItem';
-import { BoardItem } from '../model/BoardItem';
-
-export const BOARD_TYPE = 'testing.planner.Board';
+import { BOARD_TYPE, useBoard, BoardItem } from '../model/board';
 
 const useStyles = makeStyles(() => {
   return {
@@ -64,25 +62,15 @@ export const Board = ({ topic, viewId }: BoardProps) => {
   const client = useClient();
   const boardId = `${BOARD_TYPE}/${viewId}`;
 
-  const boardsModel = useArrayModel(topic, BOARD_TYPE);
+  const [board, editBoard] = useBoard(topic, viewId);
   const listsModel = useArrayModel(topic, LIST_TYPE, { boardId });
 
   const [settingsOpen, setSettingsOpen] = useState(false);
-
-  if (!boardsModel || !listsModel) {
+  if (!board || !listsModel) {
     return <div className={classes.root}>Loading board...</div>;
   }
 
-  const board: BoardItem = boardsModel.findById(boardId);
   const lists: ListItem[] = listsModel.getItems();
-
-  if (!board) {
-    return <Fragment />;
-  }
-
-  const handleUpdateBoard = (properties: Partial<BoardItem>) => {
-    boardsModel.updateItem(boardId, properties);
-  };
 
   const handleAddList = () => {
     listsModel.push({ boardId, title: 'New List' });
@@ -102,7 +90,7 @@ export const Board = ({ topic, viewId }: BoardProps) => {
     }
 
     // Dragging entire lists.
-    if (source.droppableId === board.id) {
+    if (source.droppableId === board.viewId) {
       listsModel.moveItemByIndex(source.index, destination.index);
       return;
     }
@@ -146,7 +134,7 @@ export const Board = ({ topic, viewId }: BoardProps) => {
 
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable direction="horizontal" type="column" droppableId={board.id}>
+      <Droppable direction="horizontal" type="column" droppableId={board.viewId}>
         {(provided: any) => (
           <div ref={provided.innerRef} className={classes.scrollBox}>
             <div className={classes.root}>
@@ -184,7 +172,7 @@ export const Board = ({ topic, viewId }: BoardProps) => {
       {Lists()}
       <BoardSettings
         board={board}
-        onUpdateBoard={handleUpdateBoard}
+        onUpdateBoard={editBoard}
         isOpen={settingsOpen}
         onClose={() => setSettingsOpen(false)}
       />

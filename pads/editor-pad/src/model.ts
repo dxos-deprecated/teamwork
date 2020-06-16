@@ -6,7 +6,6 @@ import assert from 'assert';
 
 import { useModel } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
-import { createObjectId } from '@dxos/echo-db';
 
 // TODO(burdon): Define types.
 export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
@@ -40,23 +39,22 @@ export interface Item {
 export const useItemList = (topic: string, types: string[]) => {
   const model = useModel({ options: { type: types, topic } });
 
-  // TODO(burdon): CRDT.
+  // TODO(burdon): CRDT. (maybe use PartiallyOrderedModel?)
   const messages: Item[] = model?.messages ?? [];
   const items = Object.values(messages.reduce((map, item) => {
-    map[item.viewId] = item;
+    map[item.viewId] = { ...(map[item.viewId] || []), ...item };
     return map;
   }, {} as Record<string, Item>));
 
   return {
     items,
-    createItem: (opts: any) => {
+    createItem: (type: string, title: string, opts = {}) => {
       const viewId = createId();
-      const objectId = createObjectId(opts.__type_url, viewId);
-      model.appendMessage({ viewId, objectId, ...opts });
+      model.appendMessage({ viewId, __type_url: type, title, ...opts });
       return viewId;
     },
-    editItem: (opts: any) => {
-      model.appendMessage(opts);
+    editItem: (type: string, viewId: string, title: string) => {
+      model.appendMessage({ __type_url: type, viewId, title });
     }
   };
 };
