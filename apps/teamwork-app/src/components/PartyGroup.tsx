@@ -13,6 +13,7 @@ import { PartyPad } from './PartyPad';
 import { Pad } from '../common';
 import { makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
+import { PartyMembers } from './PartyMembers';
 
 const useClasses = makeStyles({
   root: {
@@ -39,6 +40,9 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
         {party.displayName}
       </Typography>
       <Grid container spacing={2} alignItems="stretch" className={classes.grid}>
+        <Grid item zeroMinWidth>
+          <PartyMembers party={party} />
+        </Grid>
         {pads.map(pad => (
           <Grid key={pad.type} item zeroMinWidth>
             <PartyPad key={pad.type} pad={pad} topic={keyToString(party.publicKey)} />
