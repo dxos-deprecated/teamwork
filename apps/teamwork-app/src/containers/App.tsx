@@ -36,9 +36,9 @@ const useStyles = makeStyles(theme => ({
 
 const App = () => {
   const classes = useStyles();
-  const { topic, item: itemId } = useParams();
+  const { topic, item: viewId } = useParams();
   const [pads]: Pad[][] = usePads();
-  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), itemId);
+  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), viewId);
   const client = useClient();
   const router = useAppRouter();
 
@@ -71,7 +71,7 @@ const App = () => {
       sidebarContent={<Sidebar />}
     >
       <div className={classes.main}>
-        {pad && <pad.main topic={topic} itemId={itemId} />}
+        {pad && <pad.main topic={topic} viewId={viewId} />}
       </div>
     </AppContainer>
   );

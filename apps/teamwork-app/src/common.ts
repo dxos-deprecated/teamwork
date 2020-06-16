@@ -4,11 +4,16 @@
 
 import { ComponentType } from 'react';
 
+export interface PadComponentProps {
+  topic: string
+  viewId: string
+}
+
 export interface Pad {
   name: string,
   displayName: string,
   icon: ComponentType
-  main: ComponentType<any> // TODO(marik-d): refactor editor pad to not take any props
+  main: ComponentType<PadComponentProps>
   type: string,
   description?: string,
 }

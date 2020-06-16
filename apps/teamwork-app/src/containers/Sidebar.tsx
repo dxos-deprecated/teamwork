@@ -26,13 +26,13 @@ const TreeItem = ({ document, active, onSelect, editItem }: TreeItemProps) => {
   const [pads]: Pad[][] = usePads();
   return (
     <PartyTreeItem
-      key={document.itemId}
-      id={document.itemId}
-      label={document.title || document.itemId}
+      key={document.viewId}
+      id={document.viewId}
+      label={document.title || document.viewId}
       icon={pads.find(pad => pad.type === document.__type_url)?.icon}
-      isSelected={active === document.itemId}
+      isSelected={active === document.viewId}
       onSelect={onSelect}
-      onUpdate={(title: string) => editItem({ __type_url: document.__type_url, itemId: document.itemId, title })}
+      onUpdate={(title: string) => editItem({ __type_url: document.__type_url, viewId: document.viewId, title })}
     />
   );
 };
@@ -60,10 +60,10 @@ export const Sidebar = () => {
     <TreeView>
       {items.map(document => (
         <TreeItem
-          key={document.itemId}
+          key={document.viewId}
           document={document}
           active={active}
-          onSelect={() => handleSelect(document.itemId ?? document.objectId!)}
+          onSelect={() => handleSelect(document.viewId ?? document.objectId!)}
           editItem={editItem}
         />
       ))}

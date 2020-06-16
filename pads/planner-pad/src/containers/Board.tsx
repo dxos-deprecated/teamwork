@@ -56,13 +56,13 @@ const useStyles = makeStyles(() => {
 
 export interface BoardProps {
   topic: string
-  itemId: string
+  viewId: string
 }
 
-export const Board = ({ topic, itemId }: BoardProps) => {
+export const Board = ({ topic, viewId }: BoardProps) => {
   const classes = useStyles();
   const client = useClient();
-  const boardId = `${BOARD_TYPE}/${itemId}`;
+  const boardId = `${BOARD_TYPE}/${viewId}`;
 
   const boardsModel = useArrayModel(topic, BOARD_TYPE);
   const listsModel = useArrayModel(topic, LIST_TYPE, { boardId });

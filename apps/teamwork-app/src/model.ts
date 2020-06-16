@@ -11,7 +11,7 @@ export interface Item {
   title: string
 
   // TODO(rzadp) - canvas uses objectId instead of itemId. If we change this than we can have itemId as non-optional property
-  itemId?: string
+  viewId?: string
   objectId?: string
 }
 
@@ -24,17 +24,17 @@ export const useItemList = (topic: string, types: string[]) => {
   // TODO(burdon): CRDT.
   const messages: Item[] = model?.messages ?? [];
   const items = Object.values(messages.reduce((map, item) => {
-    map[item.itemId ?? item.objectId!] = item;
+    map[item.viewId ?? item.objectId!] = item;
     return map;
   }, {} as Record<string, Item>));
 
   return {
     items,
     createItem: (opts: any) => {
-      const itemId = createId();
-      const objectId = createObjectId(opts.__type_url, itemId);
-      model.appendMessage({ itemId, objectId, ...opts });
-      return itemId;
+      const viewId = createId();
+      const objectId = createObjectId(opts.__type_url, viewId);
+      model.appendMessage({ viewId, objectId, ...opts });
+      return viewId;
     },
     editItem: (opts: any) => {
       const objectId = createObjectId(opts.__type_url, opts.itemId);
@@ -47,9 +47,9 @@ export const useItemList = (topic: string, types: string[]) => {
  * Provides item metadata and updater.
  * @returns {[{title}, function]}
  */
-export const useItem = (topic: string, types: string[], itemId: string | undefined): [Item | undefined, (opts: { title: string }) => void] => {
-  const model = useModel({ options: { type: types, topic, itemId } });
-  if (!model || !itemId) {
+export const useItem = (topic: string, types: string[], viewId: string | undefined): [Item | undefined, (opts: { title: string }) => void] => {
+  const model = useModel({ options: { type: types, topic, viewId } });
+  if (!model || !viewId) {
     return [undefined, () => {}];
   }
 
@@ -61,8 +61,8 @@ export const useItem = (topic: string, types: string[], itemId: string | undefin
   return [
     item,
     ({ title }: { title: string }) => {
-      const objectId = createObjectId(type, itemId);
-      model.appendMessage({ __type_url: type, itemId, objectId, title });
+      const objectId = createObjectId(type, viewId);
+      model.appendMessage({ __type_url: type, viewId, objectId, title });
     }
   ];
 };
