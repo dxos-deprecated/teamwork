@@ -4,7 +4,8 @@
 
 import Icon from '@material-ui/icons/AssignmentTurnedIn';
 
-import { Board, BOARD_TYPE } from './containers/Board';
+import { Board } from './containers/Board';
+import { BOARD_TYPE } from './model/board';
 
 // export * from './model';
 
