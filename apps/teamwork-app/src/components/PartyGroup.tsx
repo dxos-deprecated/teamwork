@@ -3,8 +3,9 @@
 //
 
 import React, { useState } from 'react';
-
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
 
 import { keyToString } from '@dxos/crypto';
 import { usePads, InvitationDialog, useAppRouter } from '@dxos/react-appkit';
@@ -12,10 +13,10 @@ import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 
 import { PartyPad } from './PartyPad';
+import { NewPad } from './NewPad';
 import { Pad } from '../common';
-import { makeStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
 import { PartyMembers } from './PartyMembers';
+import { useItemList } from '../model';
 
 const useClasses = makeStyles({
   root: {
@@ -34,6 +35,8 @@ export interface PartyGroupProps {
 
 export const PartyGroup = ({ party }: PartyGroupProps) => {
   const [pads]: Pad[][] = usePads();
+  const topic = keyToString(party.publicKey);
+  const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
   const classes = useClasses();
   const client = useClient();
   const [invitationDialogOpen, setInvitationDialogOpen] = useState(false);
@@ -61,6 +64,8 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
     setInvitationDialogOpen(true);
   };
 
+  const padsWithItems = pads.filter(pad => items.some(item => item.__type_url === pad.type));
+
   return (
     <div className={classes.root}>
       <Typography variant="h4">
@@ -70,11 +75,17 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
         <Grid item zeroMinWidth>
           <PartyMembers party={party} handleUserInvite={handleUserInvite} />
         </Grid>
-        {pads.map(pad => (
+        {padsWithItems.map(pad => (
           <Grid key={pad.type} item zeroMinWidth>
-            <PartyPad key={pad.type} pad={pad} topic={keyToString(party.publicKey)} />
+            <PartyPad items={items.filter(item => item.__type_url === pad.type)} createItem={createItem} key={pad.type} pad={pad} topic={keyToString(party.publicKey)} />
           </Grid>
         ))}
+        { padsWithItems.length < pads.length && (
+          <Grid item zeroMinWidth>
+            <NewPad createItem={createItem} topic={keyToString(party.publicKey)} />
+          </Grid>
+        )
+        }
       </Grid>
       <InvitationDialog
         open={invitationDialogOpen}

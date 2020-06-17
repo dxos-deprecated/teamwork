@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useAppRouter } from '@dxos/react-appkit';
 
 import { Pad } from '../common';
-import { Item, useItemList } from '../model';
+import { Item } from '../model';
 
 const chance = new Chance();
 
@@ -36,12 +36,12 @@ const useStyles = makeStyles({
 export interface PartyPadProps {
   topic: string,
   pad: Pad,
+  items: Item[],
+  createItem: (type: string, title: string, opts?: {}) => any
 }
 
-export const PartyPad = ({ pad, topic }: PartyPadProps) => {
+export const PartyPad = ({ pad, topic, items, createItem }: PartyPadProps) => {
   const router = useAppRouter();
-  const { items, createItem } = useItemList(topic, [pad.type]);
-
   const classes = useStyles();
 
   const onSelect = (item: Item) => {
