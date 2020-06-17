@@ -6,11 +6,11 @@ import React, { useState } from 'react';
 import { Chance } from 'chance';
 import { makeStyles } from '@material-ui/styles';
 import { Add } from '@material-ui/icons';
-import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
+import { Typography, IconButton } from '@material-ui/core';
 
 import { useAppRouter } from '@dxos/react-appkit';
 
-import { Typography, IconButton } from '@material-ui/core';
+import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
 
 const chance = new Chance();
 

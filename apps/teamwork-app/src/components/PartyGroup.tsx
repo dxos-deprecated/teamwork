@@ -4,6 +4,8 @@
 
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/styles';
+import Typography from '@material-ui/core/Typography';
 
 import { keyToString } from '@dxos/crypto';
 import { usePads, InvitationDialog, useAppRouter } from '@dxos/react-appkit';
@@ -13,10 +15,7 @@ import { generatePasscode } from '@dxos/credentials';
 import { PartyPad } from './PartyPad';
 import { NewPad } from './NewPad';
 import { Pad } from '../common';
-import { makeStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
 import { PartyMembers } from './PartyMembers';
-
 import { useItemList } from '../model';
 
 const useClasses = makeStyles({

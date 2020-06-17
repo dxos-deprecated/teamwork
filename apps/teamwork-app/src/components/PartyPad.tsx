@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useAppRouter } from '@dxos/react-appkit';
 
 import { Pad } from '../common';
-import { Item, useItemList } from '../model';
+import { Item } from '../model';
 
 const chance = new Chance();
 
