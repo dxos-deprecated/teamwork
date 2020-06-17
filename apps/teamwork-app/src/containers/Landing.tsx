@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { Fab, Zoom, CircularProgress, Tooltip } from '@material-ui/core';
+import { Fab, Zoom, CircularProgress, Tooltip, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 
 import { useClient, useParties } from '@dxos/react-client';
@@ -23,6 +23,15 @@ const useStyles = makeStyles({
     bottom: 60,
     left: 'auto',
     position: 'fixed'
+  },
+  createPartyText: {
+    paddingLeft: 20,
+    paddingTop: 20,
+    color: 'gray'
+  },
+  createPartyLink: {
+    cursor: 'pointer',
+    color: '#2196f3'
   }
 });
 
@@ -51,6 +60,12 @@ export const Landing = () => {
         {parties.map((party: any) => (
           <PartyGroup key={party.publicKey.toString()} party={party} />
         ))}
+        {parties.length === 0 && (
+          <Typography className={classes.createPartyText} variant="h2">
+            <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
+            <span> to get started.</span>
+          </Typography>
+        )}
       </div>
       <Zoom in={true} timeout={500} unmountOnExit>
         <Tooltip title="Create party" aria-label="create party" placement="top">
