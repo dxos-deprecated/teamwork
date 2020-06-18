@@ -10,12 +10,14 @@ const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
+const distDir = path.join(__dirname, 'dist');
+
 module.exports = {
 
   devtool: 'eval-source-map',
 
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: distDir,
     compress: true,
     disableHostCheck: true,
     port: 8080,
@@ -30,7 +32,7 @@ module.exports = {
   },
 
   output: {
-    path: `${__dirname}/dist`,
+    path: distDir,
     filename: '[name].bundle.js',
     publicPath: PUBLIC_URL
   },
@@ -84,7 +86,7 @@ module.exports = {
     // https://www.npmjs.com/package/webpack-version-file-plugin
     new VersionFile({
       packageFile: path.join(__dirname, 'package.json'),
-      outputFile: path.join(__dirname, 'version.json')
+      outputFile: path.join(distDir, 'version.json')
     })
   ],
 
