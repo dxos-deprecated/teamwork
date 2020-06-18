@@ -1,0 +1,4 @@
+name: example.com/planner
+displayName: Planner 
+build: yarn dist
+version: 0.0.0
