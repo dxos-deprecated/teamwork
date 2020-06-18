@@ -15,7 +15,7 @@ import { useClient } from '@dxos/react-client';
 import { AppContainer, usePads, useAppRouter } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
-import { useItem } from '../model';
+import { useViewList } from '../model';
 import { Sidebar } from './Sidebar';
 import { Pad } from '../common';
 
@@ -37,12 +37,14 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: viewId } = useParams();
-  const [pads]: Pad[][] = usePads();
-  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), viewId);
   const client = useClient();
   const router = useAppRouter();
 
-  const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
+  const viewModel = useViewList(topic);
+  const view = viewModel.getById(viewId);
+
+  const [pads]: Pad[][] = usePads();
+  const pad = view ? pads.find(pad => pad.type === view.__type_url) : undefined;
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -55,12 +57,12 @@ const App = () => {
     <IconButton aria-label="home" onClick={() => router.push({ path: '/landing' })} color="inherit">
       <Home />
     </IconButton>
-    {item && (
+    {view && (
       <EditableText
-        value={item.title}
+        value={view.title}
         variant="h6"
         classes={{ root: classes.titleRoot }}
-        onUpdate={(title: string) => editItem(title)}
+        onUpdate={(title: string) => viewModel.editView(viewId, { title })}
       />
     )}
   </>);

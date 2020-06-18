@@ -14,9 +14,9 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
 
 import { useAppRouter } from '@dxos/react-appkit';
+import { View } from '@dxos/echo-db';
 
 import { Pad } from '../common';
-import { Item } from '../model';
 
 const chance = new Chance();
 
@@ -36,21 +36,20 @@ const useStyles = makeStyles({
 export interface PartyPadProps {
   topic: string,
   pad: Pad,
-  items: Item[],
-  createItem: (type: string, title: string, opts?: {}) => any
+  views: View[],
+  createView: (type: string, title: string) => void
 }
 
-export const PartyPad = ({ pad, topic, items, createItem }: PartyPadProps) => {
+export const PartyPad = ({ pad, topic, views, createView }: PartyPadProps) => {
   const router = useAppRouter();
   const classes = useStyles();
 
-  const onSelect = (item: Item) => {
+  const onSelect = (item: View) => {
     router.push({ topic, item: item.viewId });
   };
 
   const handleCreate = () => {
-    const title = `item-${chance.word()}`;
-    const viewId = createItem(pad.type, title, { mutations: [] });
+    const viewId = createView(pad.type, `item-${chance.word()}`);
     router.push({ topic, item: viewId });
   };
 
@@ -62,7 +61,7 @@ export const PartyPad = ({ pad, topic, items, createItem }: PartyPadProps) => {
         subheader={pad.description ?? ''}
       />
       <List className={classes.list}>
-        {items.map(item => (
+        {views.map(item => (
           <ListItem key={item.viewId} button onClick={() => onSelect(item)}>{item.title}</ListItem>
         ))}
       </List>

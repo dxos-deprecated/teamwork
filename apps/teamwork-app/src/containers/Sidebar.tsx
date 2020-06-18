@@ -9,7 +9,7 @@ import TreeView from '@material-ui/lab/TreeView';
 
 import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads } from '@dxos/react-appkit';
 
-import { useItemList } from '../model';
+import { useViewList } from '../model';
 import { DocumentTypeSelectDialog } from './DocumentTypeSelectDialog';
 import { Pad } from '../common';
 
@@ -19,7 +19,7 @@ export const Sidebar = () => {
   const router = useAppRouter();
   const { topic, item: active } = useParams();
   const [pads]: Pad[][] = usePads();
-  const { items, createItem, editItem } = useItemList(topic, pads.map(pad => pad.type));
+  const viewsModel = useViewList(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
 
   const handleSelect = (viewId: string) => {
@@ -30,13 +30,13 @@ export const Sidebar = () => {
     setTypeSelectDialogOpen(false);
     if (!type) return;
     const title = `item-${chance.word()}`;
-    const viewId = createItem(type, title);
+    const viewId = viewsModel.createView(type, title);
     handleSelect(viewId);
   };
 
   return (
     <TreeView>
-      {items.map(document => (
+      {viewsModel.getAllViews().map(document => (
         <PartyTreeItem
           key={document.viewId}
           id={document.viewId}
@@ -44,7 +44,7 @@ export const Sidebar = () => {
           icon={pads.find(pad => pad.type === document.__type_url)?.icon}
           isSelected={active === document.viewId}
           onSelect={() => handleSelect(document.viewId)}
-          onUpdate={(title: string) => editItem(document.__type_url, document.viewId, title)}
+          onUpdate={(title: string) => viewsModel.editView(document.viewId, { title })}
         />
       ))}
 
