@@ -52,7 +52,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }: Co
       fn: () => {
         editor.createReactElement({
           type: item.__type_url,
-          itemId: item.id,
+          viewId: item.viewId,
           title: item.title,
           topic
         });
@@ -72,7 +72,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }: Co
 
         editor.createReactElement({
           type: pad.type,
-          itemId: item.itemId,
+          viewId: item.viewId,
           title: item.title,
           topic
         });
@@ -160,6 +160,8 @@ export const Editor = (
 
   const handleReactElementRender = useCallback(props => {
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
+
+    console.log('render', props);
 
     return (
       <Pad title={props.title} icon={icon}>
