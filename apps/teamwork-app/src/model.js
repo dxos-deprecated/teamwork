@@ -5,33 +5,27 @@
 import { useModel } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
 
-export interface Item {
-  __type_url: string
-  title: string
-  viewId: string
-}
-
 /**
  * Provides item list and item creator.
  */
-export const useItemList = (topic: string, types: string[]) => {
+export const useItemList = (topic, types) => {
   const model = useModel({ options: { type: types, topic } });
 
   // TODO(burdon): CRDT. (maybe use PartiallyOrderedModel?)
-  const messages: Item[] = model?.messages ?? [];
+  const messages = model?.messages ?? [];
   const items = Object.values(messages.reduce((map, item) => {
     map[item.viewId] = { ...(map[item.viewId] || []), ...item };
     return map;
-  }, {} as Record<string, Item>));
+  }, {}));
 
   return {
     items,
-    createItem: (type: string, title: string, opts = {}) => {
+    createItem: (type, title, opts = {}) => {
       const viewId = createId();
       model.appendMessage({ viewId, __type_url: type, title, ...opts });
       return viewId;
     },
-    editItem: (type: string, viewId: string, title: string) => {
+    editItem: (type, viewId, title) => {
       model.appendMessage({ __type_url: type, viewId, title });
     }
   };
@@ -41,7 +35,7 @@ export const useItemList = (topic: string, types: string[]) => {
  * Provides item metadata and updater.
  * @returns {[{title}, function]}
  */
-export const useItem = (topic: string, types: string[], viewId: string | undefined): [Item | undefined, (title: string) => void] => {
+export const useItem = (topic, types, viewId) => {
   const model = useModel({ options: { type: types, topic, viewId } });
   if (!model || !viewId) {
     return [undefined, () => {}];
@@ -51,12 +45,12 @@ export const useItem = (topic: string, types: string[], viewId: string | undefin
   if (!model?.messages?.length) {
     return [undefined, () => {}];
   }
-  const item: Item = Object.assign({}, ...model?.messages);
+  const item = Object.assign({}, ...model?.messages);
   const type = item.__type_url;
 
   return [
     item,
-    (title: string) => {
+    (title) => {
       model.appendMessage({ __type_url: type, viewId, title });
     }
   ];

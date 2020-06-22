@@ -14,7 +14,6 @@ import { generatePasscode } from '@dxos/credentials';
 
 import { PartyPad } from './PartyPad';
 import { NewPad } from './NewPad';
-import { Pad } from '../common';
 import { PartyMembers } from './PartyMembers';
 import { useItemList } from '../model';
 
@@ -29,12 +28,8 @@ const useClasses = makeStyles({
   }
 });
 
-export interface PartyGroupProps {
-  party: any,
-}
-
-export const PartyGroup = ({ party }: PartyGroupProps) => {
-  const [pads]: Pad[][] = usePads();
+export const PartyGroup = ({ party }) => {
+  const [pads] = usePads();
   const topic = keyToString(party.publicKey);
   const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
   const classes = useClasses();
@@ -47,7 +42,7 @@ export const PartyGroup = ({ party }: PartyGroupProps) => {
   const handleUserInvite = async () => {
     const invitation = await client.partyManager.inviteToParty(
       party.publicKey,
-      (invitation: any, secret: any) => secret && secret.equals(invitation.secret),
+      (invitation, secret) => secret && secret.equals(invitation.secret),
       () => {
         const passcode = generatePasscode();
         setPasscode(passcode);

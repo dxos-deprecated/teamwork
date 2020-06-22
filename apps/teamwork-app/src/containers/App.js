@@ -17,7 +17,6 @@ import { EditableText } from '@dxos/react-ux';
 
 import { useItem } from '../model';
 import { Sidebar } from './Sidebar';
-import { Pad } from '../common';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -37,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const classes = useStyles();
   const { topic, item: viewId } = useParams();
-  const [pads]: Pad[][] = usePads();
+  const [pads] = usePads();
   const [item, editItem] = useItem(topic, pads.map(pad => pad.type), viewId);
   const client = useClient();
   const router = useAppRouter();
@@ -60,7 +59,7 @@ const App = () => {
         value={item.title}
         variant="h6"
         classes={{ root: classes.titleRoot }}
-        onUpdate={(title: string) => editItem(title)}
+        onUpdate={(title) => editItem(title)}
       />
     )}
   </>);
