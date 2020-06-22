@@ -13,7 +13,6 @@ import { EditableText } from '@dxos/react-ux';
 import { useArrayModel } from '../model/useArrayModel';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
-import { CardItem } from '../model/CardItem';
 
 export const LIST_TYPE = 'testing.planner.List';
 export const CARD_TYPE = 'testing.planner.Card';
@@ -37,33 +36,18 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export interface CardProps {
-  card: CardItem,
-  provided: any,
-  index: number,
-  snapshot?: any,
-}
-
-export interface ListProps {
-  topic: string,
-  list: any,
-  onUpdateList: (list: {title: string}) => void,
-  onOpenCard: (id: string | number) => void,
-  className?: string,
-}
-
-const List = (props: ListProps) => {
+const List = (props) => {
   const classes = useStyles();
   const { topic, list, onUpdateList, onOpenCard, className } = props;
   const { id: listId } = list;
   const cardsModel = useArrayModel(topic, CARD_TYPE, { listId });
-  const cards: CardItem[] = cardsModel ? cardsModel.getItems() : [];
+  const cards = cardsModel ? cardsModel.getItems() : [];
 
-  const handleTitleUpdate = (title: string) => {
+  const handleTitleUpdate = (title) => {
     onUpdateList({ title });
   };
 
-  const handleAddCard = (title: string) => {
+  const handleAddCard = (title) => {
     cardsModel.push({ listId, title });
   };
 
@@ -75,7 +59,7 @@ const List = (props: ListProps) => {
   //   cardsModel.moveItemByIndex(source.index, destination.index);
   // };
 
-  const Card = ({ card, provided }: CardProps) => (
+  const Card = ({ card, provided }) => (
     <div
       className={classes.cardContainer}
       {...provided.draggableProps}
@@ -102,13 +86,13 @@ const List = (props: ListProps) => {
         />
       </div>
       <Droppable direction="vertical" type="list" droppableId={list.id}>
-        {({ innerRef, placeholder }: any) => (
+        {({ innerRef, placeholder }) => (
           <div ref={innerRef}>
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
                 <Draggable key={card.id} draggableId={card.id} index={index}>
-                  {(provided: any, snapshot: any) => (
+                  {(provided, snapshot) => (
                     <Card
                       key={card.id}
                       card={card}

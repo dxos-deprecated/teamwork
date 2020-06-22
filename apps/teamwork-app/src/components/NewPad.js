@@ -37,22 +37,17 @@ const useStyles = makeStyles({
   }
 });
 
-export interface NewPadProps {
-  topic: string,
-  createItem: (type: string, title: string, opts?: {}) => any
-}
-
-export const NewPad = ({ topic, createItem }: NewPadProps) => {
+export const NewPad = ({ topic, createItem }) => {
   const router = useAppRouter();
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
 
   const classes = useStyles();
 
-  const handleSelect = (viewId: string) => {
+  const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
   };
 
-  const handleCreate = (type?: string) => {
+  const handleCreate = (type) => {
     setTypeSelectDialogOpen(false);
     if (!type) return;
     const title = `item-${chance.word()}`;

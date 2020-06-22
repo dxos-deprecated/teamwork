@@ -57,7 +57,7 @@ export const Landing = () => {
   return (
     <AppContainer>
       <div className={classes.root}>
-        {parties.map((party: any) => (
+        {parties.map((party) => (
           <PartyGroup key={party.publicKey.toString()} party={party} />
         ))}
         {parties.length === 0 && (

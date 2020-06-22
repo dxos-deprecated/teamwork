@@ -24,7 +24,6 @@ import CanvasApp from '@dxos/canvas-pad';
 
 import App from './App';
 import { Landing } from './Landing';
-import { Pad } from '../common';
 
 const initialState = {
   [SET_LAYOUT]: {
@@ -33,18 +32,14 @@ const initialState = {
   }
 };
 
-const pads: Pad[] = [
-  MessengerPad as any,
+const pads = [
+  MessengerPad,
   EditorPad,
   PlannerPad,
   CanvasApp
 ];
 
-export interface RootProps {
-  config: any
-}
-
-export const Root = ({ config }: RootProps) => {
+export const Root = ({ config }) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
   const { routes } = router;
 
