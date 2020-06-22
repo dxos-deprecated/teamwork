@@ -13,15 +13,8 @@ import Dialog from '@material-ui/core/Dialog';
 
 import { usePads } from '@dxos/react-appkit';
 
-import { Pad } from '../common';
-
-export interface DocumentTypeSelectDialogProps {
-  open: boolean
-  onSelect: (type?: string) => void
-}
-
-export const DocumentTypeSelectDialog = ({ open, onSelect }: DocumentTypeSelectDialogProps) => {
-  const [pads]: Pad[][] = usePads();
+export const DocumentTypeSelectDialog = ({ open, onSelect }) => {
+  const [pads] = usePads();
   return (
     <Dialog open={open} onClose={() => onSelect(undefined)}>
       <DialogTitle>Choose app</DialogTitle>

@@ -13,7 +13,7 @@ export const TYPE_CANVAS_DOCUMENT = 'wrn_dxos_org_canvas_echo_document';
 export const TYPE_CANVAS_ECHO_OBJECT = 'wrn_dxos_org_canvas_echo_object';
 
 // TODO(burdon): Replace.
-const fromSafeId = (id: string) => id.replace('__', '/');
+const fromSafeId = (id) => id.replace('__', '/');
 
 /**
  * Document state.
@@ -22,7 +22,7 @@ const fromSafeId = (id: string) => id.replace('__', '/');
  * @param documentId
  * @returns {{ objects: Object[] }}
  */
-export const useDocument = (topic: string, documentId: string) => {
+export const useDocument = (topic, documentId) => {
   assert(topic);
   assert(documentId);
 
@@ -39,17 +39,17 @@ export const useDocument = (topic: string, documentId: string) => {
   return {
     objects: model?.getObjectsByType(TYPE_CANVAS_ECHO_OBJECT) ?? [],
 
-    createObject: (properties: any) => {
+    createObject: (properties) => {
       assert(model);
       return model.createItem(TYPE_CANVAS_ECHO_OBJECT, properties);
     },
 
-    updateObject: (id: string, properties: any) => {
+    updateObject: (id, properties) => {
       assert(model);
       model.updateItem(id, properties);
     },
 
-    deleteObject: (id: string) => {
+    deleteObject: (id) => {
       assert(model);
       model.deleteItem(id);
     }

@@ -11,22 +11,21 @@ import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads } from '@d
 
 import { useItemList } from '../model';
 import { DocumentTypeSelectDialog } from './DocumentTypeSelectDialog';
-import { Pad } from '../common';
 
 const chance = new Chance();
 
 export const Sidebar = () => {
   const router = useAppRouter();
   const { topic, item: active } = useParams();
-  const [pads]: Pad[][] = usePads();
+  const [pads] = usePads();
   const { items, createItem, editItem } = useItemList(topic, pads.map(pad => pad.type));
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
 
-  const handleSelect = (viewId: string) => {
+  const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
   };
 
-  const handleCreate = (type?: string) => {
+  const handleCreate = (type) => {
     setTypeSelectDialogOpen(false);
     if (!type) return;
     const title = `item-${chance.word()}`;
@@ -44,7 +43,7 @@ export const Sidebar = () => {
           icon={pads.find(pad => pad.type === document.__type_url)?.icon}
           isSelected={active === document.viewId}
           onSelect={() => handleSelect(document.viewId)}
-          onUpdate={(title: string) => editItem(document.__type_url, document.viewId, title)}
+          onUpdate={(title) => editItem(document.__type_url, document.viewId, title)}
         />
       ))}
 

@@ -18,12 +18,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export interface CanvasProps {
-  topic: string
-  viewId: string
-}
-
-export const Canvas = ({ topic, viewId }: CanvasProps) => {
+export const Canvas = ({ topic, viewId }) => {
   assert(topic);
   assert(viewId);
 

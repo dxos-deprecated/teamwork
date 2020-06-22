@@ -28,11 +28,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export interface AddCardProps {
-  onAddCard: (title: string) => void,
-}
-
-const AddCard = (props: AddCardProps) => {
+const AddCard = (props) => {
   const classes = useStyles();
   const { onAddCard } = props;
   const [title, setTitle] = useState('');
@@ -52,7 +48,7 @@ const AddCard = (props: AddCardProps) => {
     setTitle('');
   };
 
-  const handleKeyDown = (ev: any) => {
+  const handleKeyDown = (ev) => {
     if (ev.key === 'Enter') {
       handleAdd();
     }

@@ -22,12 +22,7 @@ const useStyles = makeStyles({
   }
 });
 
-export interface PartyMembersProps {
-  party: any,
-  handleUserInvite: () => void,
-}
-
-export const PartyMembers = ({ party, handleUserInvite }: PartyMembersProps) => {
+export const PartyMembers = ({ party, handleUserInvite }) => {
   const classes = useStyles();
 
   return (
