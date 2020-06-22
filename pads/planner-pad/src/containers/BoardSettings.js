@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DeleteConfirmation } from '@dxos/react-ux';
 
 import Input from '../components/Input';
-import { BoardItem } from '../model/board';
 
 const useStyles = makeStyles(() => ({
   drawer: {
@@ -26,14 +25,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export interface BoardSettingsProps {
-  isOpen: boolean,
-  board: BoardItem,
-  onUpdateBoard: (updates: Partial<BoardItem>) => void,
-  onClose: () => void,
-}
-
-const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }: BoardSettingsProps) => {
+const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
   const classes = useStyles();
   const { title, description } = board;
 

@@ -7,7 +7,6 @@ import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { OutlinedTextFieldProps } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -19,25 +18,18 @@ const useStyles = makeStyles(() => ({
 /**
  * Editable text field.
  */
-
-export interface InputProps extends Partial<OutlinedTextFieldProps> {
-  className?: string,
-  value: string,
-  onUpdate: (text: string) => void,
-}
-
-const Input = (props: InputProps) => {
+const Input = (props) => {
   const classes = useStyles();
   const { className, value, onUpdate, multiline, ...textFieldProps } = props;
 
   const [text, setText] = useState(value);
   const original = value;
 
-  const handleChange = (event: any) => {
+  const handleChange = (event) => {
     setText(event.target.value);
   };
 
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = (event) => {
     const { target, key } = event;
     const { value } = target;
 

@@ -17,8 +17,7 @@ import { useArrayModel } from '../model/useArrayModel';
 import { ArrayModel } from '../model/array';
 import BoardSettings from './BoardSettings';
 import List, { LIST_TYPE, CARD_TYPE } from './List';
-import { ListItem } from '../model/ListItem';
-import { BOARD_TYPE, useBoard, BoardItem } from '../model/board';
+import { BOARD_TYPE, useBoard } from '../model/board';
 
 const useStyles = makeStyles(() => {
   return {
@@ -52,12 +51,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-export interface BoardProps {
-  topic: string
-  viewId: string
-}
-
-export const Board = ({ topic, viewId }: BoardProps) => {
+export const Board = ({ topic, viewId }) => {
   const classes = useStyles();
   const client = useClient();
   const boardId = `${BOARD_TYPE}/${viewId}`;
@@ -70,17 +64,17 @@ export const Board = ({ topic, viewId }: BoardProps) => {
     return <div className={classes.root}>Loading board...</div>;
   }
 
-  const lists: ListItem[] = listsModel.getItems();
+  const lists = listsModel.getItems();
 
   const handleAddList = () => {
     listsModel.push({ boardId, title: 'New List' });
   };
 
-  const handleUpdateList = (listId: string | number) => (properties: Partial<BoardItem>) => {
+  const handleUpdateList = (listId) => (properties) => {
     listsModel.updateItem(listId, properties);
   };
 
-  const onDragEnd = async (result: DropResult) => {
+  const onDragEnd = async (result) => {
     const { source, destination } = result;
     console.log(source, destination);
 
@@ -135,12 +129,12 @@ export const Board = ({ topic, viewId }: BoardProps) => {
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable direction="horizontal" type="column" droppableId={board.viewId}>
-        {(provided: any) => (
+        {(provided) => (
           <div ref={provided.innerRef} className={classes.scrollBox}>
             <div className={classes.root}>
               {lists.map((list, index) => (
                 <Draggable key={list.id} draggableId={list.id} index={index}>
-                  {(provided: any) => (
+                  {(provided) => (
                     <div
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
