@@ -27,26 +27,9 @@ const useEditorClasses = makeStyles(() => ({
   }
 }));
 
-interface ContextMenuHandlersOptions {
-  topic: string
-  pads: any[]
-  items: any[]
-  onCreateItem: (type: string) => any
-  editor: any
-}
-
-type ContextMenuItem = {
-  id: string
-  label: string
-  create?: boolean
-  fn: () => void
-} | {
-  subheader: string
-}
-
-const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }: ContextMenuHandlersOptions) => {
+const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) => {
   const handleContextMenuGetOptions = useCallback(() => {
-    let insertOptions: ContextMenuItem[] = items.map(item => ({
+    let insertOptions = items.map(item => ({
       id: item.id,
       label: item.title,
       fn: () => {
@@ -63,7 +46,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }: Co
       insertOptions = [{ subheader: 'Insert items' }, ...insertOptions];
     }
 
-    let createItemOptions: ContextMenuItem[] = pads.map(pad => ({
+    let createItemOptions = pads.map(pad => ({
       id: `create-${pad.type}`,
       label: `New ${pad.displayName}`,
       create: true,
@@ -107,20 +90,10 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }: Co
   };
 };
 
-export interface EditorProps {
-  topic: string
-  itemId: string
-  pads: any[]
-  items: any[]
-  onCreateItem: (type: string) => any
-}
-
-export const Editor = (
-  { topic, itemId, pads = [], items = [], onCreateItem }: EditorProps
-) => {
+export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) => {
   const { publicKey } = useProfile();
   const classes = useEditorClasses();
-  const [editor, setEditor] = useState<any>();
+  const [editor, setEditor] = useState();
 
   const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
 
@@ -128,7 +101,7 @@ export const Editor = (
     if (!documentUpdateModel || !editor) return;
 
     // Remote updates handler: update current doc
-    const modelUpdateHandler = (model: any, messages: any[]) => {
+    const modelUpdateHandler = (model, messages) => {
       messages.forEach(({ update, origin }) => {
         if (origin.docClientId !== editor.sync.doc.clientID) {
           editor.sync.processRemoteUpdate(update, origin);
