@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import Grid from '@material-ui/core/Grid';
 import { Fab, Zoom, CircularProgress, Tooltip, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 
@@ -32,6 +33,11 @@ const useStyles = makeStyles({
   createPartyLink: {
     cursor: 'pointer',
     color: '#2196f3'
+  },
+  grid: {
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 16
   }
 });
 
@@ -57,9 +63,13 @@ export const Landing = () => {
   return (
     <AppContainer>
       <div className={classes.root}>
-        {parties.map((party) => (
-          <PartyGroup key={party.publicKey.toString()} party={party} />
-        ))}
+        <Grid container spacing={2} alignItems="stretch" className={classes.grid}>
+          {parties.map((party) => (
+            <Grid key={party.publicKey.toString()} item zeroMinWidth>
+              <PartyGroup party={party} />
+            </Grid>
+          ))}
+        </Grid>
         {parties.length === 0 && (
           <Typography className={classes.createPartyText} variant="h2">
             <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
