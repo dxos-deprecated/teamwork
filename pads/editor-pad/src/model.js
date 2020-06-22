@@ -14,7 +14,7 @@ export const TYPE_EDITOR_UPDATE = 'testing.document.Update';
 /**
  * Provides the document content.
  */
-export const useDocumentUpdateModel = (topic: string, documentId: string): any => {
+export const useDocumentUpdateModel = (topic, documentId) => {
   assert(topic);
   assert(documentId);
 
@@ -27,33 +27,27 @@ export const useDocumentUpdateModel = (topic: string, documentId: string): any =
 
 // TODO(marik-d): Copied from teamwork-app. After item ids are standartized it should be replaced with a hook from appkit.
 
-export interface Item {
-  ['__type_url']: string
-  viewId: string
-  title: string
-}
-
 /**
  * Provides item list and item creator.
  */
-export const useItemList = (topic: string, types: string[]) => {
+export const useItemList = (topic, types) => {
   const model = useModel({ options: { type: types, topic } });
 
   // TODO(burdon): CRDT. (maybe use PartiallyOrderedModel?)
-  const messages: Item[] = model?.messages ?? [];
+  const messages = model?.messages ?? [];
   const items = Object.values(messages.reduce((map, item) => {
     map[item.viewId] = { ...(map[item.viewId] || []), ...item };
     return map;
-  }, {} as Record<string, Item>));
+  }, {}));
 
   return {
     items,
-    createItem: (type: string, title: string, opts = {}) => {
+    createItem: (type, title, opts = {}) => {
       const viewId = createId();
       model.appendMessage({ viewId, __type_url: type, title, ...opts });
       return viewId;
     },
-    editItem: (type: string, viewId: string, title: string) => {
+    editItem: (type, viewId, title) => {
       model.appendMessage({ __type_url: type, viewId, title });
     }
   };
