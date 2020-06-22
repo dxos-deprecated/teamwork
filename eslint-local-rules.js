@@ -1,7 +1,7 @@
 const REGEX = /Copyright/;
 const TEMPLATE = [
   '//',
-  `// Copyright ${new Date().getFullYear()} DxOS, Inc.`,
+  `// Copyright ${new Date().getFullYear()} DXOS.org`,
   '//',
   '',
 ].join('\n') + '\n'

@@ -1,5 +1,5 @@
 //
-// Copyright 2019 DxOS, Inc.
+// Copyright 2019 DXOS.org
 //
 
 const merge = require('webpack-merge');
