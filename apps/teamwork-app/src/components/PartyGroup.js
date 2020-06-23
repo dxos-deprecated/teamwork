@@ -15,6 +15,7 @@ import { keyToString } from '@dxos/crypto';
 import { usePads, InvitationDialog, useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
+import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
 import { PartyMemberList } from './PartyMemberList';
@@ -39,6 +40,14 @@ const useClasses = makeStyles({
   grid: {
     paddingTop: 16,
     paddingBottom: 16
+  },
+  labelText: {
+    fontSize: '1.5em',
+    fontWeight: 'inherit',
+    flexGrow: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
   }
 });
 
@@ -94,7 +103,13 @@ export const PartyGroup = ({ party }) => {
   return (<>
     <Card className={classes.card}>
       <CardHeader
-        title={party.displayName}
+        title={
+          <EditableText
+            value={party.displayName}
+            onUpdate={(displayName) => client.partyManager.setPartyProperty(party.publicKey, { displayName })}
+            className={classes.labelText}
+          />
+        }
       />
       <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
       <List className={classes.list}>
