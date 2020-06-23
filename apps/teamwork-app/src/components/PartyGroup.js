@@ -17,9 +17,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { keyToString } from '@dxos/crypto';
-import { InvitationDialog, useAppRouter } from '@dxos/react-appkit';
+import { useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
-import { generatePasscode } from '@dxos/credentials';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
@@ -64,31 +63,8 @@ export const PartyGroup = ({ party }) => {
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
   const classes = useClasses();
   const client = useClient();
-  const [invitationDialogOpen, setInvitationDialogOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
-  const [invitation, setInvitation] = useState(null);
-  const [passcode, setPasscode] = useState(null);
   const router = useAppRouter();
-
-  const handleUserInvite = async () => {
-    const invitation = await client.partyManager.inviteToParty(
-      party.publicKey,
-      (invitation, secret) => secret && secret.equals(invitation.secret),
-      () => {
-        const passcode = generatePasscode();
-        setPasscode(passcode);
-        return Buffer.from(passcode);
-      },
-      {
-        onFinish: () => setInvitationDialogOpen(false)
-      }
-    );
-
-    setInvitation(invitation);
-    setPasscode(null);
-
-    setInvitationDialogOpen(true);
-  };
 
   const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
@@ -113,7 +89,7 @@ export const PartyGroup = ({ party }) => {
           />
         }
       />
-      <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
+      <PartyMemberList party={party} />
       <List className={classes.list}>
         {model.getAllViews().map(item => (
           <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>
@@ -134,14 +110,6 @@ export const PartyGroup = ({ party }) => {
         <ListItem button onClick={() => setShareDialogOpen(true)}><Add />&nbsp;Share...</ListItem>
       </List>
     </Card>
-    <InvitationDialog
-      open={invitationDialogOpen}
-      link={invitation && router.createInvitationUrl(invitation)}
-      passcode={passcode}
-      title="Authorize Device"
-      message={passcode ? 'The peer has connected.' : 'A passcode will be generated once the remote peer connects.'}
-      onClose={() => setInvitationDialogOpen(false)}
-    />
     <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
     <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
   </>
