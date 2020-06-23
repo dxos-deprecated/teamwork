@@ -5,7 +5,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import FaceIcon from '@material-ui/icons/Face';
-import Button from '@material-ui/core/Button';
 import { AvatarGroup } from '@material-ui/lab';
 import { Add } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
@@ -15,30 +14,31 @@ import { humanize } from '@dxos/crypto';
 
 const useStyles = makeStyles({
   root: {
-    margin: 15
+    marginLeft: 15,
+    marginRight: 15,
+    marginBottom: 15
   }
 });
 
-export const PartyMemberList = ({ party }) => {
+export const PartyMemberList = ({ party, handleUserInvite }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AvatarGroup>
         {party.members.map(member => (<>
-          <Tooltip title={member.displayName || humanize(member.publicKey)} placement="top">
+          <Tooltip key={member.publicKey} title={member.displayName || humanize(member.publicKey)} placement="top">
             <Avatar>
               <FaceIcon />
             </Avatar>
           </Tooltip>
         </>))}
         <Tooltip title="New member" placement="top">
-          <Avatar onClick={undefined}>
+          <Avatar onClick={handleUserInvite}>
             <Add />
           </Avatar>
         </Tooltip>
       </AvatarGroup>
-      <Button size="small" color="primary" onClick={undefined}>New member</Button>
     </div>
   );
 };

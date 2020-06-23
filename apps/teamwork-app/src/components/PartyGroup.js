@@ -7,9 +7,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
+import { Add } from '@material-ui/icons';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
 import { Chance } from 'chance';
 
 import { keyToString } from '@dxos/crypto';
@@ -17,7 +16,6 @@ import { usePads, InvitationDialog, useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 
-import { PartyMembers } from './PartyMembers';
 import { PartyMemberList } from './PartyMemberList';
 import { useItemList } from '../model';
 import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
@@ -29,7 +27,9 @@ const useClasses = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     height: 600,
-    width: 300,
+    width: 300
+  },
+  list: {
     overflowY: 'scroll'
   },
   root: {
@@ -97,21 +97,17 @@ export const PartyGroup = ({ party }) => {
       <CardHeader
         title={party.displayName}
       />
-      <PartyMemberList party={party} />
+      <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
       <List className={classes.list}>
         {padsWithItems.map(pad => (
           <>
             {items.filter(item => item.__type_url === pad.type).map(item => (
-              <ListItem key={item.viewId} button onClick={() => onSelect(item)}><span><pad.icon /> {item.title}</span></ListItem>
+              <ListItem key={item.viewId} button onClick={() => onSelect(item)}><pad.icon />&nbsp;{item.title}</ListItem>
             ))}
           </>
         ))}
+        <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
       </List>
-      <PartyMembers party={party} />
-      <CardActions>
-        <Button size="small" color="primary" onClick={() => setTypeSelectDialogOpen(true)}>New document</Button>
-        <Button size="small" color="primary" onClick={handleUserInvite}>New member</Button>
-      </CardActions>
     </Card>
     <InvitationDialog
       open={invitationDialogOpen}
