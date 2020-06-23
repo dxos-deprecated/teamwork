@@ -3,55 +3,15 @@
 //
 
 import { useModel } from '@dxos/react-client';
-import { createId } from '@dxos/crypto';
+import { ViewModel } from '@dxos/view-model';
+import { usePads } from '@dxos/react-appkit';
 
 /**
  * Provides item list and item creator.
+ * @returns {ViewModel}
  */
-export const useItemList = (topic, types) => {
-  const model = useModel({ options: { type: types, topic } });
-
-  // TODO(burdon): CRDT. (maybe use PartiallyOrderedModel?)
-  const messages = model?.messages ?? [];
-  const items = Object.values(messages.reduce((map, item) => {
-    map[item.viewId] = { ...(map[item.viewId] || []), ...item };
-    return map;
-  }, {}));
-
-  return {
-    items,
-    createItem: (type, title, opts = {}) => {
-      const viewId = createId();
-      model.appendMessage({ viewId, __type_url: type, title, ...opts });
-      return viewId;
-    },
-    editItem: (type, viewId, title) => {
-      model.appendMessage({ __type_url: type, viewId, title });
-    }
-  };
-};
-
-/**
- * Provides item metadata and updater.
- * @returns {[{title}, function]}
- */
-export const useItem = (topic, types, viewId) => {
-  const model = useModel({ options: { type: types, topic, viewId } });
-  if (!model || !viewId) {
-    return [undefined, () => {}];
-  }
-
-  // TODO(burdon): CRDT.
-  if (!model?.messages?.length) {
-    return [undefined, () => {}];
-  }
-  const item = Object.assign({}, ...model?.messages);
-  const type = item.__type_url;
-
-  return [
-    item,
-    (title) => {
-      model.appendMessage({ __type_url: type, viewId, title });
-    }
-  ];
+export const useItems = (topic) => {
+  const [pads] = usePads();
+  const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
+  return model ?? new ViewModel(); // hack to ensure we dont have any crashes while model is loading
 };

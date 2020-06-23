@@ -15,7 +15,7 @@ import { useClient } from '@dxos/react-client';
 import { AppContainer, usePads, useAppRouter } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
-import { useItem } from '../model';
+import { useItems } from '../model';
 import { Sidebar } from './Sidebar';
 
 const useStyles = makeStyles(theme => ({
@@ -37,11 +37,12 @@ const App = () => {
   const classes = useStyles();
   const { topic, item: viewId } = useParams();
   const [pads] = usePads();
-  const [item, editItem] = useItem(topic, pads.map(pad => pad.type), viewId);
+  const model = useItems(topic);
+  const item = model.getById(viewId);
   const client = useClient();
   const router = useAppRouter();
 
-  const pad = item ? pads.find(pad => pad.type === item.__type_url) : undefined;
+  const pad = item ? pads.find(pad => pad.type === item.type) : undefined;
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -56,10 +57,10 @@ const App = () => {
     </IconButton>
     {item && (
       <EditableText
-        value={item.title}
+        value={item.displayName}
         variant="h6"
         classes={{ root: classes.titleRoot }}
-        onUpdate={(title) => editItem(title)}
+        onUpdate={(title) => model.renameView(viewId, title)}
       />
     )}
   </>);

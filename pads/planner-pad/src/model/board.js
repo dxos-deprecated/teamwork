@@ -3,26 +3,15 @@
 //
 
 import { useModel } from '@dxos/react-client';
+import { ViewModel } from '@dxos/view-model';
 
 export const BOARD_TYPE = 'testing.planner.Board';
 
+/**
+ *
+ * @returns {ViewModel<{ description: string }>}
+ */
 export function useBoard (topic, viewId) {
-  const model = useModel({ options: { type: BOARD_TYPE, topic, viewId } });
-  if (!model || !viewId) {
-    return [undefined, () => {}];
-  }
-
-  // TODO(burdon): CRDT.
-  if (!model?.messages?.length) {
-    return [undefined, () => {}];
-  }
-  const item = Object.assign({}, ...model?.messages);
-  const type = item.__type_url;
-
-  return [
-    item,
-    opts => {
-      model.appendMessage({ __type_url: type, viewId, ...opts });
-    }
-  ];
+  const model = useModel({ model: ViewModel, options: { type: BOARD_TYPE, topic, viewId } });
+  return model ?? new ViewModel();
 }

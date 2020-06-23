@@ -16,8 +16,8 @@ import { usePads, InvitationDialog, useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 
+import { useItems } from '../model';
 import { PartyMemberList } from './PartyMemberList';
-import { useItemList } from '../model';
 import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
 
 const chance = new Chance();
@@ -43,9 +43,8 @@ const useClasses = makeStyles({
 });
 
 export const PartyGroup = ({ party }) => {
-  const [pads] = usePads();
   const topic = keyToString(party.publicKey);
-  const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
+  const model = useItems(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
   const classes = useClasses();
   const client = useClient();
@@ -74,10 +73,6 @@ export const PartyGroup = ({ party }) => {
     setInvitationDialogOpen(true);
   };
 
-  const onSelect = (item) => {
-    router.push({ topic, item: item.viewId });
-  };
-
   const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
   };
@@ -86,11 +81,15 @@ export const PartyGroup = ({ party }) => {
     setTypeSelectDialogOpen(false);
     if (!type) return;
     const title = `item-${chance.word()}`;
-    const viewId = createItem(type, title);
+    const viewId = model.createView(type, title);
     handleSelect(viewId);
   };
 
-  const padsWithItems = pads.filter(pad => items.some(item => item.__type_url === pad.type));
+  const [pads] = usePads();
+  const iconFor = type => {
+    const pad = pads.find(pad => pad.type === type);
+    return pad ? <pad.icon /> : null;
+  };
 
   return (<>
     <Card className={classes.card}>
@@ -99,12 +98,8 @@ export const PartyGroup = ({ party }) => {
       />
       <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
       <List className={classes.list}>
-        {padsWithItems.map(pad => (
-          <>
-            {items.filter(item => item.__type_url === pad.type).map(item => (
-              <ListItem key={item.viewId} button onClick={() => onSelect(item)}><pad.icon />&nbsp;{item.title}</ListItem>
-            ))}
-          </>
+        {model.getAllViews().map(item => (
+          <ListItem key={item.viewId} button onClick={() => handleSelect(item)}>{iconFor(item.type)}&nbsp;{item.displayName}</ListItem>
         ))}
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
       </List>
