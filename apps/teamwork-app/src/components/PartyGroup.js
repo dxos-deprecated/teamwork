@@ -15,7 +15,7 @@ import { generatePasscode } from '@dxos/credentials';
 import { PartyPad } from './PartyPad';
 import { NewPad } from './NewPad';
 import { PartyMembers } from './PartyMembers';
-import { useItemList } from '../model';
+import { useItems } from '../model';
 
 const useClasses = makeStyles({
   root: {
@@ -31,7 +31,7 @@ const useClasses = makeStyles({
 export const PartyGroup = ({ party }) => {
   const [pads] = usePads();
   const topic = keyToString(party.publicKey);
-  const { items, createItem } = useItemList(topic, pads.map(pad => pad.type));
+  const model = useItems(topic);
   const classes = useClasses();
   const client = useClient();
   const [invitationDialogOpen, setInvitationDialogOpen] = useState(false);
@@ -59,7 +59,9 @@ export const PartyGroup = ({ party }) => {
     setInvitationDialogOpen(true);
   };
 
-  const padsWithItems = pads.filter(pad => items.some(item => item.__type_url === pad.type));
+  const padsWithItems = pads.filter(pad => model.getAllForType(pad.type).length > 0);
+
+  const createItem = (type, displayName) => model.createView(type, displayName);
 
   return (
     <div className={classes.root}>
@@ -72,7 +74,7 @@ export const PartyGroup = ({ party }) => {
         </Grid>
         {padsWithItems.map(pad => (
           <Grid key={pad.type} item zeroMinWidth>
-            <PartyPad items={items.filter(item => item.__type_url === pad.type)} createItem={createItem} key={pad.type} pad={pad} topic={keyToString(party.publicKey)} />
+            <PartyPad items={model.getAllForType(pad.type)} createItem={createItem} key={pad.type} pad={pad} topic={keyToString(party.publicKey)} />
           </Grid>
         ))}
         { padsWithItems.length < pads.length && (

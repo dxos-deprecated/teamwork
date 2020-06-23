@@ -25,9 +25,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
+const BoardSettings = ({ isOpen, board, onRename, onUpdate, onDelete, onClose }) => {
   const classes = useStyles();
-  const { title, description } = board;
+  const { displayName, metadata: { description = '' } } = board;
 
   const Header = () => (
     <div className={classes.drawerBox}>
@@ -42,9 +42,9 @@ const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
       <Input
         label="Board Name"
         className={classes.drawerField}
-        key={title}
-        value={title || ''}
-        onUpdate={title => onUpdateBoard({ title })}
+        key={displayName}
+        value={displayName || ''}
+        onUpdate={title => onRename(title)}
       />
       <Input
         label="Board Description"
@@ -52,7 +52,7 @@ const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
         className={classes.drawerField}
         key={description}
         value={description ?? ''}
-        onUpdate={description => onUpdateBoard({ description })}
+        onUpdate={description => onUpdate({ description })}
       />
     </div>
   );
@@ -66,8 +66,8 @@ const BoardSettings = ({ isOpen, board, onUpdateBoard, onClose }) => {
         deletedMessage="Board succesfully archived!"
         restoredMessage="Board succesfully restored!"
         isDeleted={board.deleted}
-        onDelete={() => onUpdateBoard({ deleted: true })}
-        onRestore={() => onUpdateBoard({ deleted: false })}
+        onDelete={onDelete}
+        onRestore={() => console.log('Not implemented')}
       />
     </div>
   );

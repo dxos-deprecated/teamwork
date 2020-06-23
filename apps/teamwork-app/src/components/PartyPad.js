@@ -40,7 +40,7 @@ export const PartyPad = ({ pad, topic, items, createItem }) => {
 
   const handleCreate = () => {
     const title = `item-${chance.word()}`;
-    const viewId = createItem(pad.type, title, { mutations: [] });
+    const viewId = createItem(pad.type, title);
     router.push({ topic, item: viewId });
   };
 
@@ -53,7 +53,7 @@ export const PartyPad = ({ pad, topic, items, createItem }) => {
       />
       <List className={classes.list}>
         {items.map(item => (
-          <ListItem key={item.viewId} button onClick={() => onSelect(item)}>{item.title}</ListItem>
+          <ListItem key={item.viewId} button onClick={() => onSelect(item)}>{item.displayName}</ListItem>
         ))}
       </List>
       <CardActions>

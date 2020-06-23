@@ -56,7 +56,8 @@ export const Board = ({ topic, viewId }) => {
   const client = useClient();
   const boardId = `${BOARD_TYPE}/${viewId}`;
 
-  const [board, editBoard] = useBoard(topic, viewId);
+  const viewModel = useBoard(topic, viewId);
+  const board = viewModel.getById(viewId);
   const listsModel = useArrayModel(topic, LIST_TYPE, { boardId });
 
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -166,7 +167,9 @@ export const Board = ({ topic, viewId }) => {
       {Lists()}
       <BoardSettings
         board={board}
-        onUpdateBoard={editBoard}
+        onRename={displayName => viewModel.renameView(viewId, displayName)}
+        onUpdate={opts => viewModel.updateView(viewId, opts)}
+        onDelete={() => viewModel.deleteView(viewId)}
         isOpen={settingsOpen}
         onClose={() => setSettingsOpen(false)}
       />
