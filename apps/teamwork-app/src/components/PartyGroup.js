@@ -114,7 +114,7 @@ export const PartyGroup = ({ party }) => {
       <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
       <List className={classes.list}>
         {model.getAllViews().map(item => (
-          <ListItem key={item.viewId} button onClick={() => handleSelect(item)}>{iconFor(item.type)}&nbsp;{item.displayName}</ListItem>
+          <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>{iconFor(item.type)}&nbsp;{item.displayName}</ListItem>
         ))}
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
       </List>
