@@ -89,7 +89,7 @@ export const PartyGroup = ({ party }) => {
           />
         }
       />
-      <PartyMemberList party={party} />
+      <PartyMemberList party={party} handleUserInvite={() => setShareDialogOpen(true)} />
       <List className={classes.list}>
         {model.getAllViews().map(item => (
           <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>
@@ -107,7 +107,6 @@ export const PartyGroup = ({ party }) => {
           </ListItem>
         ))}
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
-        <ListItem button onClick={() => setShareDialogOpen(true)}><Add />&nbsp;Share...</ListItem>
       </List>
     </Card>
     <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
