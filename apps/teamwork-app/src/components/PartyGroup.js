@@ -10,9 +10,14 @@ import Card from '@material-ui/core/Card';
 import { Add } from '@material-ui/icons';
 import CardHeader from '@material-ui/core/CardHeader';
 import { Chance } from 'chance';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { keyToString } from '@dxos/crypto';
-import { usePads, InvitationDialog, useAppRouter } from '@dxos/react-appkit';
+import { InvitationDialog, useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { EditableText } from '@dxos/react-ux';
@@ -20,6 +25,7 @@ import { EditableText } from '@dxos/react-ux';
 import { useItems } from '../model';
 import { PartyMemberList } from './PartyMemberList';
 import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
+import { PadIcon } from './PadIcon';
 
 const chance = new Chance();
 
@@ -94,12 +100,6 @@ export const PartyGroup = ({ party }) => {
     handleSelect(viewId);
   };
 
-  const [pads] = usePads();
-  const iconFor = type => {
-    const pad = pads.find(pad => pad.type === type);
-    return pad ? <pad.icon /> : null;
-  };
-
   return (<>
     <Card className={classes.card}>
       <CardHeader
@@ -114,7 +114,19 @@ export const PartyGroup = ({ party }) => {
       <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
       <List className={classes.list}>
         {model.getAllViews().map(item => (
-          <ListItem key={item.viewId} button onClick={() => handleSelect(item)}>{iconFor(item.type)}&nbsp;{item.displayName}</ListItem>
+          <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>
+            <ListItemIcon>
+              <PadIcon type={item.type} />
+            </ListItemIcon>
+            <ListItemText>
+              {item.displayName}
+            </ListItemText>
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
         ))}
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
       </List>
