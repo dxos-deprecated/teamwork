@@ -8,7 +8,7 @@ import { ViewModel } from '@dxos/view-model';
 export const BOARD_TYPE = 'testing.planner.Board';
 
 /**
- * 
+ *
  * @returns {ViewModel<{ description: string }>}
  */
 export function useBoard (topic, viewId) {
