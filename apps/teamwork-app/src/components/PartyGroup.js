@@ -26,6 +26,7 @@ import { useItems } from '../model';
 import { PartyMemberList } from './PartyMemberList';
 import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
 import { PadIcon } from './PadIcon';
+import { ShareDialog } from '../containers/ShareDialog';
 
 const chance = new Chance();
 
@@ -64,6 +65,7 @@ export const PartyGroup = ({ party }) => {
   const classes = useClasses();
   const client = useClient();
   const [invitationDialogOpen, setInvitationDialogOpen] = useState(false);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [invitation, setInvitation] = useState(null);
   const [passcode, setPasscode] = useState(null);
   const router = useAppRouter();
@@ -129,6 +131,7 @@ export const PartyGroup = ({ party }) => {
           </ListItem>
         ))}
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
+        <ListItem button onClick={() => setShareDialogOpen(true)}><Add />&nbsp;Share...</ListItem>
       </List>
     </Card>
     <InvitationDialog
@@ -140,6 +143,7 @@ export const PartyGroup = ({ party }) => {
       onClose={() => setInvitationDialogOpen(false)}
     />
     <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
+    <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
   </>
   );
 };
