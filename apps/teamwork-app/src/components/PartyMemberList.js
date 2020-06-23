@@ -26,13 +26,13 @@ export const PartyMemberList = ({ party, handleUserInvite }) => {
   return (
     <div className={classes.root}>
       <AvatarGroup>
-        {party.members.map(member => (<>
+        {party.members.map(member => (
           <Tooltip key={member.publicKey} title={member.displayName || humanize(member.publicKey)} placement="top">
             <Avatar>
               <FaceIcon />
             </Avatar>
           </Tooltip>
-        </>))}
+        ))}
         <Tooltip title="New member" placement="top">
           <Avatar onClick={handleUserInvite}>
             <Add />

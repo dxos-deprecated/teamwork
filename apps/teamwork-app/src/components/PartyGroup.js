@@ -43,7 +43,6 @@ const useClasses = makeStyles({
 });
 
 export const PartyGroup = ({ party }) => {
-  const [pads] = usePads();
   const topic = keyToString(party.publicKey);
   const model = useItems(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
@@ -86,7 +85,11 @@ export const PartyGroup = ({ party }) => {
     handleSelect(viewId);
   };
 
-  const padsWithItems = pads.filter(pad => model.getAllForType(pad.type).length > 0);
+  const [pads] = usePads();
+  const iconFor = type => {
+    const pad = pads.find(pad => pad.type === type);
+    return pad ? <pad.icon /> : null;
+  };
 
   return (<>
     <Card className={classes.card}>
@@ -96,7 +99,7 @@ export const PartyGroup = ({ party }) => {
       <PartyMemberList party={party} handleUserInvite={handleUserInvite} />
       <List className={classes.list}>
         {model.getAllViews().map(item => (
-          <ListItem key={item.viewId} button onClick={() => onSelect(item)}><pad.icon />&nbsp;{item.title}</ListItem>
+          <ListItem key={item.viewId} button onClick={() => handleSelect(item)}>{iconFor(item.type)}&nbsp;{item.displayName}</ListItem>
         ))}
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
       </List>
