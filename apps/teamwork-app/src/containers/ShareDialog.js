@@ -2,26 +2,27 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
+import React, { useState } from 'react';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import LinkIcon from '@material-ui/icons/Link';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles, Button } from '@material-ui/core';
 
 import { humanize } from '@dxos/crypto';
-import { makeStyles } from '@material-ui/core';
+import { useClient } from '@dxos/react-client';
+import { generatePasscode } from '@dxos/credentials';
+import { useAppRouter } from '@dxos/react-appkit';
 
 const useStyles = makeStyles({
   table: {
@@ -31,22 +32,62 @@ const useStyles = makeStyles({
 
 export const ShareDialog = ({ party, open, onClose }) => {
   const classes = useStyles();
+  const client = useClient();
+  const [pendingInvitations, setPendingInvitations] = useState([]);
+  const router = useAppRouter();
+
+  const onNewPendingInvitation = async () => {
+    const invitation = await client.partyManager.inviteToParty(
+      party.publicKey,
+      (invitation, secret) => secret && secret.equals(invitation.secret),
+      () => {
+        const passcode = generatePasscode();
+        setPendingInvitations(arr => arr.map(x => x.invitation === invitation ? { ...x, passcode } : x));
+        return Buffer.from(passcode);
+      },
+      {
+        onFinish: () => setPendingInvitations(arr => arr.filter(x => x.invitation !== invitation))
+      }
+    );
+
+    setPendingInvitations(old => [...old, { invitation }]);
+  };
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>DXOS Party sharing</DialogTitle>
       <DialogContent>
         <Typography>{`This party has ${party.members.length} collaborators. Adding a party collaborator will give them access to all views within this party.`}</Typography>
+
+        <Button
+          size="small"
+          variant="outlined"
+          // className={classes.openButton}
+          onClick={onNewPendingInvitation}
+        >Invite to party</Button>
+
         <DialogTitle variant="h5">Collaborators</DialogTitle>
         <TableContainer component={Paper}>
           <Table className={classes.table} size="small" aria-label="a dense table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Member</TableCell>
-                <TableCell>Role</TableCell>
-              </TableRow>
-            </TableHead>
             <TableBody>
+              {pendingInvitations.map((pending) => (
+                <TableRow key={pending.invitation.secret}>
+                  <TableCell>
+                    Copy link
+                    <CopyToClipboard text={router.createInvitationUrl(pending.invitation)} onCopy={value => console.log(value)}>
+                      <IconButton
+                        color="inherit"
+                        aria-label="copy to clipboard"
+                        title="Copy to clipboard"
+                        edge="start"
+                      >
+                        <LinkIcon />
+                      </IconButton>
+                    </CopyToClipboard>
+                  </TableCell>
+                  <TableCell>{pending.passcode ?? '...'}</TableCell>
+                </TableRow>
+              ))}
               {party.members.map((member) => (
                 <TableRow key={member.publicKey}>
                   <TableCell>{member.displayName || humanize(member.publicKey)}</TableCell>
