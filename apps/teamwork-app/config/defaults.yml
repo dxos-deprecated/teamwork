@@ -12,6 +12,7 @@ client:
 
   feedStorage:
     root: "dxos/incubator/feeds"
+    type: "idb"
 
   swarm:
     signal: "wss://signal2.dxos.network/dxos/signal"
