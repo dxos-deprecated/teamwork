@@ -18,6 +18,7 @@ import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 
 import { PartyMembers } from './PartyMembers';
+import { PartyMembersPills } from './PartyMembersPills';
 import { useItemList } from '../model';
 import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
 
@@ -96,6 +97,7 @@ export const PartyGroup = ({ party }) => {
       <CardHeader
         title={party.displayName}
       />
+      <PartyMembersPills party={party} />
       <List className={classes.list}>
         {padsWithItems.map(pad => (
           <>
