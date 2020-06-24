@@ -56,7 +56,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
   const parties = useParties();
   const otherMembers = parties
     .flatMap(party => party.members)
-    .filter(member => !party.members.some(m => m.publicKey.toString('hex') !== member.publicKey.toString('hex')))
+    .filter(member => !party.members.some(m => m.publicKey.toString('hex') === member.publicKey.toString('hex')));
 
   return (
     <Dialog open={open} onClose={onClose}>
