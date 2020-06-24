@@ -20,7 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, Button } from '@material-ui/core';
 
 import { humanize } from '@dxos/crypto';
-import { useClient } from '@dxos/react-client';
+import { useClient, useParties } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
 
@@ -53,6 +53,11 @@ export const ShareDialog = ({ party, open, onClose }) => {
     setPendingInvitations(old => [...old, { invitation }]);
   };
 
+  const parties = useParties();
+  const otherMembers = parties
+    .flatMap(party => party.members)
+    .filter(member => !party.members.some(m => m.publicKey.toString('hex') !== member.publicKey.toString('hex')))
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>DXOS Party sharing</DialogTitle>
@@ -64,7 +69,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
           variant="outlined"
           // className={classes.openButton}
           onClick={onNewPendingInvitation}
-        >Invite to party</Button>
+        >Create invite link</Button>
 
         <DialogTitle variant="h5">Collaborators</DialogTitle>
         <TableContainer component={Paper}>
@@ -92,6 +97,17 @@ export const ShareDialog = ({ party, open, onClose }) => {
                 <TableRow key={member.publicKey}>
                   <TableCell>{member.displayName || humanize(member.publicKey)}</TableCell>
                   <TableCell>Collaborator</TableCell>
+                </TableRow>
+              ))}
+              {otherMembers.map(member => (
+                <TableRow key={member.publicKey}>
+                  <TableCell>{member.displayName || humanize(member.publicKey)}</TableCell>
+                  <TableCell>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                    >Invite</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
