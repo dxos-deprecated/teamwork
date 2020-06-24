@@ -3,7 +3,7 @@
 //
 
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
 import FaceIcon from '@material-ui/icons/Face';
 import { AvatarGroup } from '@material-ui/lab';
 import { Add } from '@material-ui/icons';
@@ -11,6 +11,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { humanize } from '@dxos/crypto';
+
+import { getAvatarStyle } from './MemberAvatar';
 
 const useStyles = makeStyles({
   root: {
@@ -22,14 +24,17 @@ const useStyles = makeStyles({
 
 export const PartyMemberList = ({ party, handleUserInvite }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <div className={classes.root}>
       <AvatarGroup>
         {party.members.map(member => (
           <Tooltip key={member.publicKey} title={member.displayName || humanize(member.publicKey)} placement="top">
-            <Avatar>
-              <FaceIcon />
+            <Avatar style={getAvatarStyle(theme, member.publicKey)}>
+              {member.displayName
+                ? member.displayName.slice(0, 1).toUpperCase()
+                : <FaceIcon />}
             </Avatar>
           </Tooltip>
         ))}
