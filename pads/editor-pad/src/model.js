@@ -5,7 +5,8 @@
 import assert from 'assert';
 
 import { useModel } from '@dxos/react-client';
-import { createId } from '@dxos/crypto';
+import { ViewModel } from '@dxos/view-model';
+import { usePads } from '@dxos/react-appkit';
 
 // TODO(burdon): Define types.
 export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
@@ -25,30 +26,12 @@ export const useDocumentUpdateModel = (topic, documentId) => {
   return model;
 };
 
-// TODO(marik-d): Copied from teamwork-app. After item ids are standartized it should be replaced with a hook from appkit.
-
 /**
  * Provides item list and item creator.
+ * @returns {ViewModel}
  */
-export const useItemList = (topic, types) => {
-  const model = useModel({ options: { type: types, topic } });
-
-  // TODO(burdon): CRDT. (maybe use PartiallyOrderedModel?)
-  const messages = model?.messages ?? [];
-  const items = Object.values(messages.reduce((map, item) => {
-    map[item.viewId] = { ...(map[item.viewId] || []), ...item };
-    return map;
-  }, {}));
-
-  return {
-    items,
-    createItem: (type, title, opts = {}) => {
-      const viewId = createId();
-      model.appendMessage({ viewId, __type_url: type, title, ...opts });
-      return viewId;
-    },
-    editItem: (type, viewId, title) => {
-      model.appendMessage({ __type_url: type, viewId, title });
-    }
-  };
+export const useItems = (topic) => {
+  const [pads] = usePads();
+  const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
+  return model ?? new ViewModel(); // hack to ensure we dont have any crashes while model is loading
 };

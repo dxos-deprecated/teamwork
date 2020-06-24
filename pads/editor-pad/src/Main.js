@@ -9,7 +9,7 @@ import { Chance } from 'chance';
 import { usePads } from '@dxos/react-appkit';
 
 import { Editor } from './components/Editor';
-import { useItemList } from './model';
+import { useItems } from './model';
 
 const chance = new Chance();
 
@@ -18,11 +18,11 @@ export default function EditorPad ({ topic, viewId }) {
   assert(viewId);
 
   const [pads] = usePads();
-  const { items, createItem } = useItemList(topic, pads.map((pad) => pad.type));
+  const viewModel = useItems(topic, pads.map((pad) => pad.type));
   function onCreateItem (type) {
-    const title = `item-${chance.word()}`;
-    const viewId = createItem(type, title);
-    return { __type_url: type, viewId, title };
+    const displayName = `embeded-item-${chance.word()}`;
+    const viewId = viewModel.createView(type, displayName);
+    return { __type_url: type, viewId, displayName };
   }
 
   return (
@@ -30,7 +30,7 @@ export default function EditorPad ({ topic, viewId }) {
       topic={topic}
       itemId={viewId}
       pads={pads}
-      items={items}
+      items={viewModel.getAllViews()}
       onCreateItem={onCreateItem}
     />
   );
