@@ -31,12 +31,12 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   const handleContextMenuGetOptions = useCallback(() => {
     let insertOptions = items.map(item => ({
       id: item.id,
-      label: item.title,
+      label: item.displayName,
       fn: () => {
         editor.createReactElement({
           type: item.__type_url,
           viewId: item.viewId,
-          title: item.title,
+          title: item.displayName,
           topic
         });
       }
@@ -56,7 +56,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
         editor.createReactElement({
           type: pad.type,
           viewId: item.viewId,
-          title: item.title,
+          title: item.displayName,
           topic
         });
       }
