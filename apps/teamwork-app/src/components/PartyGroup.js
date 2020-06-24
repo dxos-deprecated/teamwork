@@ -60,7 +60,9 @@ const useClasses = makeStyles({
     whiteSpace: 'nowrap'
   },
   actions: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop: 'auto',
+    marginLeft: 'auto'
   }
 });
 
@@ -125,7 +127,7 @@ export const PartyGroup = ({ party }) => {
         >
           {deletedItemsVisible ? 'Hide deleted' : 'Show deleted'}
         </Button>
-        </CardActions>
+      </CardActions>
     </Card>
     <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
     <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
