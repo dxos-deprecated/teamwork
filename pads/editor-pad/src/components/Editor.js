@@ -34,7 +34,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       label: item.displayName,
       fn: () => {
         editor.createReactElement({
-          type: item.__type_url,
+          type: item.type,
           viewId: item.viewId,
           title: item.displayName,
           topic
