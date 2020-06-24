@@ -1373,23 +1373,6 @@
   dependencies:
     debug "^4.1.1"
 
-"@dxos/echo-db@^1.0.0-beta.15":
-  version "1.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.15.tgz#50fc1582e7f58eefa9cdf5e93137356b394e391e"
-  integrity sha512-y8V2y4jkcHDJBdJzRqPLSqtdHj0q1tVAuFSwQ2gNiBR4f6mb+hqxFx7vloRKVZQWVCKm1ers6xMtx6Bs54/3rw==
-  dependencies:
-    "@dxos/codec-protobuf" "^1.1.0-beta.0"
-    "@dxos/crypto" "^0.0.1"
-    "@dxos/model-factory" "^1.0.0-beta.15"
-    "@types/debug" "^4.1.1"
-    "@types/end-of-stream" "^1.4.0"
-    "@types/node" "^14.0.9"
-    "@types/stream-buffers" "^3.0.2"
-    "@types/through2" "^2.0.36"
-    debug "^4.1.1"
-    protobufjs "^6.9.0"
-    source-map-support "^0.5.12"
-
 "@dxos/echo-db@^1.0.0-beta.18":
   version "1.0.0-beta.18"
   resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.18.tgz#f22feb733ae86820ddbae5411bab4d9db6376d5b"
@@ -1398,6 +1381,24 @@
     "@dxos/codec-protobuf" "^1.1.0-beta.0"
     "@dxos/crypto" "^0.0.1"
     "@dxos/model-factory" "^1.0.0-beta.18"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    js-data-structs "^1.1.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
+"@dxos/echo-db@^1.0.0-beta.19":
+  version "1.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.19.tgz#8d44f91cf868f9cb2b149fc01bb1a76d75fa8b57"
+  integrity sha512-kNzkrmJ4O3mBNwLl2kfhAsCk0QEZXX3BTVdZs/t+k0f6biVLm1J5oziEhPabBLXFxSk9+Xl14F5HfGReao80dA==
+  dependencies:
+    "@dxos/codec-protobuf" "^1.1.0-beta.0"
+    "@dxos/crypto" "^0.0.1"
+    "@dxos/model-factory" "^1.0.0-beta.19"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/node" "^14.0.9"
@@ -1533,28 +1534,31 @@
     lodash.set "^4.3.2"
     lodash.unset "^4.5.2"
 
-"@dxos/model-factory@^1.0.0-beta.15":
-  version "1.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.15.tgz#6ee1710fa2d5d8d11a9f0165ea3db8d0c11444dd"
-  integrity sha512-c8YGGuIrX9TUQqRHbDOKzE2SHP/sa+NC8SJnevknbZuyqYrnjB/HSvjh53JBSKXzUI6uUEm1u0tuax5XHAlfMQ==
+"@dxos/model-factory@^1.0.0-beta.17", "@dxos/model-factory@^1.0.0-beta.18":
+  version "1.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.18.tgz#171ec6ebc2e24cca8765e24b64e7585f922081a7"
+  integrity sha512-YXhXUvJNzW7F4LwoIAkEq1S7u+WJm97QbXE1piZdPeH+dDK/yobzn0E4P9JiVBgbzK1WczwFE9Eb6+/S8GL0Hw==
   dependencies:
     "@dxos/crypto" "^0.0.1"
     "@dxos/debug" "^1.0.0-beta.20"
     "@dxos/feed-level-indexer" "^1.1.0-alpha.9"
+    "@dxos/metrics" "^1.0.0-beta.8"
+    charwise "^3.0.1"
     debug "^4.1.1"
     end-of-stream "^1.4.4"
     level-mem "^5.0.1"
     lodash.debounce "^4.0.8"
+    monotonic-timestamp "^0.0.9"
     multi-read-stream "^2.0.0"
     p-limit "^3.0.1"
     pump "^3.0.0"
     source-map-support "^0.5.12"
     through2 "^3.0.1"
 
-"@dxos/model-factory@^1.0.0-beta.17", "@dxos/model-factory@^1.0.0-beta.18":
-  version "1.0.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.18.tgz#171ec6ebc2e24cca8765e24b64e7585f922081a7"
-  integrity sha512-YXhXUvJNzW7F4LwoIAkEq1S7u+WJm97QbXE1piZdPeH+dDK/yobzn0E4P9JiVBgbzK1WczwFE9Eb6+/S8GL0Hw==
+"@dxos/model-factory@^1.0.0-beta.19":
+  version "1.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.19.tgz#8bf1cfb42498124e4f500f8d83644212d55a450b"
+  integrity sha512-pskoeZ4Vc6W1BfuqAwVV7qfr3fwSIQiDtSQDuo14kxCpkh73BmLQZ3hLXW6feUwUX5fqMiprSRubgFExkRHwOg==
   dependencies:
     "@dxos/crypto" "^0.0.1"
     "@dxos/debug" "^1.0.0-beta.20"
@@ -1764,13 +1768,13 @@
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
 
-"@dxos/view-model@^1.0.0-beta.16":
-  version "1.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/@dxos/view-model/-/view-model-1.0.0-beta.16.tgz#9e764296cbccca7a3675eb079643636111c0fe78"
-  integrity sha512-5hKnhomhVgutL8wVef9POmyi2X9goS6nFVkpBW2DOAtaHGVMYQm4SiE08QInuUqOP+jZ1OAAe4VnZ2m5sYTyEA==
+"@dxos/view-model@^1.0.0-beta.19":
+  version "1.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/@dxos/view-model/-/view-model-1.0.0-beta.19.tgz#eed83f802c65e21b94ac5ec5b19505da1bb8f1ed"
+  integrity sha512-dicboEEd9j0WPyqX49AZ6QpKKTkuUwDJ7Nw9k2MA92jiRWsU1jILS1CQQAuvBT+CNsoMxG/wNBM2HGoA076kmA==
   dependencies:
     "@dxos/crypto" "^0.0.1"
-    "@dxos/model-factory" "^1.0.0-beta.15"
+    "@dxos/model-factory" "^1.0.0-beta.19"
 
 "@emotion/cache@^10.0.27", "@emotion/cache@^10.0.9":
   version "10.0.29"
