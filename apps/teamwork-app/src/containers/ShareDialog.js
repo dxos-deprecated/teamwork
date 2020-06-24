@@ -27,6 +27,10 @@ import { useAppRouter } from '@dxos/react-appkit';
 const useStyles = makeStyles({
   table: {
     minWidth: 650
+  },
+  copyButton: {
+    marginLeft: 16,
+    marginRight: 16
   }
 });
 
@@ -36,7 +40,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
   const [pendingInvitations, setPendingInvitations] = useState([]);
   const router = useAppRouter();
 
-  const onNewPendingInvitation = async () => {
+  const createInvitation = async () => {
     const invitation = await client.partyManager.inviteToParty(
       party.publicKey,
       (invitation, secret) => secret && secret.equals(invitation.secret),
@@ -49,8 +53,17 @@ export const ShareDialog = ({ party, open, onClose }) => {
         onFinish: () => setPendingInvitations(arr => arr.filter(x => x.invitation !== invitation))
       }
     );
+    return invitation;
+  };
 
+  const onNewPendingInvitation = async () => {
+    const invitation = await createInvitation();
     setPendingInvitations(old => [...old, { invitation }]);
+  };
+
+  const onRecreate = async (pending) => {
+    const recreatedInvitation = await createInvitation();
+    setPendingInvitations(arr => arr.map(x => x.invitation === pending.invitation ? { invitation: recreatedInvitation } : x));
   };
 
   const parties = useParties();
@@ -79,7 +92,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
                 <TableRow key={pending.invitation.secret}>
                   <TableCell>
                     Copy link
-                    <CopyToClipboard text={router.createInvitationUrl(pending.invitation)} onCopy={value => console.log(value)}>
+                    <CopyToClipboard text={router.createInvitationUrl(pending.invitation)} onCopy={value => console.log(value)} className={classes.copyButton}>
                       <IconButton
                         color="inherit"
                         aria-label="copy to clipboard"
@@ -89,6 +102,11 @@ export const ShareDialog = ({ party, open, onClose }) => {
                         <LinkIcon />
                       </IconButton>
                     </CopyToClipboard>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => onRecreate(pending)}
+                    >Recreate</Button>
                   </TableCell>
                   <TableCell>{pending.passcode ?? '...'}</TableCell>
                 </TableRow>
