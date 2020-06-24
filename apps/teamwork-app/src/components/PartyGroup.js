@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import CardActions from '@material-ui/core/CardActions';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
@@ -112,6 +113,21 @@ export const PartyGroup = ({ party }) => {
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
                 <DeleteIcon />
+              </IconButton>
+            </ListItemSecondaryAction>
+          </ListItem>
+        ))}
+        {deletedItemsVisible && model.getAllDeletedViews().map(item => (
+          <ListItem key={item.viewId} disabled={true}>
+            <ListItemIcon>
+              <PadIcon type={item.type} />
+            </ListItemIcon>
+            <ListItemText>
+              {item.displayName}
+            </ListItemText>
+            <ListItemSecondaryAction>
+              <IconButton edge="end" aria-label="restore" onClick={() => model.restoreView(item.viewId)}>
+                <RestoreFromTrashIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
