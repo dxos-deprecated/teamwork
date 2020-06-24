@@ -24,6 +24,8 @@ import { useClient, useParties } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
 
+import { MemberAvatar } from '../components/MemberAvatar';
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650
@@ -95,13 +97,23 @@ export const ShareDialog = ({ party, open, onClose }) => {
               ))}
               {party.members.map((member) => (
                 <TableRow key={member.publicKey}>
-                  <TableCell>{member.displayName || humanize(member.publicKey)}</TableCell>
+                  <TableCell padding="checkbox">
+                    <MemberAvatar member={member} />
+                  </TableCell>
+                  <TableCell>
+                    {member.displayName || humanize(member.publicKey)}
+                  </TableCell>
                   <TableCell>Collaborator</TableCell>
                 </TableRow>
               ))}
               {otherMembers.map(member => (
                 <TableRow key={member.publicKey}>
-                  <TableCell>{member.displayName || humanize(member.publicKey)}</TableCell>
+                  <TableCell padding="checkbox">
+                    <MemberAvatar member={member} />
+                  </TableCell>
+                  <TableCell>
+                    {member.displayName || humanize(member.publicKey)}
+                  </TableCell>
                   <TableCell>
                     <Button
                       size="small"
