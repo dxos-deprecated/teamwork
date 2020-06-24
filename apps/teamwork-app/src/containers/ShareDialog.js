@@ -63,7 +63,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
 
   const onRecreate = async (pending) => {
     const recreatedInvitation = await createInvitation();
-    setPendingInvitations(arr => arr.map(x => x.invitation === pending ? { invitation: recreatedInvitation } : x));
+    setPendingInvitations(arr => arr.map(x => x.invitation === pending.invitation ? { invitation: recreatedInvitation } : x));
   };
 
   const parties = useParties();
