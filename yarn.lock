@@ -1184,42 +1184,6 @@
   optionalDependencies:
     webpack "^4.10.0"
 
-"@dxos/credentials@^1.0.1-beta.15":
-  version "1.0.1-beta.15"
-  resolved "https://registry.yarnpkg.com/@dxos/credentials/-/credentials-1.0.1-beta.15.tgz#c6cf9556fda688e069c731c1ac62892bda1c0c0e"
-  integrity sha512-dYxH3hHHsBEuTtlBzaom1zEcFtXRCUZeYpSm3caNgiwU/qq4aEA5XPLJOAWJOe/S66F/Q7TeyKkz9F0i+6mMOA==
-  dependencies:
-    "@dxos/codec-protobuf" "^1.1.0-beta.10"
-    "@dxos/crypto" "^1.0.0-beta.1"
-    "@dxos/feed-store" "^1.2.0-beta.10"
-    "@dxos/protocol" "^1.1.0-alpha.4"
-    bip39 "^3.0.2"
-    buffer-json-encoding "^1.0.2"
-    crypto-js "^3.1.9-1"
-    debug "^4.1.1"
-    encoding-down "^6.3.0"
-    end-of-stream "^1.4.1"
-    hypercore-crypto "^1.0.0"
-    hypercore-protocol "^6.11.1"
-    hypertrie "^3.8.0"
-    json-stable-stringify "^1.0.1"
-    leveldown "^5.4.1"
-    levelup "^4.3.2"
-    lodash.defaultsdeep "^4.6.1"
-    lodash.get "^4.4.2"
-    lodash.isobject "^3.0.2"
-    lodash.isplainobject "^4.0.6"
-    lodash.mapvalues "^4.6.0"
-    lodash.matches "^4.6.0"
-    memdown "^5.1.0"
-    moment "^2.24.0"
-    ngraph.graph "^18.0.1"
-    pump "^3.0.0"
-    queue-microtask "^1.1.2"
-    source-map-support "^0.5.12"
-    stream-to-array "^2.3.0"
-    uuid "^3.3.2"
-
 "@dxos/credentials@^1.0.1-beta.17":
   version "1.0.1-beta.17"
   resolved "https://registry.yarnpkg.com/@dxos/credentials/-/credentials-1.0.1-beta.17.tgz#3abbbe137a6f6fffb21960300a4865689277226c"
@@ -1359,17 +1323,17 @@
   dependencies:
     debug "^4.1.1"
 
-"@dxos/debug@^1.0.0-beta.64", "@dxos/debug@^1.0.0-beta.73":
-  version "1.0.0-beta.73"
-  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.73.tgz#0bbc4d4a5f48bde79394c78d323d62255ec2fb26"
-  integrity sha512-wiDCYA+stgNyhXZUNj5xGxWxyKFbJw3pwrzU9PGnmYh0J0DXrJwvJ8dkBITxDXQRLESKFW1SW5ixb/7kmTl77w==
-  dependencies:
-    debug "^4.1.1"
-
 "@dxos/debug@^1.0.0-beta.68":
   version "1.0.0-beta.69"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.69.tgz#842a803f83234c1a0f5c983f17561feaf6a88a9d"
   integrity sha512-ClakqGbWwFttM38ejhcvWIyvhfFCmaeUWt0mJaeUz69DKHMNIfBbTuPq+pk+EExUk/Kh043OZDExuHoRTuXUSQ==
+  dependencies:
+    debug "^4.1.1"
+
+"@dxos/debug@^1.0.0-beta.73":
+  version "1.0.0-beta.73"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.73.tgz#0bbc4d4a5f48bde79394c78d323d62255ec2fb26"
+  integrity sha512-wiDCYA+stgNyhXZUNj5xGxWxyKFbJw3pwrzU9PGnmYh0J0DXrJwvJ8dkBITxDXQRLESKFW1SW5ixb/7kmTl77w==
   dependencies:
     debug "^4.1.1"
 
