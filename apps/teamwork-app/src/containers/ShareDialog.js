@@ -31,7 +31,7 @@ const useStyles = makeStyles({
     minWidth: 650
   },
   copyButton: {
-    marginLeft: 16,
+    marginLeft: 10,
     marginRight: 16
   }
 });
@@ -93,6 +93,13 @@ export const ShareDialog = ({ party, open, onClose }) => {
               {pendingInvitations.map((pending) => (
                 <TableRow key={pending.invitation.secret}>
                   <TableCell>
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => onRecreate(pending)}
+                    >Recreate</Button>
+                  </TableCell>
+                  <TableCell>
                     Copy link
                     <CopyToClipboard text={router.createInvitationUrl(pending.invitation)} onCopy={value => console.log(value)} className={classes.copyButton}>
                       <IconButton
@@ -104,11 +111,6 @@ export const ShareDialog = ({ party, open, onClose }) => {
                         <LinkIcon />
                       </IconButton>
                     </CopyToClipboard>
-                    <Button
-                      size="small"
-                      variant="outlined"
-                      onClick={() => onRecreate(pending)}
-                    >Recreate</Button>
                   </TableCell>
                   <TableCell>{pending.passcode ?? '...'}</TableCell>
                 </TableRow>

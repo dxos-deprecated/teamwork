@@ -1534,7 +1534,7 @@
     lodash.set "^4.3.2"
     lodash.unset "^4.5.2"
 
-"@dxos/model-factory@^1.0.0-beta.17", "@dxos/model-factory@^1.0.0-beta.18":
+"@dxos/model-factory@^1.0.0-beta.15", "@dxos/model-factory@^1.0.0-beta.17", "@dxos/model-factory@^1.0.0-beta.18":
   version "1.0.0-beta.18"
   resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.18.tgz#171ec6ebc2e24cca8765e24b64e7585f922081a7"
   integrity sha512-YXhXUvJNzW7F4LwoIAkEq1S7u+WJm97QbXE1piZdPeH+dDK/yobzn0E4P9JiVBgbzK1WczwFE9Eb6+/S8GL0Hw==
@@ -1767,6 +1767,14 @@
     clsx "^1.0.4"
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
+
+"@dxos/view-model@^1.0.0-beta.16":
+  version "1.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@dxos/view-model/-/view-model-1.0.0-beta.16.tgz#9e764296cbccca7a3675eb079643636111c0fe78"
+  integrity sha512-5hKnhomhVgutL8wVef9POmyi2X9goS6nFVkpBW2DOAtaHGVMYQm4SiE08QInuUqOP+jZ1OAAe4VnZ2m5sYTyEA==
+  dependencies:
+    "@dxos/crypto" "^0.0.1"
+    "@dxos/model-factory" "^1.0.0-beta.15"
 
 "@dxos/view-model@^1.0.0-beta.19":
   version "1.0.0-beta.19"
