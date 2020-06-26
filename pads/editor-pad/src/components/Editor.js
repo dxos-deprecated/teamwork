@@ -156,6 +156,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   return (
     <DxOSEditor
       toolbar
+      schema="full"
       sync={{
         id: publicKey,
         onLocalUpdate: handleLocalUpdate,
