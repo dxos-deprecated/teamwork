@@ -38,7 +38,7 @@ const pads = [
   EditorPad,
   PlannerPad,
   CanvasApp,
-  TestingPad,
+  TestingPad
 ];
 
 export const Root = ({ config }) => {
