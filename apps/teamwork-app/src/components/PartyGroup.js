@@ -102,7 +102,7 @@ export const PartyGroup = ({ party }) => {
 
   const onSubscribe = async () => {
     await client.partyManager.subscribe(party.publicKey);
-  }
+  };
 
   if (!party.subscribed) {
     return (<>
@@ -168,7 +168,7 @@ export const PartyGroup = ({ party }) => {
         <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
       </List>
       <CardActions className={classes.actions}>
-      <Button
+        <Button
           size="small"
           color="secondary"
           onClick={onUnsubscribe}
