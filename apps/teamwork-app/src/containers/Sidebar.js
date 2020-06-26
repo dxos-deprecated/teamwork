@@ -39,22 +39,22 @@ const useStyles = makeStyles(theme => ({
 
 const useHomeTreeItemStyles = makeStyles(theme => ({
   root: {
-    paddingTop: theme.spacing(1),
+    paddingTop: theme.spacing(1)
   },
 
   content: {
     color: theme.palette.text.secondary,
     fontWeight: theme.typography.fontWeightMedium,
     '$expanded > &': {
-      fontWeight: theme.typography.fontWeightRegular,
-    },
+      fontWeight: theme.typography.fontWeightRegular
+    }
   },
 
   label: {
     fontWeight: 'inherit',
     color: 'inherit',
     overflow: 'hidden'
-  },
+  }
 }));
 
 export const Sidebar = () => {
