@@ -1,0 +1,4 @@
+name: example.com/testing
+displayName: Testing 
+build: yarn dist
+version: 0.0.0
