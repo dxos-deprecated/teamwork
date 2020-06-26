@@ -26,7 +26,7 @@
 
 - [ ] Full screen app
 - [x] List of views in left sidebar
-- [ ] List of members in left sidebar
+- [x] List of members in left sidebar
 
 ## Invitation
 
