@@ -1,5 +1,5 @@
 //
-// Copyright 2018 Wireline, Inc.
+// Copyright 2018 DXOS.org
 //
 
 import clsx from 'clsx';
