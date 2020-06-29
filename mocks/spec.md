@@ -1,4 +1,4 @@
-# UX Design
+# Teamwork spec
 
 ## Home screen
 
@@ -6,7 +6,7 @@
 - [x] See items for parties (and select to open)
 - [x] See membership for all parties
 - [x] Initiate invitations
-- [ ] Profile and settings
+- [ ] User Profile
 
 ## Navbar
 
@@ -36,4 +36,15 @@
 - [x] Show pending invitations
 - [x] Show PIN (inline next to pending invitiation; i.e., small)
 - [x] Re-trigger discovery/pin for pending invitations
-- [ ] Select member to join from address book
+- [ ] Multiple invitations at the same time - After (#13)[https://github.com/dxos/halo/issues/13]
+- [ ] Select member to join from address book - blocked on (#14)[https://github.com/dxos/halo/issues/14]
+- [ ] Invite bots (a Store bot for now)
+- [ ] Assigning roles - blocked on (#14)[https://github.com/dxos/halo/issues/14]
+
+## Testing
+
+- [ ] Simple testing pad with ObjectModel
+
+## Other
+
+- [ ] Rename EchoModel to ObjectModel
