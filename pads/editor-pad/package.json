@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dxos/editor": "^1.0.0-beta.7",
+    "@dxos/editor": "^1.0.0-beta.10",
     "@dxos/view-model": "^1.0.0-beta.16",
     "clsx": "^1.0.4",
     "yjs": "13.1.0"
