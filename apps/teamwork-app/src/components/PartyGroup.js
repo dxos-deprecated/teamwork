@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/styles';
@@ -28,7 +28,7 @@ import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
 import { PartyMemberList } from './PartyMemberList';
-import { DocumentTypeSelectDialog } from '../containers/DocumentTypeSelectDialog';
+import { DocumentTypeSelectMenu } from '../containers/DocumentTypeSelectMenu';
 import { PadIcon } from './PadIcon';
 import { ShareDialog } from '../containers/ShareDialog';
 
@@ -76,6 +76,7 @@ export const PartyGroup = ({ party }) => {
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
   const router = useAppRouter();
+  const anchor = useRef();
 
   const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
@@ -132,7 +133,9 @@ export const PartyGroup = ({ party }) => {
             </ListItemSecondaryAction>
           </ListItem>
         ))}
-        <ListItem button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
+
+        <ListItem ref={anchor} button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
+        <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </List>
       <CardActions className={classes.actions}>
         <Button
@@ -145,7 +148,6 @@ export const PartyGroup = ({ party }) => {
         </Button>
       </CardActions>
     </Card>
-    <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
     <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
   </>
   );
