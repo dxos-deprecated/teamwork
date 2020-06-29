@@ -1,5 +1,5 @@
 //
-// Copyright 2020 Wireline, Inc.
+// Copyright 2020 DXOS.org
 //
 
 import React, { useCallback, useEffect, useState } from 'react';
@@ -156,6 +156,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   return (
     <DxOSEditor
       toolbar
+      schema="full"
       sync={{
         id: publicKey,
         onLocalUpdate: handleLocalUpdate,
