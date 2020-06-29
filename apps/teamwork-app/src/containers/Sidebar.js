@@ -3,7 +3,7 @@
 //
 
 import { Chance } from 'chance';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import TreeView from '@material-ui/lab/TreeView';
 import { Divider } from '@material-ui/core';
@@ -16,7 +16,7 @@ import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads, MemberLis
 import { useParty } from '@dxos/react-client';
 
 import { useItems } from '../model';
-import { DocumentTypeSelectDialog } from './DocumentTypeSelectDialog';
+import { DocumentTypeSelectMenu } from './DocumentTypeSelectMenu';
 
 const chance = new Chance();
 
@@ -66,6 +66,7 @@ export const Sidebar = () => {
   const [pads] = usePads();
   const model = useItems(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
+  const anchor = useRef();
 
   const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
@@ -104,10 +105,10 @@ export const Sidebar = () => {
           />
         ))}
 
-        <PartyTreeAddItemButton topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
+        <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
+        <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
 
       </TreeView>
-      <DocumentTypeSelectDialog open={typeSelectDialogOpen} onSelect={handleCreate} />
       <Divider />
       <MemberList party={party} />
     </div>
