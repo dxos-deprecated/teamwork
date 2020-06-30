@@ -31,16 +31,16 @@ export const Main = ({ viewId, topic }) => {
 
   const [addPeriodically, setAddPeriodically] = useState(false);
   useEffect(() => {
-    if(addPeriodically) {
+    if (addPeriodically) {
       const intervalId = setInterval(() => {
         addItem(100);
       }, 1000);
       return () => clearInterval(intervalId);
     }
-  }, [addPeriodically])
+  }, [addPeriodically]);
 
-  const [selectedId, setSelectedId] = useState()
-  const selectedItem = selectedId !== undefined ? items.find(i => i.id === selectedId) : undefined
+  const [selectedId, setSelectedId] = useState();
+  const selectedItem = selectedId !== undefined ? items.find(i => i.id === selectedId) : undefined;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
