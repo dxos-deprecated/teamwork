@@ -1,0 +1,9 @@
+#
+# Copyright 2020 DxOS, Inc.
+#
+
+id: 'wrn:app:dxos.io/tasks'
+name: Tasks App
+version: 0.0.1
+baseUrl: /template
+package: QmVwEZd8KKsKs5QSch3kY4KeaMmupVu1Wy9a5L7hhfowHV
