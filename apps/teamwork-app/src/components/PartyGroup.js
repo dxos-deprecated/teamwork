@@ -41,6 +41,13 @@ const useClasses = makeStyles({
     height: 600,
     width: 300
   },
+  unsubscribedCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: 300,
+    width: 300,
+    backgroundColor: 'grey'
+  },
   list: {
     overflowY: 'scroll'
   },
@@ -90,6 +97,32 @@ export const PartyGroup = ({ party }) => {
     handleSelect(viewId);
   };
 
+  const onUnsubscribe = async () => {
+    await client.partyManager.unsubscribe(party.publicKey);
+  };
+
+  const onSubscribe = async () => {
+    await client.partyManager.subscribe(party.publicKey);
+  };
+
+  if (!party.subscribed) {
+    return (<>
+      <Card className={classes.unsubscribedCard}>
+        <CardHeader
+          title={<p>{party.displayName}</p>}
+        />
+        <CardActions className={classes.actions}>
+          <Button
+            size="small"
+            color="secondary"
+            onClick={onSubscribe}
+          >Resubscribe</Button>
+        </CardActions>
+      </Card>
+    </>
+    );
+  }
+
   return (<>
     <Card className={classes.card}>
       <CardHeader
@@ -138,6 +171,11 @@ export const PartyGroup = ({ party }) => {
         <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </List>
       <CardActions className={classes.actions}>
+        <Button
+          size="small"
+          color="secondary"
+          onClick={onUnsubscribe}
+        >Unsubscribe</Button>
         <Button
           size="small"
           color="secondary"

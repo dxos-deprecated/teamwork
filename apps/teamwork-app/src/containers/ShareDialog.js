@@ -20,11 +20,12 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles, Button } from '@material-ui/core';
 
 import { humanize } from '@dxos/crypto';
-import { useClient, useParties } from '@dxos/react-client';
+import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
 
 import { MemberAvatar } from '../components/MemberAvatar';
+import { useAsync } from '../hooks/useAsync';
 
 const useStyles = makeStyles({
   table: {
@@ -41,6 +42,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
   const client = useClient();
   const [pendingInvitations, setPendingInvitations] = useState([]);
   const router = useAppRouter();
+  const [contacts, error] = useAsync(async () => client.partyManager.getContacts(), []);
 
   const createInvitation = async () => {
     const invitation = await client.partyManager.inviteToParty(
@@ -68,10 +70,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
     setPendingInvitations(arr => arr.map(x => x.invitation === pending.invitation ? { invitation: recreatedInvitation } : x));
   };
 
-  const parties = useParties();
-  const otherMembers = parties
-    .flatMap(party => party.members)
-    .filter(member => !party.members.some(m => m.publicKey.toString('hex') === member.publicKey.toString('hex')));
+  if (error) throw error;
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -126,13 +125,13 @@ export const ShareDialog = ({ party, open, onClose }) => {
                   <TableCell>Collaborator</TableCell>
                 </TableRow>
               ))}
-              {otherMembers.map(member => (
-                <TableRow key={member.publicKey}>
+              { contacts !== undefined && contacts.map(contact => (
+                <TableRow key={contact.publicKey}>
                   <TableCell padding="checkbox">
-                    <MemberAvatar member={member} />
+                    <MemberAvatar member={contact} />
                   </TableCell>
                   <TableCell>
-                    {member.displayName || humanize(member.publicKey)}
+                    {contact.displayName || humanize(contact.publicKey)}
                   </TableCell>
                   <TableCell>
                     <Button

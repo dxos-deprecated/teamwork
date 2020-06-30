@@ -64,7 +64,7 @@ export const Landing = () => {
     <AppContainer>
       <div className={classes.root}>
         <Grid container spacing={2} alignItems="stretch" className={classes.grid}>
-          {parties.map((party) => (
+          {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
             <Grid key={party.publicKey.toString()} item zeroMinWidth>
               <PartyGroup party={party} />
             </Grid>
