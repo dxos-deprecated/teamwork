@@ -156,12 +156,6 @@ module.exports = {
 
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    alias: {
-      '@material-ui/styles': path.resolve(__dirname, 'node_modules/@material-ui/styles'),
-      react: path.resolve(__dirname, 'node_modules/react'),
-      'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
-      yjs: path.resolve(__dirname, 'node_modules/yjs')
-    }
   },
 
   entry: './src/index.js'
