@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header onAdd={handleCreateParty}>Parties</Header>
+      <Header onAdd={handleCreateParty}>Parties for {client.partyManager.identityManager.displayName}</Header>
 
       <Paper>
         <List dense>

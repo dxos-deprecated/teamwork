@@ -15,7 +15,7 @@ import {
 } from '@dxos/react-appkit';
 
 import Home from './Home';
-import List from './List';
+// import List from './List';
 
 const Root = ({ config }) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
@@ -34,7 +34,7 @@ const Root = ({ config }) => {
             <Route exact path={routes.register} component={Registration} />
             <RequireWallet redirect={routes.register}>
               <Route exact path="/" component={Home} />
-              <Route exact path="/:topic" component={List} />
+              {/* <Route exact path="/:topic" component={List} /> */}
               <Redirect to="/" />
             </RequireWallet>
           </Switch>
