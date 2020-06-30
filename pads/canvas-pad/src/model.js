@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { EchoModel } from '@dxos/echo-db';
+import { ObjectModel } from '@dxos/echo-db';
 import { useModel } from '@dxos/react-client';
 
 // TODO(burdon): Slashes not allowed.
@@ -28,7 +28,7 @@ export const useDocument = (topic, documentId) => {
 
   // TODO(burdon): Why do we specify type in createItem AND here?
   const model = useModel({
-    model: EchoModel,
+    model: ObjectModel,
     options: {
       type: TYPE_CANVAS_ECHO_OBJECT,
       topic,

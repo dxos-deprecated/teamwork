@@ -1458,14 +1458,14 @@
   dependencies:
     debug "^4.1.1"
 
-"@dxos/echo-db@^1.0.0-beta.19":
-  version "1.0.0-beta.19"
-  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.19.tgz#8d44f91cf868f9cb2b149fc01bb1a76d75fa8b57"
-  integrity sha512-kNzkrmJ4O3mBNwLl2kfhAsCk0QEZXX3BTVdZs/t+k0f6biVLm1J5oziEhPabBLXFxSk9+Xl14F5HfGReao80dA==
+"@dxos/echo-db@^1.0.0-beta.20":
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.20.tgz#2fb8df4a37e95ea9f3b43d72ddaffde7a2e89d24"
+  integrity sha512-MPA+rXYvabqOE/uYuho8R+OJMz+PW1aGru9XybRk3aOFfJ+TSg73dRdP8lKOfHnVN18cjonaiU9irB3EvEMquw==
   dependencies:
     "@dxos/codec-protobuf" "^1.1.0-beta.0"
     "@dxos/crypto" "^0.0.1"
-    "@dxos/model-factory" "^1.0.0-beta.19"
+    "@dxos/model-factory" "^1.0.0-beta.20"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/node" "^14.0.9"
@@ -1476,14 +1476,14 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/echo-db@^1.0.0-beta.20":
-  version "1.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.20.tgz#2fb8df4a37e95ea9f3b43d72ddaffde7a2e89d24"
-  integrity sha512-MPA+rXYvabqOE/uYuho8R+OJMz+PW1aGru9XybRk3aOFfJ+TSg73dRdP8lKOfHnVN18cjonaiU9irB3EvEMquw==
+"@dxos/echo-db@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-1.0.0-beta.21.tgz#29e8205f335ec31ec3202c71ee17a41b3952de4e"
+  integrity sha512-NN0gvK3OJUyAb/lPk6So1h6iJmYVTgkxqTb0gH806kYwp5hHeAdF8CXFa9cZO4jIA+YlFYEFLfQS4GbzbMsmLg==
   dependencies:
     "@dxos/codec-protobuf" "^1.1.0-beta.0"
     "@dxos/crypto" "^0.0.1"
-    "@dxos/model-factory" "^1.0.0-beta.20"
+    "@dxos/model-factory" "^1.0.0-beta.21"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/node" "^14.0.9"
@@ -1674,6 +1674,27 @@
   version "1.0.0-beta.20"
   resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.20.tgz#12f35395f9603200935b7b3d99d515be1c62d125"
   integrity sha512-u+om+9YDiVDrg7CCHTgxwF4cV9Qd8teQZcKiSVeSb7H8+9Iv624snVdb7O4UUkHowLlUk2p3B3O6wZ3H5hoolA==
+  dependencies:
+    "@dxos/crypto" "^0.0.1"
+    "@dxos/debug" "^1.0.0-beta.20"
+    "@dxos/feed-level-indexer" "^1.1.0-alpha.9"
+    "@dxos/metrics" "^1.0.0-beta.8"
+    charwise "^3.0.1"
+    debug "^4.1.1"
+    end-of-stream "^1.4.4"
+    level-mem "^5.0.1"
+    lodash.debounce "^4.0.8"
+    monotonic-timestamp "^0.0.9"
+    multi-read-stream "^2.0.0"
+    p-limit "^3.0.1"
+    pump "^3.0.0"
+    source-map-support "^0.5.12"
+    through2 "^3.0.1"
+
+"@dxos/model-factory@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.21.tgz#4ed8d3ccf6ea38c7bc9fc8452fbbcef6ae4af0c7"
+  integrity sha512-Legt+fJcPx6/LbNls6SWcPOvYHSlNssQmhNvexyYaatuVDeXKqlnLXwC3/7okKb4FBIRgb650L3DQywLqWtKtg==
   dependencies:
     "@dxos/crypto" "^0.0.1"
     "@dxos/debug" "^1.0.0-beta.20"

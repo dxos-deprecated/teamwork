@@ -4,7 +4,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import ColorHash from 'color-hash';
-import { EchoModel } from '@dxos/echo-db';
+import { ObjectModel } from '@dxos/echo-db';
 import { useModel, useProfile } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-ux';
 import { TYPE_TESTING_ITEM } from './model';
@@ -15,7 +15,7 @@ export const Main = ({ viewId, topic }) => {
   /**
    * @type {EchoModel}
    */
-  const model = useModel({ model: EchoModel, options: { type: TYPE_TESTING_ITEM, topic, viewId } });
+  const model = useModel({ model: ObjectModel, options: { type: TYPE_TESTING_ITEM, topic, viewId } });
   const items = model?.getObjectsByType(TYPE_TESTING_ITEM) ?? [];
 
   const { publicKey } = useProfile();
