@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import ColorHash from 'color-hash';
 import { EchoModel } from '@dxos/echo-db';
 import { useModel, useProfile } from '@dxos/react-client';
@@ -32,13 +32,27 @@ export const Main = ({ viewId, topic }) => {
   const renderCount = useRef(0);
   renderCount.current++;
 
+  const [addPeriodically, setAddPeriodically] = useState(false);
+  useEffect(() => {
+    if(addPeriodically) {
+      const intervalId = setInterval(() => {
+        addItem(100);
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [addPeriodically])
+
   return (
     <div>
-      <h1>Render count: {renderCount.current}</h1>
+      <div>
+        <h4>Render count: {renderCount.current}</h4>
+        <h4>Object count: {items.length}</h4>
+      </div>
       <div>
         <button onClick={() => addItem(1)}>Add 1</button>
         <button onClick={() => addItem(10)}>Add 10</button>
         <button onClick={() => addItem(100)}>Add 100</button>
+        <label>Add 100 every second<input type="checkbox" checked={addPeriodically} onClick={() => setAddPeriodically(x => !x)}></input></label>
       </div>
       <div>
         {items.map(item => (
