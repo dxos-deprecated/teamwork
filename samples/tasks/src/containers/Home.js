@@ -18,6 +18,7 @@ import { useClient, useParties } from '@dxos/react-client';
 import Header from '../components/Header';
 
 const Home = () => {
+  return null
   const history = useHistory();
   const parties = useParties();
   const client = useClient();
