@@ -22,15 +22,13 @@ const Home = () => {
   const parties = useParties();
   const client = useClient();
 
-  // Create new topic.
   const handleCreateParty = async () => {
-    const party = await client.partyManager.createParty();
-    console.log(`Created party: ${keyToString(party.publicKey)}`);
+    await client.partyManager.createParty();
   };
 
   return (
     <div>
-      <Header onAdd={handleCreateParty}>Parties</Header>
+      <Header onAdd={handleCreateParty}>Parties for {client.partyManager.identityManager.displayName}</Header>
 
       <Paper>
         <List dense>
