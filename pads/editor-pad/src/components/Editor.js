@@ -98,36 +98,13 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
 
   useEffect(() => {
-    if (!documentUpdateModel || !editor) return;
-
-    // Remote updates handler: update current doc
-    const modelUpdateHandler = (model, messages) => {
-      messages.forEach(({ update, origin }) => {
-        if (origin.docClientId !== editor.sync.doc.clientID) {
-          editor.sync.processRemoteUpdate(update, origin);
-        }
-      });
-    };
-
-    // Apply initial messages
-    documentUpdateModel.on('update', modelUpdateHandler);
+    if (!editor) return;
 
     return () => {
       if (!editor) return;
-
-      documentUpdateModel.off('update', modelUpdateHandler);
-
       editor.destroy();
     };
-  }, [itemId, publicKey, editor, documentUpdateModel]);
-
-  const handleLocalUpdate = useCallback((update, doc) => {
-    documentUpdateModel.appendMessage({
-      __type_url: 'testing.document.Update',
-      update,
-      origin: { author: publicKey, docClientId: doc.clientID }
-    });
-  }, [publicKey, documentUpdateModel]);
+  }, [itemId, editor]);
 
   const handleEditorCreated = useCallback(setEditor, [setEditor]);
 
@@ -159,7 +136,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
       schema="full"
       sync={{
         id: publicKey,
-        onLocalUpdate: handleLocalUpdate,
+        doc: documentUpdateModel.doc,
         status: {
           onLocalUpdate: handleLocalStatusUpdate
         }
