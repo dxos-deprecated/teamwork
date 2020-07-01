@@ -16,7 +16,7 @@ import {
 
 import Home from './Home';
 // import List from './List';
-import PartyViews from './PartyViews';
+import Tasks from './tasks';
 
 const Root = ({ config }) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
@@ -36,7 +36,7 @@ const Root = ({ config }) => {
             <RequireWallet redirect={routes.register}>
               <Route exact path="/" component={Home} />
               {/* <Route exact path="/:topic" component={List} /> */}
-              <Route exact path="/:topic" component={PartyViews} />
+              <Route exact path="/:topic" component={Tasks} />
               <Redirect to="/" />
             </RequireWallet>
           </Switch>

@@ -24,7 +24,7 @@ import { useItems } from '../model';
 
 const chance = new Chance();
 
-const PartyViews = ({  }) => {
+const Tasks = ({  }) => {
   const history = useHistory();
   const { topic } = useParams();
   const model = useItems(topic);
@@ -79,4 +79,4 @@ const PartyViews = ({  }) => {
   );
 };
 
-export default PartyViews;
+export default Tasks;
