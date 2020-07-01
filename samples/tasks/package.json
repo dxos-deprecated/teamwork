@@ -7,7 +7,7 @@
   "author": "DxOS.org",
   "description": "DxOS Tasks app example",
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "eslint -c .eslintrc.json --resolve-plugins-relative-to . ./src",
     "start": "VERBOSE=true webpack-dev-server --mode development",
     "dist": "webpack"
   },
@@ -21,7 +21,6 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/styles": "^4.9.0",
     "chance": "^1.1.6",
-    "lodash.flowright": "^3.5.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",

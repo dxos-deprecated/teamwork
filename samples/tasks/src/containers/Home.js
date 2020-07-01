@@ -22,10 +22,8 @@ const Home = () => {
   const parties = useParties();
   const client = useClient();
 
-  // Create new topic.
   const handleCreateParty = async () => {
-    const party = await client.partyManager.createParty();
-    console.log(`Created party: ${keyToString(party.publicKey)}`);
+    await client.partyManager.createParty();
   };
 
   return (

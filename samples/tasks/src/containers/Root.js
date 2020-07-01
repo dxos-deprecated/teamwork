@@ -3,7 +3,7 @@
 //
 
 import React from 'react';
-import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import { ErrorHandler } from '@dxos/debug';
 import { ClientContextProvider } from '@dxos/react-client';
@@ -15,7 +15,6 @@ import {
 } from '@dxos/react-appkit';
 
 import Home from './Home';
-// import List from './List';
 import Tasks from './tasks';
 
 const Root = ({ config }) => {
@@ -35,9 +34,7 @@ const Root = ({ config }) => {
             <Route exact path={routes.register} component={Registration} />
             <RequireWallet redirect={routes.register}>
               <Route exact path="/" component={Home} />
-              {/* <Route exact path="/:topic" component={List} /> */}
-              <Route exact path="/:topic" component={Tasks} />
-              <Redirect to="/" />
+              <Route path="/:topic" component={Tasks} />
             </RequireWallet>
           </Switch>
         </HashRouter>
