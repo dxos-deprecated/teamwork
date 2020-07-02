@@ -38,7 +38,7 @@ const useClasses = makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    height: 600,
+    height: 400,
     width: 300
   },
   unsubscribedCard: {
