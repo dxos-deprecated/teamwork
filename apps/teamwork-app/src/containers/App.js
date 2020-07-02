@@ -6,13 +6,11 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { IconButton } from '@material-ui/core';
-import { Home } from '@material-ui/icons';
 
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
-import { AppContainer, usePads, useAppRouter } from '@dxos/react-appkit';
+import { AppContainer, usePads } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
@@ -40,7 +38,6 @@ const App = () => {
   const model = useItems(topic);
   const item = model.getById(viewId);
   const client = useClient();
-  const router = useAppRouter();
 
   const pad = item ? pads.find(pad => pad.type === item.type) : undefined;
 
@@ -52,9 +49,6 @@ const App = () => {
   }, [topic]);
 
   const appBarContent = (<>
-    <IconButton aria-label="home" onClick={() => router.push({ path: '/landing' })} color="inherit">
-      <Home />
-    </IconButton>
     {item && (
       <EditableText
         value={item.displayName}

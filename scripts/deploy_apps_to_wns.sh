@@ -4,6 +4,7 @@ set -euo pipefail
 
 for app in `find . -name 'app.yml'`; do
   pushd `dirname $app`
+  yarn
 
   ORG="dxos.network"
   PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2-`

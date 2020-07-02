@@ -1,8 +1,8 @@
 //
-// Copyright 2019 Wireline, Inc.
+// Copyright 2019 DXOS.org
 //
 
-import { EchoModel } from '@dxos/echo-db';
+import { ObjectModel } from '@dxos/echo-db';
 
 export function mergeFeeds (feeds) {
   if (feeds.length === 1) {
@@ -108,7 +108,7 @@ function sortByPosition (objects) {
  */
 
 // TODO(burdon): Use hook -- do not extend EchoModel.
-export class ArrayModel extends EchoModel {
+export class ArrayModel extends ObjectModel {
   /**
    * Keep a cache around of all items in proper order. On update we invalidate
    * the cache and require a reorder.

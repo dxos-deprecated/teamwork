@@ -21,6 +21,7 @@ import MessengerPad from '@dxos/messenger-pad';
 import EditorPad from '@dxos/editor-pad';
 import PlannerPad from '@dxos/planner-pad';
 import CanvasApp from '@dxos/canvas-pad';
+import TestingPad from '@dxos/testing-pad';
 
 import App from './App';
 import { Landing } from './Landing';
@@ -36,7 +37,8 @@ const pads = [
   MessengerPad,
   EditorPad,
   PlannerPad,
-  CanvasApp
+  CanvasApp,
+  TestingPad
 ];
 
 export const Root = ({ config }) => {
