@@ -60,18 +60,16 @@ const useClasses = makeStyles({
     paddingTop: 16,
     paddingBottom: 16
   },
-  labelText: {
-    fontSize: '1.5em',
-    fontWeight: 'inherit',
-    flexGrow: 1,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
-  },
   actions: {
     justifyContent: 'space-between',
     marginTop: 'auto',
     marginLeft: 'auto'
+  },
+  titleRoot: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: 180
   }
 });
 
@@ -85,7 +83,7 @@ export const PartyGroup = ({ party }) => {
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
   const router = useAppRouter();
-  const anchor = useRef();
+  const newDocumentAnchor = useRef();
   const partySettingsMenuAnchor = useRef();
 
   const handleSelect = (viewId) => {
@@ -141,9 +139,10 @@ export const PartyGroup = ({ party }) => {
         }
         title={
           <EditableText
+            variant='h6'
             value={party.displayName}
             onUpdate={(displayName) => client.partyManager.setPartyProperty(party.publicKey, { displayName })}
-            className={classes.labelText}
+            classes={{ root: classes.titleRoot }}
           />
         }
       />
@@ -187,10 +186,11 @@ export const PartyGroup = ({ party }) => {
             </ListItemSecondaryAction>
           </ListItem>
         ))}
-        <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
+        <DocumentTypeSelectMenu anchorEl={newDocumentAnchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </List>
       <CardActions className={classes.actions}>
         <Button
+          ref={newDocumentAnchor}
           size="small"
           color="secondary"
           startIcon={<Add />}
