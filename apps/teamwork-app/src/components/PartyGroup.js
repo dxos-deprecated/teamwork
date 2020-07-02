@@ -7,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import { makeStyles } from '@material-ui/styles';
 import Card from '@material-ui/core/Card';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Add } from '@material-ui/icons';
 import CardHeader from '@material-ui/core/CardHeader';
 import { Chance } from 'chance';
@@ -17,8 +18,6 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 import CardActions from '@material-ui/core/CardActions';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 
 import { keyToString } from '@dxos/crypto';
@@ -31,6 +30,8 @@ import { PartyMemberList } from './PartyMemberList';
 import { DocumentTypeSelectMenu } from '../containers/DocumentTypeSelectMenu';
 import { PadIcon } from './PadIcon';
 import { ShareDialog } from '../containers/ShareDialog';
+import { Avatar } from '@material-ui/core';
+import { PartySettingsMenu } from '../containers/PartySettingsMenu';
 
 const chance = new Chance();
 
@@ -78,12 +79,14 @@ export const PartyGroup = ({ party }) => {
   const topic = keyToString(party.publicKey);
   const model = useItems(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
+  const [partySettingsMenuOpen, setPartySettingsMenuOpen] = useState(false);
   const classes = useClasses();
   const client = useClient();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
   const router = useAppRouter();
   const anchor = useRef();
+  const partySettingsMenuAnchor = useRef();
 
   const handleSelect = (viewId) => {
     router.push({ topic, item: viewId });
@@ -126,6 +129,16 @@ export const PartyGroup = ({ party }) => {
   return (<>
     <Card className={classes.card}>
       <CardHeader
+        avatar={
+          <Avatar aria-label={party.displayName}>
+            {party.displayName.slice(0, 1).toUpperCase()}
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings" ref={partySettingsMenuAnchor} onClick={() => setPartySettingsMenuOpen(true)}>
+            <MoreVertIcon />
+          </IconButton>
+        }
         title={
           <EditableText
             value={party.displayName}
@@ -133,6 +146,14 @@ export const PartyGroup = ({ party }) => {
             className={classes.labelText}
           />
         }
+      />
+      <PartySettingsMenu
+        anchorEl={partySettingsMenuAnchor.current}
+        open={partySettingsMenuOpen}
+        onClose={() => setPartySettingsMenuOpen(false)}
+        onVisibilityToggle={() => setDeletedItemsVisible(prev => !prev)}
+        onUnsubscribe={onUnsubscribe}
+        deletedItemsVisible={deletedItemsVisible}
       />
       <PartyMemberList party={party} handleUserInvite={() => setShareDialogOpen(true)} />
       <List className={classes.list}>
@@ -170,21 +191,6 @@ export const PartyGroup = ({ party }) => {
         <ListItem ref={anchor} button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
         <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </List>
-      <CardActions className={classes.actions}>
-        <Button
-          size="small"
-          color="secondary"
-          onClick={onUnsubscribe}
-        >Unsubscribe</Button>
-        <Button
-          size="small"
-          color="secondary"
-          startIcon={deletedItemsVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          onClick={() => setDeletedItemsVisible(prev => !prev)}
-        >
-          {deletedItemsVisible ? 'Hide deleted' : 'Show deleted'}
-        </Button>
-      </CardActions>
     </Card>
     <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
   </>
