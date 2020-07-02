@@ -39,7 +39,7 @@ const useClasses = makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    height: 400,
+    height: 390,
     width: 300
   },
   unsubscribedCard: {
@@ -187,10 +187,17 @@ export const PartyGroup = ({ party }) => {
             </ListItemSecondaryAction>
           </ListItem>
         ))}
-
-        <ListItem ref={anchor} button onClick={() => setTypeSelectDialogOpen(true)}><Add />&nbsp;New document</ListItem>
         <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </List>
+      <CardActions className={classes.actions}>
+        <Button
+          size="small"
+          color="secondary"
+          startIcon={<Add />}
+          onClick={() => setTypeSelectDialogOpen(true)}
+        >New document</Button>
+      </CardActions>
+
     </Card>
     <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
   </>

@@ -14,10 +14,6 @@ import { AppContainer } from '@dxos/react-appkit';
 import { PartyGroup } from '../components/PartyGroup';
 
 const useStyles = makeStyles({
-  root: {
-    overflowY: 'scroll',
-    overflowX: 'hidden',
-  },
   fab: {
     margin: 0,
     top: 'auto',
@@ -38,7 +34,8 @@ const useStyles = makeStyles({
   grid: {
     paddingTop: 16,
     paddingBottom: 16,
-    paddingLeft: 16
+    paddingLeft: 16,
+    overflowY: 'scroll'
   }
 });
 
@@ -63,21 +60,19 @@ export const Landing = () => {
 
   return (
     <AppContainer>
-      <div className={classes.root}>
-        <Grid container spacing={2} alignItems="stretch" className={classes.grid}>
-          {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
-            <Grid key={party.publicKey.toString()} item zeroMinWidth>
-              <PartyGroup party={party} />
-            </Grid>
-          ))}
-        </Grid>
-        {parties.length === 0 && (
-          <Typography className={classes.createPartyText} variant="h2">
-            <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
-            <span> to get started.</span>
-          </Typography>
-        )}
-      </div>
+      <Grid container spacing={1} alignItems="stretch" className={classes.grid}>
+        {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
+          <Grid key={party.publicKey.toString()} item zeroMinWidth>
+            <PartyGroup party={party} />
+          </Grid>
+        ))}
+      </Grid>
+      {parties.length === 0 && (
+        <Typography className={classes.createPartyText} variant="h2">
+          <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
+          <span> to get started.</span>
+        </Typography>
+      )}
       <Zoom in={true} timeout={500} unmountOnExit>
         <Tooltip title="Create party" aria-label="create party" placement="top">
           <Fab color="primary" className={classes.fab} onClick={createParty}>
