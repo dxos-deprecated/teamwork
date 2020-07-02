@@ -42,7 +42,7 @@ export const ShareDialog = ({ party, open, onClose }) => {
   const client = useClient();
   const [pendingInvitations, setPendingInvitations] = useState([]);
   const router = useAppRouter();
-  const [contacts, error] = [[], undefined]//useAsync(async () => client.partyManager.getContacts(), []); TODO(marik-d) Fix this
+  const [contacts, error] = useAsync(async () => client.partyManager.getContacts(), []);
 
   const createInvitation = async () => {
     const invitation = await client.partyManager.inviteToParty(
