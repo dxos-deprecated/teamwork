@@ -15,7 +15,8 @@ import { PartyGroup } from '../components/PartyGroup';
 
 const useStyles = makeStyles({
   root: {
-    overflowY: 'scroll'
+    overflowY: 'scroll',
+    overflowX: 'hidden',
   },
   fab: {
     margin: 0,
