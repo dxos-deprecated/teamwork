@@ -18,6 +18,19 @@ import { useItems } from '../model';
 import { Sidebar } from './Sidebar';
 import BotInviteDialog from '../components/BotInviteDialog';
 
+const sleep = ms => {
+  let cancel;
+  const promise = new Promise((resolve, reject) => {
+    const timeout = setTimeout(resolve, ms);
+    cancel = err => {
+      clearTimeout(timeout);
+      reject(err);
+    };
+  });
+
+  return { promise, cancel };
+};
+
 const useStyles = makeStyles(theme => ({
   main: {
     display: 'flex',
@@ -79,6 +92,7 @@ const App = () => {
     );
 
     const botUID = await botFactoryClient.sendSpawnRequest(botId);
+    await sleep(10000);
     await botFactoryClient.sendInvitationRequest(botUID, topic, spec, invitation.toQueryParameters());
   };
 
