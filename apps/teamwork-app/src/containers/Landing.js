@@ -11,7 +11,7 @@ import { Add } from '@material-ui/icons';
 import { useClient, useParties } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 
-import { PartyGroup } from '../components/PartyGroup';
+import { PartyCard } from '../components/PartyCard';
 
 const useStyles = makeStyles({
   fab: {
@@ -23,13 +23,13 @@ const useStyles = makeStyles({
     position: 'fixed'
   },
   createPartyText: {
-    paddingLeft: 20,
+    paddingLeft: 20,        // TODO(burdon): Use theme.spacing
     paddingTop: 20,
     color: 'gray'
   },
   createPartyLink: {
     cursor: 'pointer',
-    color: '#2196f3'
+    color: '#2196f3'        // TODO(burdon): Use theme!
   },
   grid: {
     paddingTop: 16,
@@ -63,16 +63,18 @@ export const Landing = () => {
       <Grid container spacing={1} alignItems="stretch" className={classes.grid}>
         {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
-            <PartyGroup party={party} />
+            <PartyCard party={party} />
           </Grid>
         ))}
       </Grid>
+
       {parties.length === 0 && (
         <Typography className={classes.createPartyText} variant="h2">
           <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
           <span> to get started.</span>
         </Typography>
       )}
+
       <Zoom in={true} timeout={500} unmountOnExit>
         <Tooltip title="Create party" aria-label="create party" placement="top">
           <Fab color="primary" className={classes.fab} onClick={createParty}>
