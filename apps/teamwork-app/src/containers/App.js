@@ -12,6 +12,7 @@ import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { AppContainer, usePads } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
+import { BotFactoryClient } from '@dxos/botkit-client';
 
 import { useItems } from '../model';
 import { Sidebar } from './Sidebar';
@@ -51,6 +52,37 @@ const App = () => {
     }
   }, [topic]);
 
+  const handleBotInvite = async (botFactoryTopic, bot, botVersion, spec) => {
+    const botId = `wrn:bot:${bot}#${botVersion}`;
+
+    const botFactoryClient = new BotFactoryClient(client.networkManager, botFactoryTopic);
+
+    const secretProvider = () => {
+    };
+
+    // Provided by inviter node.
+    const secretValidator = async (invitation, secret) => {
+      const signature = secret.slice(0, SIGNATURE_LENGTH);
+      const message = secret.slice(SIGNATURE_LENGTH);
+      return verify(message, signature, keyToBuffer(botFactoryTopic));
+    };
+
+    const invitation = await client.partyManager.inviteToParty(
+      keyToBuffer(topic),
+      secretValidator,
+      secretProvider,
+      {
+        onFinish: () => {
+          botFactoryClient.close();
+          setDialog();
+        }
+      }
+    );
+
+    const botUID = await botFactoryClient.sendSpawnRequest(botId);
+    await botFactoryClient.sendInvitationRequest(botUID, topic, spec, invitation.toQueryParameters());
+  };
+
   const appBarContent = (<>
     {item && (
       <EditableText
@@ -61,7 +93,11 @@ const App = () => {
       />
     )}
     <button onClick={() => setBotDialogVisible(true)}>Invite bot</button>
-    <BotInviteDialog open={botDialogVisible} onSubmit={opts => { console.log(opts); setBotDialogVisible(false); }} onClose={() => setBotDialogVisible(false)} />
+    <BotInviteDialog
+      open={botDialogVisible}
+      onSubmit={({ topic: bfTopic, bot, botVersion, spec }) => handleBotInvite(bfTopic, bot, botVersion, spec)}
+      onClose={() => setBotDialogVisible(false)}
+    />
   </>);
 
   return (

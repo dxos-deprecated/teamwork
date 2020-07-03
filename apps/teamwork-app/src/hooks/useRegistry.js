@@ -11,7 +11,7 @@ const WRN_TYPE_BOT = 'wrn:bot';
 
 // TODO(egorgripasov): Factor out, same code is in examples/dxos-apps.
 export const useRegistry = () => {
-  const { services: { wns: { server, chainId } } } = useConfig();
+  const { server, chainId } = { server: 'https://node1.dxos.network/wns/api', chainId: 'wireline' }
   const [registry] = useState(() => new Registry(server, chainId));
 
   return registry;
