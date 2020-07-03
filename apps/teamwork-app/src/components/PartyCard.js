@@ -7,12 +7,11 @@ import { Chance } from 'chance';
 import React, { useState, useRef } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
-import DeleteIcon from '@material-ui/icons/Delete';
+import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,9 +19,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 
-import { Add } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Clear';
+import RestoreIcon from '@material-ui/icons/RestoreFromTrash';
 
 import { keyToString } from '@dxos/crypto';
 import { useAppRouter } from '@dxos/react-appkit';
@@ -30,49 +30,58 @@ import { useClient } from '@dxos/react-client';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
-import { DocumentTypeSelectMenu } from '../containers/DocumentTypeSelectMenu';
-import { PartySettingsMenu } from '../containers/PartySettingsMenu';
+
+// TODO(burdon): Export default.
+import { DocumentTypeSelectMenu } from './DocumentTypeSelectMenu';
 import { ShareDialog } from '../containers/ShareDialog';
 
+import PartySettingsMenu from './PartySettingsMenu';
 import { PartyMemberList } from './PartyMemberList';
 import { PadIcon } from './PadIcon';
 
 // TODO(burdon): Move out of UX.
 const chance = new Chance();
 
+// TODO(burdon): Factor out.
+const images = [
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSe8ES_7-v2Xc05crmmatnR7Yk0ADX6POUCzfcX3F35fwX25d4ovtCHMB4o7-1V6GuTF29Qypt469VOU6fwgl2D7knQ--wBpGT1QcULHY36SwIFzbxShz8luKQoSZ538rofMMuILS9JxZb5c94Yt_GOMKxFQl7Qonn5REIo2ET89V-yZEfqFGD0kT1AEFBT9vSdvsByd4H3gS_Bh4ByBIvR8L2glSlidtklazlFnTonV7TMCl0Kl2CFXbhk9EXEpzkOT4gE9XWFk9tOh_lWcRQYiLgZdV8-6CjIE2A_BiBSW_3uHMQiguOJWVzt-0xPrlf1DRg89H_gCSfCZOQ7YNZUOOeGpnT2lXS5M9prwCfOt-TltfloDWg5FxwMqvK9i8h3Q-rptfsEljgZticHeUaB0USXA12omPT-Qgi7faYBZYZ0tzC7oe39WgY&usqp=CAU',
+  'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX6648388.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSiYt6aRQEKRUqW8gpnwsB3PJAxlu-ydJxfgg&usqp=CAU',
+];
+
 const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    height: 380,
     width: 300
   },
   unsubscribed: {
     backgroundColor: theme.palette.grey[500]
   },
+
   header: {
-    backgroundColor: theme.palette.grey[100]
+    // paddingTop: theme.spacing(1),
+    // paddingBottom: theme.spacing(1),
   },
-  listContainer: {
-    flex: 1
-  },
-  list: {
-    overflowY: 'scroll'
-  },
-  grid: {
-    paddingTop: 16,
-    paddingBottom: 16
-  },
-  actions: {
-    justifyContent: 'space-between',
-    marginTop: 'auto',
-    marginLeft: 'auto'
-  },
-  titleRoot: {
+  title: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    maxWidth: 180
+    whiteSpace: 'nowrap'
+  },
+
+  actions: {
+    justifyContent: 'space-between',
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  },
+
+  listContainer: {
+    height: 200,
+    overflowY: 'scroll'
+  },
+  list: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2)
   }
 }));
 
@@ -112,60 +121,63 @@ export const PartyCard = ({ party }) => {
     await client.partyManager.unsubscribe(party.publicKey);
   };
 
+  // TODO(burdon): Single return path.
   if (!party.subscribed) {
-    return (<>
-      <Card className={clsx(classes.card, classes.unsubscribed)}>
-        <CardHeader
-          title={<p>{party.displayName}</p>}
-        />
-        <CardActions className={classes.actions}>
-          <Button
-            size="small"
-            color="secondary"
-            onClick={handleSubscribe}
-          >Resubscribe</Button>
-        </CardActions>
-      </Card>
-    </>
+    return (
+      <>
+        <Card className={clsx(classes.card, classes.unsubscribed)}>
+          <CardHeader
+            classes={{ root: classes.header }}
+            title={<p>{party.displayName}</p>}
+          />
+
+          <CardActions className={classes.actions}>
+            <Button
+              size="small"
+              color="secondary"
+              onClick={handleSubscribe}
+            >
+              Subscribe
+            </Button>
+          </CardActions>
+        </Card>
+      </>
     );
   }
 
+  // TODO(burdon): Fix EditableText (component). Edit name via setting panel.
   return (
     <>
       <Card className={classes.card}>
         <CardHeader
           classes={{ root: classes.header }}
-          avatar={
-            <Avatar aria-label={party.displayName}>
-              {party.displayName.slice(0, 1).toUpperCase()}
-            </Avatar>
+          title={
+            <EditableText
+              classes={{ root: classes.title }}
+              value={party.displayName}
+              onUpdate={(displayName) => client.partyManager.setPartyProperty(party.publicKey, { displayName })}
+            />
           }
           action={
-            <IconButton aria-label="settings" ref={partySettingsMenuAnchor} onClick={() => setPartySettingsMenuOpen(true)}>
+            <IconButton
+              aria-label="party menu"
+              ref={partySettingsMenuAnchor}
+              onClick={() => setPartySettingsMenuOpen(true)}
+            >
               <MoreVertIcon />
             </IconButton>
           }
-          title={
-            <EditableText
-              variant='h6'
-              value={party.displayName}
-              onUpdate={(displayName) => client.partyManager.setPartyProperty(party.publicKey, { displayName })}
-              classes={{ root: classes.titleRoot }}
-            />
-          }
         />
 
-        <PartySettingsMenu
-          anchorEl={partySettingsMenuAnchor.current}
-          open={partySettingsMenuOpen}
-          onClose={() => setPartySettingsMenuOpen(false)}
-          onVisibilityToggle={() => setDeletedItemsVisible(prev => !prev)}
-          onUnsubscribe={handleUnsubscribe}
-          deletedItemsVisible={deletedItemsVisible}
+        <CardMedia
+          className={classes.media}
+          component="img"
+          height={140}
+          image={images[party.displayName.length % images.length]}
         />
 
         <div className={classes.listContainer}>
-          <List className={classes.list}>
+          <List className={classes.list} dense={true} disablePadding={true}>
             {model.getAllViews().map(item => (
               <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>
                 <ListItemIcon>
@@ -175,12 +187,13 @@ export const PartyCard = ({ party }) => {
                   {item.displayName}
                 </ListItemText>
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
+                  <IconButton size="small" edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
                     <DeleteIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
+
             {deletedItemsVisible && model.getAllDeletedViews().map(item => (
               <ListItem key={item.viewId} disabled={true}>
                 <ListItemIcon>
@@ -191,30 +204,45 @@ export const PartyCard = ({ party }) => {
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <IconButton edge="end" aria-label="restore" onClick={() => model.restoreView(item.viewId)}>
-                    <RestoreFromTrashIcon />
+                    <RestoreIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
-            <DocumentTypeSelectMenu anchorEl={newDocumentAnchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
           </List>
         </div>
 
-        <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
-
         <CardActions className={classes.actions}>
-          <Button
+          <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
+
+          <IconButton
             ref={newDocumentAnchor}
             size="small"
-            color="secondary"
-            startIcon={<Add />}
+            edge="end"
+            aria-label="add view"
             onClick={() => setTypeSelectDialogOpen(true)}
           >
-            New Document
-          </Button>
+            <AddIcon />
+          </IconButton>
         </CardActions>
-
       </Card>
+
+      {/* TODO(burdon): Rename View. */}
+      <DocumentTypeSelectMenu
+        anchorEl={newDocumentAnchor.current}
+        open={typeSelectDialogOpen}
+        onSelect={handleCreate}
+      />
+
+      <PartySettingsMenu
+        anchorEl={partySettingsMenuAnchor.current}
+        open={partySettingsMenuOpen}
+        deletedItemsVisible={deletedItemsVisible}
+        onClose={() => setPartySettingsMenuOpen(false)}
+        onVisibilityToggle={() => setDeletedItemsVisible(prev => !prev)}
+        onUnsubscribe={handleUnsubscribe}
+      />
+
       <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
     </>
   );

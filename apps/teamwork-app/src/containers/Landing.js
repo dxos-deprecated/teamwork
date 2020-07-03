@@ -3,10 +3,16 @@
 //
 
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import { Fab, Zoom, CircularProgress, Tooltip, Typography } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import Zoom from '@material-ui/core/Zoom';
+
+import { makeStyles } from '@material-ui/styles';
+import AddIcon from '@material-ui/icons/Add';
 
 import { useClient, useParties } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
@@ -58,9 +64,12 @@ export const Landing = () => {
     }
   }
 
+  // TODO(burdon): Factor out grid.
+  // TODO(burdon): Show blank card with "+ Add project" button (See https://console.firebase.google.com)
+
   return (
     <AppContainer>
-      <Grid container spacing={1} alignItems="stretch" className={classes.grid}>
+      <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
         {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
             <PartyCard party={party} />
@@ -78,7 +87,7 @@ export const Landing = () => {
       <Zoom in={true} timeout={500} unmountOnExit>
         <Tooltip title="Create party" aria-label="create party" placement="top">
           <Fab color="primary" className={classes.fab} onClick={createParty}>
-            {inProgress ? <CircularProgress color="secondary" /> : <Add /> }
+            {inProgress ? <CircularProgress color="secondary" /> : <AddIcon /> }
           </Fab>
         </Tooltip>
       </Zoom>

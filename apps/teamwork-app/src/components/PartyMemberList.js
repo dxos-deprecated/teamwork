@@ -15,11 +15,7 @@ import { humanize } from '@dxos/crypto';
 import { getAvatarStyle } from './MemberAvatar';
 
 const useStyles = makeStyles({
-  root: {
-    marginLeft: 15,
-    marginRight: 15,
-    marginBottom: 15
-  }
+  root: {}
 });
 
 // TODO(burdon): Pass in array (small UX data object) of processed members (don't apply humanize here).
