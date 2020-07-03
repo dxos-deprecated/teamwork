@@ -13,7 +13,7 @@ import { AppContainer } from '@dxos/react-appkit';
 
 import { PartyCard } from '../components/PartyCard';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   fab: {
     margin: 0,
     top: 'auto',
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
   createPartyLink: {
     cursor: 'pointer',
-    color: '#2196f3'        // TODO(burdon): Use theme!
+    color: theme.palette.primary.light
   },
   grid: {
     paddingTop: 16,
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     paddingLeft: 16,
     overflowY: 'scroll'
   }
-});
+}));
 
 export const Landing = () => {
   const client = useClient();
