@@ -10,6 +10,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import UnsubscribeIcon from '@material-ui/icons/Unsubscribe';
 
 export const PartySettingsMenu = ({ anchorEl, onVisibilityToggle, onUnsubscribe, open, onClose, deletedItemsVisible }) => {
   return (
@@ -27,6 +28,7 @@ export const PartySettingsMenu = ({ anchorEl, onVisibilityToggle, onUnsubscribe,
         onUnsubscribe();
         onClose();
       }}>
+        <ListItemIcon><UnsubscribeIcon /></ListItemIcon>
         <ListItemText primary="Unsubscribe" />
       </MenuItem>
     </Menu>

@@ -22,9 +22,13 @@ const useStyles = makeStyles({
   }
 });
 
-export const PartyMemberList = ({ party, handleUserInvite }) => {
+// TODO(burdon): Pass in array (small UX data object) of processed members (don't apply humanize here).
+export const PartyMemberList = ({ party, onUserInvite }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  // TODO(burdon): Make smaller.
+  // TODO(burdon): Invite should be rounded "share" button not avatar.
 
   return (
     <div className={classes.root}>
@@ -32,14 +36,13 @@ export const PartyMemberList = ({ party, handleUserInvite }) => {
         {party.members.map(member => (
           <Tooltip key={member.publicKey} title={member.displayName || humanize(member.publicKey)} placement="top">
             <Avatar style={getAvatarStyle(theme, member.publicKey)}>
-              {member.displayName
-                ? member.displayName.slice(0, 1).toUpperCase()
-                : <FaceIcon />}
+              {member.displayName ? member.displayName.slice(0, 1).toUpperCase() : <FaceIcon />}
             </Avatar>
           </Tooltip>
         ))}
+
         <Tooltip title="New member" placement="top">
-          <Avatar onClick={handleUserInvite}>
+          <Avatar onClick={onUserInvite}>
             <Add />
           </Avatar>
         </Tooltip>

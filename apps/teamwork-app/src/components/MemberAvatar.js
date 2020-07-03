@@ -9,14 +9,6 @@ import FaceIcon from '@material-ui/icons/Face';
 
 import { red, pink, deepPurple, deepOrange, indigo, blue, cyan, teal, green, amber } from '@material-ui/core/colors';
 
-export const MemberAvatar = ({ member }) => (
-  <Avatar style={getAvatarStyle(useTheme(), member.publicKey)}>
-    {member.displayName
-      ? member.displayName.slice(0, 1).toUpperCase()
-      : <FaceIcon />}
-  </Avatar>
-);
-
 const COLORS = [
   deepOrange[500],
   deepPurple[500],
@@ -39,3 +31,10 @@ export const getAvatarStyle = (theme, publicKey) => {
     color: theme.palette.getContrastText(color)
   };
 };
+
+// Components must have default export.
+export const MemberAvatar = ({ member }) => (
+  <Avatar style={getAvatarStyle(useTheme(), member.publicKey)}>
+    {member.displayName ? member.displayName.slice(0, 1).toUpperCase() : <FaceIcon />}
+  </Avatar>
+);
