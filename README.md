@@ -4,17 +4,13 @@
 
 Decentralized Collaborative Tools.
 
-
 ## Usage
 
-NOTE: Requires Node version 12.
+Start the Teamwork app:
 
 ```bash
-yarn
-yarn build
-yarn test
+yarn start
 ```
-
 
 ### Publishing to npm
 
