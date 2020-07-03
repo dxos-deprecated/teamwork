@@ -200,7 +200,7 @@ export const PartyCard = ({ party }) => {
           </List>
         </div>
 
-        <PartyMemberList party={party} handleUserInvite={() => setShareDialogOpen(true)} />
+        <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
 
         <CardActions className={classes.actions}>
           <Button

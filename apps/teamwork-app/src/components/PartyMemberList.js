@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 // TODO(burdon): Pass in array (small UX data object) of processed members (don't apply humanize here).
-export const PartyMemberList = ({ party, handleUserInvite }) => {
+export const PartyMemberList = ({ party, onUserInvite }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -42,7 +42,7 @@ export const PartyMemberList = ({ party, handleUserInvite }) => {
         ))}
 
         <Tooltip title="New member" placement="top">
-          <Avatar onClick={handleUserInvite}>
+          <Avatar onClick={onUserInvite}>
             <Add />
           </Avatar>
         </Tooltip>
