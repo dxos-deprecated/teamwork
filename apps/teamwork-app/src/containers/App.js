@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +15,7 @@ import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
 import { Sidebar } from './Sidebar';
+import BotInviteDialog from '../components/BotInviteDialog';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -40,6 +41,8 @@ const App = () => {
   const client = useClient();
 
   const pad = item ? pads.find(pad => pad.type === item.type) : undefined;
+  
+  const [botDialogVisible, setBotDialogVisible] = useState(false)
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -57,6 +60,8 @@ const App = () => {
         onUpdate={(title) => model.renameView(viewId, title)}
       />
     )}
+    <button onClick={() => setBotDialogVisible(true)}>Invite bot</button>
+    <BotInviteDialog open={botDialogVisible} onSubmit={opts => { console.log(opts); setBotDialogVisible(false); }} onClose={() => setBotDialogVisible(false)} />
   </>);
 
   return (

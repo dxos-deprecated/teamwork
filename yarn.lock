@@ -4473,7 +4473,7 @@
     end-of-stream "^1.4.1"
     through2 "^3.0.1"
 
-"@wirelineio/registry-client@^0.4.8":
+"@wirelineio/registry-client@^0.4.8", "@wirelineio/registry-client@^0.4.9":
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/@wirelineio/registry-client/-/registry-client-0.4.9.tgz#8e0166c67d74d634294076cff73b7cff5cee40d8"
   integrity sha512-n9oecUGU01+SUvdrB+/1LCbAQT+jiIG3pfZj+JLU4teou17ZxaEcMbzpFamWO2IVXZP0751y6Va42K4IFE7e9w==
