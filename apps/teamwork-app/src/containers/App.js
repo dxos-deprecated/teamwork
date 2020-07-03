@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { noop } from '@dxos/async';
-import { keyToBuffer } from '@dxos/crypto';
+import { keyToBuffer, verify, SIGNATURE_LENGTH } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { AppContainer, usePads } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
@@ -42,8 +42,7 @@ const App = () => {
   const client = useClient();
 
   const pad = item ? pads.find(pad => pad.type === item.type) : undefined;
-  
-  const [botDialogVisible, setBotDialogVisible] = useState(false)
+  const [botDialogVisible, setBotDialogVisible] = useState(false);
 
   // TODO(burdon): Create hook.
   useEffect(() => {
@@ -74,7 +73,7 @@ const App = () => {
       {
         onFinish: () => {
           botFactoryClient.close();
-          setDialog();
+          setBotDialogVisible(false);
         }
       }
     );
