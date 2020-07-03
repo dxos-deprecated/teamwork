@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   table: {
     minWidth: 650,
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   expand: {
     display: 'flex',
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 const TableCell = withStyles({
   root: {
-    borderBottom: "none"
+    borderBottom: 'none'
   }
 })(MuiTableCell);
 
