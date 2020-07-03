@@ -23,18 +23,18 @@ const useStyles = makeStyles(theme => ({
     position: 'fixed'
   },
   createPartyText: {
-    paddingLeft: 20,        // TODO(burdon): Use theme.spacing
-    paddingTop: 20,
-    color: 'gray'
+    paddingLeft: theme.spacing(3),
+    paddingTop: theme.spacing(1),
+    color: theme.palette.grey[500]
   },
   createPartyLink: {
     cursor: 'pointer',
     color: theme.palette.primary.light
   },
   grid: {
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 16,
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
     overflowY: 'scroll'
   }
 }));
