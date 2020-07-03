@@ -48,10 +48,10 @@ const useStyles = makeStyles(theme => ({
     width: 300
   },
   unsubscribed: {
-    backgroundColor: 'grey'     // TODO(burdon): Use theme.
+    backgroundColor: theme.palette.grey[500]
   },
   header: {
-    backgroundColor: '#F5F5F5'
+    backgroundColor: theme.palette.grey[100]
   },
   listContainer: {
     flex: 1
