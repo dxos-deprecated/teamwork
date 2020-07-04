@@ -14,13 +14,16 @@ import { useProfile } from '@dxos/react-client';
 import { useDocumentUpdateModel } from '../model';
 import Pad from './Pad';
 
-const useEditorClasses = makeStyles(() => ({
+const useEditorClasses = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%'
   },
   editor: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+
     '& reactelement': {
       display: 'inline-block'
     }

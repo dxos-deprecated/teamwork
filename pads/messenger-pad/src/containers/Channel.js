@@ -2,24 +2,25 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
 import assert from 'assert';
+import clsx from 'clsx';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Badge from '@material-ui/core/Badge';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import TableContainer from '@material-ui/core/TableContainer';
 import Send from '@material-ui/icons/Send';
+import TableContainer from '@material-ui/core/TableContainer';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
-import { Badge } from '@material-ui/core';
-import clsx from 'clsx';
 
-import { useChannelMessages } from '../model';
 import Messages from '../components/Messages';
 import Videos from '../components/Videos';
+
+import { useChannelMessages } from '../model';
 import { useEphemeralSwarm } from '../ephemeral-swarm';
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 3,
+    flex: 1,
     overflow: 'auto',
     justifyContent: 'flex-end'
   },
@@ -47,17 +48,17 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column-reverse',
-    minWidth: 420
+    minWidth: 400
   },
 
   videos: {
     display: 'flex',
-    flex: 7,
+    flexShrink: 0,
+    maxWidth: 400,
     flexDirection: 'column',
     justifyContent: 'flex-end',
     borderLeft: '1px solid rgba(224, 224, 224, 1)',
-    backgroundColor: '#222',
-    height: '80%'
+    backgroundColor: '#222'
   },
 
   input: {

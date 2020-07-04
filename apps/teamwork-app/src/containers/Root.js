@@ -28,7 +28,7 @@ import Home from './Home';
 
 const initialState = {
   [SET_LAYOUT]: {
-    showSidebar: true,
+    showSidebar: false,
     showDebug: false
   }
 };
