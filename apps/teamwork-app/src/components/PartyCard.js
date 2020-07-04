@@ -49,18 +49,22 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
     width: 300
   },
+
   unsubscribed: {
-    backgroundColor: theme.palette.grey[500]
+    '& img': {
+      '-webkit-filter': 'grayscale(100%)',
+      opacity: 0.7
+    }
   },
 
-  header: {
-    // paddingTop: theme.spacing(1),
-    // paddingBottom: theme.spacing(1),
+  headerRoot: {
+    height: 62 // Prevent collapse if menu icon isn't present (if not subscribed).
   },
-  title: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+  headerContent: {
+    overflow: 'hidden'
+  },
+  headerAction: {
+    margin: 0
   },
 
   actions: {
@@ -70,12 +74,13 @@ const useStyles = makeStyles(theme => ({
   },
 
   listContainer: {
-    height: 200,
+    height: 176, // 5 * 36
+    marginBottom: theme.spacing(1),
     overflowY: 'scroll'
   },
   list: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2)
+    // paddingTop: theme.spacing(2),
+    // paddingBottom: theme.spacing(2)
   }
 }));
 
@@ -101,7 +106,10 @@ export const PartyCard = ({ party }) => {
 
   const handleCreate = (type) => {
     setTypeSelectDialogOpen(false);
+
+    // TODO(burdon): When would this be null?
     if (!type) return;
+
     const title = `item-${chance.word()}`;
     const viewId = model.createView(type, title);
     handleSelect(viewId);
@@ -115,80 +123,69 @@ export const PartyCard = ({ party }) => {
     await client.partyManager.unsubscribe(party.publicKey);
   };
 
-  // TODO(burdon): Single return path.
-  if (!party.subscribed) {
-    return (
-      <>
-        <Card className={clsx(classes.card, classes.unsubscribed)}>
-          <CardHeader
-            classes={{ root: classes.header }}
-            title={<p>{party.displayName}</p>}
-          />
-
-          <CardActions className={classes.actions}>
-            <Button
-              size="small"
-              color="secondary"
-              onClick={handleSubscribe}
-            >
-              Subscribe
-            </Button>
-          </CardActions>
-        </Card>
-      </>
-    );
-  }
-
-  // TODO(burdon): Fix EditableText (component). Edit name via setting panel.
+  // TODO(burdon): Only update name via settings.
   return (
     <>
-      <Card className={classes.card}>
+      <Card className={clsx(classes.card, !party.subscribed && classes.unsubscribed)}>
         <CardHeader
-          classes={{ root: classes.header }}
+          classes={{
+            root: classes.headerRoot,
+            content: classes.headerContent,
+            action: classes.headerAction
+          }}
           title={
             <EditableText
-              classes={{ root: classes.title }}
+              disabled={!party.subscribed}
               value={party.displayName}
               onUpdate={(displayName) => client.partyManager.setPartyProperty(party.publicKey, { displayName })}
             />
           }
           action={
-            <IconButton
-              aria-label="party menu"
-              ref={settingsMenuAnchor}
-              onClick={() => setPartySettingsMenuOpen(true)}
-            >
-              <MoreVertIcon />
-            </IconButton>
+            party.subscribed && (
+              <IconButton
+                size="small"
+                aria-label="party menu"
+                ref={settingsMenuAnchor}
+                onClick={() => setPartySettingsMenuOpen(true)}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )
           }
         />
 
         <CardMedia
-          className={classes.media}
           component="img"
-          height={140}
+          height={120}
           image={getThumbnail(party.displayName)}
         />
 
         <div className={classes.listContainer}>
           <List className={classes.list} dense={true} disablePadding={true}>
             {model.getAllViews().map(item => (
-              <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>
+              <ListItem
+                key={item.viewId}
+                button
+                disabled={!party.subscribed}
+                onClick={() => handleSelect(item.viewId)}
+              >
                 <ListItemIcon>
                   <PadIcon type={item.type} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.displayName}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton size="small" edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                {party.subscribed && (
+                  <ListItemSecondaryAction>
+                    <IconButton size="small" edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                )}
               </ListItem>
             ))}
 
-            {deletedItemsVisible && model.getAllDeletedViews().map(item => (
+            {party.subscribed && deletedItemsVisible && model.getAllDeletedViews().map(item => (
               <ListItem key={item.viewId} disabled={true}>
                 <ListItemIcon>
                   <PadIcon type={item.type} />
@@ -207,17 +204,31 @@ export const PartyCard = ({ party }) => {
         </div>
 
         <CardActions className={classes.actions}>
-          <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
+          {party.subscribed && (
+            <>
+              <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
 
-          <IconButton
-            ref={createViewAnchor}
-            size="small"
-            edge="end"
-            aria-label="add view"
-            onClick={() => setTypeSelectDialogOpen(true)}
-          >
-            <AddIcon />
-          </IconButton>
+              <IconButton
+                ref={createViewAnchor}
+                size="small"
+                edge="end"
+                aria-label="add view"
+                onClick={() => setTypeSelectDialogOpen(true)}
+              >
+                <AddIcon />
+              </IconButton>
+            </>
+          )}
+
+          {!party.subscribed && (
+            <Button
+              size="small"
+              color="secondary"
+              onClick={handleSubscribe}
+            >
+              Subscribe
+            </Button>
+          )}
         </CardActions>
       </Card>
 

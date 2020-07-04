@@ -67,17 +67,25 @@ const Home = () => {
     } finally {
       setInProgress(false);
     }
-  }
+  };
 
-  // TODO(burdon): Factor out grid.
-  // TODO(burdon): Show blank card with "+ Add project" button (See https://console.firebase.google.com)
+  // TODO(burdon): Factor out party card grid (reusable).
+  // TODO(burdon): Toggle show/hide unsubscribed cards (settings?)
+  // TODO(burdon): New card should open Settings dialog.
 
-  const sortBySubscribed = (a, b) => Number(b.subscribed) - Number(a.subscribed);
+  const sortBySubscribedAndName = (a, b) => {
+    const diff = Number(b.subscribed) - Number(a.subscribed);
+    if (diff !== 0) {
+      return diff;
+    }
+
+    return a.displayName < b.displayName ? -1 : 1;
+  };
 
   return (
     <AppContainer>
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
-        {parties.sort(sortBySubscribed).map((party) => (
+        {parties.sort(sortBySubscribedAndName).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
             <PartyCard party={party} />
           </Grid>
