@@ -7,7 +7,7 @@
   "description": "Dxos planner pad",
   "keywords": [],
   "license": "GPL-3.0",
-  "author": "DxOS.org",
+  "author": "DXOS.org",
   "scripts": {
     "build": "tsc",
     "debug": "DOT_ENV=.env.debug webpack-dev-server --mode development",

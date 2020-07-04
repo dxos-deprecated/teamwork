@@ -34,7 +34,7 @@ import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
 
 import { MemberAvatar } from '../components/MemberAvatar';
-import { useAsync } from '../hooks/useAsync';
+import { useAsync } from '../hooks/use-async';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -80,7 +80,7 @@ const TableCell = withStyles(theme => ({
   }
 }))(MuiTableCell);
 
-export const ShareDialog = ({ party, open, onClose }) => {
+const SettingsDialog = ({ party, open, onClose }) => {
   const classes = useStyles();
   const client = useClient();
   const router = useAppRouter();
@@ -252,3 +252,5 @@ export const ShareDialog = ({ party, open, onClose }) => {
     </Dialog>
   );
 };
+
+export default SettingsDialog;

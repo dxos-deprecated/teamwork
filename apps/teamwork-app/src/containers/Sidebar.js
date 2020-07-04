@@ -15,8 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads, MemberList } from '@dxos/react-appkit';
 import { useParty } from '@dxos/react-client';
 
+import ViewTypeSelectMenu from '../components/ViewTypeSelectMenu';
+
 import { useItems } from '../model';
-import { DocumentTypeSelectMenu } from '../components/DocumentTypeSelectMenu';
 
 const chance = new Chance();
 
@@ -107,7 +108,7 @@ export const Sidebar = () => {
         ))}
 
         <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
-        <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
+        <ViewTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </TreeView>
       <Divider />
       <MemberList party={party} />

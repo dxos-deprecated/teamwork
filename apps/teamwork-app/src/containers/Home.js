@@ -45,19 +45,24 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Landing = () => {
+const Home = () => {
+  const classes = useStyles();
   const client = useClient();
   const parties = useParties();
-  const classes = useStyles();
+
   const [inProgress, setInProgress] = useState(false);
 
-  async function createParty () {
-    if (inProgress) return;
+  const createParty = async () => {
+    if (inProgress) {
+      return;
+    }
+
     setInProgress(true);
+
     try {
       await client.partyManager.createParty();
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
       throw new Error('Unable to create a party');
     } finally {
       setInProgress(false);
@@ -67,10 +72,12 @@ export const Landing = () => {
   // TODO(burdon): Factor out grid.
   // TODO(burdon): Show blank card with "+ Add project" button (See https://console.firebase.google.com)
 
+  const sortBySubscribed = (a, b) => Number(b.subscribed) - Number(a.subscribed);
+
   return (
     <AppContainer>
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
-        {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
+        {parties.sort(sortBySubscribed).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
             <PartyCard party={party} />
           </Grid>
@@ -94,3 +101,5 @@ export const Landing = () => {
     </AppContainer>
   );
 };
+
+export default Home;

@@ -31,23 +31,17 @@ import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
 
-// TODO(burdon): Export default.
-import { DocumentTypeSelectMenu } from './DocumentTypeSelectMenu';
-import { ShareDialog } from '../containers/ShareDialog';
+// TODO(burdon): Component should not import container.
+import SettingsDialog from '../containers/SettingsDialog';
+import { getThumbnail } from '../util/images';
 
+import ViewTypeSelectMenu from './ViewTypeSelectMenu';
 import PartySettingsMenu from './PartySettingsMenu';
 import { PartyMemberList } from './PartyMemberList';
 import { PadIcon } from './PadIcon';
 
 // TODO(burdon): Move out of UX.
 const chance = new Chance();
-
-// TODO(burdon): Factor out.
-const images = [
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSe8ES_7-v2Xc05crmmatnR7Yk0ADX6POUCzfcX3F35fwX25d4ovtCHMB4o7-1V6GuTF29Qypt469VOU6fwgl2D7knQ--wBpGT1QcULHY36SwIFzbxShz8luKQoSZ538rofMMuILS9JxZb5c94Yt_GOMKxFQl7Qonn5REIo2ET89V-yZEfqFGD0kT1AEFBT9vSdvsByd4H3gS_Bh4ByBIvR8L2glSlidtklazlFnTonV7TMCl0Kl2CFXbhk9EXEpzkOT4gE9XWFk9tOh_lWcRQYiLgZdV8-6CjIE2A_BiBSW_3uHMQiguOJWVzt-0xPrlf1DRg89H_gCSfCZOQ7YNZUOOeGpnT2lXS5M9prwCfOt-TltfloDWg5FxwMqvK9i8h3Q-rptfsEljgZticHeUaB0USXA12omPT-Qgi7faYBZYZ0tzC7oe39WgY&usqp=CAU',
-  'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX6648388.jpg',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSiYt6aRQEKRUqW8gpnwsB3PJAxlu-ydJxfgg&usqp=CAU',
-];
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -92,8 +86,8 @@ export const PartyCard = ({ party }) => {
   const [partySettingsMenuOpen, setPartySettingsMenuOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
-  const newDocumentAnchor = useRef();
-  const partySettingsMenuAnchor = useRef();
+  const createViewAnchor = useRef();
+  const settingsMenuAnchor = useRef();
 
   // TODO(burdon): This should be a dumb component (not container), so must pass in handlers.
   const topic = keyToString(party.publicKey);
@@ -161,7 +155,7 @@ export const PartyCard = ({ party }) => {
           action={
             <IconButton
               aria-label="party menu"
-              ref={partySettingsMenuAnchor}
+              ref={settingsMenuAnchor}
               onClick={() => setPartySettingsMenuOpen(true)}
             >
               <MoreVertIcon />
@@ -173,7 +167,7 @@ export const PartyCard = ({ party }) => {
           className={classes.media}
           component="img"
           height={140}
-          image={images[party.displayName.length % images.length]}
+          image={getThumbnail(party.displayName)}
         />
 
         <div className={classes.listContainer}>
@@ -216,7 +210,7 @@ export const PartyCard = ({ party }) => {
           <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
 
           <IconButton
-            ref={newDocumentAnchor}
+            ref={createViewAnchor}
             size="small"
             edge="end"
             aria-label="add view"
@@ -228,14 +222,14 @@ export const PartyCard = ({ party }) => {
       </Card>
 
       {/* TODO(burdon): Rename View. */}
-      <DocumentTypeSelectMenu
-        anchorEl={newDocumentAnchor.current}
+      <ViewTypeSelectMenu
+        anchorEl={createViewAnchor.current}
         open={typeSelectDialogOpen}
         onSelect={handleCreate}
       />
 
       <PartySettingsMenu
-        anchorEl={partySettingsMenuAnchor.current}
+        anchorEl={settingsMenuAnchor.current}
         open={partySettingsMenuOpen}
         deletedItemsVisible={deletedItemsVisible}
         onClose={() => setPartySettingsMenuOpen(false)}
@@ -243,7 +237,8 @@ export const PartyCard = ({ party }) => {
         onUnsubscribe={handleUnsubscribe}
       />
 
-      <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
+      {/* TODO(burdon): Move to Home (i.e., single instance. */}
+      <SettingsDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
     </>
   );
 };

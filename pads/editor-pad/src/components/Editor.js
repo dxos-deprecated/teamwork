@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { Editor as DxOSEditor } from '@dxos/editor';
+import { Editor as DXOSEditor } from '@dxos/editor';
 
 import { useProfile } from '@dxos/react-client';
 
@@ -154,7 +154,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   if (!documentUpdateModel) return null;
 
   return (
-    <DxOSEditor
+    <DXOSEditor
       toolbar
       schema="full"
       sync={{
