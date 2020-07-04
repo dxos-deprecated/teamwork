@@ -2,21 +2,59 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useRef, useState, useEffect } from 'react';
 import ColorHash from 'color-hash';
+import React, { useRef, useState, useEffect } from 'react';
+
+import { makeStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Toolbar from '@material-ui/core/Toolbar';
+
 import { ObjectModel } from '@dxos/echo-db';
 import { useModel, useProfile } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-ux';
+
 import { TYPE_TESTING_ITEM } from './model';
 
 const colorHash = new ColorHash({ saturation: 1 });
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  },
+  label: {
+    marginLeft: theme.spacing(1)
+  },
+  expand: {
+    flex: 1
+  },
+  data: {
+    '& span': {
+      marginLeft: 8
+    }
+  },
+  cells: {
+    margin: theme.spacing(1),
+    overflowY: 'auto',
+    flex: 1
+  },
+  cell: {
+    display: 'inline-block',
+    width: 15,
+    height: 15,
+    margin: 1,
+  }
+}));
+
 export const Main = ({ viewId, topic }) => {
-  /**
-   * @type {EchoModel}
-   */
+  const classes = useStyles();
+
+  /** @type {EchoModel} */
   const model = useModel({ model: ObjectModel, options: { type: TYPE_TESTING_ITEM, topic, viewId } });
-  const items = model?.getObjectsByType(TYPE_TESTING_ITEM) ?? [];
+  const objects = model?.getObjectsByType(TYPE_TESTING_ITEM) ?? [];
 
   const { publicKey } = useProfile();
 
@@ -40,35 +78,50 @@ export const Main = ({ viewId, topic }) => {
   }, [addPeriodically]);
 
   const [selectedId, setSelectedId] = useState();
-  const selectedItem = selectedId !== undefined ? items.find(i => i.id === selectedId) : undefined;
+  const selectedItem = selectedId !== undefined ? objects.find(i => i.id === selectedId) : undefined;
+
+  const data = {
+    render: renderCount.current,
+    objects: objects.length
+  };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div>
-        <h4>Render count: {renderCount.current}</h4>
-        <h4>Object count: {items.length}</h4>
-      </div>
-      <div>
-        <button onClick={() => addItem(1)}>Add 1</button>
-        <button onClick={() => addItem(10)}>Add 10</button>
-        <button onClick={() => addItem(100)}>Add 100</button>
-        <label>Add 100 every second<input type="checkbox" checked={addPeriodically} onClick={() => setAddPeriodically(x => !x)}></input></label>
-      </div>
-      <div style={{ overflowY: 'auto', flex: 1 }}>
-        {items.map(item => (
+    <div className={classes.root}>
+      <Toolbar variant="dense">
+        <Button color="primary" onClick={() => addItem(1)}>+1</Button>
+        <Button color="primary" onClick={() => addItem(10)}>+10</Button>
+        <Button color="primary" onClick={() => addItem(100)}>+100</Button>
+
+        <FormControlLabel
+          className={classes.label}
+          control={
+            <Checkbox
+              checked={addPeriodically}
+              onClick={() => setAddPeriodically(running => !running)}
+            />
+          }
+          label="Running"
+        />
+
+        <div className={classes.expand} />
+        <div className={classes.data}>
+          {Object.keys(data).map(key => <span key={key}>{key}: {data[key]}</span>)}
+        </div>
+      </Toolbar>
+
+      <div className={classes.cells}>
+        {objects.map(item => (
           <div
             key={item.id}
+            className={classes.cell}
             style={{
-              width: 15,
-              height: 15,
-              margin: 1,
-              display: 'inline-block',
               backgroundColor: colorHash.hex(item.properties.addedBy?.toString('hex'))
             }}
             onClick={() => setSelectedId(item.id)}
           >{item.properties.count > 0 ? item.properties.count : ''}</div>
         ))}
       </div>
+
       {selectedItem && (
         <JsonTreeView
           size="small"
