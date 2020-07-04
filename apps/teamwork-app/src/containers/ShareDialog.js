@@ -9,6 +9,7 @@ import { makeStyles, withStyles } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,10 +21,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Clear';
 import FaceIcon from '@material-ui/icons/Face';
 import LinkIcon from '@material-ui/icons/Link';
 import RefreshIcon from '@material-ui/icons/Refresh';
+import InviteIcon from '@material-ui/icons/Add';
+import PeopleIcon from '@material-ui/icons/People';
 
 import { humanize } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
@@ -34,6 +37,9 @@ import { MemberAvatar } from '../components/MemberAvatar';
 import { useAsync } from '../hooks/useAsync';
 
 const useStyles = makeStyles(theme => ({
+  title: {
+    marginLeft: theme.spacing(2)
+  },
   table: {
     minWidth: 650,
     marginTop: theme.spacing(2),
@@ -42,14 +48,37 @@ const useStyles = makeStyles(theme => ({
   expand: {
     display: 'flex',
     flex: 1
+  },
+  label: {
+    fontVariant: 'all-small-caps'
+  },
+  passcode: {
+    marginLeft: theme.spacing(1),
+    padding: theme.spacing(1),
+    border: `2px solid ${theme.palette.primary.dark}`
+  },
+  colAvatar: {
+    width: 60
+  },
+  colPasscode: {
+    width: 160
+  },
+  colStatus: {
+    width: 100
+  },
+  colActions: {
+    width: 60,
+    textAlign: 'right'
   }
 }));
 
-const TableCell = withStyles({
+const TableCell = withStyles(theme => ({
   root: {
-    borderBottom: 'none'
+    borderBottom: 'none',
+    padding: 0,
+    paddingBottom: theme.spacing(0.5)
   }
-})(MuiTableCell);
+}))(MuiTableCell);
 
 export const ShareDialog = ({ party, open, onClose }) => {
   const classes = useStyles();
@@ -96,66 +125,75 @@ export const ShareDialog = ({ party, open, onClose }) => {
 
   return (
     <Dialog open={open} maxWidth="md" onClose={onClose}>
-      <DialogTitle>Share with People and Bots</DialogTitle>
-      <DialogContent>
-
+      <DialogTitle>
         <Toolbar variant="dense" disableGutters={true}>
-          <Typography variant="h6">Members</Typography>
+          <Avatar>
+            <PeopleIcon />
+          </Avatar>
 
-          <div className={classes.expand} />
+          <Typography variant="h5" className={classes.title}>Share with People and Bots</Typography>
+        </Toolbar>
+      </DialogTitle>
 
+      <DialogContent>
+        <Toolbar variant="dense" disableGutters={true}>
           <div>
             <Button
               size="small"
               onClick={handleNewPendingInvitation}
             >
-              Get Link
+              Invite User
             </Button>
           </div>
         </Toolbar>
 
         <TableContainer>
-          <Table className={classes.table} size="small" aria-label="a dense table">
+          <Table className={classes.table} size="small" padding="none" aria-label="contacts">
             <TableBody>
               {pendingInvitations.map((pending) => (
                 <TableRow key={pending.invitation.secret}>
-                  <TableCell>
+                  <TableCell classes={{ root: classes.colAvatar }}>
                     <Avatar>
                       <FaceIcon />
                     </Avatar>
                   </TableCell>
                   <TableCell />
-                  <TableCell>
+                  <TableCell classes={{ root: classes.colPasscode }}>
                     {pending.passcode && (
                       <>
-                        <span>Passcode: {pending.passcode}</span>
-
-                        <IconButton
-                          size="small"
-                          onClick={() => handleRecreateLink(pending)}
-                          title="Regenerate PIN"
-                        >
-                          <RefreshIcon />
-                        </IconButton>
+                        <span className={classes.label}>Passcode</span>
+                        <span className={classes.passcode}>{pending.passcode}</span>
                       </>
                     )}
                   </TableCell>
-                  <TableCell>Pending</TableCell>
-                  <TableCell>
-                    <CopyToClipboard
-                      text={router.createInvitationUrl(pending.invitation)}
-                      onCopy={value => console.log(value)}
-                    >
+                  <TableCell classes={{ root: classes.colStatus }}>
+                    <span className={classes.label}>Pending</span>
+                  </TableCell>
+                  <TableCell classes={{ root: classes.colActions }}>
+                    {pending.passcode ? (
                       <IconButton
                         size="small"
-                        color="inherit"
-                        aria-label="copy to clipboard"
-                        title="Copy to clipboard"
-                        edge="start"
+                        onClick={() => handleRecreateLink(pending)}
+                        title="Regenerate PIN"
                       >
-                        <LinkIcon />
+                        <RefreshIcon />
                       </IconButton>
-                    </CopyToClipboard>
+                    ) : (
+                      <CopyToClipboard
+                        text={router.createInvitationUrl(pending.invitation)}
+                        onCopy={value => console.log(value)}
+                      >
+                        <IconButton
+                          size="small"
+                          color="inherit"
+                          aria-label="copy to clipboard"
+                          title="Copy to clipboard"
+                          edge="start"
+                        >
+                          <LinkIcon />
+                        </IconButton>
+                      </CopyToClipboard>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -164,15 +202,17 @@ export const ShareDialog = ({ party, open, onClose }) => {
             <TableBody>
               {party.members.map((member) => (
                 <TableRow key={member.publicKey}>
-                  <TableCell padding="checkbox">
+                  <TableCell classes={{ root: classes.colAvatar }}>
                     <MemberAvatar member={member} />
                   </TableCell>
                   <TableCell>
                     {member.displayName || humanize(member.publicKey)}
                   </TableCell>
                   <TableCell />
-                  <TableCell>Member</TableCell>
-                  <TableCell>
+                  <TableCell classes={{ root: classes.colStatus }}>
+                    <span className={classes.label}>Member</span>
+                  </TableCell>
+                  <TableCell classes={{ root: classes.colActions }}>
                     <IconButton size="small">
                       <DeleteIcon />
                     </IconButton>
@@ -184,16 +224,18 @@ export const ShareDialog = ({ party, open, onClose }) => {
             <TableBody>
               {contacts && contacts.map(contact => (
                 <TableRow key={contact.publicKey}>
-                  <TableCell padding="checkbox">
+                  <TableCell classes={{ root: classes.colAvatar }}>
                     <MemberAvatar member={contact} />
                   </TableCell>
                   <TableCell>
                     {contact.displayName || humanize(contact.publicKey)}
                   </TableCell>
-                  <TableCell>
-                    <Button size="small">
-                      Invite
-                    </Button>
+                  <TableCell />
+                  <TableCell />
+                  <TableCell classes={{ root: classes.colActions }}>
+                    <IconButton size="small">
+                      <InviteIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -201,6 +243,12 @@ export const ShareDialog = ({ party, open, onClose }) => {
           </Table>
         </TableContainer>
       </DialogContent>
+
+      <DialogActions>
+        <Button onClick={onClose} color="primary">
+          Done
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };
