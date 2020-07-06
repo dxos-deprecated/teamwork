@@ -58,7 +58,7 @@ export const Board = ({ topic, viewId }) => {
   const lists = listsModel.getObjectsByType(LIST_TYPE);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
-  if (!board) {
+  if (!board || !listsModel) {
     return <div className={classes.root}>Loading board...</div>;
   }
 
