@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS, Inc.
+// Copyright 2020 DXOS, Inc.
 //
 
 import { Config, LocalStorage, Dynamics, Envs, Defaults } from '@dxos/config';

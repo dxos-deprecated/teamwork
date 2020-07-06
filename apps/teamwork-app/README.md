@@ -26,5 +26,5 @@ yarn wire register
 And finally test locally:
 
 ```
-yarn wire app serve --app wrn:app:DxOS.io/teamwork --path /teamwork
+yarn wire app serve --app wrn:app:DXOS.io/teamwork --path /teamwork
 ```

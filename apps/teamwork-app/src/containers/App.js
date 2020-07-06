@@ -14,7 +14,7 @@ import { AppContainer, usePads } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
-import { Sidebar } from './Sidebar';
+import Sidebar from './Sidebar';
 
 const useStyles = makeStyles(theme => ({
   main: {

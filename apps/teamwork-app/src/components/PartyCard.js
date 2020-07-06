@@ -7,12 +7,11 @@ import { Chance } from 'chance';
 import React, { useState, useRef } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardHeader from '@material-ui/core/CardHeader';
-import DeleteIcon from '@material-ui/icons/Delete';
+import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,9 +19,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
 
-import { Add } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Clear';
+import RestoreIcon from '@material-ui/icons/RestoreFromTrash';
 
 import { keyToString } from '@dxos/crypto';
 import { useAppRouter } from '@dxos/react-appkit';
@@ -30,12 +30,15 @@ import { useClient } from '@dxos/react-client';
 import { EditableText } from '@dxos/react-ux';
 
 import { useItems } from '../model';
-import { DocumentTypeSelectMenu } from '../containers/DocumentTypeSelectMenu';
-import { PartySettingsMenu } from '../containers/PartySettingsMenu';
-import { ShareDialog } from '../containers/ShareDialog';
 
-import { PartyMemberList } from './PartyMemberList';
-import { PadIcon } from './PadIcon';
+// TODO(burdon): Component should not import container.
+import SettingsDialog from '../containers/SettingsDialog';
+import { getThumbnail } from '../util/images';
+
+import ViewTypeSelectMenu from './ViewTypeSelectMenu';
+import PartySettingsMenu from './PartySettingsMenu';
+import PartyMemberList from './PartyMemberList';
+import PadIcon from './PadIcon';
 
 // TODO(burdon): Move out of UX.
 const chance = new Chance();
@@ -44,47 +47,52 @@ const useStyles = makeStyles(theme => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
-    height: 380,
     width: 300
   },
+
   unsubscribed: {
-    backgroundColor: theme.palette.grey[500]
+    '& img': {
+      '-webkit-filter': 'grayscale(100%)',
+      opacity: 0.7
+    }
   },
-  header: {
-    backgroundColor: theme.palette.grey[100]
+
+  headerRoot: {
+    height: 62 // Prevent collapse if menu icon isn't present (if not subscribed).
   },
-  listContainer: {
-    flex: 1
+  headerContent: {
+    overflow: 'hidden'
   },
-  list: {
-    overflowY: 'scroll'
+  headerAction: {
+    margin: 0
   },
-  grid: {
-    paddingTop: 16,
-    paddingBottom: 16
-  },
+
   actions: {
     justifyContent: 'space-between',
-    marginTop: 'auto',
-    marginLeft: 'auto'
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   },
-  titleRoot: {
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    maxWidth: 180
+
+  listContainer: {
+    height: 176, // 5 * 36
+    marginBottom: theme.spacing(1),
+    overflowY: 'scroll'
+  },
+  list: {
+    // paddingTop: theme.spacing(2),
+    // paddingBottom: theme.spacing(2)
   }
 }));
 
 // TODO(burdon): Move to react-appkit.
-export const PartyCard = ({ party }) => {
+const PartyCard = ({ party }) => {
   const classes = useStyles();
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
   const [partySettingsMenuOpen, setPartySettingsMenuOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
-  const newDocumentAnchor = useRef();
-  const partySettingsMenuAnchor = useRef();
+  const createViewAnchor = useRef();
+  const settingsMenuAnchor = useRef();
 
   // TODO(burdon): This should be a dumb component (not container), so must pass in handlers.
   const topic = keyToString(party.publicKey);
@@ -98,7 +106,10 @@ export const PartyCard = ({ party }) => {
 
   const handleCreate = (type) => {
     setTypeSelectDialogOpen(false);
+
+    // TODO(burdon): When would this be null?
     if (!type) return;
+
     const title = `item-${chance.word()}`;
     const viewId = model.createView(type, title);
     handleSelect(viewId);
@@ -112,76 +123,69 @@ export const PartyCard = ({ party }) => {
     await client.partyManager.unsubscribe(party.publicKey);
   };
 
-  if (!party.subscribed) {
-    return (<>
-      <Card className={clsx(classes.card, classes.unsubscribed)}>
-        <CardHeader
-          title={<p>{party.displayName}</p>}
-        />
-        <CardActions className={classes.actions}>
-          <Button
-            size="small"
-            color="secondary"
-            onClick={handleSubscribe}
-          >Resubscribe</Button>
-        </CardActions>
-      </Card>
-    </>
-    );
-  }
-
+  // TODO(burdon): Only update name via settings.
   return (
     <>
-      <Card className={classes.card}>
+      <Card className={clsx(classes.card, !party.subscribed && classes.unsubscribed)}>
         <CardHeader
-          classes={{ root: classes.header }}
-          avatar={
-            <Avatar aria-label={party.displayName}>
-              {party.displayName.slice(0, 1).toUpperCase()}
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings" ref={partySettingsMenuAnchor} onClick={() => setPartySettingsMenuOpen(true)}>
-              <MoreVertIcon />
-            </IconButton>
-          }
+          classes={{
+            root: classes.headerRoot,
+            content: classes.headerContent,
+            action: classes.headerAction
+          }}
           title={
             <EditableText
-              variant='h6'
+              disabled={!party.subscribed}
               value={party.displayName}
               onUpdate={(displayName) => client.partyManager.setPartyProperty(party.publicKey, { displayName })}
-              classes={{ root: classes.titleRoot }}
             />
+          }
+          action={
+            party.subscribed && (
+              <IconButton
+                size="small"
+                aria-label="party menu"
+                ref={settingsMenuAnchor}
+                onClick={() => setPartySettingsMenuOpen(true)}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )
           }
         />
 
-        <PartySettingsMenu
-          anchorEl={partySettingsMenuAnchor.current}
-          open={partySettingsMenuOpen}
-          onClose={() => setPartySettingsMenuOpen(false)}
-          onVisibilityToggle={() => setDeletedItemsVisible(prev => !prev)}
-          onUnsubscribe={handleUnsubscribe}
-          deletedItemsVisible={deletedItemsVisible}
+        <CardMedia
+          component="img"
+          height={120}
+          image={getThumbnail(party.displayName)}
         />
 
         <div className={classes.listContainer}>
-          <List className={classes.list}>
+          <List className={classes.list} dense={true} disablePadding={true}>
             {model.getAllViews().map(item => (
-              <ListItem key={item.viewId} button onClick={() => handleSelect(item.viewId)}>
+              <ListItem
+                key={item.viewId}
+                button
+                disabled={!party.subscribed}
+                onClick={() => handleSelect(item.viewId)}
+              >
                 <ListItemIcon>
                   <PadIcon type={item.type} />
                 </ListItemIcon>
                 <ListItemText>
                   {item.displayName}
                 </ListItemText>
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
+                {party.subscribed && (
+                  <ListItemSecondaryAction>
+                    <IconButton size="small" edge="end" aria-label="delete" onClick={() => model.deleteView(item.viewId)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                )}
               </ListItem>
             ))}
-            {deletedItemsVisible && model.getAllDeletedViews().map(item => (
+
+            {party.subscribed && deletedItemsVisible && model.getAllDeletedViews().map(item => (
               <ListItem key={item.viewId} disabled={true}>
                 <ListItemIcon>
                   <PadIcon type={item.type} />
@@ -191,31 +195,71 @@ export const PartyCard = ({ party }) => {
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <IconButton edge="end" aria-label="restore" onClick={() => model.restoreView(item.viewId)}>
-                    <RestoreFromTrashIcon />
+                    <RestoreIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
-            <DocumentTypeSelectMenu anchorEl={newDocumentAnchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
           </List>
         </div>
 
-        <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
-
         <CardActions className={classes.actions}>
-          <Button
-            ref={newDocumentAnchor}
-            size="small"
-            color="secondary"
-            startIcon={<Add />}
-            onClick={() => setTypeSelectDialogOpen(true)}
-          >
-            New Document
-          </Button>
-        </CardActions>
+          {party.subscribed && (
+            <>
+              <Button
+                size="small"
+                variant="outlined"
+                onClick={() => setShareDialogOpen(true)}
+              >
+              Share
+              </Button>
 
+              <PartyMemberList party={party} />
+
+              <IconButton
+                ref={createViewAnchor}
+                size="small"
+                edge="end"
+                aria-label="add view"
+                onClick={() => setTypeSelectDialogOpen(true)}
+              >
+                <AddIcon />
+              </IconButton>
+            </>
+          )}
+
+          {!party.subscribed && (
+            <Button
+              size="small"
+              color="secondary"
+              onClick={handleSubscribe}
+            >
+              Subscribe
+            </Button>
+          )}
+        </CardActions>
       </Card>
-      <ShareDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
+
+      {/* TODO(burdon): Rename View. */}
+      <ViewTypeSelectMenu
+        anchorEl={createViewAnchor.current}
+        open={typeSelectDialogOpen}
+        onSelect={handleCreate}
+      />
+
+      <PartySettingsMenu
+        anchorEl={settingsMenuAnchor.current}
+        open={partySettingsMenuOpen}
+        deletedItemsVisible={deletedItemsVisible}
+        onClose={() => setPartySettingsMenuOpen(false)}
+        onVisibilityToggle={() => setDeletedItemsVisible(prev => !prev)}
+        onUnsubscribe={handleUnsubscribe}
+      />
+
+      {/* TODO(burdon): Move to Home (i.e., single instance. */}
+      <SettingsDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
     </>
   );
 };
+
+export default PartyCard;

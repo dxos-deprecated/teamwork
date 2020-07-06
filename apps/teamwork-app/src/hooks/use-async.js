@@ -7,6 +7,7 @@ import { useState, useLayoutEffect } from 'react';
 
 const INITIAL_STATE = [undefined, undefined];
 
+// TODO(burdon): Comment.
 export function useAsync (execute, deps) {
   const [state, setState] = useState(INITIAL_STATE);
 
