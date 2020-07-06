@@ -123,7 +123,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   if (!documentUpdateModel) return null;
 
   return (
-    <DxOSEditor
+    <DXOSEditor
       key={documentUpdateModel.doc.clientID}
       toolbar
       schema="full"
