@@ -11,7 +11,7 @@ import { Editor as DXOSEditor } from '@dxos/editor';
 
 import { useProfile } from '@dxos/react-client';
 
-import { useDocumentUpdateModel } from '../model';
+import { useDocumentUpdateModel, TYPE_EDITOR_UPDATE } from '../model';
 import Pad from './Pad';
 
 const useEditorClasses = makeStyles(theme => ({
@@ -126,7 +126,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
 
   const handleLocalUpdate = useCallback((update, doc) => {
     documentUpdateModel.appendMessage({
-      __type_url: 'testing.document.Update',
+      __type_url: TYPE_EDITOR_UPDATE,
       update,
       origin: { author: publicKey, docClientId: doc.clientID }
     });
