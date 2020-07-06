@@ -10,12 +10,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { useArrayModel } from '../model/useArrayModel';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
-
-export const LIST_TYPE = 'testing.planner.List';
-export const CARD_TYPE = 'testing.planner.Card';
+import { CARD_TYPE, useCard } from '../model/card';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,15 +37,16 @@ const List = (props) => {
   const classes = useStyles();
   const { topic, list, onUpdateList, onOpenCard, className } = props;
   const { id: listId } = list;
-  const cardsModel = useArrayModel(topic, CARD_TYPE, { listId });
-  const cards = cardsModel ? cardsModel.getItems() : [];
+
+  const cardsModel = useCard(topic, listId);
+  const cards = cardsModel.getObjectsByType(CARD_TYPE);
 
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
   };
 
   const handleAddCard = (title) => {
-    cardsModel.push({ listId, title });
+    cardsModel.createItem(CARD_TYPE, { listId, title });
   };
 
   // const handleDragEnd = result => {
