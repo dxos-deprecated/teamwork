@@ -3,7 +3,8 @@
 //
 
 import clsx from 'clsx';
-import { Chance } from 'chance';
+import assert from 'assert';
+
 import React, { useState, useRef } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
@@ -39,9 +40,6 @@ import ViewTypeSelectMenu from './ViewTypeSelectMenu';
 import PartySettingsMenu from './PartySettingsMenu';
 import PartyMemberList from './PartyMemberList';
 import PadIcon from './PadIcon';
-
-// TODO(burdon): Move out of UX.
-const chance = new Chance();
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -96,7 +94,7 @@ const PartyCard = ({ party }) => {
 
   // TODO(burdon): This should be a dumb component (not container), so must pass in handlers.
   const topic = keyToString(party.publicKey);
-  const model = useItems(topic);
+  const { model, createItem } = useItems(topic);
   const client = useClient();
   const router = useAppRouter();
 
@@ -105,13 +103,9 @@ const PartyCard = ({ party }) => {
   };
 
   const handleCreate = (type) => {
+    assert(type);
     setTypeSelectDialogOpen(false);
-
-    // TODO(burdon): When would this be null?
-    if (!type) return;
-
-    const title = `item-${chance.word()}`;
-    const viewId = model.createView(type, title);
+    const viewId = createItem(type);
     handleSelect(viewId);
   };
 

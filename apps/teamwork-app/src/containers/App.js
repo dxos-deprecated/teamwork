@@ -35,7 +35,7 @@ const App = () => {
   const classes = useStyles();
   const { topic, item: viewId } = useParams();
   const [pads] = usePads();
-  const model = useItems(topic);
+  const { model } = useItems(topic);
   const item = model.getById(viewId);
   const client = useClient();
 

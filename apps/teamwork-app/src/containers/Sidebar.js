@@ -2,7 +2,7 @@
 // Copyright 2018 DXOS.org
 //
 
-import { Chance } from 'chance';
+import assert from 'assert';
 import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import TreeView from '@material-ui/lab/TreeView';
@@ -18,8 +18,6 @@ import { useParty } from '@dxos/react-client';
 import ViewTypeSelectMenu from '../components/ViewTypeSelectMenu';
 
 import { useItems } from '../model';
-
-const chance = new Chance();
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -65,7 +63,7 @@ const Sidebar = () => {
   const homeTreeItemStyles = useHomeTreeItemStyles();
   const { topic, item: active } = useParams();
   const [pads] = usePads();
-  const model = useItems(topic);
+  const { model, createItem } = useItems(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
   const anchor = useRef();
 
@@ -74,10 +72,9 @@ const Sidebar = () => {
   };
 
   const handleCreate = (type) => {
+    assert(type);
     setTypeSelectDialogOpen(false);
-    if (!type) return;
-    const title = `item-${chance.word()}`;
-    const viewId = model.createView(type, title);
+    const viewId = createItem(type);
     handleSelect(viewId);
   };
 
