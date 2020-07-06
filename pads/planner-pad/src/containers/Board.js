@@ -121,7 +121,7 @@ export const Board = ({ topic, viewId }) => {
     </div>
   );
 
-  const MyLists = () => (
+  const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable direction="horizontal" type="column" droppableId={board.viewId}>
         {(provided) => (
@@ -158,7 +158,7 @@ export const Board = ({ topic, viewId }) => {
   return (
     <Fragment>
       <Topbar />
-      <MyLists />
+      <Lists />
       <BoardSettings
         board={board}
         onRename={displayName => viewModel.renameView(viewId, displayName)}
