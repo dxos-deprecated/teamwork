@@ -37,8 +37,8 @@ import { getThumbnail } from '../util/images';
 
 import ViewTypeSelectMenu from './ViewTypeSelectMenu';
 import PartySettingsMenu from './PartySettingsMenu';
-import { PartyMemberList } from './PartyMemberList';
-import { PadIcon } from './PadIcon';
+import PartyMemberList from './PartyMemberList';
+import PadIcon from './PadIcon';
 
 // TODO(burdon): Move out of UX.
 const chance = new Chance();

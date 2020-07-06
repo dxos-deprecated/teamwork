@@ -58,7 +58,7 @@ const useHomeTreeItemStyles = makeStyles(theme => ({
   }
 }));
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const router = useAppRouter();
   const party = useParty();
   const classes = useStyles();
@@ -115,3 +115,5 @@ export const Sidebar = () => {
     </div>
   );
 };
+
+export default Sidebar;

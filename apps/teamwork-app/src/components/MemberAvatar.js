@@ -34,9 +34,10 @@ export const getAvatarStyle = (theme, publicKey) => {
   };
 };
 
-// Components must have default export.
-export const MemberAvatar = ({ member }) => (
+const MemberAvatar = ({ member }) => (
   <Avatar style={getAvatarStyle(useTheme(), member.publicKey)}>
     {member.displayName ? member.displayName.slice(0, 1).toUpperCase() : <FaceIcon />}
   </Avatar>
 );
+
+export default MemberAvatar;

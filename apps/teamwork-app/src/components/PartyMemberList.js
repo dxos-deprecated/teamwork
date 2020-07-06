@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // TODO(burdon): Pass in array (small UX data object) of processed members (don't apply humanize here).
-export const PartyMemberList = ({ party, onUserInvite }) => {
+const PartyMemberList = ({ party, onUserInvite }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -49,3 +49,5 @@ export const PartyMemberList = ({ party, onUserInvite }) => {
     </div>
   );
 };
+
+export default PartyMemberList;

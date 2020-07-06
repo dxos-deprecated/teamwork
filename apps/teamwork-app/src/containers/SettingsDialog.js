@@ -33,7 +33,7 @@ import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
 
-import { MemberAvatar } from '../components/MemberAvatar';
+import MemberAvatar from '../components/MemberAvatar';
 import { useAsync } from '../hooks/use-async';
 
 const useStyles = makeStyles(theme => ({
