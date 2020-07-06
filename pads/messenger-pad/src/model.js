@@ -10,8 +10,8 @@ import { createId } from '@dxos/crypto';
 import { DefaultPartiallyOrderedModel } from '@dxos/echo-db';
 
 // TODO(burdon): Define types.
-export const TYPE_MESSENGER_CHANNEL = 'testing.messenger.Channel';
-const TYPE_MESSENGER_MESSAGE = 'testing.messenger.Message';
+export const TYPE_MESSENGER_CHANNEL = 'dxos.teamwork.messenger.channel';
+const TYPE_MESSENGER_MESSAGE = 'dxos.teamwork.messenger.message';
 
 /**
  * Provides channel list and channel creator.

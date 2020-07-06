@@ -2,6 +2,5 @@
 // Copyright 2020 DXOS.org
 //
 
-// TODO(burdon): Define types.
-export const TYPE_TESTING_PAD = 'testing.testing.Pad';
-export const TYPE_TESTING_ITEM = 'testing.testing.Item';
+export const TYPE_TESTING_PAD = 'dxos.teamwork.testing.Pad';
+export const TYPE_TESTING_ITEM = 'dxos.teamwork.testing.Item';

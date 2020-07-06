@@ -9,8 +9,8 @@ import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 
 // TODO(burdon): Define types.
-export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
-export const TYPE_EDITOR_UPDATE = 'testing.document.Update';
+export const TYPE_EDITOR_DOCUMENT = 'dxos.teamwork.editor.document';
+export const TYPE_EDITOR_UPDATE = 'dxos.teamwork.editor.update';
 
 /**
  * Provides the document content.

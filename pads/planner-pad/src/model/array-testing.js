@@ -16,7 +16,7 @@ const SEED = 1;
 // eslint-disable-next-line new-cap
 const RNG = new seedrandom(SEED);
 
-const TYPE = 'ArrayModel.test';
+const TYPE = 'dxos.teamwork.planner.array';
 
 /*
  * Mock ID provider making sure we generate IDs deterministically. We need this
