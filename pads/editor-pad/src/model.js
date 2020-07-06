@@ -3,14 +3,16 @@
 //
 
 import assert from 'assert';
+import { Chance } from 'chance';
 
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 
-// TODO(burdon): Define types.
 export const TYPE_EDITOR_DOCUMENT = 'dxos.teamwork.editor.document';
 export const TYPE_EDITOR_UPDATE = 'dxos.teamwork.editor.update';
+
+const chance = new Chance();
 
 /**
  * Provides the document content.
@@ -33,5 +35,14 @@ export const useDocumentUpdateModel = (topic, documentId) => {
 export const useItems = (topic) => {
   const [pads] = usePads();
   const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
-  return model ?? new ViewModel(); // hack to ensure we dont have any crashes while model is loading
+
+  return {
+    items: model?.getAllViews() ?? [],
+    createItem: () => {
+      assert(model);
+      const displayName = `embeded-item-${chance.word()}`;
+      const viewId = model.createView(TYPE_EDITOR_DOCUMENT, displayName);
+      return { __type_url: TYPE_EDITOR_DOCUMENT, viewId, displayName };
+    }
+  };
 };

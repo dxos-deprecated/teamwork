@@ -54,7 +54,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       label: `New ${pad.displayName}`,
       create: true,
       fn: async () => {
-        const item = await onCreateItem(pad.type);
+        const item = await onCreateItem();
 
         editor.createReactElement({
           type: pad.type,
