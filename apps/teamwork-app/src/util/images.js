@@ -20,9 +20,9 @@ const images = [
   DarkImage,
   RedImage,
   OrangeImage,
-  BlueWaveImage,
+  BlueWaveImage
 ];
 
 export const getThumbnail = (value) => {
   return images[hash(value) % images.length];
-}
+};
