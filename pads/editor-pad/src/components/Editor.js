@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -97,21 +97,10 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
 
   const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
 
-  useEffect(() => {
-    if (!editor) return;
-
-    return () => {
-      if (!editor) return;
-      editor.destroy();
-    };
-  }, [itemId, editor]);
-
-  const handleEditorCreated = useCallback(setEditor, [setEditor]);
+  const handleEditorCreated = useCallback(setEditor, []);
 
   const handleReactElementRender = useCallback(props => {
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
-
-    console.log('render', props);
 
     return (
       <Pad title={props.title} icon={icon}>
@@ -132,6 +121,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
 
   return (
     <DxOSEditor
+      key={documentUpdateModel.doc.clientID}
       toolbar
       schema="full"
       sync={{
