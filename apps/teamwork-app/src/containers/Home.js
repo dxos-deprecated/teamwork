@@ -4,20 +4,15 @@
 
 import React, { useState } from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import Zoom from '@material-ui/core/Zoom';
 
 import { makeStyles } from '@material-ui/styles';
-import AddIcon from '@material-ui/icons/Add';
 
 import { useClient, useParties } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 
-import { PartyCard } from '../components/PartyCard';
+import PartyCard from '../components/PartyCard';
+import NewPartyCard from '../components/NewPartyCard';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -85,27 +80,15 @@ const Home = () => {
   return (
     <AppContainer>
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
+        <Grid item zeroMinWidth>
+          <NewPartyCard onNewParty={createParty} />
+        </Grid>
         {parties.sort(sortBySubscribedAndName).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
             <PartyCard party={party} />
           </Grid>
         ))}
       </Grid>
-
-      {parties.length === 0 && (
-        <Typography className={classes.createPartyText} variant="h2">
-          <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
-          <span> to get started.</span>
-        </Typography>
-      )}
-
-      <Zoom in={true} timeout={500} unmountOnExit>
-        <Tooltip title="Create party" aria-label="create party" placement="top">
-          <Fab color="primary" className={classes.fab} onClick={createParty}>
-            {inProgress ? <CircularProgress color="secondary" /> : <AddIcon /> }
-          </Fab>
-        </Tooltip>
-      </Zoom>
     </AppContainer>
   );
 };

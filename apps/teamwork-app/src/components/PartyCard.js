@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // TODO(burdon): Move to react-appkit.
-export const PartyCard = ({ party }) => {
+const PartyCard = ({ party }) => {
   const classes = useStyles();
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
   const [partySettingsMenuOpen, setPartySettingsMenuOpen] = useState(false);
@@ -253,3 +253,5 @@ export const PartyCard = ({ party }) => {
     </>
   );
 };
+
+export default PartyCard;
