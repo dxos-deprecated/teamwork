@@ -6,7 +6,6 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import FaceIcon from '@material-ui/icons/Face';
 import { AvatarGroup } from '@material-ui/lab';
-import { Add } from '@material-ui/icons';
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 
@@ -22,12 +21,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // TODO(burdon): Pass in array (small UX data object) of processed members (don't apply humanize here).
-const PartyMemberList = ({ party, onUserInvite }) => {
+const PartyMemberList = ({ party }) => {
   const classes = useStyles();
   const theme = useTheme();
 
   // TODO(burdon): Make smaller.
-  // TODO(burdon): Invite should be rounded "share" button not avatar.
 
   return (
     <div className={classes.root}>
@@ -39,12 +37,6 @@ const PartyMemberList = ({ party, onUserInvite }) => {
             </Avatar>
           </Tooltip>
         ))}
-
-        <Tooltip title="New member" placement="top">
-          <Avatar className={classes.avatar} onClick={onUserInvite}>
-            <Add />
-          </Avatar>
-        </Tooltip>
       </AvatarGroup>
     </div>
   );

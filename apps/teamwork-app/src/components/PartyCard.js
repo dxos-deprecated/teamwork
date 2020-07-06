@@ -206,7 +206,15 @@ const PartyCard = ({ party }) => {
         <CardActions className={classes.actions}>
           {party.subscribed && (
             <>
-              <PartyMemberList party={party} onUserInvite={() => setShareDialogOpen(true)} />
+              <Button
+                size="small"
+                variant="outlined"
+                onClick={() => setShareDialogOpen(true)}
+              >
+              Share
+              </Button>
+
+              <PartyMemberList party={party} />
 
               <IconButton
                 ref={createViewAnchor}
