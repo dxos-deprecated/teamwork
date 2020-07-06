@@ -18,6 +18,7 @@ import { ArrayModel } from '../model/array';
 import BoardSettings from './BoardSettings';
 import List, { LIST_TYPE, CARD_TYPE } from './List';
 import { BOARD_TYPE, useBoard } from '../model/board';
+import { LIST_TYPE, useList } from '../model/list';
 
 const useStyles = makeStyles(() => {
   return {
@@ -60,6 +61,9 @@ export const Board = ({ topic, viewId }) => {
   const board = viewModel.getById(viewId);
   const listsModel = useArrayModel(topic, LIST_TYPE, { boardId });
 
+  const myListModel = useList(topic, viewId);
+  const myLists = myListModel.getObjectsByType(LIST_TYPE);
+
   const [settingsOpen, setSettingsOpen] = useState(false);
   if (!board || !listsModel) {
     return <div className={classes.root}>Loading board...</div>;
@@ -69,10 +73,12 @@ export const Board = ({ topic, viewId }) => {
 
   const handleAddList = () => {
     listsModel.push({ boardId, title: 'New List' });
+    myListModel.createItem(LIST_TYPE, { title: 'New List' });
   };
 
   const handleUpdateList = (listId) => (properties) => {
     listsModel.updateItem(listId, properties);
+    myListModel.updateItem(listId, properties);
   };
 
   const onDragEnd = async (result) => {
@@ -161,10 +167,45 @@ export const Board = ({ topic, viewId }) => {
     </DragDropContext>
   );
 
+  const MyLists = () => (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable direction="horizontal" type="column" droppableId={board.viewId}>
+        {(provided) => (
+          <div ref={provided.innerRef} className={classes.scrollBox}>
+            <div className={classes.root}>
+              {myLists.map((list, index) => (
+                <Draggable key={list.id} draggableId={list.id} index={index}>
+                  {(provided) => (
+                    <div
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}
+                      style={provided.draggableProps.style}
+                      className={classes.list}
+                    >
+                      <List
+                        key={list.id}
+                        topic={topic}
+                        list={list}
+                        onUpdateList={handleUpdateList(list.id)}
+                        onOpenCard={() => { }}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+            </div>
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
+
   return (
     <Fragment>
       <Topbar />
-      {Lists()}
+      {/* {Lists()} */}
+      <MyLists />
       <BoardSettings
         board={board}
         onRename={displayName => viewModel.renameView(viewId, displayName)}
