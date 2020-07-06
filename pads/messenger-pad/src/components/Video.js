@@ -2,15 +2,17 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useRef, useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import React, { useRef, useEffect, useState } from 'react';
+
+import { makeStyles } from '@material-ui/core/styles';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
 const useStyles = makeStyles(() => ({
   videoContainer: {
-    position: 'relative'
+    position: 'relative',
+    marginTop: -3
   },
   video: {
     width: '100%',
@@ -23,7 +25,7 @@ const useStyles = makeStyles(() => ({
     width: '100vw',
     height: '100vh',
     zIndex: 10000,
-    backgroundColor: 'black'
+    backgroundColor: '#000'
   },
   centeredUnderlay: {
     left: 0,

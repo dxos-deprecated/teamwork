@@ -7,20 +7,23 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { Editor as DxOSEditor } from '@dxos/editor';
+import { Editor as DXOSEditor } from '@dxos/editor';
 
 import { useProfile } from '@dxos/react-client';
 
 import { useDocumentUpdateModel } from '../model';
 import Pad from './Pad';
 
-const useEditorClasses = makeStyles(() => ({
+const useEditorClasses = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%'
   },
   editor: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+
     '& reactelement': {
       display: 'inline-block'
     }
@@ -154,7 +157,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   if (!documentUpdateModel) return null;
 
   return (
-    <DxOSEditor
+    <DXOSEditor
       toolbar
       schema="full"
       sync={{
