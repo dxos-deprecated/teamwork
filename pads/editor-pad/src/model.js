@@ -7,6 +7,7 @@ import assert from 'assert';
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
+import { TextModel } from '@dxos/text-model';
 
 // TODO(burdon): Define types.
 export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
@@ -20,7 +21,8 @@ export const useDocumentUpdateModel = (topic, documentId) => {
   assert(documentId);
 
   const model = useModel({
-    options: { type: TYPE_EDITOR_UPDATE, topic, documentId, disableUpdateHandler: true }
+    model: TextModel,
+    options: { type: TYPE_EDITOR_UPDATE, topic, documentId }
   });
 
   return model;
