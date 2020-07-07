@@ -28,13 +28,15 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import InviteIcon from '@material-ui/icons/Add';
 import PeopleIcon from '@material-ui/icons/People';
 
-import { humanize } from '@dxos/crypto';
+import { humanize, keyToBuffer, verify, SIGNATURE_LENGTH, keyToString } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
+import { BotFactoryClient } from '@dxos/botkit-client';
 
 import MemberAvatar from '../components/MemberAvatar';
 import { useAsync } from '../hooks/use-async';
+import BotInviteDialog from '../components/BotInviteDialog';
 
 const useStyles = makeStyles(theme => ({
   title: {
@@ -84,8 +86,10 @@ const SettingsDialog = ({ party, open, onClose }) => {
   const classes = useStyles();
   const client = useClient();
   const router = useAppRouter();
+  const topic = keyToString(party.publicKey);
   const [pendingInvitations, setPendingInvitations] = useState([]);
   const [contacts, error] = useAsync(async () => client.partyManager.getContacts(), []);
+  const [botDialogVisible, setBotDialogVisible] = useState(false);
 
   const createInvitation = async () => {
     const invitation = await client.partyManager.inviteToParty(
@@ -102,6 +106,37 @@ const SettingsDialog = ({ party, open, onClose }) => {
       }
     );
     return invitation;
+  };
+
+  const handleBotInvite = async (botFactoryTopic, bot, botVersion, spec) => {
+    const botId = `wrn:bot:${bot}#${botVersion}`;
+
+    const botFactoryClient = new BotFactoryClient(client.networkManager, botFactoryTopic);
+
+    const secretProvider = () => {
+    };
+
+    // Provided by inviter node.
+    const secretValidator = async (invitation, secret) => {
+      const signature = secret.slice(0, SIGNATURE_LENGTH);
+      const message = secret.slice(SIGNATURE_LENGTH);
+      return verify(message, signature, keyToBuffer(botFactoryTopic));
+    };
+
+    const invitation = await client.partyManager.inviteToParty(
+      keyToBuffer(topic),
+      secretValidator,
+      secretProvider,
+      {
+        onFinish: () => {
+          botFactoryClient.close();
+          setBotDialogVisible(false);
+        }
+      }
+    );
+
+    const botUID = await botFactoryClient.sendSpawnRequest(botId);
+    await botFactoryClient.sendInvitationRequest(botUID, topic, spec, invitation.toQueryParameters());
   };
 
   const handleNewPendingInvitation = async () => {
@@ -144,8 +179,20 @@ const SettingsDialog = ({ party, open, onClose }) => {
             >
               Invite User
             </Button>
+            <Button
+              size="small"
+              onClick={() => setBotDialogVisible(true)}
+            >
+              Invite Bot
+            </Button>
           </div>
         </Toolbar>
+
+        <BotInviteDialog
+          open={botDialogVisible}
+          onSubmit={({ topic: bfTopic, bot, botVersion, spec }) => handleBotInvite(bfTopic, bot, botVersion, spec)}
+          onClose={() => setBotDialogVisible(false)}
+        />
 
         <TableContainer>
           <Table className={classes.table} size="small" padding="none" aria-label="contacts">
