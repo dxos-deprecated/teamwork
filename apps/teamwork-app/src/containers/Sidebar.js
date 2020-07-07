@@ -15,8 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads, MemberList } from '@dxos/react-appkit';
 import { useParty } from '@dxos/react-client';
 
+import ViewTypeSelectMenu from '../components/ViewTypeSelectMenu';
+
 import { useItems } from '../model';
-import { DocumentTypeSelectMenu } from './DocumentTypeSelectMenu';
 
 const chance = new Chance();
 
@@ -57,7 +58,7 @@ const useHomeTreeItemStyles = makeStyles(theme => ({
   }
 }));
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const router = useAppRouter();
   const party = useParty();
   const classes = useStyles();
@@ -92,7 +93,8 @@ export const Sidebar = () => {
               <Typography variant="body2">Home</Typography>
             </div>
           )}
-        ></TreeItem>
+        />
+
         {model.getAllViews().map(view => (
           <PartyTreeItem
             key={view.viewId}
@@ -106,11 +108,12 @@ export const Sidebar = () => {
         ))}
 
         <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
-        <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
-
+        <ViewTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
       </TreeView>
       <Divider />
       <MemberList party={party} />
     </div>
   );
 };
+
+export default Sidebar;

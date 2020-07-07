@@ -11,7 +11,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import { usePads } from '@dxos/react-appkit';
 
-export const DocumentTypeSelectMenu = ({ anchorEl, onSelect, open }) => {
+const ViewTypeSelectMenu = ({ anchorEl, onSelect, open }) => {
   const [pads] = usePads();
   return (
     <Menu anchorEl={anchorEl} open={open} onClose={() => onSelect(undefined)}>
@@ -26,3 +26,5 @@ export const DocumentTypeSelectMenu = ({ anchorEl, onSelect, open }) => {
     </Menu>
   );
 };
+
+export default ViewTypeSelectMenu;

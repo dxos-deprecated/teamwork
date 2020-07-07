@@ -11,13 +11,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 
-import { useClient } from '@dxos/react-client';
-
-import { useArrayModel } from '../model/useArrayModel';
-import { ArrayModel } from '../model/array';
 import BoardSettings from './BoardSettings';
-import List, { LIST_TYPE, CARD_TYPE } from './List';
-import { BOARD_TYPE, useBoard } from '../model/board';
+import List from './List';
+import { useBoard } from '../model/board';
+import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
 
 const useStyles = makeStyles(() => {
   return {
@@ -53,57 +50,59 @@ const useStyles = makeStyles(() => {
 
 export const Board = ({ topic, viewId }) => {
   const classes = useStyles();
-  const client = useClient();
-  const boardId = `${BOARD_TYPE}/${viewId}`;
 
   const viewModel = useBoard(topic, viewId);
   const board = viewModel.getById(viewId);
-  const listsModel = useArrayModel(topic, LIST_TYPE, { boardId });
+
+  const listsModel = useList(topic, viewId);
+  const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
+  const cards = listsModel.getObjectsByType(CARD_TYPE);
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   if (!board || !listsModel) {
     return <div className={classes.root}>Loading board...</div>;
   }
 
-  const lists = listsModel.getItems();
-
   const handleAddList = () => {
-    listsModel.push({ boardId, title: 'New List' });
+    listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
   };
 
   const handleUpdateList = (listId) => (properties) => {
     listsModel.updateItem(listId, properties);
   };
 
+  const handleAddCard = (title, listId) => {
+    const cardsInList = getCardsForList(listId);
+    listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
+  };
+
+  const getCardsForList = listId => cards
+    .filter(card => card.properties.listId === listId)
+    .sort(positionCompare);
+
   const onDragEnd = async (result) => {
-    const { source, destination } = result;
-    console.log(source, destination);
+    const { source, destination, draggableId } = result;
 
     // No drop target, skip this no-op.
     if (!destination) {
       return;
     }
 
-    // Dragging entire lists.
-    if (source.droppableId === board.viewId) {
-      listsModel.moveItemByIndex(source.index, destination.index);
-      return;
+    if (source.droppableId === board.viewId) { // Dragging entire lists.
+      const position = getPositionAtIndex(lists, destination.index);
+      listsModel.updateItem(draggableId, { position });
+    } else { // Dragging cards
+      const cardsInList = getCardsForList(destination.droppableId);
+      const position = getPositionAtIndex(cardsInList, destination.index);
+      if (source.droppableId === destination.droppableId) {
+        listsModel.updateItem(draggableId, { position });
+      } else {
+        listsModel.updateItem(draggableId, {
+          position,
+          listId: destination.droppableId
+        });
+      }
     }
-
-    // Same list card move movement
-    if (source.droppableId === destination.droppableId) {
-      // eslint-disable-next-line no-debugger
-      debugger;
-      const model = await client.modelFactory.createModel(
-        ArrayModel, { type: CARD_TYPE, topic, source }
-      );
-      client.modelFactory.destroyModel(model);
-
-      console.log('card dragging within');
-      return;
-    }
-
-    console.log('card from one list to another');
   };
 
   const Topbar = () => (
@@ -145,10 +144,11 @@ export const Board = ({ topic, viewId }) => {
                     >
                       <List
                         key={list.id}
-                        topic={topic}
                         list={list}
+                        cards={getCardsForList(list.id)}
                         onUpdateList={handleUpdateList(list.id)}
                         onOpenCard={() => { }}
+                        onAddCard={handleAddCard}
                       />
                     </div>
                   )}
@@ -164,7 +164,7 @@ export const Board = ({ topic, viewId }) => {
   return (
     <Fragment>
       <Topbar />
-      {Lists()}
+      <Lists />
       <BoardSettings
         board={board}
         onRename={displayName => viewModel.renameView(viewId, displayName)}
@@ -176,3 +176,25 @@ export const Board = ({ topic, viewId }) => {
     </Fragment>
   );
 };
+
+const positionCompare = (a, b) => a.properties.position - b.properties.position;
+
+function getLastPosition (list) {
+  if (list.length === 0) {
+    return 0;
+  } else {
+    return list[list.length - 1].properties.position + 1;
+  }
+}
+
+function getPositionAtIndex (list, index) {
+  if (list.length === 0) {
+    return 0;
+  } else if (index === 0) {
+    return list[0].properties.position - 1;
+  } else if (index >= list.length - 1) {
+    return list[list.length - 1].properties.position + 1;
+  } else {
+    return (list[index - 1].properties.position + list[index].properties.position) / 2;
+  }
+}

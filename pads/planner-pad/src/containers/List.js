@@ -10,12 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { useArrayModel } from '../model/useArrayModel';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
-
-export const LIST_TYPE = 'testing.planner.List';
-export const CARD_TYPE = 'testing.planner.Card';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -36,28 +32,12 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const List = (props) => {
+const List = ({ list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
   const classes = useStyles();
-  const { topic, list, onUpdateList, onOpenCard, className } = props;
-  const { id: listId } = list;
-  const cardsModel = useArrayModel(topic, CARD_TYPE, { listId });
-  const cards = cardsModel ? cardsModel.getItems() : [];
 
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
   };
-
-  const handleAddCard = (title) => {
-    cardsModel.push({ listId, title });
-  };
-
-  // const handleDragEnd = result => {
-  //   const { source, destination } = result;
-  //   if (!source || !destination) {
-  //     return;
-  //   }
-  //   cardsModel.moveItemByIndex(source.index, destination.index);
-  // };
 
   const Card = ({ card, provided }) => (
     <div
@@ -107,7 +87,7 @@ const List = (props) => {
           </div>
         )}
       </Droppable>
-      <AddCard onAddCard={handleAddCard} />
+      <AddCard onAddCard={title => onAddCard(title, list.id)} />
     </div>
   );
 };

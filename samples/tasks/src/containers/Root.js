@@ -1,5 +1,5 @@
 //
-// Copyright 2020 DxOS, Inc.
+// Copyright 2020 DXOS, Inc.
 //
 
 import React from 'react';
@@ -15,7 +15,7 @@ import {
 } from '@dxos/react-appkit';
 
 import Home from './Home';
-import Tasks from './tasks';
+import Tasks from './Tasks';
 
 const Root = ({ config }) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
