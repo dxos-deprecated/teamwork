@@ -83,7 +83,6 @@ export const Board = ({ topic, viewId }) => {
 
   const onDragEnd = async (result) => {
     const { source, destination, draggableId } = result;
-    console.log(source, destination);
 
     // No drop target, skip this no-op.
     if (!destination) {

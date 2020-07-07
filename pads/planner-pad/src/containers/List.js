@@ -12,7 +12,6 @@ import { EditableText } from '@dxos/react-ux';
 
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
-import { CARD_TYPE, useCard } from '../model/card';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -39,15 +38,6 @@ const List = ({ topic, list, cards, onUpdateList, onOpenCard, onAddCard, classNa
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
   };
-
-
-  // const handleDragEnd = result => {
-  //   const { source, destination } = result;
-  //   if (!source || !destination) {
-  //     return;
-  //   }
-  //   cardsModel.moveItemByIndex(source.index, destination.index);
-  // };
 
   const Card = ({ card, provided }) => (
     <div
