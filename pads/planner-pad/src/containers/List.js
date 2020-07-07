@@ -33,21 +33,13 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const List = (props) => {
+const List = ({ topic, list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
   const classes = useStyles();
-  const { topic, list, onUpdateList, onOpenCard, className } = props;
-  const { id: listId } = list;
-
-  const cardsModel = useCard(topic, listId);
-  const cards = cardsModel.getObjectsByType(CARD_TYPE);
 
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
   };
 
-  const handleAddCard = (title) => {
-    cardsModel.createItem(CARD_TYPE, { listId, title });
-  };
 
   // const handleDragEnd = result => {
   //   const { source, destination } = result;
@@ -105,7 +97,7 @@ const List = (props) => {
           </div>
         )}
       </Droppable>
-      <AddCard onAddCard={handleAddCard} />
+      <AddCard onAddCard={title => onAddCard(title, list.id)} />
     </div>
   );
 };

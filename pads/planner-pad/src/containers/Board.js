@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import BoardSettings from './BoardSettings';
 import List from './List';
 import { useBoard } from '../model/board';
-import { LIST_TYPE, useList } from '../model/list';
+import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
 
 const useStyles = makeStyles(() => {
   return {
@@ -56,6 +56,8 @@ export const Board = ({ topic, viewId }) => {
 
   const listsModel = useList(topic, viewId);
   const lists = listsModel.getObjectsByType(LIST_TYPE);
+  const cards = listsModel.getObjectsByType(CARD_TYPE);
+  console.log(cards)
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   if (!board || !listsModel) {
@@ -70,8 +72,17 @@ export const Board = ({ topic, viewId }) => {
     listsModel.updateItem(listId, properties);
   };
 
+  const handleAddCard = (title, listId) => {
+    const cardsInList = getCardsForList(listId)
+    listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
+  };
+
+  const getCardsForList = listId => cards
+    .filter(card => card.properties.listId === listId)
+    .sort((a, b) => a.properties.position - b.properties.position)
+
   const onDragEnd = async (result) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
     console.log(source, destination);
 
     // No drop target, skip this no-op.
@@ -87,13 +98,8 @@ export const Board = ({ topic, viewId }) => {
 
     // Same list card move movement
     if (source.droppableId === destination.droppableId) {
-      // TODO(rzadp): Implement this? What should happen here?
-      // const model = await client.modelFactory.createModel(
-      //   ArrayModel, { type: CARD_TYPE, topic, source }
-      // );
-      // client.modelFactory.destroyModel(model);
-
-      console.log('card dragging within');
+      const cardsInList = getCardsForList(destination.droppableId)
+      listsModel.updateItem(draggableId, { position: getPositionAtIndex(cardsInList, destination.index) })
       return;
     }
 
@@ -141,8 +147,10 @@ export const Board = ({ topic, viewId }) => {
                         key={list.id}
                         topic={topic}
                         list={list}
+                        cards={getCardsForList(list.id)}
                         onUpdateList={handleUpdateList(list.id)}
                         onOpenCard={() => { }}
+                        onAddCard={handleAddCard}
                       />
                     </div>
                   )}
@@ -170,3 +178,23 @@ export const Board = ({ topic, viewId }) => {
     </Fragment>
   );
 };
+
+function getLastPosition(list) {
+  if(list.length === 0) {
+    return 0;
+  } else {
+    return list[list.length - 1].properties.position + 1
+  }
+}
+
+function getPositionAtIndex(list, index) {
+  if(list.length === 0) {
+    return 0;
+  } else if(index === 0) {
+    return list[0].properties.position - 1
+  } else if(index >= list.length - 1) {
+    return list[list.length - 1].properties.position + 1
+  } else {
+    return (list[index - 1].properties.position + list[index].properties.position) / 2
+  }
+}
