@@ -36,7 +36,7 @@ import { useViews } from '../model';
 import SettingsDialog from '../containers/SettingsDialog';
 import { getThumbnail } from '../util/images';
 
-import ViewTypeSelectMenu from './ViewTypeSelectMenu';
+import NewViewCreationMenu from './NewViewCreationMenu';
 import PartySettingsMenu from './PartySettingsMenu';
 import PartyMemberList from './PartyMemberList';
 import PadIcon from './PadIcon';
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 // TODO(burdon): Move to react-appkit.
 const PartyCard = ({ party }) => {
   const classes = useStyles();
-  const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
+  const [newViewCreationMenuOpen, setNewViewCreationMenuOpen] = useState(false);
   const [partySettingsMenuOpen, setPartySettingsMenuOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
@@ -104,7 +104,7 @@ const PartyCard = ({ party }) => {
 
   const handleCreate = (type) => {
     assert(type);
-    setTypeSelectDialogOpen(false);
+    setNewViewCreationMenuOpen(false);
     const viewId = createView(type);
     handleSelect(viewId);
   };
@@ -215,7 +215,7 @@ const PartyCard = ({ party }) => {
                 size="small"
                 edge="end"
                 aria-label="add view"
-                onClick={() => setTypeSelectDialogOpen(true)}
+                onClick={() => setNewViewCreationMenuOpen(true)}
               >
                 <AddIcon />
               </IconButton>
@@ -234,11 +234,11 @@ const PartyCard = ({ party }) => {
         </CardActions>
       </Card>
 
-      {/* TODO(burdon): Rename View. */}
-      <ViewTypeSelectMenu
+      <NewViewCreationMenu
         anchorEl={createViewAnchor.current}
-        open={typeSelectDialogOpen}
+        open={newViewCreationMenuOpen}
         onSelect={handleCreate}
+        onClose={() => setNewViewCreationMenuOpen(false)}
       />
 
       <PartySettingsMenu

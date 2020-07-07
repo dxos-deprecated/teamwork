@@ -15,8 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads, MemberList } from '@dxos/react-appkit';
 import { useParty } from '@dxos/react-client';
 
-import ViewTypeSelectMenu from '../components/ViewTypeSelectMenu';
-
+import NewViewCreationMenu from '../components/NewViewCreationMenu';
 import { useViews } from '../model';
 
 const useStyles = makeStyles(theme => ({
@@ -64,7 +63,7 @@ const Sidebar = () => {
   const { topic, item: active } = useParams();
   const [pads] = usePads();
   const { model, createView } = useViews(topic);
-  const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
+  const [newViewCreationMenuOpen, setNewViewCreationMenuOpen] = useState(false);
   const anchor = useRef();
 
   const handleSelect = (viewId) => {
@@ -73,7 +72,7 @@ const Sidebar = () => {
 
   const handleCreate = (type) => {
     assert(type);
-    setTypeSelectDialogOpen(false);
+    setNewViewCreationMenuOpen(false);
     const viewId = createView(type);
     handleSelect(viewId);
   };
@@ -104,8 +103,8 @@ const Sidebar = () => {
           />
         ))}
 
-        <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
-        <ViewTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
+        <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setNewViewCreationMenuOpen(true)}>Item</PartyTreeAddItemButton>
+        <NewViewCreationMenu anchorEl={anchor.current} open={newViewCreationMenuOpen} onSelect={handleCreate} onClose={() => setNewViewCreationMenuOpen(false)} />
       </TreeView>
       <Divider />
       <MemberList party={party} />
