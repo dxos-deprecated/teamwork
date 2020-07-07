@@ -11,7 +11,7 @@ export const BOARD_TYPE = 'dxos.teamwork.planner.board';
  *
  * @returns {ViewModel<{ description: string }>}
  */
-export function useBoard (topic, viewId) {
+export function useViews (topic, viewId) {
   const model = useModel({ model: ViewModel, options: { type: BOARD_TYPE, topic, viewId } });
   return model ?? new ViewModel();
 }

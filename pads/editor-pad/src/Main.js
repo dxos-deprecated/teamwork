@@ -11,7 +11,7 @@ import grey from '@material-ui/core/colors/blueGrey';
 import { usePads } from '@dxos/react-appkit';
 
 import { Editor } from './components/Editor';
-import { useItems } from './model';
+import { useViews } from './model';
 
 const useStyles = makeStyles({
   root: {
@@ -36,10 +36,10 @@ const EditorPad = ({ topic, viewId }) => {
 
   const classes = useStyles();
   const [pads] = usePads();
-  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
+  const { views, createView } = useViews(topic, pads.map((pad) => pad.type));
 
   const handleCreateItem = () => {
-    return createItem();
+    return createView();
   };
 
   return (
@@ -49,7 +49,7 @@ const EditorPad = ({ topic, viewId }) => {
           topic={topic}
           itemId={viewId}
           pads={pads}
-          items={items}
+          items={views}
           onCreateItem={handleCreateItem}
         />
       </div>

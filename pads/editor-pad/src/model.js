@@ -31,16 +31,16 @@ export const useDocumentUpdateModel = (topic, documentId) => {
 };
 
 /**
- * Provides item list and item creator.
+ * Provides view list and view creator.
  * @returns {ViewModel}
  */
-export const useItems = (topic) => {
+export const useViews = (topic) => {
   const [pads] = usePads();
   const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
 
   return {
-    items: model?.getAllViews() ?? [],
-    createItem: () => {
+    views: model?.getAllViews() ?? [],
+    createView: () => {
       assert(model);
       const displayName = `embeded-item-${chance.word()}`;
       const viewId = model.createView(TYPE_EDITOR_DOCUMENT, displayName);
