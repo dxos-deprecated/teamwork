@@ -24,7 +24,7 @@
     "@dxos/credentials": "^1.0.1-beta.17",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.73",
-    "@dxos/echo-db": "^1.0.0-beta.21",
+    "@dxos/echo-db": "^1.0.0-beta.23",
     "@dxos/editor-pad": "^1.0.1-beta.6",
     "@dxos/messenger-pad": "^1.0.1-beta.6",
     "@dxos/planner-pad": "^1.0.1-beta.6",

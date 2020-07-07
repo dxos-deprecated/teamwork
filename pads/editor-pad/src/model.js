@@ -8,6 +8,7 @@ import { Chance } from 'chance';
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
+import { TextModel } from '@dxos/text-model';
 
 export const TYPE_EDITOR_DOCUMENT = 'dxos.teamwork.editor.document';
 export const TYPE_EDITOR_UPDATE = 'dxos.teamwork.editor.update';
@@ -22,7 +23,8 @@ export const useDocumentUpdateModel = (topic, documentId) => {
   assert(documentId);
 
   const model = useModel({
-    options: { type: TYPE_EDITOR_UPDATE, topic, documentId, disableUpdateHandler: true }
+    model: TextModel,
+    options: { type: TYPE_EDITOR_UPDATE, topic, documentId }
   });
 
   return model;
