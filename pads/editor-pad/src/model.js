@@ -8,10 +8,10 @@ import { Chance } from 'chance';
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
-import { TextModel } from '@dxos/text-model';
+import { TextModel, TYPE_TEXT_MODEL_UPDATE } from '@dxos/text-model';
 
-export const TYPE_EDITOR_DOCUMENT = 'wrn://dxos.org/teamwork/editor/document';
-export const TYPE_EDITOR_UPDATE = 'wrn://dxos.org/echo/text-model/update'; // TODO(rzadp) import TYPE_TEXT_MODEL_UPDATE from text-model after bumping the version
+export const TYPE_EDITOR_DOCUMENT = 'wrn_dxos_org_teamwork_editor_document';
+export const TYPE_EDITOR_UPDATE = TYPE_TEXT_MODEL_UPDATE;
 
 const chance = new Chance();
 

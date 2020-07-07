@@ -5,7 +5,7 @@
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 
-export const BOARD_TYPE = 'wrn://dxos.org/teamwork/planner/board';
+export const BOARD_TYPE = 'wrn_dxos_org_teamwork_planner_board';
 
 /**
  *

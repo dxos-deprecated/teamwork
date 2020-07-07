@@ -1652,6 +1652,27 @@
     source-map-support "^0.5.12"
     through2 "^3.0.1"
 
+"@dxos/model-factory@^1.0.0-beta.25":
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.25.tgz#1f9d655a42d9c3f78c995931b7b9c4bd1d7f499f"
+  integrity sha512-Kap7OM0FaQnM7va0OFz3VtZMvQZzZJ4fLeIgQlMoN0VG0r02IvcYYnBQSe7GBmudniyu89ObIKBj+JHQQxUgdQ==
+  dependencies:
+    "@dxos/crypto" "^0.0.1"
+    "@dxos/debug" "^1.0.0-beta.20"
+    "@dxos/feed-level-indexer" "^1.1.0-alpha.9"
+    "@dxos/metrics" "^1.0.0-beta.8"
+    charwise "^3.0.1"
+    debug "^4.1.1"
+    end-of-stream "^1.4.4"
+    level-mem "^5.0.1"
+    lodash.debounce "^4.0.8"
+    monotonic-timestamp "^0.0.9"
+    multi-read-stream "^2.0.0"
+    p-limit "^3.0.1"
+    pump "^3.0.0"
+    source-map-support "^0.5.12"
+    through2 "^3.0.1"
+
 "@dxos/network-manager@^1.0.0-beta.35", "@dxos/network-manager@^1.0.0-beta.93", "@dxos/network-manager@^1.0.0-beta.94", "@dxos/network-manager@^1.0.0-beta.97":
   version "1.0.0-beta.99"
   resolved "https://registry.yarnpkg.com/@dxos/network-manager/-/network-manager-1.0.0-beta.99.tgz#f1aaee5864a893ff3a4233748e2a09a88d689580"
@@ -1850,12 +1871,12 @@
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
 
-"@dxos/text-model@^1.0.0-beta.23":
-  version "1.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-1.0.0-beta.23.tgz#a2441010bf56fa77fbeb14522235b9adac15b9d6"
-  integrity sha512-MWY8O43Jc2+Z0/t884QL8HzKAKZxiMHrkpNiaS7v7Qq1phbceBPFcyReEHsLIv187J6Ciib4UYK3N84NDaNbxg==
+"@dxos/text-model@^1.0.0-beta.25":
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-1.0.0-beta.25.tgz#d296e65675645a3e74b1c3fa05fb57ed48285794"
+  integrity sha512-5AZAkVK9KfaZScvLVRXC5tcYk6XUveJA/5u2KTi0IlnX9dNaoIxHxJwD48S9y2hhQfnQ4dQbAHZQu0ZVcTIPXA==
   dependencies:
-    "@dxos/model-factory" "^1.0.0-beta.23"
+    "@dxos/model-factory" "^1.0.0-beta.25"
     yjs "^13.2.0"
 
 "@dxos/view-model@^1.0.0-beta.16":
