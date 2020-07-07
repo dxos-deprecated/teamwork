@@ -55,7 +55,7 @@ export const Board = ({ topic, viewId }) => {
   const board = viewModel.getById(viewId);
 
   const listsModel = useList(topic, viewId);
-  const lists = listsModel.getObjectsByType(LIST_TYPE);
+  const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
   const cards = listsModel.getObjectsByType(CARD_TYPE);
   console.log(cards)
 
@@ -65,7 +65,7 @@ export const Board = ({ topic, viewId }) => {
   }
 
   const handleAddList = () => {
-    listsModel.createItem(LIST_TYPE, { title: 'New List' });
+    listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
   };
 
   const handleUpdateList = (listId) => (properties) => {
@@ -79,7 +79,7 @@ export const Board = ({ topic, viewId }) => {
 
   const getCardsForList = listId => cards
     .filter(card => card.properties.listId === listId)
-    .sort((a, b) => a.properties.position - b.properties.position)
+    .sort(positionCompare)
 
   const onDragEnd = async (result) => {
     const { source, destination, draggableId } = result;
@@ -89,25 +89,22 @@ export const Board = ({ topic, viewId }) => {
     if (!destination) {
       return;
     }
-
-    // Dragging entire lists.
-    if (source.droppableId === board.viewId) {
-      // listsModel.moveItemByIndex(source.index, destination.index); // TODO(rzadp): add moving lists
-      return;
-    }
-
-    const cardsInList = getCardsForList(destination.droppableId)
-    const position = getPositionAtIndex(cardsInList, destination.index)
-    if (source.droppableId === destination.droppableId) {
+    
+    if (source.droppableId === board.viewId) { // Dragging entire lists.
+      const position = getPositionAtIndex(lists, destination.index)
       listsModel.updateItem(draggableId, { position })
-    } else {
-      listsModel.updateItem(draggableId, {
-        position,
-        listId: destination.droppableId,
-      })
+    } else { // Dragging cards
+      const cardsInList = getCardsForList(destination.droppableId)
+      const position = getPositionAtIndex(cardsInList, destination.index)
+      if (source.droppableId === destination.droppableId) {
+        listsModel.updateItem(draggableId, { position })
+      } else {
+        listsModel.updateItem(draggableId, {
+          position,
+          listId: destination.droppableId,
+        })
+      }
     }
-
-    console.log('card from one list to another');
   };
 
   const Topbar = () => (
@@ -182,6 +179,8 @@ export const Board = ({ topic, viewId }) => {
     </Fragment>
   );
 };
+
+const positionCompare = (a, b) => a.properties.position - b.properties.position
 
 function getLastPosition(list) {
   if(list.length === 0) {
