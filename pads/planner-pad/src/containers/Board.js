@@ -72,13 +72,13 @@ export const Board = ({ topic, viewId }) => {
   };
 
   const handleAddCard = (title, listId) => {
-    const cardsInList = getCardsForList(listId)
+    const cardsInList = getCardsForList(listId);
     listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
   };
 
   const getCardsForList = listId => cards
     .filter(card => card.properties.listId === listId)
-    .sort(positionCompare)
+    .sort(positionCompare);
 
   const onDragEnd = async (result) => {
     const { source, destination, draggableId } = result;
@@ -87,20 +87,20 @@ export const Board = ({ topic, viewId }) => {
     if (!destination) {
       return;
     }
-    
+
     if (source.droppableId === board.viewId) { // Dragging entire lists.
-      const position = getPositionAtIndex(lists, destination.index)
-      listsModel.updateItem(draggableId, { position })
+      const position = getPositionAtIndex(lists, destination.index);
+      listsModel.updateItem(draggableId, { position });
     } else { // Dragging cards
-      const cardsInList = getCardsForList(destination.droppableId)
-      const position = getPositionAtIndex(cardsInList, destination.index)
+      const cardsInList = getCardsForList(destination.droppableId);
+      const position = getPositionAtIndex(cardsInList, destination.index);
       if (source.droppableId === destination.droppableId) {
-        listsModel.updateItem(draggableId, { position })
+        listsModel.updateItem(draggableId, { position });
       } else {
         listsModel.updateItem(draggableId, {
           position,
-          listId: destination.droppableId,
-        })
+          listId: destination.droppableId
+        });
       }
     }
   };
@@ -144,7 +144,6 @@ export const Board = ({ topic, viewId }) => {
                     >
                       <List
                         key={list.id}
-                        topic={topic}
                         list={list}
                         cards={getCardsForList(list.id)}
                         onUpdateList={handleUpdateList(list.id)}
@@ -178,24 +177,24 @@ export const Board = ({ topic, viewId }) => {
   );
 };
 
-const positionCompare = (a, b) => a.properties.position - b.properties.position
+const positionCompare = (a, b) => a.properties.position - b.properties.position;
 
-function getLastPosition(list) {
-  if(list.length === 0) {
+function getLastPosition (list) {
+  if (list.length === 0) {
     return 0;
   } else {
-    return list[list.length - 1].properties.position + 1
+    return list[list.length - 1].properties.position + 1;
   }
 }
 
-function getPositionAtIndex(list, index) {
-  if(list.length === 0) {
+function getPositionAtIndex (list, index) {
+  if (list.length === 0) {
     return 0;
-  } else if(index === 0) {
-    return list[0].properties.position - 1
-  } else if(index >= list.length - 1) {
-    return list[list.length - 1].properties.position + 1
+  } else if (index === 0) {
+    return list[0].properties.position - 1;
+  } else if (index >= list.length - 1) {
+    return list[list.length - 1].properties.position + 1;
   } else {
-    return (list[index - 1].properties.position + list[index].properties.position) / 2
+    return (list[index - 1].properties.position + list[index].properties.position) / 2;
   }
 }

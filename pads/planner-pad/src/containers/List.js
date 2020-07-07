@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const List = ({ topic, list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
+const List = ({ list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
   const classes = useStyles();
 
   const handleTitleUpdate = (title) => {
