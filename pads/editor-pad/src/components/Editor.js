@@ -11,7 +11,7 @@ import { Editor as DXOSEditor } from '@dxos/editor';
 
 import { useProfile } from '@dxos/react-client';
 
-import { useDocumentUpdateModel, TYPE_EDITOR_UPDATE } from '../model';
+import { useDocumentUpdateModel } from '../model';
 import Pad from './Pad';
 
 const useEditorClasses = makeStyles(theme => ({
