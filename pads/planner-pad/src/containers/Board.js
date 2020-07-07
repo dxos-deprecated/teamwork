@@ -96,11 +96,15 @@ export const Board = ({ topic, viewId }) => {
       return;
     }
 
-    // Same list card move movement
+    const cardsInList = getCardsForList(destination.droppableId)
+    const position = getPositionAtIndex(cardsInList, destination.index)
     if (source.droppableId === destination.droppableId) {
-      const cardsInList = getCardsForList(destination.droppableId)
-      listsModel.updateItem(draggableId, { position: getPositionAtIndex(cardsInList, destination.index) })
-      return;
+      listsModel.updateItem(draggableId, { position })
+    } else {
+      listsModel.updateItem(draggableId, {
+        position,
+        listId: destination.droppableId,
+      })
     }
 
     console.log('card from one list to another');
