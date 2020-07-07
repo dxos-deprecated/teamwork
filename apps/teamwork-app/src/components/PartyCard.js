@@ -30,7 +30,7 @@ import { useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { EditableText } from '@dxos/react-ux';
 
-import { useItems } from '../model';
+import { useViews } from '../model';
 
 // TODO(burdon): Component should not import container.
 import SettingsDialog from '../containers/SettingsDialog';
@@ -94,7 +94,7 @@ const PartyCard = ({ party }) => {
 
   // TODO(burdon): This should be a dumb component (not container), so must pass in handlers.
   const topic = keyToString(party.publicKey);
-  const { model, createItem } = useItems(topic);
+  const { model, createView } = useViews(topic);
   const client = useClient();
   const router = useAppRouter();
 
@@ -105,7 +105,7 @@ const PartyCard = ({ party }) => {
   const handleCreate = (type) => {
     assert(type);
     setTypeSelectDialogOpen(false);
-    const viewId = createItem(type);
+    const viewId = createView(type);
     handleSelect(viewId);
   };
 

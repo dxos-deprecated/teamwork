@@ -17,7 +17,7 @@ import { useParty } from '@dxos/react-client';
 
 import ViewTypeSelectMenu from '../components/ViewTypeSelectMenu';
 
-import { useItems } from '../model';
+import { useViews } from '../model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -63,7 +63,7 @@ const Sidebar = () => {
   const homeTreeItemStyles = useHomeTreeItemStyles();
   const { topic, item: active } = useParams();
   const [pads] = usePads();
-  const { model, createItem } = useItems(topic);
+  const { model, createView } = useViews(topic);
   const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
   const anchor = useRef();
 
@@ -74,7 +74,7 @@ const Sidebar = () => {
   const handleCreate = (type) => {
     assert(type);
     setTypeSelectDialogOpen(false);
-    const viewId = createItem(type);
+    const viewId = createView(type);
     handleSelect(viewId);
   };
 

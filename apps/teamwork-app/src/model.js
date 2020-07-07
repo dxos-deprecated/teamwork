@@ -12,16 +12,16 @@ import { usePads } from '@dxos/react-appkit';
 const chance = new Chance();
 
 /**
- * Provides item list and item creator.
+ * Provides view list and view creator.
  * @returns {ViewModel}
  */
-export const useItems = (topic) => {
+export const useViews = (topic) => {
   const [pads] = usePads();
   const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
 
   return {
     model: model ?? new ViewModel(),
-    createItem: (type) => {
+    createView: (type) => {
       assert(model);
       const title = `item-${chance.word()}`;
       return model.createView(type, title);
