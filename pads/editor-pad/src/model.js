@@ -11,7 +11,7 @@ import { usePads } from '@dxos/react-appkit';
 import { TextModel } from '@dxos/text-model';
 
 export const TYPE_EDITOR_DOCUMENT = 'dxos.teamwork.editor.document';
-export const TYPE_EDITOR_UPDATE = 'dxos.teamwork.editor.update';
+export const TYPE_EDITOR_UPDATE = 'testing.document.Update'; // TODO(rzadp) import TYPE_TEXT_MODEL_UPDATE from text-model after xx gets merged
 
 const chance = new Chance();
 
