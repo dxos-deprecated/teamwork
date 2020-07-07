@@ -10,8 +10,8 @@ import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 import { TextModel } from '@dxos/text-model';
 
-export const TYPE_EDITOR_DOCUMENT = 'dxos.teamwork.editor.document';
-export const TYPE_EDITOR_UPDATE = 'testing.document.Update'; // TODO(rzadp) import TYPE_TEXT_MODEL_UPDATE from text-model after https://github.com/dxos/echo/pull/53 gets merged
+export const TYPE_EDITOR_DOCUMENT = 'wrn://dxos.org/teamwork/editor/document';
+export const TYPE_EDITOR_UPDATE = 'wrn://dxos.org/echo/text-model/update'; // TODO(rzadp) import TYPE_TEXT_MODEL_UPDATE from text-model after bumping the version
 
 const chance = new Chance();
 

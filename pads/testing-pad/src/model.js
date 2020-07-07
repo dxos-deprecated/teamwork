@@ -7,8 +7,8 @@ import assert from 'assert';
 import { ObjectModel } from '@dxos/echo-db';
 import { useModel } from '@dxos/react-client';
 
-export const TYPE_TESTING_PAD = 'dxos.teamwork.testing.Pad';
-export const TYPE_TESTING_ITEM = 'dxos.teamwork.testing.Item';
+export const TYPE_TESTING_PAD = 'wrn://dxos.org/teamwork/testing/pad';
+export const TYPE_TESTING_ITEM = 'wrn://dxos.org/teamwork/testing/item';
 
 /**
  * Provides item list and item creator.

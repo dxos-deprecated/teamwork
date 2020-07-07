@@ -9,8 +9,8 @@ import { useModel, useProfile } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
 import { DefaultPartiallyOrderedModel } from '@dxos/echo-db';
 
-export const TYPE_MESSENGER_CHANNEL = 'dxos.teamwork.messenger.channel';
-export const TYPE_MESSENGER_MESSAGE = 'dxos.teamwork.messenger.message';
+export const TYPE_MESSENGER_CHANNEL = 'wrn://dxos.org/teamwork/messenger/channel';
+export const TYPE_MESSENGER_MESSAGE = 'wrn://dxos.org/teamwork/messenger/message';
 
 /**
  * Provides channel list and channel creator.

@@ -9,8 +9,8 @@ import { useModel } from '@dxos/react-client';
 
 // TODO(burdon): Slashes not allowed.
 // TODO(burdon): Standardize "document" for all apps (or item?)
-export const TYPE_CANVAS_DOCUMENT = 'dxos.teamwork.canvas.document';
-export const TYPE_CANVAS_ECHO_OBJECT = 'dxos.teamwork.canvas.object';
+export const TYPE_CANVAS_DOCUMENT = 'wrn://dxos.org/teamwork/canvas/document';
+export const TYPE_CANVAS_ECHO_OBJECT = 'wrn://dxos.org/teamwork/canvas/object';
 
 // TODO(burdon): Replace.
 const fromSafeId = (id) => id.replace('__', '/');
