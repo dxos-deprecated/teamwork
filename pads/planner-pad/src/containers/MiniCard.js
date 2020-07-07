@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
 
 const InnerCard = (props) => {
   const { card } = props;
-  return <Typography variant="body1">{card.title} { card.position} </Typography>;
+  return <Typography variant="body1">{card.title}</Typography>;
 };
 
 const MiniCard = (props) => {
