@@ -57,7 +57,6 @@ export const Board = ({ topic, viewId }) => {
   const listsModel = useList(topic, viewId);
   const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
   const cards = listsModel.getObjectsByType(CARD_TYPE);
-  console.log(cards)
 
   const [settingsOpen, setSettingsOpen] = useState(false);
   if (!board || !listsModel) {
