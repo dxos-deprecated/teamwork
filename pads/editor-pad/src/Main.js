@@ -38,6 +38,10 @@ const EditorPad = ({ topic, viewId }) => {
   const [pads] = usePads();
   const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
 
+  const handleCreateItem = () => {
+    return createItem();
+  };
+
   return (
     <div className={classes.root}>
       <div className={classes.container}>
@@ -46,7 +50,7 @@ const EditorPad = ({ topic, viewId }) => {
           itemId={viewId}
           pads={pads}
           items={items}
-          onCreateItem={createItem}
+          onCreateItem={handleCreateItem}
         />
       </div>
     </div>
