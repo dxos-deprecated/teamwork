@@ -21,6 +21,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import DeleteIcon from '@material-ui/icons/Clear';
 import FaceIcon from '@material-ui/icons/Face';
 import LinkIcon from '@material-ui/icons/Link';
 import RefreshIcon from '@material-ui/icons/Refresh';
@@ -263,6 +264,9 @@ const SettingsDialog = ({ party, open, onClose }) => {
                     <span className={classes.label}>{member.displayName?.startsWith('bot:') ? 'Bot' : 'Member'}</span>
                   </TableCell>
                   <TableCell classes={{ root: classes.colActions }}>
+                    <IconButton size="small">
+                      <DeleteIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -284,7 +288,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
                       <InviteIcon
                         onClick={async () => {
                           const invitation = await client.partyManager.inviteToParty(party.publicKey,
-                            new InviteDetails(InviteType.OFFLINE_KEY, { publicKey: contact.publicKey }))
+                            new InviteDetails(InviteType.OFFLINE_KEY, { publicKey: contact.publicKey }));
                           console.log(router.createInvitationUrl(invitation));
                         }}
                       />
