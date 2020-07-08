@@ -46,9 +46,6 @@ const BotInviteDialog = ({ open, onSubmit, onClose }) => {
 
   const registryBots = useRegistryBots();
 
-  // TODO(burdon): Form editor.
-  const [spec, setSpec] = useState('{}');
-
   useEffect(() => {
     const versions = registryBots
       .filter(({ name }) => name === bot).map(({ version }) => version)
@@ -104,15 +101,6 @@ const BotInviteDialog = ({ open, onSubmit, onClose }) => {
             </MenuItem>
           ))}
         </Select>
-
-        <TextField
-          label="Spec"
-          fullWidth
-          multiline={true}
-          spellCheck={false}
-          value={spec}
-          onChange={event => setSpec(event.target.value)}
-        />
       </DialogContent>
 
       <DialogActions>
@@ -121,18 +109,8 @@ const BotInviteDialog = ({ open, onSubmit, onClose }) => {
           disabled={disabled}
           color="primary"
           onClick={() => {
-            try {
-              onSubmit({
-                topic,
-                spec: JSON.parse(spec),
-                bot,
-                botVersion
-              });
-
-              setDisabled(true);
-            } catch (err) {
-              // TODO(burdon): Show JSON parse error.
-            }
+            onSubmit({ topic, bot, botVersion });
+            setDisabled(true);
           }}
         >
           {disabled ? 'Sending...' : 'Invite'}
