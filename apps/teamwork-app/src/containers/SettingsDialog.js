@@ -109,7 +109,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
     return invitation;
   };
 
-  const handleBotInvite = async (botFactoryTopic, bot, botVersion, spec) => {
+  const handleBotInvite = async (botFactoryTopic, bot, botVersion, spec = {}) => {
     const botId = `wrn:bot:${bot}#${botVersion}`;
 
     const botFactoryClient = new BotFactoryClient(client.networkManager, botFactoryTopic);
