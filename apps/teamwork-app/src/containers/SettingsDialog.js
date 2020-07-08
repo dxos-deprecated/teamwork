@@ -21,18 +21,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
-import DeleteIcon from '@material-ui/icons/Clear';
 import FaceIcon from '@material-ui/icons/Face';
 import LinkIcon from '@material-ui/icons/Link';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import InviteIcon from '@material-ui/icons/Add';
 import PeopleIcon from '@material-ui/icons/People';
 
-import { humanize, keyToBuffer, verify, SIGNATURE_LENGTH, keyToString } from '@dxos/crypto';
-import { useClient } from '@dxos/react-client';
-import { generatePasscode } from '@dxos/credentials';
-import { useAppRouter } from '@dxos/react-appkit';
 import { BotFactoryClient } from '@dxos/botkit-client';
+import { generatePasscode } from '@dxos/credentials';
+import { humanize, keyToBuffer, verify, SIGNATURE_LENGTH, keyToString } from '@dxos/crypto';
+import { InviteDetails, InviteType } from '@dxos/party-manager';
+import { useAppRouter } from '@dxos/react-appkit';
+import { useClient } from '@dxos/react-client';
 
 import MemberAvatar from '../components/MemberAvatar';
 import { useAsync } from '../hooks/use-async';
@@ -95,13 +95,15 @@ const SettingsDialog = ({ party, open, onClose }) => {
   const createInvitation = async () => {
     const invitation = await client.partyManager.inviteToParty(
       party.publicKey,
-      (invitation, secret) => secret && secret.equals(invitation.secret),
-      () => {
-        const passcode = generatePasscode();
-        // TODO(burdon): Don't use generic variable names like "arr" and "x"
-        setPendingInvitations(arr => arr.map(x => x.invitation === invitation ? { ...x, passcode } : x));
-        return Buffer.from(passcode);
-      },
+      new InviteDetails(InviteType.INTERACTIVE, {
+        secretValidator: (invitation, secret) => secret && secret.equals(invitation.secret),
+        secretProvider: () => {
+          const passcode = generatePasscode();
+          // TODO(burdon): Don't use generic variable names like "arr" and "x"
+          setPendingInvitations(arr => arr.map(x => x.invitation === invitation ? { ...x, passcode } : x));
+          return Buffer.from(passcode);
+        }
+      }),
       {
         onFinish: () => setPendingInvitations(arr => arr.filter(x => x.invitation !== invitation))
       }
@@ -114,8 +116,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
 
     const botFactoryClient = new BotFactoryClient(client.networkManager, botFactoryTopic);
 
-    const secretProvider = () => {
-    };
+    const secretProvider = () => {};
 
     // Provided by inviter node.
     const secretValidator = async (invitation, secret) => {
@@ -126,14 +127,15 @@ const SettingsDialog = ({ party, open, onClose }) => {
 
     const invitation = await client.partyManager.inviteToParty(
       keyToBuffer(topic),
-      secretValidator,
-      secretProvider,
-      {
-        onFinish: () => {
-          botFactoryClient.close();
-          setBotDialogVisible(false);
+      new InviteDetails(InviteType.INTERACTIVE,
+        { secretValidator, secretProvider },
+        {
+          onFinish: () => {
+            botFactoryClient.close();
+            setBotDialogVisible(false);
+          }
         }
-      }
+      )
     );
 
     const botUID = await botFactoryClient.sendSpawnRequest(botId);
@@ -261,9 +263,6 @@ const SettingsDialog = ({ party, open, onClose }) => {
                     <span className={classes.label}>{member.displayName?.startsWith('bot:') ? 'Bot' : 'Member'}</span>
                   </TableCell>
                   <TableCell classes={{ root: classes.colActions }}>
-                    <IconButton size="small">
-                      <DeleteIcon />
-                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -282,7 +281,13 @@ const SettingsDialog = ({ party, open, onClose }) => {
                   <TableCell />
                   <TableCell classes={{ root: classes.colActions }}>
                     <IconButton size="small">
-                      <InviteIcon />
+                      <InviteIcon
+                        onClick={async () => {
+                          const invitation = await client.partyManager.inviteToParty(party.publicKey,
+                            new InviteDetails(InviteType.OFFLINE_KEY, { publicKey: contact.publicKey }))
+                          console.log(router.createInvitationUrl(invitation));
+                        }}
+                      />
                     </IconButton>
                   </TableCell>
                 </TableRow>
