@@ -89,6 +89,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
   const topic = keyToString(party.publicKey);
   const [pendingInvitations, setPendingInvitations] = useState([]);
   const [contacts, error] = useAsync(async () => client.partyManager.getContacts(), []);
+  const newContacts = contacts?.filter(c => !party.members.some(m => m.publicKey.toString('hex') === c.publicKey.toString('hex')))
   const [botDialogVisible, setBotDialogVisible] = useState(false);
 
   const createInvitation = async () => {
@@ -269,7 +270,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
             </TableBody>
 
             <TableBody>
-              {contacts && contacts.map(contact => (
+              {newContacts?.map(contact => (
                 <TableRow key={contact.publicKey}>
                   <TableCell classes={{ root: classes.colAvatar }}>
                     <MemberAvatar member={contact} />
