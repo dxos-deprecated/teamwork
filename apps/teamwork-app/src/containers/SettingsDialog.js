@@ -257,7 +257,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
                   </TableCell>
                   <TableCell />
                   <TableCell classes={{ root: classes.colStatus }}>
-                    <span className={classes.label}>Member</span>
+                    <span className={classes.label}>{member.displayName?.startsWith('bot:') ? 'Bot' : 'Member'}</span>
                   </TableCell>
                   <TableCell classes={{ root: classes.colActions }}>
                     <IconButton size="small">
