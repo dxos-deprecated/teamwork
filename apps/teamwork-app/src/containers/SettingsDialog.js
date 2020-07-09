@@ -289,6 +289,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
                         onClick={async () => {
                           const invitation = await client.partyManager.inviteToParty(party.publicKey,
                             new InviteDetails(InviteType.OFFLINE_KEY, { publicKey: contact.publicKey }));
+                          // TODO(telackey): Some sort of real UI goes here.
                           console.log(router.createInvitationUrl(invitation));
                         }}
                       />
