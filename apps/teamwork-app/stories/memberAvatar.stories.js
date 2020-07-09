@@ -5,7 +5,7 @@
 import React from 'react';
 import { Theme } from '@dxos/react-appkit';
 
-import { getAvatarStyle, MemberAvatar } from '../src/components/MemberAvatar';
+import MemberAvatar, { getAvatarStyle } from '../src/components/MemberAvatar';
 import FaceIcon from '@material-ui/icons/Face';
 import Avatar from '@material-ui/core/Avatar';
 import { useTheme } from '@material-ui/styles';

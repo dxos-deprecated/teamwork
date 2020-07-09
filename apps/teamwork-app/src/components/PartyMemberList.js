@@ -11,7 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import { humanize } from '@dxos/crypto';
 
-import { getAvatarStyle } from '@dxos/teamwork-components/';
+import { getAvatarStyle } from './MemberAvatar';
 
 const useStyles = makeStyles(theme => ({
   avatar: {

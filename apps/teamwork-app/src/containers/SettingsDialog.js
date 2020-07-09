@@ -34,7 +34,7 @@ import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
 import { BotFactoryClient } from '@dxos/botkit-client';
 
-import { MemberAvatar } from '@dxos/teamwork-components';
+import MemberAvatar from '../components/MemberAvatar';
 import { useAsync } from '../hooks/use-async';
 import BotInviteDialog from '../components/BotInviteDialog';
 
