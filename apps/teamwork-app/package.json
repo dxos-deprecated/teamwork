@@ -52,7 +52,8 @@
     "react-dom": "^16.12.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "string-hash": "^1.1.3"
+    "string-hash": "^1.1.3",
+    "@dxos/teamwork-components": "1.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

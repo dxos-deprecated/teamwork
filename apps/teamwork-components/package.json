@@ -1,5 +1,5 @@
 {
-  "name": "teamwork-components",
+  "name": "@dxos/teamwork-components",
   "version": "1.0.0",
   "main": "dist/es/index.js",
   "module": "dist/es/index.js",
@@ -14,27 +14,18 @@
   "dependencies": {
     "@material-ui/core": "^4.9.10",
     "@material-ui/icons": "^4.9.1",
-    "clsx": "^1.1.0",
-    "d3": "^5.9.2",
-    "debug": "^4.1.1",
-    "faker": "^4.1.0",
-    "immutability-helper": "^3.0.2",
-    "lodash.defaultsdeep": "^4.6.1",
-    "lodash.get": "^4.4.2",
+    "@material-ui/styles": "^4.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-hotkeys": "^2.0.0",
-    "react-resize-aware": "^3.0.0"
+    "@dxos/react-appkit": "^1.0.0-beta.105"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-export-default-from": "^7.8.3",
     "@babel/preset-react": "^7.9.4",
-    "@storybook/addon-knobs": "^5.3.18",
     "@storybook/react": "^5.3.18",
-    "babel-jest": "^25.5.1",
-    "babel-loader": "^8.1.0",
-    "jest": "^25.5.2"
+    "@storybook/addon-knobs": "^5.3.18",
+    "babel-loader": "^8.1.0"
   }
 }
