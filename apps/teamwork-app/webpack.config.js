@@ -6,12 +6,14 @@ const path = require('path');
 const VersionFile = require('webpack-version-file-plugin');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
 
 const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 const distDir = path.join(__dirname, 'dist');
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
 
@@ -19,10 +21,13 @@ module.exports = {
 
   devtool: 'eval-source-map',
 
+  mode: isDevelopment ? 'development' : 'production',
+
   devServer: {
     contentBase: distDir,
     compress: true,
     disableHostCheck: true,
+    hotOnly: true,
     port: 8080,
     watchOptions: {
       ignored: /node_modules/,
@@ -97,8 +102,10 @@ module.exports = {
       templateParameters: {
         title: 'Teamwork'
       }
-    })
-  ],
+    }),
+
+    isDevelopment && new ReactRefreshWebpackPlugin(),
+  ].filter(Boolean),
 
   module: {
     rules: [
@@ -124,7 +131,8 @@ module.exports = {
               '@babel/plugin-proposal-nullish-coalescing-operator',
               '@babel/plugin-proposal-optional-chaining',
               'babel-plugin-styled-components',
-            ],
+              isDevelopment && require.resolve('react-refresh/babel'),
+            ].filter(Boolean),
           },
         },
       },
