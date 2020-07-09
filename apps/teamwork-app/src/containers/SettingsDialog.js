@@ -32,8 +32,7 @@ import { humanize } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 import { generatePasscode } from '@dxos/credentials';
 import { useAppRouter } from '@dxos/react-appkit';
-
-import MemberAvatar from '@dxos/teamwork-components';
+import { MemberAvatar } from '@dxos/teamwork-components';
 
 import { useAsync } from '../hooks/use-async';
 
