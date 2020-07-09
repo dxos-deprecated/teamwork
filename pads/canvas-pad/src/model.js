@@ -7,10 +7,9 @@ import assert from 'assert';
 import { ObjectModel } from '@dxos/echo-db';
 import { useModel } from '@dxos/react-client';
 
-// TODO(burdon): Slashes not allowed.
 // TODO(burdon): Standardize "document" for all apps (or item?)
-export const TYPE_CANVAS_DOCUMENT = 'wrn_dxos_org_canvas_echo_document';
-export const TYPE_CANVAS_ECHO_OBJECT = 'wrn_dxos_org_canvas_echo_object';
+export const TYPE_CANVAS_DOCUMENT = 'wrn_dxos_org_teamwork_canvas_document';
+export const TYPE_CANVAS_ECHO_OBJECT = 'wrn_dxos_org_teamwork_canvas_object';
 
 // TODO(burdon): Replace.
 const fromSafeId = (id) => id.replace('__', '/');

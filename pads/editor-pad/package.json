@@ -19,7 +19,7 @@
   "dependencies": {
     "@dxos/editor": "^1.0.0-beta.10",
     "@dxos/view-model": "^1.0.0-beta.16",
-    "@dxos/text-model": "^1.0.0-beta.23",
+    "@dxos/text-model": "^1.0.0-beta.25",
     "clsx": "^1.0.4",
     "yjs": "13.1.0"
   },

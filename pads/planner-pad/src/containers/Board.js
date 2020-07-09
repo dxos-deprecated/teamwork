@@ -13,7 +13,7 @@ import Button from '@material-ui/core/Button';
 
 import BoardSettings from './BoardSettings';
 import List from './List';
-import { useBoard } from '../model/board';
+import { useViews } from '../model/board';
 import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
 
 const useStyles = makeStyles(() => {
@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => {
 export const Board = ({ topic, viewId }) => {
   const classes = useStyles();
 
-  const viewModel = useBoard(topic, viewId);
+  const viewModel = useViews(topic, viewId);
   const board = viewModel.getById(viewId);
 
   const listsModel = useList(topic, viewId);

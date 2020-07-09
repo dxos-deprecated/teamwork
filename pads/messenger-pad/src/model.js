@@ -9,9 +9,8 @@ import { useModel, useProfile } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
 import { DefaultPartiallyOrderedModel } from '@dxos/echo-db';
 
-// TODO(burdon): Define types.
-export const TYPE_MESSENGER_CHANNEL = 'testing.messenger.Channel';
-const TYPE_MESSENGER_MESSAGE = 'testing.messenger.Message';
+export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
+export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
 
 /**
  * Provides channel list and channel creator.
