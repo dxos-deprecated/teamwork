@@ -3,7 +3,8 @@
 //
 
 import clsx from 'clsx';
-import { Chance } from 'chance';
+import assert from 'assert';
+
 import React, { useState, useRef } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
@@ -29,19 +30,16 @@ import { useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { EditableText } from '@dxos/react-ux';
 
-import { useItems } from '../model';
+import { useViews } from '../model';
 
 // TODO(burdon): Component should not import container.
 import SettingsDialog from '../containers/SettingsDialog';
 import { getThumbnail } from '../util/images';
 
-import ViewTypeSelectMenu from './ViewTypeSelectMenu';
+import NewViewCreationMenu from './NewViewCreationMenu';
 import PartySettingsMenu from './PartySettingsMenu';
 import PartyMemberList from './PartyMemberList';
 import PadIcon from './PadIcon';
-
-// TODO(burdon): Move out of UX.
-const chance = new Chance();
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -87,7 +85,7 @@ const useStyles = makeStyles(theme => ({
 // TODO(burdon): Move to react-appkit.
 const PartyCard = ({ party }) => {
   const classes = useStyles();
-  const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
+  const [newViewCreationMenuOpen, setNewViewCreationMenuOpen] = useState(false);
   const [partySettingsMenuOpen, setPartySettingsMenuOpen] = useState(false);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [deletedItemsVisible, setDeletedItemsVisible] = useState(false);
@@ -96,7 +94,7 @@ const PartyCard = ({ party }) => {
 
   // TODO(burdon): This should be a dumb component (not container), so must pass in handlers.
   const topic = keyToString(party.publicKey);
-  const model = useItems(topic);
+  const { model, createView } = useViews(topic);
   const client = useClient();
   const router = useAppRouter();
 
@@ -105,13 +103,9 @@ const PartyCard = ({ party }) => {
   };
 
   const handleCreate = (type) => {
-    setTypeSelectDialogOpen(false);
-
-    // TODO(burdon): When would this be null?
-    if (!type) return;
-
-    const title = `item-${chance.word()}`;
-    const viewId = model.createView(type, title);
+    assert(type);
+    setNewViewCreationMenuOpen(false);
+    const viewId = createView(type);
     handleSelect(viewId);
   };
 
@@ -221,7 +215,7 @@ const PartyCard = ({ party }) => {
                 size="small"
                 edge="end"
                 aria-label="add view"
-                onClick={() => setTypeSelectDialogOpen(true)}
+                onClick={() => setNewViewCreationMenuOpen(true)}
               >
                 <AddIcon />
               </IconButton>
@@ -240,11 +234,11 @@ const PartyCard = ({ party }) => {
         </CardActions>
       </Card>
 
-      {/* TODO(burdon): Rename View. */}
-      <ViewTypeSelectMenu
+      <NewViewCreationMenu
         anchorEl={createViewAnchor.current}
-        open={typeSelectDialogOpen}
+        open={newViewCreationMenuOpen}
         onSelect={handleCreate}
+        onClose={() => setNewViewCreationMenuOpen(false)}
       />
 
       <PartySettingsMenu

@@ -4,18 +4,16 @@
 
 import ColorHash from 'color-hash';
 import React, { useRef, useState, useEffect } from 'react';
-
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import { ObjectModel } from '@dxos/echo-db';
-import { useModel, useProfile } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-ux';
+import { useProfile } from '@dxos/react-client';
 
-import { TYPE_TESTING_ITEM } from './model';
+import { useItems } from './model';
 
 const colorHash = new ColorHash({ saturation: 1 });
 
@@ -53,14 +51,12 @@ export const Main = ({ viewId, topic }) => {
   const classes = useStyles();
 
   /** @type {EchoModel} */
-  const model = useModel({ model: ObjectModel, options: { type: TYPE_TESTING_ITEM, topic, viewId } });
-  const objects = model?.getObjectsByType(TYPE_TESTING_ITEM) ?? [];
-
+  const { objects, createItem } = useItems(topic, viewId);
   const { publicKey } = useProfile();
 
   function addItem (count) {
     for (let i = 0; i < count; i++) {
-      model.createItem(TYPE_TESTING_ITEM, { addedBy: publicKey, count: 0 });
+      createItem({ addedBy: publicKey, count: 0 });
     }
   }
 

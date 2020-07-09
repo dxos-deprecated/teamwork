@@ -47,7 +47,7 @@ const NewPartyCard = ({ onNewParty }) => {
         <IconButton className={classes.addButton} onClick={onNewParty}>
           <Add className={classes.addIcon} />
         </IconButton>
-        <Typography className={classes.addSubtitle} variant="h5">New item</Typography>
+        <Typography className={classes.addSubtitle} variant="h5">New Party</Typography>
       </Card>
     </>
   );
