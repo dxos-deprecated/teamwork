@@ -1633,28 +1633,7 @@
     source-map-support "^0.5.12"
     through2 "^3.0.1"
 
-"@dxos/model-factory@^1.0.0-beta.21", "@dxos/model-factory@^1.0.0-beta.23", "@dxos/model-factory@^1.0.0-beta.25":
-  version "1.0.0-beta.25"
-  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.25.tgz#1f9d655a42d9c3f78c995931b7b9c4bd1d7f499f"
-  integrity sha512-Kap7OM0FaQnM7va0OFz3VtZMvQZzZJ4fLeIgQlMoN0VG0r02IvcYYnBQSe7GBmudniyu89ObIKBj+JHQQxUgdQ==
-  dependencies:
-    "@dxos/crypto" "^0.0.1"
-    "@dxos/debug" "^1.0.0-beta.20"
-    "@dxos/feed-level-indexer" "^1.1.0-alpha.9"
-    "@dxos/metrics" "^1.0.0-beta.8"
-    charwise "^3.0.1"
-    debug "^4.1.1"
-    end-of-stream "^1.4.4"
-    level-mem "^5.0.1"
-    lodash.debounce "^4.0.8"
-    monotonic-timestamp "^0.0.9"
-    multi-read-stream "^2.0.0"
-    p-limit "^3.0.1"
-    pump "^3.0.0"
-    source-map-support "^0.5.12"
-    through2 "^3.0.1"
-
-"@dxos/model-factory@^1.0.0-beta.25":
+"@dxos/model-factory@^1.0.0-beta.21", "@dxos/model-factory@^1.0.0-beta.25":
   version "1.0.0-beta.25"
   resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.25.tgz#1f9d655a42d9c3f78c995931b7b9c4bd1d7f499f"
   integrity sha512-Kap7OM0FaQnM7va0OFz3VtZMvQZzZJ4fLeIgQlMoN0VG0r02IvcYYnBQSe7GBmudniyu89ObIKBj+JHQQxUgdQ==
