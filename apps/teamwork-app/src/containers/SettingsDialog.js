@@ -128,16 +128,14 @@ const SettingsDialog = ({ party, open, onClose }) => {
 
     const invitation = await client.partyManager.inviteToParty(
       keyToBuffer(topic),
-      new InviteDetails(InviteType.INTERACTIVE,
-        { secretValidator, secretProvider },
-        {
-          onFinish: () => {
-            botFactoryClient.close();
-            setBotDialogVisible(false);
-          }
+      new InviteDetails(InviteType.INTERACTIVE, { secretValidator, secretProvider }),
+      {
+        onFinish: () => {
+          botFactoryClient.close();
+          setBotDialogVisible(false);
         }
-      )
-    );
+      }
+    )
 
     const botUID = await botFactoryClient.sendSpawnRequest(botId);
     await botFactoryClient.sendInvitationRequest(botUID, topic, spec, invitation.toQueryParameters());
