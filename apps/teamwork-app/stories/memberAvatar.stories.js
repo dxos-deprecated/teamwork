@@ -3,12 +3,11 @@
 //
 
 import React from 'react';
-import { Theme } from '@dxos/react-appkit';
 
-import MemberAvatar, { getAvatarStyle } from '../src/components/MemberAvatar';
-import FaceIcon from '@material-ui/icons/Face';
-import Avatar from '@material-ui/core/Avatar';
-import { useTheme } from '@material-ui/styles';
+import { Theme } from '@dxos/react-appkit';
+import { createKeyPair, keyToString } from '@dxos/crypto';
+
+import MemberAvatar from '../src/components/MemberAvatar';
 
 export default {
   title: 'Member Avatar'
@@ -16,7 +15,7 @@ export default {
 
 export const withMemberAvatar = () => {
   const member = {
-    publicKey: '16xWXMNUJnXCMUS2rPdqWCKek4iSZvEAHyNXABnhAvwWZQf',
+    publicKey: keyToString(createKeyPair().publicKey),
     displayName: 'Test name'
   };
 
@@ -27,24 +26,15 @@ export const withMemberAvatar = () => {
   );
 };
 
-export const withGetAvatarStyle = () => {
+export const withNoDisplayName = () => {
   const member = {
-    publicKey: '16xWXMNUJnXCMUS2rPdqWCKek4iSZvEAHyNXABnhAvwWZQf',
-    displayName: 'Test name'
-  };
-
-  const ThemeWrapper = () => {
-    const theme = useTheme();
-    return (
-      <Avatar style={getAvatarStyle(theme, member.publicKey)}>
-        {member.displayName ? member.displayName.slice(0, 1).toUpperCase() : <FaceIcon />}
-      </Avatar>
-    );
+    publicKey: keyToString(createKeyPair().publicKey),
+    displayName: undefined
   };
 
   return (
     <Theme>
-      <ThemeWrapper />
+      <MemberAvatar member={member} />
     </Theme>
   );
 };
