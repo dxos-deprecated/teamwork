@@ -13,7 +13,7 @@ import { EditableText } from '@dxos/react-ux';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexShrink: 0,
     backgroundColor: 'rgba(0,0,0, 0.03)',
@@ -29,6 +29,9 @@ const useStyles = makeStyles(() => ({
     '&:not(:last-child)': {
       marginBottom: 10
     }
+  },
+  list: {
+    minHeight: theme.spacing(5)
   }
 }));
 
@@ -67,7 +70,7 @@ const List = ({ list, cards, onUpdateList, onOpenCard, onAddCard, className }) =
       </div>
       <Droppable direction="vertical" type="list" droppableId={list.id}>
         {({ innerRef, placeholder }) => (
-          <div ref={innerRef}>
+          <div ref={innerRef} className={classes.list}>
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
