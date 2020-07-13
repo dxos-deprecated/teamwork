@@ -49,7 +49,7 @@ const EditorPad = ({ topic, viewId }) => {
           topic={topic}
           itemId={viewId}
           pads={pads}
-          items={views}
+          items={views.filter(view => view.viewId.toString() !== viewId.toString())} // do not allow inception embedding
           onCreateItem={handleCreateItem}
         />
       </div>
