@@ -135,7 +135,7 @@ const SettingsDialog = ({ party, open, onClose }) => {
           setBotDialogVisible(false);
         }
       }
-    )
+    );
 
     const botUID = await botFactoryClient.sendSpawnRequest(botId);
     await botFactoryClient.sendInvitationRequest(botUID, topic, spec, invitation.toQueryParameters());
