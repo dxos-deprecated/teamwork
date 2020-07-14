@@ -10,7 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import FaceIcon from '@material-ui/icons/Face';
-import AddIcon from '@material-ui/icons/Add';
+import ShareIcon from '@material-ui/icons/GroupAdd';
 
 import { humanize } from '@dxos/crypto';
 
@@ -51,7 +51,7 @@ const PartyMemberList = ({ party, onShare }) => {
       </AvatarGroup>
       <Tooltip title="Share" placement="top">
         <Avatar className={clsx(classes.avatar, classes.newMemberStyle)} onClick={onShare}>
-          <AddIcon />
+          <ShareIcon />
         </Avatar>
       </Tooltip>
     </div>

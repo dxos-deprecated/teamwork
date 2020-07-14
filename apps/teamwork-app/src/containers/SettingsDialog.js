@@ -40,7 +40,7 @@ import { useAppRouter } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 
 import MemberAvatar from '../components/MemberAvatar';
-import { useAsync } from '../hooks/use-async';
+import { useAsync } from '../hooks/useAsync';
 import BotInviteDialog from '../components/BotInviteDialog';
 
 const useStyles = makeStyles(theme => ({
