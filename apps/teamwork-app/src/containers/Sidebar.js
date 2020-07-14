@@ -63,7 +63,6 @@ const Sidebar = () => {
             icon={pads.find(pad => pad.type === view.type)?.icon}
             isSelected={active === view.viewId}
             onSelect={() => handleSelect(view.viewId)}
-            onUpdate={(title) => model.renameView(view.viewId, title)}
           />
         ))}
 
