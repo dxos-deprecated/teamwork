@@ -11,7 +11,7 @@ import grey from '@material-ui/core/colors/blueGrey';
 import { usePads } from '@dxos/react-appkit';
 
 import { Editor } from './components/Editor';
-import { useViews } from './model';
+import { useViews, TYPE_EDITOR_DOCUMENT } from './model';
 
 const useStyles = makeStyles({
   root: {
@@ -48,8 +48,8 @@ const EditorPad = ({ topic, viewId }) => {
         <Editor
           topic={topic}
           itemId={viewId}
-          pads={pads}
-          items={views.filter(view => view.viewId.toString() !== viewId.toString())} // do not allow inception embedding
+          pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
+          items={views.filter(view => view.type !== TYPE_EDITOR_DOCUMENT)}
           onCreateItem={handleCreateItem}
         />
       </div>
