@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.primary.contrastText,
     display: 'inline-block',
     lineHeight: '48px'
-  },
+  }
 }));
 
 const App = () => {
