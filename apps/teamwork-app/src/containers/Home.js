@@ -9,10 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
 import { useClient, useParties } from '@dxos/react-client';
-import { keyToString } from '@dxos/crypto';
-import { AppContainer, PartyCard, NewPartyCard } from '@dxos/react-appkit';
+import { AppContainer, NewPartyCard } from '@dxos/react-appkit';
 
-import { useViews } from '../model';
+import PartyCardContainer from './PartyCard';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -39,14 +38,6 @@ const useStyles = makeStyles(theme => ({
     overflowY: 'scroll'
   }
 }));
-
-const PartyCardContainer = ({ party }) => {
-  const topic = keyToString(party.publicKey);
-  const { model, createView } = useViews(topic);
-  return (
-    <PartyCard party={party} viewModel={model} createView={createView} />
-  );
-};
 
 const Home = () => {
   const classes = useStyles();
