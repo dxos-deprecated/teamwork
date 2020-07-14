@@ -2,7 +2,7 @@
 // Copyright 2018 DXOS.org
 //
 
-import { Chance } from 'chance';
+import assert from 'assert';
 import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import TreeView from '@material-ui/lab/TreeView';
@@ -15,10 +15,8 @@ import Typography from '@material-ui/core/Typography';
 import { PartyTreeAddItemButton, PartyTreeItem, useAppRouter, usePads, MemberList } from '@dxos/react-appkit';
 import { useParty } from '@dxos/react-client';
 
-import { useItems } from '../model';
-import { DocumentTypeSelectMenu } from './DocumentTypeSelectMenu';
-
-const chance = new Chance();
+import NewViewCreationMenu from '../components/NewViewCreationMenu';
+import { useViews } from '../model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,15 +55,15 @@ const useHomeTreeItemStyles = makeStyles(theme => ({
   }
 }));
 
-export const Sidebar = () => {
+const Sidebar = () => {
   const router = useAppRouter();
   const party = useParty();
   const classes = useStyles();
   const homeTreeItemStyles = useHomeTreeItemStyles();
   const { topic, item: active } = useParams();
   const [pads] = usePads();
-  const model = useItems(topic);
-  const [typeSelectDialogOpen, setTypeSelectDialogOpen] = useState(false);
+  const { model, createView } = useViews(topic);
+  const [newViewCreationMenuOpen, setNewViewCreationMenuOpen] = useState(false);
   const anchor = useRef();
 
   const handleSelect = (viewId) => {
@@ -73,10 +71,9 @@ export const Sidebar = () => {
   };
 
   const handleCreate = (type) => {
-    setTypeSelectDialogOpen(false);
-    if (!type) return;
-    const title = `item-${chance.word()}`;
-    const viewId = model.createView(type, title);
+    assert(type);
+    setNewViewCreationMenuOpen(false);
+    const viewId = createView(type);
     handleSelect(viewId);
   };
 
@@ -92,7 +89,8 @@ export const Sidebar = () => {
               <Typography variant="body2">Home</Typography>
             </div>
           )}
-        ></TreeItem>
+        />
+
         {model.getAllViews().map(view => (
           <PartyTreeItem
             key={view.viewId}
@@ -105,12 +103,13 @@ export const Sidebar = () => {
           />
         ))}
 
-        <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setTypeSelectDialogOpen(true)}>Item</PartyTreeAddItemButton>
-        <DocumentTypeSelectMenu anchorEl={anchor.current} open={typeSelectDialogOpen} onSelect={handleCreate} />
-
+        <PartyTreeAddItemButton ref={anchor} topic={topic} onClick={() => setNewViewCreationMenuOpen(true)}>Item</PartyTreeAddItemButton>
+        <NewViewCreationMenu anchorEl={anchor.current} open={newViewCreationMenuOpen} onSelect={handleCreate} onClose={() => setNewViewCreationMenuOpen(false)} />
       </TreeView>
       <Divider />
       <MemberList party={party} />
     </div>
   );
 };
+
+export default Sidebar;

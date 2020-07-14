@@ -3,14 +3,17 @@
 //
 
 import assert from 'assert';
+import { Chance } from 'chance';
 
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
+import { TextModel, TYPE_TEXT_MODEL_UPDATE } from '@dxos/text-model';
 
-// TODO(burdon): Define types.
-export const TYPE_EDITOR_DOCUMENT = 'testing.document.Document';
-export const TYPE_EDITOR_UPDATE = 'testing.document.Update';
+export const TYPE_EDITOR_DOCUMENT = 'wrn_dxos_org_teamwork_editor_document';
+export const TYPE_EDITOR_UPDATE = TYPE_TEXT_MODEL_UPDATE;
+
+const chance = new Chance();
 
 /**
  * Provides the document content.
@@ -20,18 +23,28 @@ export const useDocumentUpdateModel = (topic, documentId) => {
   assert(documentId);
 
   const model = useModel({
-    options: { type: TYPE_EDITOR_UPDATE, topic, documentId, disableUpdateHandler: true }
+    model: TextModel,
+    options: { type: TYPE_EDITOR_UPDATE, topic, documentId }
   });
 
   return model;
 };
 
 /**
- * Provides item list and item creator.
+ * Provides view list and view creator.
  * @returns {ViewModel}
  */
-export const useItems = (topic) => {
+export const useViews = (topic) => {
   const [pads] = usePads();
   const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
-  return model ?? new ViewModel(); // hack to ensure we dont have any crashes while model is loading
+
+  return {
+    views: model?.getAllViews() ?? [],
+    createView: () => {
+      assert(model);
+      const displayName = `embeded-item-${chance.word()}`;
+      const viewId = model.createView(TYPE_EDITOR_DOCUMENT, displayName);
+      return { __type_url: TYPE_EDITOR_DOCUMENT, viewId, displayName };
+    }
+  };
 };

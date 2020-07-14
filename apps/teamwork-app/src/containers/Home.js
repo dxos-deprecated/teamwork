@@ -3,15 +3,16 @@
 //
 
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+
 import Grid from '@material-ui/core/Grid';
-import { Fab, Zoom, CircularProgress, Tooltip, Typography } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+
+import { makeStyles } from '@material-ui/styles';
 
 import { useClient, useParties } from '@dxos/react-client';
 import { AppContainer } from '@dxos/react-appkit';
 
-import { PartyCard } from '../components/PartyCard';
+import PartyCard from '../components/PartyCard';
+import NewPartyCard from '../components/NewPartyCard';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -39,49 +40,57 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Landing = () => {
+const Home = () => {
+  const classes = useStyles();
   const client = useClient();
   const parties = useParties();
-  const classes = useStyles();
+
   const [inProgress, setInProgress] = useState(false);
 
-  async function createParty () {
-    if (inProgress) return;
+  const createParty = async () => {
+    if (inProgress) {
+      return;
+    }
+
     setInProgress(true);
+
     try {
       await client.partyManager.createParty();
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error(err);
       throw new Error('Unable to create a party');
     } finally {
       setInProgress(false);
     }
-  }
+  };
+
+  // TODO(burdon): Factor out party card grid (reusable).
+  // TODO(burdon): Toggle show/hide unsubscribed cards (settings?)
+  // TODO(burdon): New card should open Settings dialog.
+
+  const sortBySubscribedAndName = (a, b) => {
+    const diff = Number(b.subscribed) - Number(a.subscribed);
+    if (diff !== 0) {
+      return diff;
+    }
+
+    return a.displayName < b.displayName ? -1 : 1;
+  };
 
   return (
     <AppContainer>
-      <Grid container spacing={1} alignItems="stretch" className={classes.grid}>
-        {parties.sort((b, a) => Number(a.subscribed) - Number(b.subscribed)).map((party) => (
+      <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
+        {parties.sort(sortBySubscribedAndName).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
             <PartyCard party={party} />
           </Grid>
         ))}
+        <Grid item zeroMinWidth>
+          <NewPartyCard onNewParty={createParty} />
+        </Grid>
       </Grid>
-
-      {parties.length === 0 && (
-        <Typography className={classes.createPartyText} variant="h2">
-          <a className={classes.createPartyLink} onClick={createParty}>Create a party</a>
-          <span> to get started.</span>
-        </Typography>
-      )}
-
-      <Zoom in={true} timeout={500} unmountOnExit>
-        <Tooltip title="Create party" aria-label="create party" placement="top">
-          <Fab color="primary" className={classes.fab} onClick={createParty}>
-            {inProgress ? <CircularProgress color="secondary" /> : <Add /> }
-          </Fab>
-        </Tooltip>
-      </Zoom>
     </AppContainer>
   );
 };
+
+export default Home;

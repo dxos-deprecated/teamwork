@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import Icon from '@material-ui/icons/Chat';
+import Icon from '@material-ui/icons/BugReport';
 
 import { Main } from './Main';
 import { TYPE_TESTING_PAD } from './model';

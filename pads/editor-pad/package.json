@@ -19,12 +19,13 @@
   "dependencies": {
     "@dxos/editor": "^1.0.0-beta.10",
     "@dxos/view-model": "^1.0.0-beta.16",
+    "@dxos/text-model": "^1.0.0-beta.25",
     "clsx": "^1.0.4",
     "yjs": "13.1.0"
   },
   "peerDependencies": {
     "@dxos/crypto": "^1.0.0-beta.1",
-    "@dxos/react-client": "^1.0.0-beta.101",
+    "@dxos/react-client": "^1.0.0-beta.131",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "^16.13.1",

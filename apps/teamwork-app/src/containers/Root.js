@@ -24,11 +24,11 @@ import CanvasApp from '@dxos/canvas-pad';
 import TestingPad from '@dxos/testing-pad';
 
 import App from './App';
-import { Landing } from './Landing';
+import Home from './Home';
 
 const initialState = {
   [SET_LAYOUT]: {
-    showSidebar: true,
+    showSidebar: false,
     showDebug: false
   }
 };
@@ -41,7 +41,7 @@ const pads = [
   TestingPad
 ];
 
-export const Root = ({ config }) => {
+const Root = ({ config }) => {
   const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
   const { routes } = router;
 
@@ -61,9 +61,10 @@ export const Root = ({ config }) => {
                 <RequireWallet redirect={routes.register}>
                   <Switch>
                     {SystemRoutes(router)}
+                    <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
                     <Route exact path={routes.app} component={App} />
-                    <Route exact path="/landing" component={Landing} />
-                    <Redirect to="/landing" />
+                    <Route exact path="/home" component={Home} />
+                    <Redirect to="/home" />
                   </Switch>
                 </RequireWallet>
               </Switch>
@@ -74,3 +75,5 @@ export const Root = ({ config }) => {
     </Theme>
   );
 };
+
+export default Root;

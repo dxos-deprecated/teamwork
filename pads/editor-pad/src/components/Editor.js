@@ -2,25 +2,28 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { Editor as DxOSEditor } from '@dxos/editor';
+import { Editor as DXOSEditor } from '@dxos/editor';
 
 import { useProfile } from '@dxos/react-client';
 
 import { useDocumentUpdateModel } from '../model';
 import Pad from './Pad';
 
-const useEditorClasses = makeStyles(() => ({
+const useEditorClasses = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     height: '100%'
   },
   editor: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+
     '& reactelement': {
       display: 'inline-block'
     }
@@ -51,7 +54,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       label: `New ${pad.displayName}`,
       create: true,
       fn: async () => {
-        const item = await onCreateItem(pad.type);
+        const item = await onCreateItem();
 
         editor.createReactElement({
           type: pad.type,
@@ -97,44 +100,10 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
 
   const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
 
-  useEffect(() => {
-    if (!documentUpdateModel || !editor) return;
-
-    // Remote updates handler: update current doc
-    const modelUpdateHandler = (model, messages) => {
-      messages.forEach(({ update, origin }) => {
-        if (origin.docClientId !== editor.sync.doc.clientID) {
-          editor.sync.processRemoteUpdate(update, origin);
-        }
-      });
-    };
-
-    // Apply initial messages
-    documentUpdateModel.on('update', modelUpdateHandler);
-
-    return () => {
-      if (!editor) return;
-
-      documentUpdateModel.off('update', modelUpdateHandler);
-
-      editor.destroy();
-    };
-  }, [itemId, publicKey, editor, documentUpdateModel]);
-
-  const handleLocalUpdate = useCallback((update, doc) => {
-    documentUpdateModel.appendMessage({
-      __type_url: 'testing.document.Update',
-      update,
-      origin: { author: publicKey, docClientId: doc.clientID }
-    });
-  }, [publicKey, documentUpdateModel]);
-
-  const handleEditorCreated = useCallback(setEditor, [setEditor]);
+  const handleEditorCreated = useCallback(setEditor, []);
 
   const handleReactElementRender = useCallback(props => {
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
-
-    console.log('render', props);
 
     return (
       <Pad title={props.title} icon={icon}>
@@ -154,12 +123,13 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   if (!documentUpdateModel) return null;
 
   return (
-    <DxOSEditor
+    <DXOSEditor
+      key={documentUpdateModel.doc.clientID}
       toolbar
       schema="full"
       sync={{
         id: publicKey,
-        onLocalUpdate: handleLocalUpdate,
+        doc: documentUpdateModel.doc,
         status: {
           onLocalUpdate: handleLocalStatusUpdate
         }

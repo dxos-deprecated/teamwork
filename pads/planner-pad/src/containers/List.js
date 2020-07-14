@@ -10,14 +10,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { useArrayModel } from '../model/useArrayModel';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
 
-export const LIST_TYPE = 'testing.planner.List';
-export const CARD_TYPE = 'testing.planner.Card';
-
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexShrink: 0,
     backgroundColor: 'rgba(0,0,0, 0.03)',
@@ -33,31 +29,18 @@ const useStyles = makeStyles(() => ({
     '&:not(:last-child)': {
       marginBottom: 10
     }
+  },
+  list: {
+    minHeight: theme.spacing(5)
   }
 }));
 
-const List = (props) => {
+const List = ({ list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
   const classes = useStyles();
-  const { topic, list, onUpdateList, onOpenCard, className } = props;
-  const { id: listId } = list;
-  const cardsModel = useArrayModel(topic, CARD_TYPE, { listId });
-  const cards = cardsModel ? cardsModel.getItems() : [];
 
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
   };
-
-  const handleAddCard = (title) => {
-    cardsModel.push({ listId, title });
-  };
-
-  // const handleDragEnd = result => {
-  //   const { source, destination } = result;
-  //   if (!source || !destination) {
-  //     return;
-  //   }
-  //   cardsModel.moveItemByIndex(source.index, destination.index);
-  // };
 
   const Card = ({ card, provided }) => (
     <div
@@ -87,7 +70,7 @@ const List = (props) => {
       </div>
       <Droppable direction="vertical" type="list" droppableId={list.id}>
         {({ innerRef, placeholder }) => (
-          <div ref={innerRef}>
+          <div ref={innerRef} className={classes.list}>
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
@@ -107,7 +90,7 @@ const List = (props) => {
           </div>
         )}
       </Droppable>
-      <AddCard onAddCard={handleAddCard} />
+      <AddCard onAddCard={title => onAddCard(title, list.id)} />
     </div>
   );
 };

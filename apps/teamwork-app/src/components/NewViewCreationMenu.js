@@ -11,10 +11,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import { usePads } from '@dxos/react-appkit';
 
-export const DocumentTypeSelectMenu = ({ anchorEl, onSelect, open }) => {
+const NewViewCreationMenu = ({ anchorEl, onSelect, open, onClose }) => {
   const [pads] = usePads();
   return (
-    <Menu anchorEl={anchorEl} open={open} onClose={() => onSelect(undefined)}>
+    <Menu anchorEl={anchorEl} open={open} onClose={onClose}>
       {pads.map(pad => (
         <MenuItem button key={pad.type} onClick={() => onSelect(pad.type)}>
           <ListItemIcon>
@@ -26,3 +26,5 @@ export const DocumentTypeSelectMenu = ({ anchorEl, onSelect, open }) => {
     </Menu>
   );
 };
+
+export default NewViewCreationMenu;

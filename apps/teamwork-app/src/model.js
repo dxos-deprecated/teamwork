@@ -2,16 +2,29 @@
 // Copyright 2020 DXOS.org
 //
 
+import { Chance } from 'chance';
+import assert from 'assert';
+
 import { useModel } from '@dxos/react-client';
 import { ViewModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 
+const chance = new Chance();
+
 /**
- * Provides item list and item creator.
+ * Provides view list and view creator.
  * @returns {ViewModel}
  */
-export const useItems = (topic) => {
+export const useViews = (topic) => {
   const [pads] = usePads();
   const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
-  return model ?? new ViewModel(); // hack to ensure we dont have any crashes while model is loading
+
+  return {
+    model: model ?? new ViewModel(),
+    createView: (type) => {
+      assert(model);
+      const title = `item-${chance.word()}`;
+      return model.createView(type, title);
+    }
+  };
 };

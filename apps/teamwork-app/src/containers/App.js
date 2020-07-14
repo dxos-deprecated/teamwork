@@ -13,8 +13,8 @@ import { useClient } from '@dxos/react-client';
 import { AppContainer, usePads } from '@dxos/react-appkit';
 import { EditableText } from '@dxos/react-ux';
 
-import { useItems } from '../model';
-import { Sidebar } from './Sidebar';
+import { useViews } from '../model';
+import Sidebar from './Sidebar';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -35,7 +35,7 @@ const App = () => {
   const classes = useStyles();
   const { topic, item: viewId } = useParams();
   const [pads] = usePads();
-  const model = useItems(topic);
+  const { model } = useViews(topic);
   const item = model.getById(viewId);
   const client = useClient();
 
