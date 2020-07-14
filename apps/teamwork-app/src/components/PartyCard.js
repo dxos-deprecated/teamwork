@@ -26,19 +26,16 @@ import DeleteIcon from '@material-ui/icons/Clear';
 import RestoreIcon from '@material-ui/icons/RestoreFromTrash';
 
 import { keyToString } from '@dxos/crypto';
-import { useAppRouter } from '@dxos/react-appkit';
+import { useAppRouter, PartySettingsDialog, PartyMemberList } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 import { EditableText } from '@dxos/react-ux';
 
 import { useViews } from '../model';
 
-// TODO(burdon): Component should not import container.
-import SettingsDialog from '../containers/SettingsDialog';
 import { getThumbnail } from '../util/images';
 
 import NewViewCreationMenu from './NewViewCreationMenu';
 import PartySettingsMenu from './PartySettingsMenu';
-import PartyMemberList from './PartyMemberList';
 import PadIcon from './PadIcon';
 
 const useStyles = makeStyles(theme => ({
@@ -243,7 +240,7 @@ const PartyCard = ({ party }) => {
       />
 
       {/* TODO(burdon): Move to Home (i.e., single instance. */}
-      <SettingsDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
+      <PartySettingsDialog open={shareDialogOpen} onClose={() => setShareDialogOpen(false)} party={party} />
     </>
   );
 };

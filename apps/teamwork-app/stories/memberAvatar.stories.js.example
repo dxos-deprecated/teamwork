@@ -2,6 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
+// THIS IS AN EXAMPLE - MemberAvatar has been moved to SDK since.
+
 import React from 'react';
 
 import { Theme } from '@dxos/react-appkit';
