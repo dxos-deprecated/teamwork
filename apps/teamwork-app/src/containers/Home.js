@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/styles';
 import { useClient, useParties } from '@dxos/react-client';
 import { AppContainer, NewPartyCard } from '@dxos/react-appkit';
 
-import PartyCardContainer from './PartyCard';
+import PartyCardContainer from './PartyCardContainer';
 
 const useStyles = makeStyles(theme => ({
   fab: {
