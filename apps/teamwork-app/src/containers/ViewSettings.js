@@ -90,6 +90,7 @@ const ViewSettings = () => {
       <Card className={classes.root}>
         <CardHeader title="View Settings" />
         <CardContent className={classes.contentRoot}>
+          {/* TODO(rzadp): Use EditableText after https://github.com/dxos/teamwork/issues/180 */}
           {item && (
             <TextField
               className={classes.settingItem}
