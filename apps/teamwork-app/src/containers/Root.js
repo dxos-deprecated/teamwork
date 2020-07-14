@@ -24,6 +24,7 @@ import CanvasApp from '@dxos/canvas-pad';
 import TestingPad from '@dxos/testing-pad';
 
 import App from './App';
+import ViewSettings from './ViewSettings';
 import Home from './Home';
 
 const initialState = {
@@ -61,8 +62,12 @@ const Root = ({ config }) => {
                 <RequireWallet redirect={routes.register}>
                   <Switch>
                     {SystemRoutes(router)}
+                    <Route exact path="/settings/:topic?"><Redirect to="/home" /></Route>
+                    <Route exact path={'/settings/:topic([0-9a-fA-F]{64})/:item'} component={ViewSettings} />
+
                     <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
                     <Route exact path={routes.app} component={App} />
+
                     <Route exact path="/home" component={Home} />
                     <Redirect to="/home" />
                   </Switch>
