@@ -12,10 +12,9 @@ import IconButton from '@material-ui/core/IconButton';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
-import { AppContainer, usePads, useAppRouter } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultViewSidebar } from '@dxos/react-appkit';
 
 import { useViews } from '../model';
-import Sidebar from './Sidebar';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -62,7 +61,7 @@ const App = () => {
   return (
     <AppContainer
       appBarContent={appBarContent}
-      sidebarContent={<Sidebar />}
+      sidebarContent={<DefaultViewSidebar />}
     >
       <div className={classes.main}>
         {pad && <pad.main topic={topic} viewId={viewId} />}

@@ -14,7 +14,8 @@ import {
   Registration,
   RequireWallet,
   SystemRoutes,
-  Theme
+  Theme,
+  ViewSettings
 } from '@dxos/react-appkit';
 import { ClientContextProvider } from '@dxos/react-client';
 import MessengerPad from '@dxos/messenger-pad';
@@ -24,7 +25,6 @@ import CanvasApp from '@dxos/canvas-pad';
 import TestingPad from '@dxos/testing-pad';
 
 import App from './App';
-import ViewSettings from './ViewSettings';
 import Home from './Home';
 
 const initialState = {
