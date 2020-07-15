@@ -9,10 +9,10 @@ app:
 client:
   devtools: true
   keyStorage:
-    root: "dxos/incubator/keys"
+    root: "dxos/teamwork/keys"
 
   feedStorage:
-    root: "dxos/incubator/feeds"
+    root: "dxos/teamwork/feeds"
 
   swarm:
     signal: "wss://signal2.dxos.network/dxos/signal"
