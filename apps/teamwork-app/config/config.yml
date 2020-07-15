@@ -5,3 +5,8 @@
 
 app:
   name: 'Teamwork'
+client:
+  keyStorage:
+    root: "dxos/teamwork-local/keys"
+  feedStorage:
+    root: "dxos/teamwork-local/feeds"
