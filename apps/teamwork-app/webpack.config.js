@@ -152,6 +152,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: '[name].[ext]',
+              publicPath: PUBLIC_URL
             }
           }
         ]
