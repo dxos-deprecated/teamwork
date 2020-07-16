@@ -38,8 +38,8 @@ const EditorPad = ({ topic, viewId }) => {
   const [pads] = usePads();
   const { views, createView } = useViews(topic, pads.map((pad) => pad.type));
 
-  const handleCreateItem = () => {
-    return createView();
+  const handleCreateItem = (type) => {
+    return createView(type);
   };
 
   return (
