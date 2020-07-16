@@ -26,11 +26,8 @@ const useStyles = makeStyles(() => {
     },
 
     scrollBox: {
-      // TODO(sfvisser): Don't hardcode the sidebar width and toolbar height,
-      // but fix the current container mess.
-      width: 'calc(100vw - 250px)',
       overflow: 'scroll',
-      height: 'calc(100% - 50px)'
+      display: 'flex'
     },
 
     topbar: {

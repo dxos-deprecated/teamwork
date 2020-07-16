@@ -20,6 +20,9 @@ const useEditorClasses = makeStyles(theme => ({
     flexDirection: 'column',
     height: '100%'
   },
+  padContainer: {
+    maxWidth: '740px'
+  },
   editor: {
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
@@ -54,7 +57,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       label: `New ${pad.displayName}`,
       create: true,
       fn: async () => {
-        const item = await onCreateItem();
+        const item = await onCreateItem(pad.type);
 
         editor.createReactElement({
           type: pad.type,
@@ -106,9 +109,11 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
 
     return (
-      <Pad title={props.title} icon={icon}>
-        <PadComponent {...props} />
-      </Pad>
+      <div className={classes.padContainer}>
+        <Pad title={props.title} icon={icon}>
+          <PadComponent {...props} />
+        </Pad>
+      </div>
     );
   }, [pads]);
 
