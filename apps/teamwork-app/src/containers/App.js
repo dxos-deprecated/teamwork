@@ -6,8 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Home, BuildOutlined } from '@material-ui/icons';
+import { Home } from '@material-ui/icons';
 import IconButton from '@material-ui/core/IconButton';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
@@ -53,7 +54,7 @@ const App = () => {
       <Home onClick={() => router.push({ path: '/home' })} />
     </IconButton>
     <IconButton color="inherit">
-      <BuildOutlined onClick={() => setViewSettingsOpen(true)} />
+      <SettingsIcon onClick={() => setViewSettingsOpen(true)} />
     </IconButton>
   </>);
 
