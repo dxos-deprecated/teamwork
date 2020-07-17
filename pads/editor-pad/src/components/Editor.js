@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
 
@@ -22,6 +23,10 @@ const useEditorClasses = makeStyles(theme => ({
   },
   padContainer: {
     maxWidth: '740px'
+  },
+  padDivider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   editor: {
     paddingLeft: theme.spacing(3),
@@ -110,9 +115,11 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
 
     return (
       <div className={classes.padContainer}>
+        <Divider className={classes.padDivider} />
         <Pad title={props.title} icon={icon}>
           <PadComponent {...props} />
         </Pad>
+        <Divider className={classes.padDivider} />
       </div>
     );
   }, [pads]);
