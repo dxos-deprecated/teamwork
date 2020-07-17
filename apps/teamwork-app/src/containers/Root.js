@@ -14,7 +14,7 @@ import {
   Registration,
   RequireWallet,
   SystemRoutes,
-  Theme,
+  Theme
 } from '@dxos/react-appkit';
 import { ClientContextProvider } from '@dxos/react-client';
 import MessengerPad from '@dxos/messenger-pad';
