@@ -17,5 +17,6 @@ export default {
   icon: Icon,
   main: Board,
   type: BOARD_TYPE,
-  description: 'Plan your projects'
+  description: 'Plan your projects',
+  customViewSettings: true
 };
