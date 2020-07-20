@@ -119,7 +119,6 @@ export const Board = ({ topic, viewId, viewSettingsOpen = false, setViewSettings
         <Button
           variant="outlined"
           size="small"
-          startIcon={}
           onClick={handleInitializeKanban}
           className={classes.initializeButton}
         >

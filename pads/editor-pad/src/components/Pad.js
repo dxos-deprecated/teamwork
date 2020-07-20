@@ -24,8 +24,7 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Pad = ({ title, icon: Icon, children }) => {
+export const Pad = ({ title, icon, children }) => {
   const classes = useStyles();
 
   return (
