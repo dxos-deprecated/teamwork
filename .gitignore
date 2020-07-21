@@ -110,3 +110,6 @@ dist
 
 .out/
 
+# vscode
+.vscode
+

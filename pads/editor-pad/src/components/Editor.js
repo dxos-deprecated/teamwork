@@ -44,7 +44,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       id: item.id,
       label: item.displayName,
       fn: () => {
-        editor.createReactElement({
+        editor.createBlockReactElement({
           type: item.type,
           viewId: item.viewId,
           title: item.displayName,
@@ -64,7 +64,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       fn: async () => {
         const item = await onCreateItem(pad.type);
 
-        editor.createReactElement({
+        editor.createBlockReactElement({
           type: pad.type,
           viewId: item.viewId,
           title: item.displayName,
