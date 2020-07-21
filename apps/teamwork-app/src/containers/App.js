@@ -49,20 +49,12 @@ const App = () => {
     }
   }, [topic]);
 
-  const appBarContent = (<>
-    <IconButton color="inherit">
-      <Home onClick={() => router.push({ path: '/home' })} />
-    </IconButton>
-    <IconButton color="inherit">
-      <SettingsIcon onClick={() => setViewSettingsOpen(true)} />
-    </IconButton>
-  </>);
-
   return (
     <>
       <AppContainer
-        appBarContent={appBarContent}
         sidebarContent={<DefaultViewSidebar />}
+        onSettingsOpened={() => setViewSettingsOpen(true)}
+        onHomeNavigation={() => router.push({ path: '/home' })}
       >
         <div className={classes.main}>
           {pad && <pad.main topic={topic} viewId={viewId} viewSettingsOpen={viewSettingsOpen} setViewSettingsOpen={setViewSettingsOpen} />}
