@@ -60,7 +60,7 @@ const App = () => {
         onHomeNavigation={() => router.push({ path: '/home' })}
       >
         <div className={classes.main}>
-          {pad && <pad.main topic={topic} viewId={viewId} viewSettingsOpen={viewSettingsOpen} setViewSettingsOpen={setViewSettingsOpen} />}
+          {pad && <pad.main topic={topic} viewId={viewId} />}
         </div>
       </AppContainer>
       <Settings
@@ -69,6 +69,7 @@ const App = () => {
         onCancel={() => setViewSettingsOpen(false)}
         item={item}
         viewModel={model}
+        Icon={pad && pad.icon}
       />
     </>
   );

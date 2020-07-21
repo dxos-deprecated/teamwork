@@ -4,8 +4,8 @@
 
 import React, { useState } from 'react';
 
+import Icon from '@material-ui/icons/AssignmentTurnedIn';
 import { makeStyles } from '@material-ui/core/styles';
-import SettingsIcon from '@material-ui/icons/Settings';
 import Input from '../components/Input';
 
 import { ItemSettings } from '@dxos/react-appkit';
@@ -35,7 +35,7 @@ const PlannerSettingsDialog = ({ open, onClose, onCancel, item, viewModel }) => 
       onCancel={onCancel}
       item={item}
       closingDisabled={false}
-      icon={<SettingsIcon />}
+      icon={<Icon />}
     >
       <Input
         label="Board Description"
