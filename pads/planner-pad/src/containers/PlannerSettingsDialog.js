@@ -38,7 +38,7 @@ const PlannerSettingsDialog = ({ open, onClose, onCancel, item, viewModel }) => 
       icon={<Icon />}
     >
       <Input
-        label="Board Description"
+        label="Description"
         multiline
         className={classes.settingsItem}
         key={description}
