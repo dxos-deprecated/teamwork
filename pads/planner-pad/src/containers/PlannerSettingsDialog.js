@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -18,14 +18,14 @@ const useStyles = makeStyles(theme => ({
 
 const PlannerSettingsDialog = ({ open, onClose, onCancel, item, viewModel }) => {
   const classes = useStyles();
-  const [description, setDescription] = useState(item.metadata.description);
+  const [description, setDescription] = useState(item ? item.metadata.description : '');
 
   const handleClose = ({ name }) => {
     if (item) {
       viewModel.renameView(item.viewId, name);
-      viewModel.updateView(item.viewId, {description});
+      viewModel.updateView(item.viewId, { description });
     }
-    onClose({ name });
+    onClose({ name }, { description });
   };
 
   return (
