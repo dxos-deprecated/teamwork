@@ -5,6 +5,7 @@
   "keywords": [],
   "license": "GPL-3.0",
   "author": "DXOS.org",
+  "private": true,
   "scripts": {
     "analyzer": "webpack --config webpack-analyzer.config.js",
     "debug": "DOT_ENV=.env.debug webpack-dev-server --mode development",

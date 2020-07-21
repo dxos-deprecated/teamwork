@@ -3,6 +3,7 @@
   "version": "1.0.1-beta.6",
   "description": "Canvas pad.",
   "main": "dist/index.js",
+  "private": true,
   "homepage": "https://github.com/dxos/teamwork#readme",
   "bugs": {
     "url": "https://github.com/dxos/teamwork/issues"

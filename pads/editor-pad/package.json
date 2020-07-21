@@ -2,7 +2,7 @@
   "name": "@dxos/editor-pad",
   "version": "1.0.1-beta.6",
   "description": "DxOs editor pad",
-  "private": false,
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",

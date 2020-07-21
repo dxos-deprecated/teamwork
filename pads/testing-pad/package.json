@@ -2,6 +2,7 @@
   "name": "@dxos/testing-pad",
   "version": "1.0.1-beta.6",
   "main": "dist/index.js",
+  "private": true,
   "scripts": {
     "build": "babel src -d dist",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
