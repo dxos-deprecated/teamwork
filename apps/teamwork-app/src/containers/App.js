@@ -13,7 +13,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
-import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, ViewSettingsDialog } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, ViewSettingsDialog, DefaultSettingsDialog } from '@dxos/react-appkit';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -49,6 +49,10 @@ const App = () => {
     }
   }, [topic]);
 
+  if (!model || !item) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <AppContainer
@@ -60,7 +64,7 @@ const App = () => {
           {pad && <pad.main topic={topic} viewId={viewId} viewSettingsOpen={viewSettingsOpen} setViewSettingsOpen={setViewSettingsOpen} />}
         </div>
       </AppContainer>
-      {pad && !pad.customViewSettings && (
+      {/* {pad && !pad.customViewSettings && (
         <ViewSettingsDialog
           open={viewSettingsOpen}
           onClose={() => setViewSettingsOpen(false)}
@@ -68,7 +72,15 @@ const App = () => {
           pads={pads}
           viewId={viewId}
         />
-      )}
+      )} */}
+      <DefaultSettingsDialog
+        open={viewSettingsOpen}
+        onClose={() => setViewSettingsOpen(false)}
+        onCancel={() => setViewSettingsOpen(false)}
+        item={item}
+        viewId={viewId}
+        viewModel={model}
+      />
     </>
   );
 };
