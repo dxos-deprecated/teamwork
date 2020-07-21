@@ -43,6 +43,7 @@ const Home = () => {
   const parties = useParties();
 
   const [inProgress, setInProgress] = useState(false);
+  const [viewSettingsOpen, setViewSettingsOpen] = useState(false);
 
   const createParty = async () => {
     if (inProgress) {
@@ -75,18 +76,20 @@ const Home = () => {
   };
 
   return (
-    <AppContainer>
-      <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
-        {parties.sort(sortBySubscribedAndName).map((party) => (
-          <Grid key={party.publicKey.toString()} item zeroMinWidth>
-            <PartyCardContainer party={party} />
+    <>
+      <AppContainer>
+        <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
+          {parties.sort(sortBySubscribedAndName).map((party) => (
+            <Grid key={party.publicKey.toString()} item zeroMinWidth>
+              <PartyCardContainer party={party} />
+            </Grid>
+          ))}
+          <Grid item zeroMinWidth>
+            <NewPartyCard onNewParty={createParty} />
           </Grid>
-        ))}
-        <Grid item zeroMinWidth>
-          <NewPartyCard onNewParty={createParty} />
         </Grid>
-      </Grid>
-    </AppContainer>
+      </AppContainer>
+    </>
   );
 };
 

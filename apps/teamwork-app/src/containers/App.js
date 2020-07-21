@@ -78,7 +78,6 @@ const App = () => {
         onClose={() => setViewSettingsOpen(false)}
         onCancel={() => setViewSettingsOpen(false)}
         item={item}
-        viewId={viewId}
         viewModel={model}
       />
     </>
