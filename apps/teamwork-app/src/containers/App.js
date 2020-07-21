@@ -47,7 +47,7 @@ const App = () => {
   }, [topic]);
 
   if (!model || !item) {
-    return <p>Loading...</p>;
+    return null;
   }
 
   const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
