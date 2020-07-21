@@ -6,14 +6,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Home } from '@material-ui/icons';
-import IconButton from '@material-ui/core/IconButton';
-import SettingsIcon from '@material-ui/icons/Settings';
 
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
-import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, ViewSettingsDialog } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -49,34 +46,31 @@ const App = () => {
     }
   }, [topic]);
 
-  const appBarContent = (<>
-    <IconButton color="inherit">
-      <Home onClick={() => router.push({ path: '/home' })} />
-    </IconButton>
-    <IconButton color="inherit">
-      <SettingsIcon onClick={() => setViewSettingsOpen(true)} />
-    </IconButton>
-  </>);
+  if (!model || !item) {
+    return <p>Loading...</p>;
+  }
+
+  const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
 
   return (
     <>
       <AppContainer
-        appBarContent={appBarContent}
         sidebarContent={<DefaultViewSidebar />}
+        onSettingsOpened={() => setViewSettingsOpen(true)}
+        onHomeNavigation={() => router.push({ path: '/home' })}
       >
         <div className={classes.main}>
-          {pad && <pad.main topic={topic} viewId={viewId} viewSettingsOpen={viewSettingsOpen} setViewSettingsOpen={setViewSettingsOpen} />}
+          {pad && <pad.main topic={topic} viewId={viewId} />}
         </div>
       </AppContainer>
-      {pad && !pad.customViewSettings && (
-        <ViewSettingsDialog
-          open={viewSettingsOpen}
-          onClose={() => setViewSettingsOpen(false)}
-          viewModel={model}
-          pads={pads}
-          viewId={viewId}
-        />
-      )}
+      <Settings
+        open={viewSettingsOpen}
+        onClose={() => setViewSettingsOpen(false)}
+        onCancel={() => setViewSettingsOpen(false)}
+        item={item}
+        viewModel={model}
+        Icon={pad && pad.icon}
+      />
     </>
   );
 };

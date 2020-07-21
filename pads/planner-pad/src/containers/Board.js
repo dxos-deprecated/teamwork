@@ -9,13 +9,13 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import { usePads } from '@dxos/react-appkit';
 
 import List from './List';
 import { useViews } from '../model/board';
 import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
-import CustomViewSettingsDialog from './CustomViewSettingsDialog';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -46,6 +46,11 @@ const useStyles = makeStyles(theme => {
 
     initializeButton: {
       marginRight: theme.spacing(3)
+    },
+
+    description: {
+      marginLeft: theme.spacing(3),
+      color: theme.palette.grey[500]
     }
   };
 });
@@ -133,6 +138,7 @@ export const Board = ({ topic, viewId, viewSettingsOpen = false, setViewSettings
       >
         Add List
       </Button>
+      <Typography className={classes.description} variant="subtitle1">{board.metadata.description}</Typography>
     </div>
   );
 
@@ -175,15 +181,6 @@ export const Board = ({ topic, viewId, viewSettingsOpen = false, setViewSettings
     <Fragment>
       <Topbar />
       <Lists />
-      <CustomViewSettingsDialog
-        open={viewSettingsOpen}
-        onClose={() => setViewSettingsOpen(false)}
-        viewModel={viewModel}
-        pads={pads}
-        viewId={viewId}
-        board={board}
-        onUpdate={opts => viewModel.updateView(viewId, opts)}
-      />
     </Fragment>
   );
 };
