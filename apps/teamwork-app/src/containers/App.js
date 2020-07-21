@@ -53,6 +53,8 @@ const App = () => {
     return <p>Loading...</p>;
   }
 
+  const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
+
   return (
     <>
       <AppContainer
@@ -73,7 +75,7 @@ const App = () => {
           viewId={viewId}
         />
       )} */}
-      <DefaultSettingsDialog
+      <Settings
         open={viewSettingsOpen}
         onClose={() => setViewSettingsOpen(false)}
         onCancel={() => setViewSettingsOpen(false)}
