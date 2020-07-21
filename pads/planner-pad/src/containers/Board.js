@@ -9,9 +9,6 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-
-import { usePads } from '@dxos/react-appkit';
 
 import List from './List';
 import { useViews } from '../model/board';
@@ -47,18 +44,12 @@ const useStyles = makeStyles(theme => {
     initializeButton: {
       marginRight: theme.spacing(3)
     },
-
-    description: {
-      marginLeft: theme.spacing(3),
-      color: theme.palette.grey[500]
-    }
   };
 });
 
-export const Board = ({ topic, viewId, viewSettingsOpen = false, setViewSettingsOpen = () => {} }) => {
+export const Board = ({ topic, viewId }) => {
   const classes = useStyles();
 
-  const [pads] = usePads();
   const viewModel = useViews(topic, viewId);
   const board = viewModel.getById(viewId);
 
@@ -138,7 +129,6 @@ export const Board = ({ topic, viewId, viewSettingsOpen = false, setViewSettings
       >
         Add List
       </Button>
-      <Typography className={classes.description} variant="subtitle1">{board.metadata.description}</Typography>
     </div>
   );
 
