@@ -1,6 +1,6 @@
 {
   "name": "@dxos/editor-pad",
-  "version": "1.0.1-beta.7",
+  "version": "1.0.1-beta.6",
   "description": "DxOs editor pad",
   "private": false,
   "main": "dist/index.js",
@@ -18,8 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "@dxos/editor": "^1.0.0-beta.17",
-    "@dxos/view-model": "^1.0.0-beta.16",
     "@dxos/text-model": "^1.0.0-beta.25",
+    "@dxos/view-model": "^1.0.0-beta.16",
     "clsx": "^1.0.4",
     "yjs": "13.1.0"
   },
