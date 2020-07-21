@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => {
 
     initializeButton: {
       marginRight: theme.spacing(3)
-    },
+    }
   };
 });
 
