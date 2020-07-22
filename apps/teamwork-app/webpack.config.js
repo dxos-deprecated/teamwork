@@ -56,7 +56,7 @@ module.exports = {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           // name: 'vendor',
-          name(module) {
+          name (module) {
             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
             // return `vendor-${packageName.replace('@', '')}`;
 
@@ -104,7 +104,7 @@ module.exports = {
       }
     }),
 
-    isDevelopment && new ReactRefreshWebpackPlugin(),
+    isDevelopment && new ReactRefreshWebpackPlugin({ overlay: false })
   ].filter(Boolean),
 
   module: {
@@ -121,19 +121,19 @@ module.exports = {
             presets: [
               [
                 '@babel/preset-env',
-                { targets: { browsers: '> 5%, not IE <= 11' } },
+                { targets: { browsers: '> 5%, not IE <= 11' } }
               ],
-              '@babel/preset-react',
+              '@babel/preset-react'
             ],
             plugins: [
               ['@babel/plugin-proposal-class-properties', { loose: true }],
               '@babel/plugin-proposal-nullish-coalescing-operator',
               '@babel/plugin-proposal-optional-chaining',
               'babel-plugin-styled-components',
-              isDevelopment && require.resolve('react-refresh/babel'),
-            ].filter(Boolean),
-          },
-        },
+              isDevelopment && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
+          }
+        }
       },
 
       // config
@@ -166,9 +166,9 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '@material-ui/styles': path.resolve(__dirname, '..', '..', 'node_modules/@material-ui/styles'),
-      'react': path.resolve(__dirname, '..', '..', 'node_modules/react'),
+      react: path.resolve(__dirname, '..', '..', 'node_modules/react'),
       'react-dom': path.resolve(__dirname, '..', '..', 'node_modules/react-dom'),
-      'yjs': path.resolve(__dirname, '..', '..', 'node_modules/yjs')
+      yjs: path.resolve(__dirname, '..', '..', 'node_modules/yjs')
     }
   }
 };
