@@ -91,6 +91,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
           value={list.properties.title || 'untitled list'}
           disabled={embedded}
           onUpdate={handleTitleUpdate}
+          bareInput={true}
         />
       </div>
       <Droppable direction="vertical" type="list" droppableId={list.id}>
