@@ -7,9 +7,12 @@ import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useModel, useClient } from '@dxos/react-client';
+import { ObjectModel } from '@dxos/echo-db';
+import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
-import { useClient } from '@dxos/react-client';
+
 import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
 
 const useStyles = makeStyles(theme => ({
@@ -46,11 +49,19 @@ const App = () => {
     }
   }, [topic]);
 
-  if (!model || !item) {
+  const listsModel = useModel({ model: ObjectModel, options: { type: [LIST_TYPE], topic, viewId } });
+
+  if (!model || !item || !pad) {
     return null;
   }
 
   const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
+
+  if (pad.type === BOARD_TYPE) {
+    if (!listsModel) {
+      return null;
+    }
+  }
 
   return (
     <>
@@ -64,12 +75,14 @@ const App = () => {
         </div>
       </AppContainer>
       <Settings
+        topic={topic}
         open={viewSettingsOpen}
         onClose={() => setViewSettingsOpen(false)}
         onCancel={() => setViewSettingsOpen(false)}
         item={item}
         viewModel={model}
         Icon={pad && pad.icon}
+        listsModel={listsModel}
       />
     </>
   );

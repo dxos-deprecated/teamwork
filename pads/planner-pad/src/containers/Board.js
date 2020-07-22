@@ -6,8 +6,9 @@ import clsx from 'clsx';
 import React, { Fragment } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 
 import List from './List';
@@ -160,6 +161,9 @@ export const Board = ({ topic, viewId }) => {
                   )}
                 </Draggable>
               ))}
+              <List
+                onNewList={handleAddList}
+              />
             </div>
           </div>
         )}
@@ -169,7 +173,7 @@ export const Board = ({ topic, viewId }) => {
 
   return (
     <Fragment>
-      <Topbar />
+      {/* <Topbar /> */}
       <Lists />
     </Fragment>
   );

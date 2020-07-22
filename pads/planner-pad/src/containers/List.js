@@ -7,6 +7,9 @@ import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 import { EditableText } from '@dxos/react-ux';
 
@@ -32,10 +35,18 @@ const useStyles = makeStyles(theme => ({
   },
   list: {
     minHeight: theme.spacing(5)
+  },
+  newList: {
+    padding: theme.spacing(2),
+    textAlign: 'center'
+  },
+  addSubtitle: {
+    color: theme.palette.grey[300],
+    marginTop: theme.spacing(2)
   }
 }));
 
-const List = ({ list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
+const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
   const classes = useStyles();
 
   const handleTitleUpdate = (title) => {
@@ -58,6 +69,17 @@ const List = ({ list, cards, onUpdateList, onOpenCard, onAddCard, className }) =
   );
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
+
+  if (onNewList) {
+    return (
+      <div className={clsx(classes.root, className, classes.newList)}>
+        <IconButton className={classes.addButton} onClick={onNewList}>
+          <AddIcon className={classes.addIcon} />
+        </IconButton>
+        <Typography className={classes.addSubtitle} variant='h5'>New List</Typography>
+      </div>
+    );
+  }
 
   return (
     <div className={clsx(classes.root, className)}>
