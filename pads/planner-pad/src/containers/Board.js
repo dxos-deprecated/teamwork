@@ -56,7 +56,6 @@ const useStyles = makeStyles(theme => {
 
 export const Board = ({ topic, viewId, embedded }) => {
   const classes = useStyles();
-  if (embedded) return <p>Im embedded</p>;
 
   const viewModel = useViews(topic, viewId);
   const board = viewModel.getById(viewId);
@@ -163,12 +162,14 @@ export const Board = ({ topic, viewId, embedded }) => {
                         onUpdateList={handleUpdateList(list.id)}
                         onOpenCard={() => { }}
                         onAddCard={handleAddCard}
+                        embedded={embedded}
                       />
                     </div>
                   )}
                 </Draggable>
               ))}
               <List
+                embedded={embedded}
                 onNewList={handleAddList}
               />
             </div>

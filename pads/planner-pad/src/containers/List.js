@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className }) => {
+const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded }) => {
   const classes = useStyles();
 
   const handleTitleUpdate = (title) => {
@@ -71,6 +71,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
 
   if (onNewList) {
+    if (embedded) return null;
     return (
       <div className={clsx(classes.root, className, classes.newList)}>
         <IconButton className={classes.addButton} onClick={onNewList}>
@@ -87,6 +88,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
         <EditableText
           key={list.properties.title}
           value={list.properties.title || 'untitled list'}
+          disabled={embedded}
           onUpdate={handleTitleUpdate}
         />
       </div>
@@ -112,7 +114,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
           </div>
         )}
       </Droppable>
-      <AddCard onAddCard={title => onAddCard(title, list.id)} />
+      {!embedded && <AddCard onAddCard={title => onAddCard(title, list.id)} />}
     </div>
   );
 };
