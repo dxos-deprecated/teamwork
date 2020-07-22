@@ -17,6 +17,10 @@ import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
 
 const useStyles = makeStyles(theme => {
   return {
+    containerRoot: {
+      overflow: 'scroll'
+    },
+
     root: {
       display: 'flex',
       flexDirection: 'row',
@@ -25,7 +29,9 @@ const useStyles = makeStyles(theme => {
     },
 
     scrollBox: {
-      overflow: 'scroll',
+      // TODO(sfvisser): Don't hardcode the sidebar width and toolbar height,
+      // but fix the current container mess.
+      width: '100vw',
       display: 'flex'
     },
 
@@ -48,8 +54,9 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const Board = ({ topic, viewId }) => {
+export const Board = ({ topic, viewId, embedded }) => {
   const classes = useStyles();
+  if (embedded) return <p>Im embedded</p>;
 
   const viewModel = useViews(topic, viewId);
   const board = viewModel.getById(viewId);
@@ -59,7 +66,7 @@ export const Board = ({ topic, viewId }) => {
   const cards = listsModel.getObjectsByType(CARD_TYPE);
 
   if (!board || !listsModel) {
-    return <div className={classes.root}>Loading board...</div>;
+    return null;
   }
 
   const handleAddList = () => {
@@ -172,10 +179,10 @@ export const Board = ({ topic, viewId }) => {
   );
 
   return (
-    <Fragment>
+    <div className={classes.containerRoot}>
       {/* <Topbar /> */}
       <Lists />
-    </Fragment>
+    </div>
   );
 };
 
