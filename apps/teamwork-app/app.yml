@@ -3,7 +3,8 @@
 #
 
 id: 'wrn:app:dxos.io/teamwork'
-name: Teamwork
+name: dxos.io/teamwork
+displayName: Teamwork
 version: 0.0.1
 baseUrl: /teamwork
 package: QmVwEZd8KKsKs5QSch3kY4KeaMmupVu1Wy9a5L7hhfowHV
