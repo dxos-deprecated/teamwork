@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'rgba(0,0,0, 0.03)',
     borderRadius: 3,
     padding: 10,
-    width: 280
+    width: 240
   },
   header: {
     marginBottom: 10,
@@ -34,12 +34,14 @@ const useStyles = makeStyles(theme => ({
     }
   },
   list: {
-    minHeight: theme.spacing(5)
+    minHeight: theme.spacing(5),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(2)
   },
   newList: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    maxHeight: 122
+    maxHeight: 142
   },
   addSubtitle: {
     color: theme.palette.grey[300],
