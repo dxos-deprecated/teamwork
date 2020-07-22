@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
   },
   newList: {
     padding: theme.spacing(2),
-    textAlign: 'center'
+    textAlign: 'center',
+    maxHeight: 122
   },
   addSubtitle: {
     color: theme.palette.grey[300],
