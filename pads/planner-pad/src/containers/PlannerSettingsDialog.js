@@ -71,7 +71,7 @@ const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, viewModel
           onClick={() => setPendingInitialization(true)}
           className={clsx(classes.settingsItem, classes.initializeButton)}
         >
-          Initialize kanban
+          Initialize
         </Button>
     </ItemSettings>
   );
