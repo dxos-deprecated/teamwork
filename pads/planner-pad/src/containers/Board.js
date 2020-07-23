@@ -29,9 +29,8 @@ const useStyles = makeStyles(theme => {
     },
 
     scrollBox: {
-      // TODO(sfvisser): Don't hardcode the sidebar width and toolbar height,
-      // but fix the current container mess.
-      width: '100vw',
+      width: '100%',
+      maxWidth: '100vw',
       display: 'flex'
     },
 
