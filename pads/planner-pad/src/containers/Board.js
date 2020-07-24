@@ -3,7 +3,7 @@
 //
 
 import clsx from 'clsx';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -13,12 +13,13 @@ import Button from '@material-ui/core/Button';
 
 import List from './List';
 import { useViews } from '../model/board';
-import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
+import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
 
 const useStyles = makeStyles(theme => {
   return {
     containerRoot: {
-      overflow: 'scroll'
+      overflow: 'scroll',
+      height: '100%'
     },
 
     root: {
@@ -31,7 +32,8 @@ const useStyles = makeStyles(theme => {
     scrollBox: {
       width: '100%',
       maxWidth: '100vw',
-      display: 'flex'
+      display: 'flex',
+      padding: 10
     },
 
     topbar: {
