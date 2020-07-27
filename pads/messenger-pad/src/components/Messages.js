@@ -34,6 +34,14 @@ const Messages = ({ messages }) => {
   // TODO(burdon): Remove lines (like slack).
   // TODO(burdon): Add date if not today.
 
+  const handleMessageClick = event => {
+    if (event.target.nodeName === 'A') {
+      event.preventDefault();
+      const currentUrl = location.href.split('/').slice(0, -1).join('/');
+      window.location.assign(`${currentUrl}/${event.target.href.split('/').pop()}`);
+    }
+  };
+
   return (
     <Table size="small">
       <TableBody>
@@ -60,7 +68,11 @@ const Messages = ({ messages }) => {
                 component="span"
                 variant="body1"
               >
-                {text}
+                <span
+                  onClick={handleMessageClick}
+                  dangerouslySetInnerHTML={{ __html: text }}
+                />
+
               </Typography>
             </TableCell>
           </TableRow>
