@@ -4,8 +4,10 @@
 
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import leveljs from 'level-js';
 
 import { ErrorHandler } from '@dxos/debug';
+import { Client } from '@dxos/client';
 import {
   SET_LAYOUT,
   AppKitContextProvider,
@@ -16,12 +18,14 @@ import {
   SystemRoutes,
   Theme
 } from '@dxos/react-appkit';
-import { ClientContextProvider } from '@dxos/react-client';
+import { ClientProvider } from '@dxos/react-client';
 import MessengerPad from '@dxos/messenger-pad';
 import EditorPad from '@dxos/editor-pad';
 import PlannerPad from '@dxos/planner-pad';
 import CanvasApp from '@dxos/canvas-pad';
 import TestingPad from '@dxos/testing-pad';
+import { createStorage } from '@dxos/random-access-multi-storage';
+import { Keyring, KeyStore } from '@dxos/credentials';
 
 import App from './App';
 import Home from './Home';
@@ -41,13 +45,21 @@ const pads = [
   TestingPad
 ];
 
-const Root = ({ config }) => {
-  const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
+const Root = ({ client: { feedStorage, keyStorage, swarm }, ...config }) => {
+  const { app: { publicUrl } } = config;
+
+  const client = new Client({
+    storage: createStorage(feedStorage.root, feedStorage.type),
+    keyring: new Keyring(new KeyStore(leveljs(`${keyStorage.root}/keystore`))),
+    swarm
+  });
+
+  const router = { ...DefaultRouter, publicUrl};
   const { routes } = router;
 
   return (
     <Theme>
-      <ClientContextProvider config={config}>
+      <ClientProvider client={client} config={config}>
         <AppKitContextProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
@@ -72,7 +84,7 @@ const Root = ({ config }) => {
             </HashRouter>
           </CheckForErrors>
         </AppKitContextProvider>
-      </ClientContextProvider>
+      </ClientProvider>
     </Theme>
   );
 };
