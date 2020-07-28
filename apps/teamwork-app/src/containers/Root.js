@@ -58,7 +58,11 @@ const Root = ({ config }) => {
             <HashRouter>
               <Switch>
                 <Route exact path={routes.register} component={Registration} />
-                <RequireWallet redirect={routes.register}>
+                <RequireWallet
+                  redirect={routes.register}
+                  // Allow access to the AUTH route if it is for joining an Identity, otherwise require a Wallet.
+                  isRequired={(path = '', query = {}) => !path.startsWith(routes.auth) || !query.identityKey}
+                >
                   <Switch>
                     {SystemRoutes(router)}
                     <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
