@@ -4,10 +4,8 @@
 
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
-import leveljs from 'level-js';
 
 import { ErrorHandler } from '@dxos/debug';
-import { Client } from '@dxos/client';
 import {
   SET_LAYOUT,
   AppKitContextProvider,
@@ -24,8 +22,6 @@ import EditorPad from '@dxos/editor-pad';
 import PlannerPad from '@dxos/planner-pad';
 import CanvasApp from '@dxos/canvas-pad';
 import TestingPad from '@dxos/testing-pad';
-import { createStorage } from '@dxos/random-access-multi-storage';
-import { Keyring, KeyStore } from '@dxos/credentials';
 
 import App from './App';
 import Home from './Home';
@@ -45,16 +41,9 @@ const pads = [
   TestingPad
 ];
 
-const Root = ({ config: { client: { feedStorage, keyStorage, swarm }, ...config } }) => {
+const Root = ({ config, client }) => {
   const { app: { publicUrl } } = config;
-  const keyring = new Keyring(new KeyStore(leveljs(`${keyStorage.root}/keystore`)));
   
-  const client = new Client({
-    storage: createStorage(feedStorage.root, feedStorage.type),
-    keyring,
-    swarm
-  });
-
   const router = { ...DefaultRouter, publicUrl};
   const { routes } = router;
 
