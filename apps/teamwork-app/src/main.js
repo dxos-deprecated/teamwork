@@ -17,9 +17,9 @@ import { loadConfig } from './config';
 
 (async () => {
   const cfg = await loadConfig();
-  
+
   const { client: { feedStorage, keyStorage, swarm }, ...config } = cfg.values;
-  
+
   const keyring = new Keyring(new KeyStore(leveljs(`${keyStorage.root}/keystore`)));
 
   const client = new Client({

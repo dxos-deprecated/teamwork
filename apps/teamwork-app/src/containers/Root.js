@@ -43,8 +43,8 @@ const pads = [
 
 const Root = ({ config, client }) => {
   const { app: { publicUrl } } = config;
-  
-  const router = { ...DefaultRouter, publicUrl};
+
+  const router = { ...DefaultRouter, publicUrl };
   const { routes } = router;
 
   return (
