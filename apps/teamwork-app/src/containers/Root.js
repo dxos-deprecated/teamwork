@@ -45,12 +45,13 @@ const pads = [
   TestingPad
 ];
 
-const Root = ({ client: { feedStorage, keyStorage, swarm }, ...config }) => {
+const Root = ({ config: { client: { feedStorage, keyStorage, swarm }, ...config } }) => {
   const { app: { publicUrl } } = config;
-
+  const keyring = new Keyring(new KeyStore(leveljs(`${keyStorage.root}/keystore`)));
+  
   const client = new Client({
     storage: createStorage(feedStorage.root, feedStorage.type),
-    keyring: new Keyring(new KeyStore(leveljs(`${keyStorage.root}/keystore`))),
+    keyring,
     swarm
   });
 
