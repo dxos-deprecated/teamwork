@@ -16,7 +16,7 @@ import {
   SystemRoutes,
   Theme
 } from '@dxos/react-appkit';
-import { ClientContextProvider } from '@dxos/react-client';
+import { ClientProvider } from '@dxos/react-client';
 import MessengerPad from '@dxos/messenger-pad';
 import EditorPad from '@dxos/editor-pad';
 import PlannerPad from '@dxos/planner-pad';
@@ -41,13 +41,15 @@ const pads = [
   TestingPad
 ];
 
-const Root = ({ config }) => {
-  const router = { ...DefaultRouter, publicUrl: config.app.publicUrl };
+const Root = ({ config, client }) => {
+  const { app: { publicUrl } } = config;
+
+  const router = { ...DefaultRouter, publicUrl };
   const { routes } = router;
 
   return (
     <Theme>
-      <ClientContextProvider config={config}>
+      <ClientProvider client={client} config={config}>
         <AppKitContextProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
@@ -76,7 +78,7 @@ const Root = ({ config }) => {
             </HashRouter>
           </CheckForErrors>
         </AppKitContextProvider>
-      </ClientContextProvider>
+      </ClientProvider>
     </Theme>
   );
 };

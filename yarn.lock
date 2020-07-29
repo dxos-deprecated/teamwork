@@ -1305,7 +1305,7 @@
     semver "^7.1.1"
     yargs "^11.0.0"
 
-"@dxos/client@^1.0.0-beta.217":
+"@dxos/client@^1.0.0-beta.215", "@dxos/client@^1.0.0-beta.217":
   version "1.0.0-beta.217"
   resolved "https://registry.yarnpkg.com/@dxos/client/-/client-1.0.0-beta.217.tgz#2ba9762823a8911c26edf40fbf8b995a1859d8b4"
   integrity sha512-tD3guqAn85k7ZDM737HnbgqzDVea7u4HaBvWpqpqWGVFSDUiywIphYMRzPiuPC7xBkKZAM8QP3Aqc/fLAnByLg==

@@ -6,8 +6,9 @@ app:
   name: 'Teamwork'
   rootElement: 'root'
 
+devtools: true
+
 client:
-  devtools: true
   keyStorage:
     root: "dxos/teamwork/keys"
 
