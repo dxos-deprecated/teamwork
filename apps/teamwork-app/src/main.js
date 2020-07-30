@@ -27,7 +27,7 @@ import { loadConfig } from './config';
     keyring,
     swarm
   });
-  await client.initialize();
+  // await client.initialize();
 
   debug.enable(cfg.get('debug.logging'));
 
