@@ -1381,9 +1381,9 @@
     source-map-support "^0.5.12"
 
 "@dxos/editor@^1.0.0-beta.18":
-  version "1.0.0-beta.19"
-  resolved "https://registry.yarnpkg.com/@dxos/editor/-/editor-1.0.0-beta.19.tgz#3f50a44af5ca826e40bfa68df99874d953476114"
-  integrity sha512-v5R+EM1uxq1T1Tf8v+1JZ8IqM6idsoiKPwrqo3Q34OHABCxFtEjkaLqPZsN1HQXeLXlJczK0C22W/mX66i6Hvw==
+  version "1.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/@dxos/editor/-/editor-1.0.0-beta.20.tgz#50f0e081aa8f61c1d47700d36b120ce69ec0f06d"
+  integrity sha512-XTACCPhZZrOYKVehrvNjh04S3K/oBWhO4sSceCSlR190+5SkMnRAYiERMLRBOTDOIbVOv4xWiTpp0VGs1hXdYg==
   dependencies:
     classnames "^2.2.6"
     color-hash "^1.0.3"
@@ -1413,9 +1413,9 @@
     yjs "^13.3.0"
 
 "@dxos/feed-level-indexer@^1.1.0-alpha.9":
-  version "1.1.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@dxos/feed-level-indexer/-/feed-level-indexer-1.1.0-alpha.9.tgz#2cf4cf1225b2d1a620e7427e25e06f6100644eb0"
-  integrity sha512-Ejb2YieukxkFP513vUfW3uk0Qn2Z9sHM2lRRi17KC6WM3kn5W3XZYaKcTHIJcpQkuiYzU8R23f5uJvBnJiBdhg==
+  version "1.1.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@dxos/feed-level-indexer/-/feed-level-indexer-1.1.0-beta.0.tgz#8b39f88bbfdb906b21884195f581dbc281aec55c"
+  integrity sha512-M7xXGQ3Qh/oP1P8iD5mhZP2A5NC26Eft4uCUZZIiWcnh1vRW4QRm1JMvsVL4ZMXCxGPhZuyBJjROBNpWccnNvg==
   dependencies:
     "@babel/runtime" "^7.8.7"
     "@frando/level-live" "^1.1.0"
@@ -1431,9 +1431,9 @@
     varint "^5.0.0"
 
 "@dxos/feed-store@^1.2.0-beta.1", "@dxos/feed-store@^1.2.0-beta.23":
-  version "1.2.0-beta.27"
-  resolved "https://registry.yarnpkg.com/@dxos/feed-store/-/feed-store-1.2.0-beta.27.tgz#0d7746bbed87b62adc37df8793d66d73bc9bd141"
-  integrity sha512-YGqDelPXkoM+IMPAwxz/H9FmB+etX2PCGfYP9b2p7mYt2FNknW+Gyk/kUYXrMAexwqFexAOo2QaWGSR9wjEMDQ==
+  version "1.2.0-beta.28"
+  resolved "https://registry.yarnpkg.com/@dxos/feed-store/-/feed-store-1.2.0-beta.28.tgz#d0e69df998e4dca001bae38aefb984ac0b29eda2"
+  integrity sha512-2wqustEWcDPR3ckbPyZV69u/6PjwTlODpFHWoaCiQcX5xLIcqADUNYnGRtSe1eWuNS16way++ZM4WhES83aw5A==
   dependencies:
     buffer-json-encoding "^1.0.2"
     debug "^4.1.1"
