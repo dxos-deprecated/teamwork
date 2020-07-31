@@ -6,7 +6,6 @@ import React from 'react';
 import assert from 'assert';
 
 import { makeStyles } from '@material-ui/styles';
-import grey from '@material-ui/core/colors/blueGrey';
 
 import { usePads } from '@dxos/react-appkit';
 
@@ -17,8 +16,7 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: grey[200]
+    flexDirection: 'column'
   },
 
   container: {
@@ -38,8 +36,8 @@ const EditorPad = ({ topic, viewId }) => {
   const [pads] = usePads();
   const { views, createView } = useViews(topic, pads.map((pad) => pad.type));
 
-  const handleCreateItem = () => {
-    return createView();
+  const handleCreateItem = (type) => {
+    return createView(type);
   };
 
   return (

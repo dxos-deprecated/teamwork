@@ -3,21 +3,25 @@
 //
 
 import clsx from 'clsx';
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import { makeStyles } from '@material-ui/core/styles';
-import SettingsIcon from '@material-ui/icons/Settings';
 import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 
-import BoardSettings from './BoardSettings';
 import List from './List';
 import { useViews } from '../model/board';
-import { LIST_TYPE, CARD_TYPE, useList } from '../model/list';
+import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
 
-const useStyles = makeStyles(() => {
+const useStyles = makeStyles(theme => {
   return {
+    containerRoot: {
+      overflow: 'scroll',
+      height: '100%'
+    },
+
     root: {
       display: 'flex',
       flexDirection: 'row',
@@ -26,29 +30,32 @@ const useStyles = makeStyles(() => {
     },
 
     scrollBox: {
-      // TODO(sfvisser): Don't hardcode the sidebar width and toolbar height,
-      // but fix the current container mess.
-      width: 'calc(100vw - 250px)',
-      overflow: 'scroll',
-      height: 'calc(100% - 50px)'
+      width: '100%',
+      maxWidth: '100vw',
+      display: 'flex',
+      padding: 10
     },
 
     topbar: {
       display: 'flex',
       background: 'white',
       padding: 10,
-      justifyContent: 'space-between'
+      justifyContent: 'flex-start'
     },
 
     list: {
       '&:not(:last-child)': {
         marginRight: 10
       }
+    },
+
+    initializeButton: {
+      marginRight: theme.spacing(3)
     }
   };
 });
 
-export const Board = ({ topic, viewId }) => {
+export const Board = ({ topic, viewId, embedded }) => {
   const classes = useStyles();
 
   const viewModel = useViews(topic, viewId);
@@ -58,9 +65,8 @@ export const Board = ({ topic, viewId }) => {
   const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
   const cards = listsModel.getObjectsByType(CARD_TYPE);
 
-  const [settingsOpen, setSettingsOpen] = useState(false);
   if (!board || !listsModel) {
-    return <div className={classes.root}>Loading board...</div>;
+    return null;
   }
 
   const handleAddList = () => {
@@ -74,6 +80,12 @@ export const Board = ({ topic, viewId }) => {
   const handleAddCard = (title, listId) => {
     const cardsInList = getCardsForList(listId);
     listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
+  };
+
+  const handleInitializeKanban = () => {
+    listsModel.createItem(LIST_TYPE, { title: 'TODO', position: 0 });
+    listsModel.createItem(LIST_TYPE, { title: 'In Progress', position: 1 });
+    listsModel.createItem(LIST_TYPE, { title: 'Done', position: 2 });
   };
 
   const getCardsForList = listId => cards
@@ -107,6 +119,16 @@ export const Board = ({ topic, viewId }) => {
 
   const Topbar = () => (
     <div className={clsx(classes.topbar, 'MuiDrawer-paperAnchorDockedTop')}>
+      { lists.length === 0 && (
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={handleInitializeKanban}
+          className={classes.initializeButton}
+        >
+          Initialize kanban
+        </Button>
+      )}
       <Button
         variant="outlined"
         size="small"
@@ -114,14 +136,6 @@ export const Board = ({ topic, viewId }) => {
         onClick={handleAddList}
       >
         Add List
-      </Button>
-      <Button
-        variant="outlined"
-        size="small"
-        startIcon={<SettingsIcon fontSize="small" />}
-        onClick={() => setSettingsOpen(!settingsOpen)}
-      >
-        Settings
       </Button>
     </div>
   );
@@ -149,11 +163,16 @@ export const Board = ({ topic, viewId }) => {
                         onUpdateList={handleUpdateList(list.id)}
                         onOpenCard={() => { }}
                         onAddCard={handleAddCard}
+                        embedded={embedded}
                       />
                     </div>
                   )}
                 </Draggable>
               ))}
+              <List
+                embedded={embedded}
+                onNewList={handleAddList}
+              />
             </div>
           </div>
         )}
@@ -162,18 +181,10 @@ export const Board = ({ topic, viewId }) => {
   );
 
   return (
-    <Fragment>
-      <Topbar />
+    <div className={classes.containerRoot}>
+      {/* <Topbar /> */}
       <Lists />
-      <BoardSettings
-        board={board}
-        onRename={displayName => viewModel.renameView(viewId, displayName)}
-        onUpdate={opts => viewModel.updateView(viewId, opts)}
-        onDelete={() => viewModel.deleteView(viewId)}
-        isOpen={settingsOpen}
-        onClose={() => setSettingsOpen(false)}
-      />
-    </Fragment>
+    </div>
   );
 };
 

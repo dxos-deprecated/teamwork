@@ -2,19 +2,18 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { Home, BuildOutlined } from '@material-ui/icons';
-import IconButton from '@material-ui/core/IconButton';
 
+import { useModel, useClient } from '@dxos/react-client';
+import { ObjectModel } from '@dxos/echo-db';
+import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
-import { useClient } from '@dxos/react-client';
-import { AppContainer, usePads, useAppRouter, DefaultViewSidebar } from '@dxos/react-appkit';
 
-import { useViews } from '../model';
+import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -39,6 +38,7 @@ const App = () => {
   const { model } = useViews(topic);
   const item = model.getById(viewId);
   const client = useClient();
+  const [viewSettingsOpen, setViewSettingsOpen] = useState(false);
 
   const pad = item ? pads.find(pad => pad.type === item.type) : undefined;
 
@@ -49,24 +49,42 @@ const App = () => {
     }
   }, [topic]);
 
-  const appBarContent = (<>
-    <IconButton color="inherit">
-      <Home onClick={() => router.push({ path: '/home' })} />
-    </IconButton>
-    <IconButton color="inherit">
-      <BuildOutlined onClick={() => router.push({ path: '/settings', topic, item: viewId })} />
-    </IconButton>
-  </>);
+  const listsModel = useModel({ model: ObjectModel, options: { type: [LIST_TYPE], topic, viewId } });
+
+  if (!model || !item || !pad) {
+    return null;
+  }
+
+  const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
+
+  if (pad.type === BOARD_TYPE) {
+    if (!listsModel) {
+      return null;
+    }
+  }
 
   return (
-    <AppContainer
-      appBarContent={appBarContent}
-      sidebarContent={<DefaultViewSidebar />}
-    >
-      <div className={classes.main}>
-        {pad && <pad.main topic={topic} viewId={viewId} />}
-      </div>
-    </AppContainer>
+    <>
+      <AppContainer
+        sidebarContent={<DefaultViewSidebar />}
+        onSettingsOpened={() => setViewSettingsOpen(true)}
+        onHomeNavigation={() => router.push({ path: '/home' })}
+      >
+        <div className={classes.main}>
+          {pad && <pad.main topic={topic} viewId={viewId} />}
+        </div>
+      </AppContainer>
+      <Settings
+        topic={topic}
+        open={viewSettingsOpen}
+        onClose={() => setViewSettingsOpen(false)}
+        onCancel={() => setViewSettingsOpen(false)}
+        item={item}
+        viewModel={model}
+        Icon={pad && pad.icon}
+        listsModel={listsModel}
+      />
+    </>
   );
 };
 

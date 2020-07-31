@@ -40,11 +40,12 @@ export const useViews = (topic) => {
 
   return {
     views: model?.getAllViews() ?? [],
-    createView: () => {
+    createView: (type) => {
       assert(model);
+      assert(type);
       const displayName = `embeded-item-${chance.word()}`;
-      const viewId = model.createView(TYPE_EDITOR_DOCUMENT, displayName);
-      return { __type_url: TYPE_EDITOR_DOCUMENT, viewId, displayName };
+      const viewId = model.createView(type, displayName);
+      return { __type_url: type, viewId, displayName };
     }
   };
 };

@@ -6,16 +6,17 @@ app:
   name: 'Teamwork'
   rootElement: 'root'
 
+devtools: true
+
 client:
-  devtools: true
   keyStorage:
-    root: "dxos/incubator/keys"
+    root: "dxos/teamwork/keys"
 
   feedStorage:
-    root: "dxos/incubator/feeds"
+    root: "dxos/teamwork/feeds"
 
   swarm:
-    signal: "wss://signal2.dxos.network/dxos/signal"
+    signal: "wss://demo.kube.dxos.network/dxos/signal"
     ice:
       - urls: "stun:stun.wirelne.ninja:3478"
       - urls: "turn:stun.wireline.ninja:3478"

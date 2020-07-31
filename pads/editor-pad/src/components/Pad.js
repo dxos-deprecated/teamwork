@@ -5,12 +5,10 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
+// import Typography from '@material-ui/core/Typography';
 
 export const useStyles = makeStyles(() => ({
   padContainer: {
-    backgroundColor: grey[300],
     padding: 4,
     borderRadius: 4
   },
@@ -26,16 +24,16 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Pad = ({ title, icon: Icon, children }) => {
+export const Pad = ({ title, icon, children }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.padContainer}>
       <div className={classes.padContent}>{children}</div>
-      <div className={classes.padInfo}>
+      {/* <div className={classes.padInfo}>
         <Icon className={classes.padInfoIcon} />
         <Typography variant="button">{title}</Typography>
-      </div>
+      </div> */}
     </div>
   );
 };

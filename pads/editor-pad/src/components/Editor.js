@@ -6,6 +6,7 @@ import React, { useCallback, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
 
@@ -19,6 +20,13 @@ const useEditorClasses = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%'
+  },
+  padContainer: {
+    maxWidth: '740px'
+  },
+  padDivider: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   editor: {
     paddingLeft: theme.spacing(3),
@@ -54,7 +62,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       label: `New ${pad.displayName}`,
       create: true,
       fn: async () => {
-        const item = await onCreateItem();
+        const item = await onCreateItem(pad.type);
 
         editor.createReactElement({
           type: pad.type,
@@ -106,9 +114,13 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
 
     return (
-      <Pad title={props.title} icon={icon}>
-        <PadComponent {...props} />
-      </Pad>
+      <div className={classes.padContainer}>
+        <Divider className={classes.padDivider} />
+        <Pad title={props.title} icon={icon}>
+          <PadComponent {...props} embedded={true} />
+        </Pad>
+        <Divider className={classes.padDivider} />
+      </div>
     );
   }, [pads]);
 

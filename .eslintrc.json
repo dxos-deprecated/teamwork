@@ -1,18 +1,15 @@
 {
   "root": true,
-  "parser": "@typescript-eslint/parser",
+  "parser": "babel-eslint",
   "extends": [
     "semistandard"
   ],
   "plugins": [
-    "@typescript-eslint/eslint-plugin",
     "eslint-plugin-local-rules"
   ],
   "rules": {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
     "indent": "off",
-    "@typescript-eslint/indent": ["error", 2],
     "local-rules/header": ["error"],
     "camelcase": "off"
   }

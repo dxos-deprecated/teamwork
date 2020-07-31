@@ -75,7 +75,7 @@ const plugins = [
 
 export default {
   preserveSymlinks: true,
-  input: './src/index.ts',
+  input: './src/index.js',
   external,
   plugins,
   output: {
