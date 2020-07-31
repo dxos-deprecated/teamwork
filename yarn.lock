@@ -1214,32 +1214,6 @@
     tree-kill "^1.2.1"
     yargs "^11.0.0"
 
-"@dxos/cli@^1.0.0-beta.50":
-  version "1.0.0-beta.68"
-  resolved "https://registry.yarnpkg.com/@dxos/cli/-/cli-1.0.0-beta.68.tgz#54fb1e9850a64145f5e78e5a33db2f32b00d4f64"
-  integrity sha512-FouzyFDCPdFGmhV5yxVjv2fk57hc+MfmYz/C/1cSlo7EqceRAVkJHvwL8rV1a9cToTDJKnp1Pxx9atdqq3u86A==
-  dependencies:
-    "@babel/runtime" "7.7.2"
-    "@dxos/cli-core" "^1.0.0-beta.68"
-    "@dxos/debug" "^1.0.0-beta.68"
-    assert "^2.0.0"
-    find-root "^1.1.0"
-    fs-extra "^8.1.0"
-    js-yaml "^3.13.1"
-    lodash.defaults "^4.2.0"
-    lodash.defaultsdeep "^4.6.1"
-    lodash.get "^4.4.2"
-    lodash.isarray "^4.0.0"
-    lodash.omit "^4.5.0"
-    lodash.set "^4.3.2"
-    lodash.uniqby "^4.7.0"
-    ndjson-parse "^1.0.4"
-    node-yaml "^4.0.1"
-    ora "^3.4.0"
-    read-pkg-up "^6.0.0"
-    semver "^7.1.1"
-    yargs "^11.0.0"
-
 "@dxos/cli@^1.0.1-beta.12":
   version "1.0.1-beta.28"
   resolved "https://registry.yarnpkg.com/@dxos/cli/-/cli-1.0.1-beta.28.tgz#5b002a88b2f90ddc3abaf900332fbe624a09267d"
