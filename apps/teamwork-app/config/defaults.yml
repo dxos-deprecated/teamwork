@@ -10,10 +10,10 @@ devtools: true
 
 client:
   keyStorage:
-    root: "dxos/teamwork/keys"
+    root: "dxos/apps/keys"
 
   feedStorage:
-    root: "dxos/teamwork/feeds"
+    root: "dxos/apps/feeds"
 
   swarm:
     signal: "wss://demo.kube.dxos.network/dxos/signal"
