@@ -4,14 +4,15 @@
 
 import ColorHash from 'color-hash';
 import React, { useRef, useState, useEffect } from 'react';
+
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import { JsonTreeView } from '@dxos/react-ux';
 import { useProfile } from '@dxos/react-client';
+import { JsonTreeView } from '@dxos/react-ux';
 
 import { useItems } from './model';
 

@@ -7,13 +7,12 @@ import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useModel, useClient } from '@dxos/react-client';
-import { ObjectModel } from '@dxos/echo-db';
-import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
-
+import { ObjectModel } from '@dxos/echo-db';
+import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
 import { AppContainer, usePads, useAppRouter, DefaultViewList, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
+import { useModel, useClient } from '@dxos/react-client';
 
 const useStyles = makeStyles(theme => ({
   main: {

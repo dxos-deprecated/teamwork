@@ -6,10 +6,10 @@ import clsx from 'clsx';
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 
 import { EditableText } from '@dxos/react-ux';
 

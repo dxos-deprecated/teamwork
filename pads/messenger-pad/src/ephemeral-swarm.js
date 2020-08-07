@@ -2,9 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
+import discoverySwarmWebRTC from '@geut/discovery-swarm-webrtc';
 import { useState, useEffect } from 'react';
 
-import discoverySwarmWebRTC from '@geut/discovery-swarm-webrtc';
 import { keyToBuffer, discoveryKey } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client/dist/es/hooks/client';
 

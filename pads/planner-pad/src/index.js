@@ -5,8 +5,8 @@
 import Icon from '@material-ui/icons/AssignmentTurnedIn';
 
 import { Board } from './containers/Board';
-import { BOARD_TYPE } from './model/board';
 import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
+import { BOARD_TYPE } from './model/board';
 
 // export * from './model';
 

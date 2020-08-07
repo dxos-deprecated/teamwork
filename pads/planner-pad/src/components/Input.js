@@ -2,11 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
 import clsx from 'clsx';
+import React, { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   input: {

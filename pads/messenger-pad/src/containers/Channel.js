@@ -6,22 +6,21 @@ import assert from 'assert';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Send from '@material-ui/icons/Send';
 import TableContainer from '@material-ui/core/TableContainer';
+import { makeStyles } from '@material-ui/core/styles';
+import Send from '@material-ui/icons/Send';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
 import Messages from '../components/Messages';
 import Videos from '../components/Videos';
-
-import { useChannelMessages } from '../model';
 import { useEphemeralSwarm } from '../ephemeral-swarm';
+import { useChannelMessages } from '../model';
 
 const useStyles = makeStyles(theme => ({
   root: {

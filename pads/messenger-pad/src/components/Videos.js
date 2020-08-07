@@ -7,8 +7,8 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Video from './Video';
-import VideoHandler from './VideoHandler';
 import VideoControls from './VideoControls';
+import VideoHandler from './VideoHandler';
 
 const videoConstraints = {
   width: {

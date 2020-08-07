@@ -4,16 +4,16 @@
 
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import MicIcon from '@material-ui/icons/Mic';
-import MicOffIcon from '@material-ui/icons/MicOff';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import VideocamOffIcon from '@material-ui/icons/VideocamOff';
-import ScreenShareIcon from '@material-ui/icons/ScreenShare';
-import StopScreenShareIcon from '@material-ui/icons/StopScreenShare';
+import { makeStyles } from '@material-ui/core/styles';
 import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
+import MicIcon from '@material-ui/icons/Mic';
+import MicOffIcon from '@material-ui/icons/MicOff';
+import ScreenShareIcon from '@material-ui/icons/ScreenShare';
+import StopScreenShareIcon from '@material-ui/icons/StopScreenShare';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
 const useStyles = makeStyles(() => ({
   controls: {

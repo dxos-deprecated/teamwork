@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-import { useState, useEffect } from 'react';
 import assert from 'assert';
+import { useState, useEffect } from 'react';
 
-import { useModel, useProfile } from '@dxos/react-client';
 import { createId } from '@dxos/crypto';
 import { DefaultPartiallyOrderedModel } from '@dxos/echo-db';
+import { useModel, useProfile } from '@dxos/react-client';
 
 export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
 export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
