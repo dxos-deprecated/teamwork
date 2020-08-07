@@ -8,3 +8,4 @@ displayName: Teamwork
 version: 0.0.1
 baseUrl: /teamwork
 package: QmVwEZd8KKsKs5QSch3kY4KeaMmupVu1Wy9a5L7hhfowHV
+build: yarn dist
