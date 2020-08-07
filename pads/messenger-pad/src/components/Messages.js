@@ -2,16 +2,16 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
-import moment from 'moment';
 import ColorHash from 'color-hash';
+import moment from 'moment';
+import React from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
 
 const colorHash = new ColorHash({ saturation: 1 });
 

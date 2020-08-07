@@ -5,7 +5,11 @@
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
+import CanvasApp from '@dxos/canvas-pad';
 import { ErrorHandler } from '@dxos/debug';
+import EditorPad from '@dxos/editor-pad';
+import MessengerPad from '@dxos/messenger-pad';
+import PlannerPad from '@dxos/planner-pad';
 import {
   SET_LAYOUT,
   AppKitContextProvider,
@@ -17,10 +21,6 @@ import {
   Theme
 } from '@dxos/react-appkit';
 import { ClientProvider } from '@dxos/react-client';
-import MessengerPad from '@dxos/messenger-pad';
-import EditorPad from '@dxos/editor-pad';
-import PlannerPad from '@dxos/planner-pad';
-import CanvasApp from '@dxos/canvas-pad';
 import TestingPad from '@dxos/testing-pad';
 
 import App from './App';

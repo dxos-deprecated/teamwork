@@ -6,14 +6,13 @@ import clsx from 'clsx';
 import React from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import AddIcon from '@material-ui/icons/Add';
-import { makeStyles } from '@material-ui/core/styles';
-
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
 
-import List from './List';
 import { useViews } from '../model/board';
 import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
+import List from './List';
 
 const useStyles = makeStyles(theme => {
   return {

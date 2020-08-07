@@ -4,12 +4,11 @@
 
 import React, { useCallback, useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
-import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
-
 import { useProfile } from '@dxos/react-client';
 
 import { useDocumentUpdateModel } from '../model';

@@ -2,8 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
 import assert from 'assert';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 

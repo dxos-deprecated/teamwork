@@ -2,16 +2,16 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import React, { useState, useEffect } from 'react';
 
-import Icon from '@material-ui/icons/AssignmentTurnedIn';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/icons/AssignmentTurnedIn';
 
 import { ObjectModel } from '@dxos/echo-db';
-import { useModel } from '@dxos/react-client';
 import { ItemSettings } from '@dxos/react-appkit';
+import { useModel } from '@dxos/react-client';
 
 import Input from '../components/Input';
 import { LIST_TYPE, useList } from '../model/list';
