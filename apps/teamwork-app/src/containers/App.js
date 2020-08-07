@@ -13,7 +13,7 @@ import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
 import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 
-import { AppContainer, usePads, useAppRouter, DefaultViewSidebar, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultViewList, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
 
 const useStyles = makeStyles(theme => ({
   main: {
@@ -66,7 +66,7 @@ const App = () => {
   return (
     <>
       <AppContainer
-        sidebarContent={<DefaultViewSidebar />}
+        sidebarContent={<DefaultViewList />}
         onSettingsOpened={() => setViewSettingsOpen(true)}
         onHomeNavigation={() => router.push({ path: '/home' })}
       >

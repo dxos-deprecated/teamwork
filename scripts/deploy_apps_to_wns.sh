@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-for app in `find . -name 'app.yml'`; do
-  pushd `dirname $app`
-  yarn
+# TODO(telackey) do we need to check for the the '-app' suffix?
+for appdir in `find ./apps -name '*-app' -type d | grep -v node_modules`; do
+  pushd $appdir
 
   ORG="dxos.network"
   PKG_NAME=`cat package.json | jq -r '.name' | cut -d'/' -f2-`

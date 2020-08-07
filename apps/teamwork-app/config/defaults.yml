@@ -10,10 +10,10 @@ devtools: true
 
 client:
   keyStorage:
-    root: "dxos/teamwork/keys"
+    root: "dxos/apps/keys"
 
   feedStorage:
-    root: "dxos/teamwork/feeds"
+    root: "dxos/apps/feeds"
 
   swarm:
     signal: "wss://demo.kube.dxos.network/dxos/signal"
@@ -22,6 +22,11 @@ client:
       - urls: "turn:stun.wireline.ninja:3478"
         username: "wireline"
         credential: "wireline"
+
+services:
+  wns:
+    server: "https://node1.dxos.network/wns/api"
+    chainId: "wireline"
 
 debug:
     mode: 'development'
