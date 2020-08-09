@@ -32,6 +32,7 @@ import Root from './containers/Root';
     swarm,
     registry: new Registry(server, chainId)
   });
+  await client.initialize();
 
   debug.enable(cfg.get('debug.logging'));
 
