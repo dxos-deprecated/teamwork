@@ -3,10 +3,11 @@
 //
 
 import assert from 'assert';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
+import MessengerPad from '@dxos/messenger-pad';
 import { usePads } from '@dxos/react-appkit';
 
 import { Editor } from './components/Editor';
@@ -22,19 +23,23 @@ const useStyles = makeStyles({
   container: {
     display: 'flex',
     flex: 1,
-    width: 800,
-    maxWidth: 1000,
     margin: 'auto'
+  },
+
+  messengerContainer: {
+    minWidth: 400,
+    maxWidth: 800
   }
 });
 
-const EditorPad = ({ topic, viewId }) => {
+const EditorPad = ({ party, topic, viewId }) => {
   assert(topic);
   assert(viewId);
 
   const classes = useStyles();
   const [pads] = usePads();
   const { views, createView } = useViews(topic, pads.map((pad) => pad.type));
+  const [messengerOpen, setMessengerOpen] = useState(false);
 
   const handleCreateItem = (type) => {
     return createView(type);
@@ -49,7 +54,17 @@ const EditorPad = ({ topic, viewId }) => {
           pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
           items={views.filter(view => view.type !== TYPE_EDITOR_DOCUMENT)}
           onCreateItem={handleCreateItem}
+          onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
+        {messengerOpen && (
+          <div className={classes.messengerContainer}>
+            <MessengerPad.main
+              party={party}
+              topic={topic}
+              viewId={viewId}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

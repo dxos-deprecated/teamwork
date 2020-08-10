@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
+import MessengerPad from '@dxos/messenger-pad';
 import { useProfile } from '@dxos/react-client';
 
 import { useDocumentUpdateModel } from '../model';
@@ -100,10 +101,21 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   };
 };
 
-export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) => {
+export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
   const { publicKey } = useProfile();
   const classes = useEditorClasses();
   const [editor, setEditor] = useState();
+
+  const customButtons = onToggleMessenger ? [
+    {
+      name: 'messenger',
+      title: 'Messenger',
+      icon: MessengerPad.icon,
+      onClick: onToggleMessenger,
+      enabled: () => true,
+      active: () => false
+    }
+  ] : [];
 
   const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
 
@@ -136,7 +148,7 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem }) =
   return (
     <DXOSEditor
       key={documentUpdateModel.doc.clientID}
-      toolbar
+      toolbar={{ customButtons }}
       schema="full"
       sync={{
         id: publicKey,
