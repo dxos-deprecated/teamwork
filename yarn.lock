@@ -1439,10 +1439,10 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/editor@^1.0.0-beta.24":
-  version "1.0.0-beta.24"
-  resolved "https://registry.yarnpkg.com/@dxos/editor/-/editor-1.0.0-beta.24.tgz#6532a219cc27b6f9d13690b958f09f8f8572b1e8"
-  integrity sha512-qVE+hEKnwkwEmeem7UYRjE/BUCQr/NcfokF6uzkP40IDIYIArTbWURKyJf3HD098aCWr6YfEkHAC9f65lNG6Hg==
+"@dxos/editor@^1.0.0-beta.25":
+  version "1.0.0-beta.25"
+  resolved "https://registry.yarnpkg.com/@dxos/editor/-/editor-1.0.0-beta.25.tgz#2a64eae90faf07740f690162c3aab2ff1ce99b99"
+  integrity sha512-qv2UUJKcIlbz62KWm8XJfxl/VhWWAY0aLr3NwqV1bWZsrVsINsXJnZ9LoMCPNxOCevOOXQXiU1+WncUawpsJEw==
   dependencies:
     classnames "^2.2.6"
     color-hash "^1.0.3"
