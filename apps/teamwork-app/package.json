@@ -24,7 +24,6 @@
     "@dxos/async": "^1.0.0-beta.1",
     "@dxos/botkit-client": "^1.0.0-beta.241",
     "@dxos/canvas-pad": "^1.0.1-beta.8",
-    "@dxos/client": "^1.0.0-beta.215",
     "@dxos/config": "^1.0.0-beta.73",
     "@dxos/credentials": "^1.0.1-beta.17",
     "@dxos/crypto": "^1.0.0-beta.1",
