@@ -12,6 +12,8 @@ import { useModel, useProfile } from '@dxos/react-client';
 export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
 export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
 
+const messagesSort = (a, b) => (a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0);
+
 /**
  * Provides channel list and channel creator.
  * @param {string} topic
@@ -86,12 +88,9 @@ export const useChannelMessages = (topic, channelId) => {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
     if (model) {
-      model.on('update', () => {
-        setMessages(
-          [...model.messages]
-            .sort((a, b) => (a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0))
-        );
-      });
+      const update = () => setMessages([...model.messages].sort(messagesSort));
+      update();
+      model.on('update', update);
     }
   }, [model]);
 
