@@ -47,8 +47,16 @@ const Root = ({ config, client }) => {
   const router = { ...DefaultRouter, publicUrl };
   const { routes } = router;
 
+  const themeBase = {
+    breakpoints: {
+      values: {
+        subMbp: 1600
+      }
+    }
+  };
+
   return (
-    <Theme>
+    <Theme base={themeBase}>
       <ClientProvider client={client} config={config}>
         <AppKitContextProvider
           initialState={initialState}

@@ -13,7 +13,7 @@ import { usePads } from '@dxos/react-appkit';
 import { Editor } from './components/Editor';
 import { useViews, TYPE_EDITOR_DOCUMENT } from './model';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flex: 1,
@@ -23,14 +23,16 @@ const useStyles = makeStyles({
   container: {
     display: 'flex',
     flex: 1,
-    margin: 'auto'
+    [theme.breakpoints.up('subMbp')]: {
+      margin: 'auto'
+    },
+    maxWidth: 800
   },
 
   messengerContainer: {
-    minWidth: 400,
-    maxWidth: 800
+    width: 400
   }
-});
+}));
 
 const EditorPad = ({ party, topic, viewId }) => {
   assert(topic);
@@ -59,6 +61,7 @@ const EditorPad = ({ party, topic, viewId }) => {
         {messengerOpen && (
           <div className={classes.messengerContainer}>
             <MessengerPad.main
+              embedded
               party={party}
               topic={topic}
               viewId={viewId}

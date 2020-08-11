@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Channel = ({ topic, viewId, narrow }) => {
+export const Channel = ({ topic, viewId, narrow, embedded }) => {
   assert(topic);
   assert(viewId);
 
@@ -114,7 +114,7 @@ export const Channel = ({ topic, viewId, narrow }) => {
                 <IconButton onClick={handleSubmit}>
                   <Send />
                 </IconButton>
-                <IconButton onClick={() => setVideoEnabled(current => !current)}>
+                <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded}>
                   {videoEnabled
                     ? <VideocamOffIcon />
                     : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
