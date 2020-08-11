@@ -64,7 +64,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
       ref={provided.innerRef}
     >
       <MiniCard
-        card={card.properties}
+        cardProperties={card.properties}
         onOpenCard={() => onOpenCard(card.id)}
         style={provided.draggableProps.style}
       />

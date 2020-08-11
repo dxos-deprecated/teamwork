@@ -5,28 +5,33 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Typography, Card as MuiCard } from '@material-ui/core';
+import { Typography, Card as MuiCard, CardHeader } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
+import SettingsIcon from '@material-ui/icons/MoreVert';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     cursor: 'pointer',
     padding: 20
+  },
+  deleted: {
+    backgroundColor: theme.palette.grey[300]
   }
 }));
 
 const InnerCard = (props) => {
-  const { card } = props;
-  return <Typography variant="body1">{card.title}</Typography>;
+  const { cardProperties } = props;
+  return <Typography variant="body1">{cardProperties.title}</Typography>;
 };
 
 const MiniCard = (props) => {
   const classes = useStyles();
-  const { className, style, onOpenCard, card } = props;
+  const { className, style, onOpenCard, cardProperties } = props;
 
   return (
-    <MuiCard className={clsx(classes.root, className)} onMouseUp={onOpenCard}>
-      <InnerCard style={style} classes={classes} card={card} />
+    <MuiCard className={clsx(classes.root, className, cardProperties.deleted ? classes.deleted : '')} onMouseUp={onOpenCard}>
+      <InnerCard style={style} classes={classes} cardProperties={cardProperties} />
     </MuiCard>
   );
 };

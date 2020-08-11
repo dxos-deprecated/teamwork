@@ -2,16 +2,20 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
 import { useViews } from '../model/board';
 import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
+import CardDetailsDialog from './CardDetailsDialog';
 import List from './List';
 
 const useStyles = makeStyles(theme => {
@@ -50,19 +54,26 @@ const useStyles = makeStyles(theme => {
 
     initializeButton: {
       marginRight: theme.spacing(3)
+    },
+
+    visibilityToggle: {
+      marginLeft: theme.spacing(3),
+      marginTop: theme.spacing(2)
     }
   };
 });
 
 export const Board = ({ topic, viewId, embedded }) => {
   const classes = useStyles();
+  const [selectedCard, setSelectedCard] = useState(undefined);
+  const [showArchived, setShowArchived] = useState(false);
 
   const viewModel = useViews(topic, viewId);
   const board = viewModel.getById(viewId);
 
   const listsModel = useList(topic, viewId);
   const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
-  const cards = listsModel.getObjectsByType(CARD_TYPE);
+  const cards = listsModel.getObjectsByType(CARD_TYPE).filter(c => showArchived || !c.properties.deleted);
 
   if (!board || !listsModel) {
     return null;
@@ -76,9 +87,19 @@ export const Board = ({ topic, viewId, embedded }) => {
     listsModel.updateItem(listId, properties);
   };
 
+  const handleUpdateCard = (cardId) => (properties) => {
+    listsModel.updateItem(cardId, properties);
+  };
+
   const handleAddCard = (title, listId) => {
     const cardsInList = getCardsForList(listId);
     listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
+  };
+
+  const handleToggleArchive = () => {
+    assert(selectedCard);
+    listsModel.updateItem(selectedCard.id, { deleted: !selectedCard.properties.deleted });
+    setSelectedCard(undefined);
   };
 
   const handleInitializeKanban = () => {
@@ -160,7 +181,7 @@ export const Board = ({ topic, viewId, embedded }) => {
                         list={list}
                         cards={getCardsForList(list.id)}
                         onUpdateList={handleUpdateList(list.id)}
-                        onOpenCard={() => { }}
+                        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
                         onAddCard={handleAddCard}
                         embedded={embedded}
                       />
@@ -182,7 +203,26 @@ export const Board = ({ topic, viewId, embedded }) => {
   return (
     <div className={classes.containerRoot}>
       {/* <Topbar /> */}
+      <div className={classes.visibilityToggle}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={showArchived}
+              value={showArchived}
+              onChange={() => setShowArchived(!showArchived)}
+            />
+          }
+          label='Show archived'
+        />
+      </div>
       <Lists />
+      <CardDetailsDialog
+        open={!!selectedCard}
+        onClose={() => setSelectedCard(undefined)}
+        onToggleArchive={handleToggleArchive}
+        card={selectedCard}
+        onCardUpdate={handleUpdateCard(selectedCard?.id)}
+      />
     </div>
   );
 };
