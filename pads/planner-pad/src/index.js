@@ -8,7 +8,7 @@ import { Board } from './containers/Board';
 import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
 import { BOARD_TYPE } from './model/board';
 
-// export * from './model';
+export { LIST_TYPE, CARD_TYPE } from './model/list';
 
 export default {
   // TODO(elmasse): READ THIS FROM PAD.YML
