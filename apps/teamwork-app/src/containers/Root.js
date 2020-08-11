@@ -48,9 +48,16 @@ const Root = ({ config, client }) => {
   const { routes } = router;
 
   const themeBase = {
+    // https://material-ui.com/customization/breakpoints/
     breakpoints: {
       values: {
-        subMbp: 1600
+        subMbp: 1600,
+        // defaults:
+        xs: 0,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1920
       }
     }
   };
