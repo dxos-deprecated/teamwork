@@ -2,17 +2,16 @@
 // Copyright 2020 DXOS.org
 //
 
-import clsx from 'clsx';
 import assert from 'assert';
+import clsx from 'clsx';
 import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
 
 import { useViews } from '../model/board';
 import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
