@@ -137,6 +137,7 @@ export const Board = ({ topic, itemId, embedded }) => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   const Topbar = () => (
     <div className={clsx(classes.topbar, 'MuiDrawer-paperAnchorDockedTop')}>
       { lists.length === 0 && (
