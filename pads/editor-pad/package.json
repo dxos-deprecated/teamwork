@@ -19,8 +19,8 @@
   "dependencies": {
     "@dxos/editor": "^1.0.0-beta.25",
     "@dxos/messenger-pad": "^1.0.1-beta.8",
-    "@dxos/text-model": "^1.0.0-beta.27",
-    "@dxos/view-model": "^1.0.0-beta.27",
+    "@dxos/text-model": "^1.0.0-beta.28",
+    "@dxos/view-model": "^1.0.0-beta.28",
     "clsx": "^1.0.4",
     "yjs": "13.2.0"
   },

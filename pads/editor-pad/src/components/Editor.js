@@ -46,7 +46,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       fn: () => {
         editor.createReactElement({
           type: item.type,
-          viewId: item.viewId,
+          itemId: item.itemId,
           title: item.displayName,
           topic
         });
@@ -66,7 +66,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
 
         editor.createReactElement({
           type: pad.type,
-          viewId: item.viewId,
+          itemId: item.itemId,
           title: item.displayName,
           topic
         });
