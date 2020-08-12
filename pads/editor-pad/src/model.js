@@ -5,10 +5,10 @@
 import assert from 'assert';
 import { Chance } from 'chance';
 
-import { ItemModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 import { useModel } from '@dxos/react-client';
 import { TextModel, TYPE_TEXT_MODEL_UPDATE } from '@dxos/text-model';
+import { ItemModel } from '@dxos/view-model';
 
 export const TYPE_EDITOR_DOCUMENT = 'wrn_dxos_org_teamwork_editor_document';
 export const TYPE_EDITOR_UPDATE = TYPE_TEXT_MODEL_UPDATE;
