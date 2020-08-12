@@ -13,7 +13,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
-import List from './List';
 import { useItems } from '../model/board';
 import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
 import CardDetailsDialog from './CardDetailsDialog';

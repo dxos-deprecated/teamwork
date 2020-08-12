@@ -5,7 +5,6 @@
 import assert from 'assert';
 import { Chance } from 'chance';
 
-import { useModel } from '@dxos/react-client';
 import { ItemModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 import { useModel } from '@dxos/react-client';

@@ -11,7 +11,7 @@ import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { ObjectModel } from '@dxos/echo-db';
 import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
-import { AppContainer, usePads, useAppRouter, DefaultItemsList, useItems, DefaultSettingsDialog } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultItemList, useItems, DefaultSettingsDialog } from '@dxos/react-appkit';
 import { useModel, useClient } from '@dxos/react-client';
 
 const useStyles = makeStyles(theme => ({
@@ -66,7 +66,7 @@ const App = () => {
     <>
       <AppContainer
         onSettingsOpened={() => setItemSettingsOpen(true)}
-        sidebarContent={<DefaultItemsList />}
+        sidebarContent={<DefaultItemList />}
         onHomeNavigation={() => router.push({ path: '/home' })}
       >
         <div className={classes.main}>
