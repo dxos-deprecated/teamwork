@@ -72,8 +72,12 @@ export const Board = ({ topic, itemId, embedded }) => {
   const board = itemModel.getById(itemId);
 
   const listsModel = useList(topic, itemId);
-  const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
-  const cards = listsModel.getObjectsByType(CARD_TYPE).filter(c => showArchived || !c.properties.deleted);
+  const lists = listsModel.getObjectsByType(LIST_TYPE)
+    .filter(c => showArchived || !c.properties.deleted)
+    .sort(positionCompare);
+
+  const cards = listsModel.getObjectsByType(CARD_TYPE)
+    .filter(c => showArchived || !c.properties.deleted);
 
   if (!board || !listsModel) {
     return null;

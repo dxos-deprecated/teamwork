@@ -16,7 +16,7 @@ import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { ArchiveButton, RestoreButton } from '../components/Input';
+import { ArchiveButton, RestoreButton } from '../components';
 
 const useStyles = makeStyles(theme => ({
   root: {
