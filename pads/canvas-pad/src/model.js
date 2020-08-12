@@ -18,12 +18,12 @@ const fromSafeId = (id) => id.replace('__', '/');
  * Document state.
  *
  * @param topic
- * @param documentId
+ * @param itemId
  * @returns {{ objects: Object[] }}
  */
-export const useDocument = (topic, documentId) => {
+export const useDocument = (topic, itemId) => {
   assert(topic);
-  assert(documentId);
+  assert(itemId);
 
   // TODO(burdon): Why do we specify type in createItem AND here?
   const model = useModel({
@@ -31,7 +31,7 @@ export const useDocument = (topic, documentId) => {
     options: {
       type: TYPE_CANVAS_ECHO_OBJECT,
       topic,
-      documentId: fromSafeId(documentId)
+      itemId: fromSafeId(itemId)
     }
   });
 

@@ -5,10 +5,11 @@
 import assert from 'assert';
 import { Chance } from 'chance';
 
+import { useModel } from '@dxos/react-client';
+import { ItemModel } from '@dxos/view-model';
 import { usePads } from '@dxos/react-appkit';
 import { useModel } from '@dxos/react-client';
 import { TextModel, TYPE_TEXT_MODEL_UPDATE } from '@dxos/text-model';
-import { ViewModel } from '@dxos/view-model';
 
 export const TYPE_EDITOR_DOCUMENT = 'wrn_dxos_org_teamwork_editor_document';
 export const TYPE_EDITOR_UPDATE = TYPE_TEXT_MODEL_UPDATE;
@@ -31,21 +32,21 @@ export const useDocumentUpdateModel = (topic, documentId) => {
 };
 
 /**
- * Provides view list and view creator.
- * @returns {ViewModel}
+ * Provides item list and item creator.
+ * @returns {ItemModel}
  */
-export const useViews = (topic) => {
+export const useItems = (topic) => {
   const [pads] = usePads();
-  const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
+  const model = useModel({ model: ItemModel, options: { type: pads.map(pad => pad.type), topic } });
 
   return {
-    views: model?.getAllViews() ?? [],
-    createView: (type) => {
+    items: model?.getAllItems() ?? [],
+    createItem: (type) => {
       assert(model);
       assert(type);
       const displayName = `embeded-item-${chance.word()}`;
-      const viewId = model.createView(type, displayName);
-      return { __type_url: type, viewId, displayName };
+      const itemId = model.createItem(type, displayName);
+      return { __type_url: type, itemId, displayName };
     }
   };
 };

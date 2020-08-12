@@ -18,13 +18,13 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Canvas = ({ topic, viewId }) => {
+export const Canvas = ({ topic, itemId }) => {
   assert(topic);
-  assert(viewId);
+  assert(itemId);
 
   const classes = useStyles();
 
-  const model = useDocument(topic, viewId);
+  const model = useDocument(topic, itemId);
 
   // TODO(burdon): Bug: create object, move it, then when revisit document it's in the original position...
   // Since the messages are out of order.

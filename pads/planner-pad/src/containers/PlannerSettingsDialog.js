@@ -2,8 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
+import React, { useState } from 'react';
 import clsx from 'clsx';
-import React, { useState, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,7 +14,7 @@ import { ItemSettings } from '@dxos/react-appkit';
 import { useModel } from '@dxos/react-client';
 
 import Input from '../components/Input';
-import { LIST_TYPE, useList } from '../model/list';
+import { LIST_TYPE } from '../model/list';
 
 const useStyles = makeStyles(theme => ({
   settingsItem: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   initializeButton: {}
 }));
 
-const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, viewModel, listsModel }) => {
+const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, itemModel, listsModel }) => {
   const lists = listsModel ? listsModel.getObjectsByType(LIST_TYPE) : undefined;
   const classes = useStyles();
   const newListsModel = useModel({ model: ObjectModel, options: { type: LIST_TYPE, topic } });
@@ -32,17 +32,17 @@ const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, viewModel
   const initialized = lists ? lists.length > 0 : false;
 
   const handleClose = ({ name }) => {
-    const initializeKanban = (viewId) => {
+    const initializeKanban = (itemId) => {
       if (!pendingInitialization) return;
-      newListsModel.createItem(LIST_TYPE, { topic, viewId, title: 'TODO', position: 0 }, viewId);
-      newListsModel.createItem(LIST_TYPE, { topic, viewId, title: 'In Progress', position: 1 }, viewId);
-      newListsModel.createItem(LIST_TYPE, { topic, viewId, title: 'Done', position: 2 }, viewId);
+      newListsModel.createItem(LIST_TYPE, { topic, itemId, title: 'TODO', position: 0 }, { itemId });
+      newListsModel.createItem(LIST_TYPE, { topic, itemId, title: 'In Progress', position: 1 }, { itemId });
+      newListsModel.createItem(LIST_TYPE, { topic, itemId, title: 'Done', position: 2 }, { itemId });
     };
 
     if (item) {
-      viewModel.renameView(item.viewId, name);
-      viewModel.updateView(item.viewId, { description });
-      initializeKanban(item.viewId);
+      itemModel.renameItem(item.itemId, name);
+      itemModel.updateItem(item.itemId, { description });
+      initializeKanban(item.itemId);
     }
     onClose({ name }, { description }, initializeKanban);
   };

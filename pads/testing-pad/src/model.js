@@ -12,10 +12,10 @@ export const TYPE_TESTING_ITEM = 'wrn_dxos_org_teamwork_testing_item';
 
 /**
  * Provides item list and item creator.
- * @returns {ViewModel}
+ * @returns {ItemModel}
  */
-export const useItems = (topic, viewId) => {
-  const model = useModel({ model: ObjectModel, options: { type: TYPE_TESTING_ITEM, topic, viewId } });
+export const useItems = (topic, itemId) => {
+  const model = useModel({ model: ObjectModel, options: { type: TYPE_TESTING_ITEM, topic, itemId } });
   const objects = model?.getObjectsByType(TYPE_TESTING_ITEM) ?? [];
 
   return {

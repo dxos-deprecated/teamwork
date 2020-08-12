@@ -13,7 +13,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
-import { useViews } from '../model/board';
+import List from './List';
+import { useItems } from '../model/board';
 import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
 import CardDetailsDialog from './CardDetailsDialog';
 import List from './List';
@@ -63,15 +64,15 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const Board = ({ topic, viewId, embedded }) => {
+export const Board = ({ topic, itemId, embedded }) => {
   const classes = useStyles();
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
 
-  const viewModel = useViews(topic, viewId);
-  const board = viewModel.getById(viewId);
+  const itemModel = useItems(topic, itemId);
+  const board = itemModel.getById(itemId);
 
-  const listsModel = useList(topic, viewId);
+  const listsModel = useList(topic, itemId);
   const lists = listsModel.getObjectsByType(LIST_TYPE).sort(positionCompare);
   const cards = listsModel.getObjectsByType(CARD_TYPE).filter(c => showArchived || !c.properties.deleted);
 
@@ -120,7 +121,7 @@ export const Board = ({ topic, viewId, embedded }) => {
       return;
     }
 
-    if (source.droppableId === board.viewId) { // Dragging entire lists.
+    if (source.droppableId === board.itemId) { // Dragging entire lists.
       const position = getPositionAtIndex(lists, destination.index);
       listsModel.updateItem(draggableId, { position });
     } else { // Dragging cards
@@ -162,7 +163,7 @@ export const Board = ({ topic, viewId, embedded }) => {
 
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable direction="horizontal" type="column" droppableId={board.viewId}>
+      <Droppable direction="horizontal" type="column" droppableId={board.itemId}>
         {(provided) => (
           <div ref={provided.innerRef} className={classes.scrollBox}>
             <div className={classes.root}>

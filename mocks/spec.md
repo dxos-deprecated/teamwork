@@ -14,7 +14,7 @@
 - [ ] Toggle sidebar button ("=" far-left)
 - [x] Home button (logo left) to return to home screen
 - [ ] Profile button (right)
-- [ ] Breadcrumbs (party and view title) (left/center)
+- [ ] Breadcrumbs (party and item title) (left/center)
 - [ ] Notifications/status (right: see Airtable)
 - [ ] App-specific settings panel to edit name, icon, etc. (Right-hand sidebar?)
 
@@ -25,13 +25,13 @@
 ## App screen
 
 - [ ] Full screen app
-- [x] List of views in left sidebar
+- [x] List of items in left sidebar
 - [x] List of members in left sidebar
 
 ## Invitation
 
 - [x] Single large dialog
-- [x] View existing members
+- [x] Item: existing members
 - [x] Option to get link to share
 - [x] Show pending invitations
 - [x] Show PIN (inline next to pending invitiation; i.e., small)

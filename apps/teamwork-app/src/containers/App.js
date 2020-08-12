@@ -11,7 +11,7 @@ import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
 import { ObjectModel } from '@dxos/echo-db';
 import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
-import { AppContainer, usePads, useAppRouter, DefaultViewList, useViews, DefaultSettingsDialog } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultItemsList, useItems, DefaultSettingsDialog } from '@dxos/react-appkit';
 import { useModel, useClient } from '@dxos/react-client';
 
 const useStyles = makeStyles(theme => ({
@@ -32,12 +32,12 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const router = useAppRouter();
   const classes = useStyles();
-  const { topic, item: viewId } = useParams();
+  const { topic, item: itemId } = useParams();
   const [pads] = usePads();
-  const { model } = useViews(topic);
-  const item = model.getById(viewId);
+  const { model } = useItems(topic);
+  const item = model.getById(itemId);
   const client = useClient();
-  const [viewSettingsOpen, setViewSettingsOpen] = useState(false);
+  const [itemSettingsOpen, setItemSettingsOpen] = useState(false);
 
   const pad = item ? pads.find(pad => pad.type === item.type) : undefined;
 
@@ -48,7 +48,7 @@ const App = () => {
     }
   }, [topic]);
 
-  const listsModel = useModel({ model: ObjectModel, options: { type: [LIST_TYPE], topic, viewId } });
+  const listsModel = useModel({ model: ObjectModel, options: { type: [LIST_TYPE], topic, itemId } });
 
   if (!model || !item || !pad) {
     return null;
@@ -65,21 +65,21 @@ const App = () => {
   return (
     <>
       <AppContainer
-        sidebarContent={<DefaultViewList />}
-        onSettingsOpened={() => setViewSettingsOpen(true)}
+        onSettingsOpened={() => setItemSettingsOpen(true)}
+        sidebarContent={<DefaultItemsList />}
         onHomeNavigation={() => router.push({ path: '/home' })}
       >
         <div className={classes.main}>
-          {pad && <pad.main topic={topic} viewId={viewId} />}
+          {pad && <pad.main topic={topic} itemId={itemId} />}
         </div>
       </AppContainer>
       <Settings
         topic={topic}
-        open={viewSettingsOpen}
-        onClose={() => setViewSettingsOpen(false)}
-        onCancel={() => setViewSettingsOpen(false)}
+        open={itemSettingsOpen}
+        onClose={() => setItemSettingsOpen(false)}
+        onCancel={() => setItemSettingsOpen(false)}
         item={item}
-        viewModel={model}
+        itemModel={model}
         Icon={pad && pad.icon}
         listsModel={listsModel}
       />

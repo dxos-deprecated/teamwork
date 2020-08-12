@@ -48,11 +48,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Main = ({ viewId, topic }) => {
+export const Main = ({ itemId, topic }) => {
   const classes = useStyles();
 
   /** @type {EchoModel} */
-  const { objects, createItem } = useItems(topic, viewId);
+  const { objects, createItem } = useItems(topic, itemId);
   const { publicKey } = useProfile();
 
   function addItem (count) {

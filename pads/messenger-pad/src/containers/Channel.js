@@ -68,13 +68,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Channel = ({ topic, viewId, narrow, embedded }) => {
+export const Channel = ({ topic, itemId, narrow, embedded }) => {
   assert(topic);
-  assert(viewId);
+  assert(itemId);
 
   const classes = useStyles();
-  const [messages, createMessage] = useChannelMessages(topic, viewId);
-  const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(viewId);
+  const [messages, createMessage] = useChannelMessages(topic, itemId);
+  const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
   const [content, setContent] = useState('');
   const [videoEnabled, setVideoEnabled] = useState(false);
 

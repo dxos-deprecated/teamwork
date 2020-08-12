@@ -11,7 +11,7 @@ import MessengerPad from '@dxos/messenger-pad';
 import { usePads } from '@dxos/react-appkit';
 
 import { Editor } from './components/Editor';
-import { useViews, TYPE_EDITOR_DOCUMENT } from './model';
+import { useItems, TYPE_EDITOR_DOCUMENT } from './model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,17 +34,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EditorPad = ({ party, topic, viewId }) => {
+const EditorPad = ({ party, topic, itemId }) => {
   assert(topic);
-  assert(viewId);
+  assert(itemId);
 
   const classes = useStyles();
   const [pads] = usePads();
-  const { views, createView } = useViews(topic, pads.map((pad) => pad.type));
+  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
   const [messengerOpen, setMessengerOpen] = useState(false);
 
   const handleCreateItem = (type) => {
-    return createView(type);
+    return createItem(type);
   };
 
   return (
@@ -52,9 +52,9 @@ const EditorPad = ({ party, topic, viewId }) => {
       <div className={classes.container}>
         <Editor
           topic={topic}
-          itemId={viewId}
+          itemId={itemId}
           pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
-          items={views.filter(view => view.type !== TYPE_EDITOR_DOCUMENT)}
+          items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
           onCreateItem={handleCreateItem}
           onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
@@ -64,7 +64,7 @@ const EditorPad = ({ party, topic, viewId }) => {
               embedded
               party={party}
               topic={topic}
-              viewId={viewId}
+              itemId={itemId}
             />
           </div>
         )}
