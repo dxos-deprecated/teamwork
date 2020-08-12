@@ -4,23 +4,23 @@
 
 import assert from 'assert';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import Badge from '@material-ui/core/Badge';
-import FormControl from '@material-ui/core/FormControl';
 import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import TableContainer from '@material-ui/core/TableContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import Send from '@material-ui/icons/Send';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
+import { Editor } from '@dxos/editor';
+import { usePads } from '@dxos/react-appkit';
+
 import Messages from '../components/Messages';
 import Videos from '../components/Videos';
 import { useEphemeralSwarm } from '../ephemeral-swarm';
-import { useChannelMessages } from '../model';
+import { useChannelMessages, useItems } from '../model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,42 +60,155 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: '#222'
   },
 
-  input: {
-    display: 'flex',
-    flexShrink: 0,
-    margin: theme.spacing(2),
-    marginTop: theme.spacing(4)
+  floatingButtons: {
+    alignSelf: 'flex-end',
+    marginTop: -theme.spacing(9),
+    marginBottom: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    textAlign: 'right',
+
+    '& > button': {
+      marginTop: 1,
+      padding: theme.spacing(2)
+    }
   }
 }));
+
+const useEditorStyles = makeStyles(theme => {
+  return {
+    root: {
+      flex: '0 0 auto',
+      margin: theme.spacing(2),
+      marginTop: theme.spacing(3.5)
+    },
+
+    editorContainer: {
+      padding: '18.5px 14px',
+      paddingRight: theme.spacing(12),
+      height: theme.spacing(7),
+      maxHeight: 'initial',
+      border: '1px solid black',
+      borderRadius: theme.spacing(0.5),
+      borderColor: 'rgb(195, 195, 195)',
+      overflow: 'hidden'
+    },
+
+    editor: {
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      fontSize: '1rem',
+      fontWeight: 400,
+      lineHeight: '1.1876em',
+      letterSpacing: '0.00938em',
+      '& p': {
+        marginTop: 0,
+        marginBottom: 0
+      }
+    }
+  };
+});
+
+const queryFilter = query => items => {
+  return items.filter(item => item.displayName.toLowerCase().includes(query.toLowerCase()));
+};
+
+const useSuggestionsMenuHandlers = (topic, pads, items, editor, createItem) => {
+  function handleSuggestionsGetOptions (query) {
+    const filter = queryFilter(query);
+    let insertOptions = filter(items).map(item => ({
+      id: item.itemId,
+      label: item.displayName
+    }));
+
+    if (insertOptions.length > 0) {
+      insertOptions = [{ subheader: 'Insert items' }, ...insertOptions];
+    }
+
+    let createItemOptions = filter(pads).map(pad => ({
+      id: `create-${pad.type}`,
+      label: `New ${pad.displayName}`,
+      create: true,
+      type: pad.type
+    }));
+
+    if (createItemOptions.length > 0) {
+      createItemOptions = [{ subheader: 'Create items' }, ...createItemOptions];
+    }
+
+    return [...insertOptions, ...createItemOptions];
+  }
+
+  async function handleSuggestionsOptionSelect (option, { prosemirrorView }) {
+    let item;
+    if (option.create) {
+      item = await createItem(option.type);
+    } else {
+      item = items.find(item => item.itemId === option.id);
+    }
+
+    const title = `@${item.displayName}`;
+    const href = `/app/${topic}/${item.itemId}`;
+
+    const { tr } = prosemirrorView.state;
+
+    editor.insertLink(title, title, href, tr);
+    editor.insertText(' ', tr);
+    editor.scrollIntoView(tr);
+
+    prosemirrorView.dispatch(tr);
+  }
+
+  return {
+    handleSuggestionsGetOptions,
+    handleSuggestionsOptionSelect
+  };
+};
 
 export const Channel = ({ topic, itemId, narrow, embedded }) => {
   assert(topic);
   assert(itemId);
 
   const classes = useStyles();
+
   const [messages, createMessage] = useChannelMessages(topic, itemId);
   const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
-  const [content, setContent] = useState('');
-  const [videoEnabled, setVideoEnabled] = useState(false);
+  const editorClasses = useEditorStyles();
 
-  const handleSubmit = () => {
-    const value = content.trim();
+  const [videoEnabled, setVideoEnabled] = useState(false);
+  const [pads] = usePads();
+  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
+
+  const editor = useRef();
+
+  const {
+    handleSuggestionsGetOptions,
+    handleSuggestionsOptionSelect
+  } = useSuggestionsMenuHandlers(topic, pads, items, editor.current, createItem);
+
+  function handleEditorCreated (editorInstance) {
+    editor.current = editorInstance;
+  }
+
+  function handleSubmit () {
+    const value = editor
+      .current
+      .getContentHtml()
+      .replace(/<\/?p>/g, '')
+      .replace(/<br\/?>/g, '')
+      .trim();
+
     if (value.length) {
       createMessage(value);
-      setContent('');
+      editor.current.clear();
     }
-  };
+  }
 
-  const handleKeyDown = ({ key }) => {
-    switch (key) {
-      case 'Enter': {
-        handleSubmit();
-        break;
-      }
-
-      default:
+  function handleKeyDown (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      handleSubmit();
     }
-  };
+  }
 
   return (
     <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })}>
@@ -104,25 +217,27 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
           <Messages messages={messages} />
         </TableContainer>
 
-        <FormControl className={classes.input}>
-          <OutlinedInput
-            value={content}
-            onChange={event => setContent(event.target.value)}
-            onKeyDown={handleKeyDown}
-            endAdornment={(
-              <InputAdornment position="end">
-                <IconButton onClick={handleSubmit}>
-                  <Send />
-                </IconButton>
-                <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded}>
-                  {videoEnabled
-                    ? <VideocamOffIcon />
-                    : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
-                </IconButton>
-              </InputAdornment>
-            )}
-          />
-        </FormControl>
+        <Editor
+          suggestions={{
+            getOptions: handleSuggestionsGetOptions,
+            onSelect: handleSuggestionsOptionSelect,
+            maxListHeight: 500
+          }}
+          onCreated={handleEditorCreated}
+          onKeyDown={handleKeyDown}
+          classes={editorClasses}
+        />
+
+        <div className={classes.floatingButtons}>
+          <IconButton onClick={handleSubmit}>
+            <Send />
+          </IconButton>
+          <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded} edge="start">
+            {videoEnabled
+              ? <VideocamOffIcon />
+              : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
+          </IconButton>
+        </div>
       </div>
 
       {videoEnabled && (
