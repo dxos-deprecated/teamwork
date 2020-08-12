@@ -2,6 +2,7 @@
 // Copyright 2018 DXOS.org
 //
 
+import assert from 'assert';
 import clsx from 'clsx';
 import React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
@@ -13,6 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { EditableText } from '@dxos/react-ux';
 
+import { ArchiveButton, RestoreButton } from '../components';
 import AddCard from './AddCard';
 import MiniCard from './MiniCard';
 
@@ -38,6 +40,9 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2)
   },
+  deleted: {
+    backgroundColor: theme.palette.grey[300]
+  },
   newList: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -54,6 +59,11 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
 
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
+  };
+
+  const handleToggleArchive = () => {
+    assert(list);
+    onUpdateList({ deleted: !list.properties.deleted });
   };
 
   const Card = ({ card, provided }) => (
@@ -86,7 +96,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
   }
 
   return (
-    <div className={clsx(classes.root, className)}>
+    <div className={clsx(classes.root, className, list.properties.deleted ? classes.deleted : '')}>
       <div className={classes.header}>
         <EditableText
           key={list.properties.title}
@@ -118,7 +128,14 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
           </div>
         )}
       </Droppable>
-      {!embedded && <AddCard onAddCard={title => onAddCard(title, list.id)} />}
+      {!embedded && (<>
+        <AddCard onAddCard={title => onAddCard(title, list.id)} />
+        {list.properties.deleted ? (
+          <RestoreButton onClick={handleToggleArchive}>Restore</RestoreButton>
+        ) : (
+          <ArchiveButton onClick={handleToggleArchive}>Archive</ArchiveButton>
+        )}
+      </>)}
     </div>
   );
 };

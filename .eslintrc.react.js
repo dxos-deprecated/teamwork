@@ -1,24 +1,28 @@
-const baseConfig = require('./.eslintrc.json')
+//
+// Copyright 2020 DXOS.org
+//
+
+const baseConfig = require('./.eslintrc.json');
 
 module.exports = {
   ...baseConfig,
   extends: [
     ...baseConfig.extends,
-    'plugin:react/recommended',
+    'plugin:react/recommended'
   ],
   settings: {
     ...baseConfig.settings,
     react: {
-      version: 'detect',
-    },
+      version: 'detect'
+    }
   },
   env: {
     ...baseConfig.env,
-    browser: true,
+    browser: true
   },
   plugins: [
     ...baseConfig.plugins,
-    'react-hooks',
+    'react-hooks'
   ],
   rules: {
     ...baseConfig.rules,
@@ -34,4 +38,4 @@ module.exports = {
       }
     ]
   }
-}
+};

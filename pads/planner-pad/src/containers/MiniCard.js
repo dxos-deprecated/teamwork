@@ -5,10 +5,8 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Typography, Card as MuiCard, CardHeader } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { Typography, Card as MuiCard } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SettingsIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles(theme => ({
   root: {
