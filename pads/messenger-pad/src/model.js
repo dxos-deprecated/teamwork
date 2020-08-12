@@ -10,7 +10,7 @@ import { createId } from '@dxos/crypto';
 import { DefaultPartiallyOrderedModel } from '@dxos/echo-db';
 import { usePads } from '@dxos/react-appkit';
 import { useModel, useProfile } from '@dxos/react-client';
-import { ViewModel } from '@dxos/view-model';
+import { ItemModel } from '@dxos/view-model';
 
 export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
 export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
@@ -117,21 +117,21 @@ export const useChannelMessages = (topic, channelId) => {
 };
 
 /**
- * Provides view list and view creator.
- * @returns {ViewModel}
+ * Provides item list and item creator.
+ * @returns {ItemModel}
  */
-export const useViews = (topic) => {
+export const useItems = (topic) => {
   const [pads] = usePads();
-  const model = useModel({ model: ViewModel, options: { type: pads.map(pad => pad.type), topic } });
+  const model = useModel({ model: ItemModel, options: { type: pads.map(pad => pad.type), topic } });
 
   return {
-    views: model?.getAllViews() ?? [],
-    createView: (type) => {
+    items: model?.getAllItems() ?? [],
+    createItem: (type) => {
       assert(model);
       assert(type);
       const displayName = `embeded-item-${chance.word()}`;
-      const viewId = model.createView(type, displayName);
-      return { __type_url: type, viewId, displayName };
+      const itemId = model.createItem(type, displayName);
+      return { __type_url: type, itemId, displayName };
     }
   };
 };

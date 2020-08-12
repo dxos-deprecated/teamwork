@@ -20,7 +20,7 @@ import { usePads } from '@dxos/react-appkit';
 import Messages from '../components/Messages';
 import Videos from '../components/Videos';
 import { useEphemeralSwarm } from '../ephemeral-swarm';
-import { useChannelMessages, useViews } from '../model';
+import { useChannelMessages, useItems } from '../model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -112,42 +112,42 @@ const queryFilter = query => items => {
   return items.filter(item => item.displayName.toLowerCase().includes(query.toLowerCase()));
 };
 
-const useSuggestionsMenuHandlers = (topic, pads, views, editor, onCreateView) => {
+const useSuggestionsMenuHandlers = (topic, pads, items, editor, createItem) => {
   function handleSuggestionsGetOptions (query) {
     const filter = queryFilter(query);
-    let insertOptions = filter(views).map(view => ({
-      id: view.viewId,
-      label: view.displayName
+    let insertOptions = filter(items).map(item => ({
+      id: item.itemId,
+      label: item.displayName
     }));
 
     if (insertOptions.length > 0) {
-      insertOptions = [{ subheader: 'Insert views' }, ...insertOptions];
+      insertOptions = [{ subheader: 'Insert items' }, ...insertOptions];
     }
 
-    let createViewOptions = filter(pads).map(pad => ({
+    let createItemOptions = filter(pads).map(pad => ({
       id: `create-${pad.type}`,
       label: `New ${pad.displayName}`,
       create: true,
       type: pad.type
     }));
 
-    if (createViewOptions.length > 0) {
-      createViewOptions = [{ subheader: 'Create views' }, ...createViewOptions];
+    if (createItemOptions.length > 0) {
+      createItemOptions = [{ subheader: 'Create items' }, ...createItemOptions];
     }
 
-    return [...insertOptions, ...createViewOptions];
+    return [...insertOptions, ...createItemOptions];
   }
 
   async function handleSuggestionsOptionSelect (option, { prosemirrorView }) {
-    let view;
+    let item;
     if (option.create) {
-      view = await onCreateView(option.type);
+      item = await createItem(option.type);
     } else {
-      view = views.find(view => view.viewId === option.id);
+      item = items.find(item => item.itemId === option.id);
     }
 
-    const title = `@${view.displayName}`;
-    const href = `/app/${topic}/${view.viewId}`;
+    const title = `@${item.displayName}`;
+    const href = `/app/${topic}/${item.itemId}`;
 
     const { tr } = prosemirrorView.state;
 
@@ -176,14 +176,14 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
 
   const [videoEnabled, setVideoEnabled] = useState(false);
   const [pads] = usePads();
-  const { views, createView } = useViews(topic, pads.map((pad) => pad.type));
+  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
 
   const editor = useRef();
 
   const {
     handleSuggestionsGetOptions,
     handleSuggestionsOptionSelect
-  } = useSuggestionsMenuHandlers(topic, pads, views, editor.current, createView);
+  } = useSuggestionsMenuHandlers(topic, pads, items, editor.current, createItem);
 
   function handleEditorCreated (editorInstance) {
     editor.current = editorInstance;
