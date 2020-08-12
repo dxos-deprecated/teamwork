@@ -2,9 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import assert from 'assert';
-import clsx from 'clsx';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,29 +11,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { red, green } from '@material-ui/core/colors';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 
-import { ObjectModel } from '@dxos/echo-db';
-import { ItemSettings } from '@dxos/react-appkit';
-import { useModel } from '@dxos/react-client';
 import { EditableText } from '@dxos/react-ux';
 
-import Input from '../components/Input';
-import { LIST_TYPE, useList } from '../model/list';
-
-const ArchiveButton = withStyles(() => ({
-  root: {
-    color: red[400]
-  }
-}))(Button);
-
-const RestoreButton = withStyles(() => ({
-  root: {
-    color: green[400]
-  }
-}))(Button);
+import { ArchiveButton, RestoreButton } from '../components';
 
 const useStyles = makeStyles(theme => ({
   root: {
