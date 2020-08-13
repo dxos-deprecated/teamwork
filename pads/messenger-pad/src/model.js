@@ -20,60 +20,6 @@ const chance = new Chance();
 const messagesSort = (a, b) => (a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : 0);
 
 /**
- * Provides channel list and channel creator.
- * @param {string} topic
- * @returns {[Object[], function]}
- */
-export const useChannelList = (topic) => {
-  const model = useModel({ options: { type: TYPE_MESSENGER_CHANNEL, topic } });
-  if (!model) {
-    return [[]];
-  }
-
-  // TODO(burdon): CRDT.
-  const { messages = [] } = model;
-  const channels = Object.values(messages.reduce((map, channel) => {
-    map[channel.id] = channel;
-    return map;
-  }, {}));
-
-  return [
-    channels,
-
-    // Create chanel.
-    title => {
-      const id = createId();
-      model.appendMessage({ __type_url: TYPE_MESSENGER_CHANNEL, id, title });
-      return id;
-    }
-  ];
-};
-
-/**
- * Provides channel metadata and updater.
- * @param {string} topic
- * @param {string} channelId
- * @returns {[{title}, function]}
- */
-export const useChannel = (topic, channelId) => {
-  const model = useModel({ options: { type: TYPE_MESSENGER_CHANNEL, topic, id: channelId } });
-  if (!model) {
-    return [[]];
-  }
-
-  // TODO(burdon): CRDT.
-  const { messages = [] } = model;
-  const { title } = messages.length > 0 ? messages[messages.length - 1] : {};
-
-  return [
-    { title },
-    ({ title }) => {
-      model.appendMessage({ __type_url: TYPE_MESSENGER_CHANNEL, id: channelId, title });
-    }
-  ];
-};
-
-/**
  * Provides channel messages and appender.
  * @param topic
  * @param channelId
