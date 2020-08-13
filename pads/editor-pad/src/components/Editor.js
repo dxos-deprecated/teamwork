@@ -165,6 +165,7 @@ export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateIt
       onCreated={handleEditorCreated}
       reactElementRenderFn={handleReactElementRender}
       classes={classes}
+      initialFontSize={14}
     />
   );
 };
