@@ -37,6 +37,7 @@ const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, itemModel
       newListsModel.createItem(LIST_TYPE, { topic, itemId, title: 'TODO', position: 0 }, { itemId });
       newListsModel.createItem(LIST_TYPE, { topic, itemId, title: 'In Progress', position: 1 }, { itemId });
       newListsModel.createItem(LIST_TYPE, { topic, itemId, title: 'Done', position: 2 }, { itemId });
+      setPendingInitialization(false);
     };
 
     if (item) {
