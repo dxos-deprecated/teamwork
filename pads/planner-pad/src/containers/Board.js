@@ -11,8 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useItems } from '../model/board';
-import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
+import { useItems, positionCompare, getLastPosition, getInsertedPositionAtIndex, getChangedPositionAtIndex, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import CardDetailsDialog from './CardDetailsDialog';
 import List from './List';
 
@@ -251,42 +250,3 @@ export const Board = ({ topic, itemId, embedded }) => {
   );
 };
 
-const positionCompare = (a, b) => a.properties.position - b.properties.position;
-
-function getLastPosition (list) {
-  if (list.length === 0) {
-    return 0;
-  } else {
-    return list[list.length - 1].properties.position + 1;
-  }
-}
-/**
- * Changing position when moving to a different list
- */
-function getInsertedPositionAtIndex (list, index) {
-  if (list.length === 0) {
-    return 0;
-  } else if (index === 0) {
-    return list[0].properties.position - 1;
-  } else if (index > list.length - 1) {
-    return list[list.length - 1].properties.position + 1;
-  } else {
-    return (list[index - 1].properties.position + list[index].properties.position) / 2;
-  }
-}
-/**
- * Changing position within the same list / board
- */
-function getChangedPositionAtIndex (list, index, movingDown = false) {
-  if (list.length === 0) {
-    return 0;
-  } else if (index === 0) {
-    return list[0].properties.position - 1;
-  } else if (index >= list.length - 1) {
-    return list[list.length - 1].properties.position + 1;
-  } else if (movingDown) {
-    return (list[index].properties.position + list[index + 1].properties.position) / 2;
-  } else {
-    return (list[index - 1].properties.position + list[index].properties.position) / 2;
-  }
-}
