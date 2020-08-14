@@ -116,16 +116,20 @@ export const Board = ({ topic, itemId, embedded }) => {
     }
 
     if (source.droppableId === board.itemId) { // Dragging entire lists.
-      const position = getPositionAtIndex(lists, destination.index);
+      const movingDown = destination.index > source.index;
+      const position = getChangedPositionAtIndex(lists, destination.index, movingDown);
       listsModel.updateItem(draggableId, { position });
     } else { // Dragging cards
       const cardsInList = getCardsForList(destination.droppableId);
-      const position = getPositionAtIndex(cardsInList, destination.index);
       if (source.droppableId === destination.droppableId) {
+        // moving in the same list
+        const movingDown = destination.index > source.index;
+        const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown)
         listsModel.updateItem(draggableId, { position });
       } else {
+        // moving to another list
         listsModel.updateItem(draggableId, {
-          position,
+          position: getInsertedPositionAtIndex(cardsInList, destination.index),
           listId: destination.droppableId
         });
       }
@@ -208,14 +212,32 @@ function getLastPosition (list) {
     return list[list.length - 1].properties.position + 1;
   }
 }
-
-function getPositionAtIndex (list, index) {
+/**
+ * Changing position when moving to a different list
+ */
+function getInsertedPositionAtIndex (list, index) {
+  if (list.length === 0) {
+    return 0;
+  } else if (index === 0) {
+    return list[0].properties.position - 1;
+  } else if (index > list.length - 1) {
+    return list[list.length - 1].properties.position + 1;
+  } else {
+    return (list[index - 1].properties.position + list[index].properties.position) / 2;
+  }
+}
+/**
+ * Changing position within the same list / board
+ */
+function getChangedPositionAtIndex (list, index, movingDown = false) {
   if (list.length === 0) {
     return 0;
   } else if (index === 0) {
     return list[0].properties.position - 1;
   } else if (index >= list.length - 1) {
     return list[list.length - 1].properties.position + 1;
+  } else if (movingDown) {
+    return (list[index].properties.position + list[index + 1].properties.position) / 2;
   } else {
     return (list[index - 1].properties.position + list[index].properties.position) / 2;
   }
