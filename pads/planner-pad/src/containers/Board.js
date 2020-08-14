@@ -10,8 +10,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useItems, positionCompare, getLastPosition, getInsertedPositionAtIndex, getChangedPositionAtIndex, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import DraggableLists from '../components/DraggableLists';
+import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import CardDetailsDialog from './CardDetailsDialog';
 
 const useStyles = makeStyles(theme => {
@@ -110,34 +110,6 @@ export const Board = ({ topic, itemId, embedded }) => {
     listsModel.updateItem(id, newProperties);
   };
 
-  const onDragEnd = async ({ source, destination, draggableId }) => {
-    if (!destination) {
-      return; // No drop target, skip this no-op.
-    }
-
-    setIsDragDisabled(true);
-
-    if (source.droppableId === board.itemId) { // Dragging entire lists.
-      const movingDown = destination.index > source.index;
-      const position = getChangedPositionAtIndex(lists, destination.index, movingDown);
-      handleMoveList(draggableId, { position });
-    } else { // Dragging cards
-      const cardsInList = getCardsForList(destination.droppableId);
-      if (source.droppableId === destination.droppableId) {
-        // moving in the same list
-        const movingDown = destination.index > source.index;
-        const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown);
-        handleMoveCard(draggableId, { position });
-      } else {
-        // moving to another list
-        handleMoveCard(draggableId, {
-          position: getInsertedPositionAtIndex(cardsInList, destination.index),
-          listId: destination.droppableId
-        });
-      }
-    }
-  };
-
   return (
     <div className={classes.containerRoot}>
       { isDragDisabled && <CircularProgress className={classes.spinner} />}
@@ -154,10 +126,12 @@ export const Board = ({ topic, itemId, embedded }) => {
         />
       </div>
       <DraggableLists
-        onDragEnd={onDragEnd}
+        handleMoveList={handleMoveList}
+        handleMoveCard={handleMoveCard}
         lists={lists}
         boardId={board.itemId}
         isDragDisabled={isDragDisabled}
+        onDragDisabled={() => setIsDragDisabled(true)}
         getCardsForList={getCardsForList}
         embedded={embedded}
         onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}

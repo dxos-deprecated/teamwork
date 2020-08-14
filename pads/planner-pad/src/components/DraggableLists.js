@@ -9,6 +9,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { makeStyles } from '@material-ui/core/styles';
 
 import List from '../containers/List';
+import { getInsertedPositionAtIndex, getChangedPositionAtIndex } from '../model';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -47,8 +48,36 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const DraggableLists = ({ onDragEnd, boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList }) => {
+export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled }) => {
   const classes = useStyles();
+
+  const onDragEnd = async (result) => {
+    const { source, destination, draggableId } = result;
+    if (!destination) {
+      return; // No drop target, skip this no-op.
+    }
+    onDragDisabled();
+
+    if (source.droppableId === boardId) { // Dragging entire lists.
+      const movingDown = destination.index > source.index;
+      const position = getChangedPositionAtIndex(lists, destination.index, movingDown);
+      handleMoveList(draggableId, { position });
+    } else { // Dragging cards
+      const cardsInList = getCardsForList(destination.droppableId);
+      if (source.droppableId === destination.droppableId) {
+        // moving in the same list
+        const movingDown = destination.index > source.index;
+        const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown);
+        handleMoveCard(draggableId, { position });
+      } else {
+        // moving to another list
+        handleMoveCard(draggableId, {
+          position: getInsertedPositionAtIndex(cardsInList, destination.index),
+          listId: destination.droppableId
+        });
+      }
+    }
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -92,3 +121,5 @@ export const DraggableLists = ({ onDragEnd, boardId, lists, isDragDisabled, getC
     </DragDropContext>
   );
 };
+
+export default DraggableLists;
