@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -27,6 +28,15 @@ const useStyles = makeStyles(theme => {
       flexDirection: 'row',
       height: '100%',
       padding: 10
+    },
+
+    newList: {
+      padding: 10,
+      marginTop: 10
+    },
+
+    draggingOver: {
+      marginRight: 250
     },
 
     scrollBox: {
@@ -185,9 +195,9 @@ export const Board = ({ topic, itemId, embedded }) => {
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable direction="horizontal" type="column" droppableId={board.itemId}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <div ref={provided.innerRef} className={classes.scrollBox}>
-            <div className={classes.root}>
+            <div className={clsx(classes.root, snapshot.isDraggingOver ? classes.draggingOver : '')}>
               {lists.map((list, index) => (
                 <Draggable key={list.id} draggableId={list.id} index={index} isDragDisabled={isDragDisabled}>
                   {(provided) => (
@@ -196,7 +206,7 @@ export const Board = ({ topic, itemId, embedded }) => {
                       {...provided.dragHandleProps}
                       ref={provided.innerRef}
                       style={provided.draggableProps.style}
-                      className={classes.list}
+                      className={clsx(classes.list)}
                     >
                       <List
                         isDragDisabled={isDragDisabled}
@@ -212,11 +222,12 @@ export const Board = ({ topic, itemId, embedded }) => {
                   )}
                 </Draggable>
               ))}
-              <List
-                embedded={embedded}
-                onNewList={handleAddList}
-              />
             </div>
+            <List
+              className={classes.newList}
+              embedded={embedded}
+              onNewList={handleAddList}
+            />
           </div>
         )}
       </Droppable>
@@ -249,4 +260,3 @@ export const Board = ({ topic, itemId, embedded }) => {
     </div>
   );
 };
-
