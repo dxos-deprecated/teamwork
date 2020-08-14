@@ -3,15 +3,12 @@
 //
 
 import assert from 'assert';
-import clsx from 'clsx';
 import React, { useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
-import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
 
 import { useItems } from '../model/board';
 import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
@@ -106,12 +103,6 @@ export const Board = ({ topic, itemId, embedded }) => {
     setSelectedCard(undefined);
   };
 
-  const handleInitializeKanban = () => {
-    listsModel.createItem(LIST_TYPE, { title: 'TODO', position: 0 });
-    listsModel.createItem(LIST_TYPE, { title: 'In Progress', position: 1 });
-    listsModel.createItem(LIST_TYPE, { title: 'Done', position: 2 });
-  };
-
   const getCardsForList = listId => cards
     .filter(card => card.properties.listId === listId)
     .sort(positionCompare);
@@ -140,30 +131,6 @@ export const Board = ({ topic, itemId, embedded }) => {
       }
     }
   };
-
-  // eslint-disable-next-line no-unused-vars
-  const Topbar = () => (
-    <div className={clsx(classes.topbar, 'MuiDrawer-paperAnchorDockedTop')}>
-      { lists.length === 0 && (
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleInitializeKanban}
-          className={classes.initializeButton}
-        >
-          Initialize kanban
-        </Button>
-      )}
-      <Button
-        variant="outlined"
-        size="small"
-        startIcon={<AddIcon fontSize="small" />}
-        onClick={handleAddList}
-      >
-        Add List
-      </Button>
-    </div>
-  );
 
   const Lists = () => (
     <DragDropContext onDragEnd={onDragEnd}>
