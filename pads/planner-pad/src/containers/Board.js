@@ -3,20 +3,16 @@
 //
 
 import assert from 'assert';
-import clsx from 'clsx';
-import React, { useState } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import React, { useState, useEffect } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
 
-import { useItems } from '../model/board';
-import { CARD_TYPE, LIST_TYPE, useList } from '../model/list';
+import DraggableLists from '../components/DraggableLists';
+import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import CardDetailsDialog from './CardDetailsDialog';
-import List from './List';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -25,40 +21,16 @@ const useStyles = makeStyles(theme => {
       height: '100%'
     },
 
-    root: {
-      display: 'flex',
-      flexDirection: 'row',
-      height: '100%',
-      padding: 10
-    },
-
-    scrollBox: {
-      width: '100%',
-      maxWidth: '100vw',
-      display: 'flex',
-      padding: 10
-    },
-
-    topbar: {
-      display: 'flex',
-      background: 'white',
-      padding: 10,
-      justifyContent: 'flex-start'
-    },
-
-    list: {
-      '&:not(:last-child)': {
-        marginRight: 10
-      }
-    },
-
-    initializeButton: {
-      marginRight: theme.spacing(3)
-    },
-
     visibilityToggle: {
       marginLeft: theme.spacing(3),
       marginTop: theme.spacing(2)
+    },
+
+    spinner: {
+      position: 'absolute',
+      right: 0,
+      marginTop: theme.spacing(2),
+      marginRight: theme.spacing(2)
     }
   };
 });
@@ -67,33 +39,45 @@ export const Board = ({ topic, itemId, embedded }) => {
   const classes = useStyles();
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
+  const [isDragDisabled, setIsDragDisabled] = useState(false);
 
   const itemModel = useItems(topic, itemId);
   const board = itemModel.getById(itemId);
-
   const listsModel = useList(topic, itemId);
-  const lists = listsModel.getObjectsByType(LIST_TYPE)
+
+  const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
+  const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
+
+  const lists = listsCache
     .filter(c => showArchived || !c.properties.deleted)
     .sort(positionCompare);
 
-  const cards = listsModel.getObjectsByType(CARD_TYPE)
+  const cards = cardsCache
     .filter(c => showArchived || !c.properties.deleted);
+
+  const getCardsForList = listId => cards
+    .filter(card => card.properties.listId === listId)
+    .sort(positionCompare);
+
+  useEffect(() => {
+    const updateHandler = () => {
+      setListsCache(listsModel.getObjectsByType(LIST_TYPE));
+      setCardsCache(listsModel.getObjectsByType(CARD_TYPE));
+      setIsDragDisabled(false);
+    };
+
+    if (listsModel) {
+      listsModel.on('update', updateHandler);
+      return () => listsModel.off('update', updateHandler);
+    }
+  }, [listsModel]);
 
   if (!board || !listsModel) {
     return null;
   }
 
-  const handleAddList = () => {
-    listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
-  };
-
-  const handleUpdateList = (listId) => (properties) => {
-    listsModel.updateItem(listId, properties);
-  };
-
-  const handleUpdateCard = (cardId) => (properties) => {
-    listsModel.updateItem(cardId, properties);
-  };
+  const handleAddList = () => listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
+  const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
 
   const handleAddCard = (title, listId) => {
     const cardsInList = getCardsForList(listId);
@@ -106,108 +90,29 @@ export const Board = ({ topic, itemId, embedded }) => {
     setSelectedCard(undefined);
   };
 
-  const handleInitializeKanban = () => {
-    listsModel.createItem(LIST_TYPE, { title: 'TODO', position: 0 });
-    listsModel.createItem(LIST_TYPE, { title: 'In Progress', position: 1 });
-    listsModel.createItem(LIST_TYPE, { title: 'Done', position: 2 });
+  const handleMoveList = (id, newProperties) => {
+    setListsCache(old => {
+      const moved = old.find(x => x.id === id);
+      const newCache = [...old].filter(x => x.id !== id);
+      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
+      return newCache;
+    });
+    listsModel.updateItem(id, newProperties);
   };
 
-  const getCardsForList = listId => cards
-    .filter(card => card.properties.listId === listId)
-    .sort(positionCompare);
-
-  const onDragEnd = async (result) => {
-    const { source, destination, draggableId } = result;
-
-    // No drop target, skip this no-op.
-    if (!destination) {
-      return;
-    }
-
-    if (source.droppableId === board.itemId) { // Dragging entire lists.
-      const position = getPositionAtIndex(lists, destination.index);
-      listsModel.updateItem(draggableId, { position });
-    } else { // Dragging cards
-      const cardsInList = getCardsForList(destination.droppableId);
-      const position = getPositionAtIndex(cardsInList, destination.index);
-      if (source.droppableId === destination.droppableId) {
-        listsModel.updateItem(draggableId, { position });
-      } else {
-        listsModel.updateItem(draggableId, {
-          position,
-          listId: destination.droppableId
-        });
-      }
-    }
+  const handleMoveCard = (id, newProperties) => {
+    setCardsCache(old => {
+      const moved = old.find(x => x.id === id);
+      const newCache = [...old].filter(x => x.id !== id);
+      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
+      return newCache;
+    });
+    listsModel.updateItem(id, newProperties);
   };
-
-  // eslint-disable-next-line no-unused-vars
-  const Topbar = () => (
-    <div className={clsx(classes.topbar, 'MuiDrawer-paperAnchorDockedTop')}>
-      { lists.length === 0 && (
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={handleInitializeKanban}
-          className={classes.initializeButton}
-        >
-          Initialize kanban
-        </Button>
-      )}
-      <Button
-        variant="outlined"
-        size="small"
-        startIcon={<AddIcon fontSize="small" />}
-        onClick={handleAddList}
-      >
-        Add List
-      </Button>
-    </div>
-  );
-
-  const Lists = () => (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable direction="horizontal" type="column" droppableId={board.itemId}>
-        {(provided) => (
-          <div ref={provided.innerRef} className={classes.scrollBox}>
-            <div className={classes.root}>
-              {lists.map((list, index) => (
-                <Draggable key={list.id} draggableId={list.id} index={index}>
-                  {(provided) => (
-                    <div
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      ref={provided.innerRef}
-                      style={provided.draggableProps.style}
-                      className={classes.list}
-                    >
-                      <List
-                        key={list.id}
-                        list={list}
-                        cards={getCardsForList(list.id)}
-                        onUpdateList={handleUpdateList(list.id)}
-                        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
-                        onAddCard={handleAddCard}
-                        embedded={embedded}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              <List
-                embedded={embedded}
-                onNewList={handleAddList}
-              />
-            </div>
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
 
   return (
     <div className={classes.containerRoot}>
-      {/* <Topbar /> */}
+      { isDragDisabled && <CircularProgress className={classes.spinner} />}
       <div className={classes.visibilityToggle}>
         <FormControlLabel
           control={
@@ -220,36 +125,27 @@ export const Board = ({ topic, itemId, embedded }) => {
           label='Show archived'
         />
       </div>
-      <Lists />
+      <DraggableLists
+        handleMoveList={handleMoveList}
+        handleMoveCard={handleMoveCard}
+        lists={lists}
+        boardId={board.itemId}
+        isDragDisabled={isDragDisabled}
+        onDragDisabled={() => setIsDragDisabled(true)}
+        getCardsForList={getCardsForList}
+        embedded={embedded}
+        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
+        handleAddCard={handleAddCard}
+        handleUpdateList={handleUpdateListOrCard}
+        handleAddList={handleAddList}
+      />
       <CardDetailsDialog
         open={!!selectedCard}
         onClose={() => setSelectedCard(undefined)}
         onToggleArchive={handleToggleArchive}
         card={selectedCard}
-        onCardUpdate={handleUpdateCard(selectedCard?.id)}
+        onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
       />
     </div>
   );
 };
-
-const positionCompare = (a, b) => a.properties.position - b.properties.position;
-
-function getLastPosition (list) {
-  if (list.length === 0) {
-    return 0;
-  } else {
-    return list[list.length - 1].properties.position + 1;
-  }
-}
-
-function getPositionAtIndex (list, index) {
-  if (list.length === 0) {
-    return 0;
-  } else if (index === 0) {
-    return list[0].properties.position - 1;
-  } else if (index >= list.length - 1) {
-    return list[list.length - 1].properties.position + 1;
-  } else {
-    return (list[index - 1].properties.position + list[index].properties.position) / 2;
-  }
-}

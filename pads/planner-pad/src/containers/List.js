@@ -16,7 +16,7 @@ import { EditableText } from '@dxos/react-ux';
 
 import { ArchiveButton, RestoreButton } from '../components';
 import AddCard from './AddCard';
-import MiniCard from './MiniCard';
+import DraggableCard from './DraggableCard';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,11 +29,6 @@ const useStyles = makeStyles(theme => ({
   header: {
     marginBottom: 10,
     lineHeight: 'inherit !important'
-  },
-  cardContainer: {
-    '&:not(:last-child)': {
-      marginBottom: 10
-    }
   },
   list: {
     minHeight: theme.spacing(5),
@@ -54,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded }) => {
+const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled }) => {
   const classes = useStyles();
 
   const handleTitleUpdate = (title) => {
@@ -66,29 +61,14 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
     onUpdateList({ deleted: !list.properties.deleted });
   };
 
-  const Card = ({ card, provided }) => (
-    <div
-      className={classes.cardContainer}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-      ref={provided.innerRef}
-    >
-      <MiniCard
-        cardProperties={card.properties}
-        onOpenCard={() => onOpenCard(card.id)}
-        style={provided.draggableProps.style}
-      />
-    </div>
-  );
-
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
 
   if (onNewList) {
     if (embedded) return null;
     return (
       <div className={clsx(classes.root, className, classes.newList)}>
-        <IconButton className={classes.addButton} onClick={onNewList}>
-          <AddIcon className={classes.addIcon} />
+        <IconButton onClick={onNewList}>
+          <AddIcon />
         </IconButton>
         <Typography className={classes.addSubtitle} variant='h5'>New List</Typography>
       </div>
@@ -112,14 +92,13 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
-                <Draggable key={card.id} draggableId={card.id} index={index}>
-                  {(provided, snapshot) => (
-                    <Card
+                <Draggable key={card.id} draggableId={card.id} index={index} isDragDisabled={isDragDisabled}>
+                  {(provided) => (
+                    <DraggableCard
                       key={card.id}
                       card={card}
-                      index={index}
                       provided={provided}
-                      snapshot={snapshot}
+                      onOpenCard={onOpenCard}
                     />
                   )}
                 </Draggable>
