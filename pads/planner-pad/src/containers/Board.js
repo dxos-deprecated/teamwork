@@ -3,9 +3,7 @@
 //
 
 import assert from 'assert';
-import clsx from 'clsx';
 import React, { useState, useEffect } from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -13,54 +11,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useItems, positionCompare, getLastPosition, getInsertedPositionAtIndex, getChangedPositionAtIndex, CARD_TYPE, LIST_TYPE, useList } from '../model';
+import DraggableLists from '../components/DraggableLists';
 import CardDetailsDialog from './CardDetailsDialog';
-import List from './List';
 
 const useStyles = makeStyles(theme => {
   return {
     containerRoot: {
       overflow: 'scroll',
       height: '100%'
-    },
-
-    root: {
-      display: 'flex',
-      flexDirection: 'row',
-      height: '100%',
-      padding: 10
-    },
-
-    newList: {
-      padding: 10,
-      marginTop: 10
-    },
-
-    draggingOver: {
-      marginRight: 250
-    },
-
-    scrollBox: {
-      width: '100%',
-      maxWidth: '100vw',
-      display: 'flex',
-      padding: 10
-    },
-
-    topbar: {
-      display: 'flex',
-      background: 'white',
-      padding: 10,
-      justifyContent: 'flex-start'
-    },
-
-    list: {
-      '&:not(:last-child)': {
-        marginRight: 10
-      }
-    },
-
-    initializeButton: {
-      marginRight: theme.spacing(3)
     },
 
     visibilityToggle: {
@@ -97,6 +55,10 @@ export const Board = ({ topic, itemId, embedded }) => {
   const cards = cardsCache
     .filter(c => showArchived || !c.properties.deleted);
 
+  const getCardsForList = listId => cards
+    .filter(card => card.properties.listId === listId)
+    .sort(positionCompare);
+
   useEffect(() => {
     const updateHandler = () => {
       setListsCache(listsModel.getObjectsByType(LIST_TYPE));
@@ -114,17 +76,8 @@ export const Board = ({ topic, itemId, embedded }) => {
     return null;
   }
 
-  const handleAddList = () => {
-    listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
-  };
-
-  const handleUpdateList = (listId) => (properties) => {
-    listsModel.updateItem(listId, properties);
-  };
-
-  const handleUpdateCard = (cardId) => (properties) => {
-    listsModel.updateItem(cardId, properties);
-  };
+  const handleAddList = () => listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
+  const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
 
   const handleAddCard = (title, listId) => {
     const cardsInList = getCardsForList(listId);
@@ -157,16 +110,9 @@ export const Board = ({ topic, itemId, embedded }) => {
     listsModel.updateItem(id, newProperties);
   };
 
-  const getCardsForList = listId => cards
-    .filter(card => card.properties.listId === listId)
-    .sort(positionCompare);
-
-  const onDragEnd = async (result) => {
-    const { source, destination, draggableId } = result;
-
-    // No drop target, skip this no-op.
+  const onDragEnd = async ({ source, destination, draggableId }) => {
     if (!destination) {
-      return;
+      return; // No drop target, skip this no-op.
     }
 
     setIsDragDisabled(true);
@@ -192,48 +138,6 @@ export const Board = ({ topic, itemId, embedded }) => {
     }
   };
 
-  const Lists = () => (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable direction="horizontal" type="column" droppableId={board.itemId}>
-        {(provided, snapshot) => (
-          <div ref={provided.innerRef} className={classes.scrollBox}>
-            <div className={clsx(classes.root, snapshot.isDraggingOver ? classes.draggingOver : '')}>
-              {lists.map((list, index) => (
-                <Draggable key={list.id} draggableId={list.id} index={index} isDragDisabled={isDragDisabled}>
-                  {(provided) => (
-                    <div
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      ref={provided.innerRef}
-                      style={provided.draggableProps.style}
-                      className={clsx(classes.list)}
-                    >
-                      <List
-                        isDragDisabled={isDragDisabled}
-                        key={list.id}
-                        list={list}
-                        cards={getCardsForList(list.id)}
-                        onUpdateList={handleUpdateList(list.id)}
-                        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
-                        onAddCard={handleAddCard}
-                        embedded={embedded}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-            </div>
-            <List
-              className={classes.newList}
-              embedded={embedded}
-              onNewList={handleAddList}
-            />
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
-  );
-
   return (
     <div className={classes.containerRoot}>
       { isDragDisabled && <CircularProgress className={classes.spinner} />}
@@ -249,13 +153,24 @@ export const Board = ({ topic, itemId, embedded }) => {
           label='Show archived'
         />
       </div>
-      <Lists />
+      <DraggableLists
+        onDragEnd={onDragEnd}
+        lists={lists}
+        boardId={board.itemId}
+        isDragDisabled={isDragDisabled}
+        getCardsForList={getCardsForList}
+        embedded={embedded}
+        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
+        handleAddCard={handleAddCard}
+        handleUpdateList={handleUpdateListOrCard}
+        handleAddList={handleAddList}
+      />
       <CardDetailsDialog
         open={!!selectedCard}
         onClose={() => setSelectedCard(undefined)}
         onToggleArchive={handleToggleArchive}
         card={selectedCard}
-        onCardUpdate={handleUpdateCard(selectedCard?.id)}
+        onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
       />
     </div>
   );
