@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded }) => {
+const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled }) => {
   const classes = useStyles();
 
   const handleTitleUpdate = (title) => {
@@ -112,7 +112,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
             {cards
               .filter(card => !card.deleted)
               .map((card, index) => (
-                <Draggable key={card.id} draggableId={card.id} index={index}>
+                <Draggable key={card.id} draggableId={card.id} index={index} isDragDisabled={isDragDisabled}>
                   {(provided, snapshot) => (
                     <Card
                       key={card.id}

@@ -3,10 +3,11 @@
 //
 
 import assert from 'assert';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import Checkbox from '@material-ui/core/Checkbox';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -56,6 +57,13 @@ const useStyles = makeStyles(theme => {
     visibilityToggle: {
       marginLeft: theme.spacing(3),
       marginTop: theme.spacing(2)
+    },
+
+    spinner: {
+      position: 'absolute',
+      right: 0,
+      marginTop: theme.spacing(2),
+      marginRight: theme.spacing(2)
     }
   };
 });
@@ -64,17 +72,34 @@ export const Board = ({ topic, itemId, embedded }) => {
   const classes = useStyles();
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
+  const [isDragDisabled, setIsDragDisabled] = useState(false);
 
   const itemModel = useItems(topic, itemId);
   const board = itemModel.getById(itemId);
-
   const listsModel = useList(topic, itemId);
-  const lists = listsModel.getObjectsByType(LIST_TYPE)
+
+  const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
+  const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
+
+  const lists = listsCache
     .filter(c => showArchived || !c.properties.deleted)
     .sort(positionCompare);
 
-  const cards = listsModel.getObjectsByType(CARD_TYPE)
+  const cards = cardsCache
     .filter(c => showArchived || !c.properties.deleted);
+
+  useEffect(() => {
+    const updateHandler = () => {
+      setListsCache(listsModel.getObjectsByType(LIST_TYPE));
+      setCardsCache(listsModel.getObjectsByType(CARD_TYPE));
+      setIsDragDisabled(false);
+    };
+
+    if (listsModel) {
+      listsModel.on('update', updateHandler);
+      return () => listsModel.off('update', updateHandler);
+    }
+  }, [listsModel]);
 
   if (!board || !listsModel) {
     return null;
@@ -103,6 +128,26 @@ export const Board = ({ topic, itemId, embedded }) => {
     setSelectedCard(undefined);
   };
 
+  const handleMoveList = (id, newProperties) => {
+    setListsCache(old => {
+      const moved = old.find(x => x.id === id);
+      const newCache = [...old].filter(x => x.id !== id);
+      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
+      return newCache;
+    });
+    listsModel.updateItem(id, newProperties);
+  };
+
+  const handleMoveCard = (id, newProperties) => {
+    setCardsCache(old => {
+      const moved = old.find(x => x.id === id);
+      const newCache = [...old].filter(x => x.id !== id);
+      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
+      return newCache;
+    });
+    listsModel.updateItem(id, newProperties);
+  };
+
   const getCardsForList = listId => cards
     .filter(card => card.properties.listId === listId)
     .sort(positionCompare);
@@ -115,20 +160,22 @@ export const Board = ({ topic, itemId, embedded }) => {
       return;
     }
 
+    setIsDragDisabled(true);
+
     if (source.droppableId === board.itemId) { // Dragging entire lists.
       const movingDown = destination.index > source.index;
       const position = getChangedPositionAtIndex(lists, destination.index, movingDown);
-      listsModel.updateItem(draggableId, { position });
+      handleMoveList(draggableId, { position });
     } else { // Dragging cards
       const cardsInList = getCardsForList(destination.droppableId);
       if (source.droppableId === destination.droppableId) {
         // moving in the same list
         const movingDown = destination.index > source.index;
-        const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown)
-        listsModel.updateItem(draggableId, { position });
+        const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown);
+        handleMoveCard(draggableId, { position });
       } else {
         // moving to another list
-        listsModel.updateItem(draggableId, {
+        handleMoveCard(draggableId, {
           position: getInsertedPositionAtIndex(cardsInList, destination.index),
           listId: destination.droppableId
         });
@@ -143,7 +190,7 @@ export const Board = ({ topic, itemId, embedded }) => {
           <div ref={provided.innerRef} className={classes.scrollBox}>
             <div className={classes.root}>
               {lists.map((list, index) => (
-                <Draggable key={list.id} draggableId={list.id} index={index}>
+                <Draggable key={list.id} draggableId={list.id} index={index} isDragDisabled={isDragDisabled}>
                   {(provided) => (
                     <div
                       {...provided.draggableProps}
@@ -153,6 +200,7 @@ export const Board = ({ topic, itemId, embedded }) => {
                       className={classes.list}
                     >
                       <List
+                        isDragDisabled={isDragDisabled}
                         key={list.id}
                         list={list}
                         cards={getCardsForList(list.id)}
@@ -178,7 +226,7 @@ export const Board = ({ topic, itemId, embedded }) => {
 
   return (
     <div className={classes.containerRoot}>
-      {/* <Topbar /> */}
+      { isDragDisabled && <CircularProgress className={classes.spinner} />}
       <div className={classes.visibilityToggle}>
         <FormControlLabel
           control={
