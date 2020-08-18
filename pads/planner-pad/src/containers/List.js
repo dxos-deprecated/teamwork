@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   newCardSettingsButton: {
     position: 'absolute',
     right: theme.spacing(1),
-    top: theme.spacing(1),
+    top: theme.spacing(1)
   }
 }));
 
