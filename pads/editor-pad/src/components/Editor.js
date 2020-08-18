@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,6 +12,7 @@ import { Editor as DXOSEditor } from '@dxos/editor';
 import MessengerPad from '@dxos/messenger-pad';
 import { useProfile } from '@dxos/react-client';
 
+import { useDataChannel } from '../data-channel';
 import { useDocumentUpdateModel } from '../model';
 import Pad from './Pad';
 
@@ -39,7 +40,7 @@ const useEditorClasses = makeStyles(theme => ({
 }));
 
 const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) => {
-  const handleContextMenuGetOptions = useCallback(() => {
+  function handleContextMenuGetOptions () {
     let insertOptions = items.map(item => ({
       id: item.id,
       label: item.displayName,
@@ -78,15 +79,15 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
     }
 
     return [...insertOptions, ...createItemOptions];
-  }, [topic, pads, items, onCreateItem, editor]);
+  }
 
-  const handleContextMenuRenderItem = useCallback(({ option }) => {
+  function handleContextMenuRenderItem ({ option }) {
     return (
       <ListItemText
         primary={option.label}
       />
     );
-  }, []);
+  }
 
   const handleContextMenuOptionSelect = useCallback(option => {
     if (option.fn) {
@@ -101,10 +102,11 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   };
 };
 
-export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
-  const { publicKey } = useProfile();
+export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
+  const { publicKey, username } = useProfile();
   const classes = useEditorClasses();
   const [editor, setEditor] = useState();
+  const [statusData, broadcastStatus] = useDataChannel(itemId);
 
   const customButtons = onToggleMessenger ? [
     {
@@ -119,9 +121,14 @@ export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateIt
 
   const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
 
-  const handleEditorCreated = useCallback(setEditor, []);
+  function handleEditorCreated (editor) {
+    // Set peer name for status
+    editor.sync.status.setUserName(username);
 
-  const handleReactElementRender = useCallback(props => {
+    setEditor(editor);
+  }
+
+  function handleReactElementRender (props) {
     const { main: PadComponent, icon } = pads.find(pad => pad.type === props.type);
 
     return (
@@ -133,7 +140,7 @@ export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateIt
         <Divider className={classes.padDivider} />
       </div>
     );
-  }, [pads]);
+  }
 
   const {
     handleContextMenuGetOptions,
@@ -141,7 +148,11 @@ export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateIt
     handleContextMenuOptionSelect
   } = useContextMenuHandlers({ topic, pads, items, onCreateItem, editor });
 
-  const handleLocalStatusUpdate = () => null;
+  useEffect(() => {
+    if (statusData) {
+      editor.sync.status.processRemoteUpdate(statusData);
+    }
+  }, [statusData]);
 
   if (!documentUpdateModel) return null;
 
@@ -154,7 +165,7 @@ export const Editor = ({ party, topic, itemId, pads = [], items = [], onCreateIt
         id: publicKey,
         doc: documentUpdateModel.doc,
         status: {
-          onLocalUpdate: handleLocalStatusUpdate
+          onLocalUpdate: broadcastStatus
         }
       }}
       contextMenu={{
