@@ -42,6 +42,8 @@ export const useDataChannel = (channelId) => {
           setData(Object.values(update));
         } catch (error) {
           // Parsing error.
+          // Probably this data message is not for us
+          console.warn(error);
         }
       });
     });
