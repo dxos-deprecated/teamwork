@@ -13,7 +13,10 @@ const useStyles = makeStyles(() => ({
     marginTop: 10
   },
   openButton: {
-    width: '100%'
+    width: '100%',
+    justifyContent: 'flex-start',
+    textTransform: 'none',
+    color: 'grey'
   },
   textField: {
     width: '100%'
@@ -57,12 +60,12 @@ const AddCard = (props) => {
   const AddButton = () => (
     <Button
       size="small"
-      variant="outlined"
+      variant="text"
       className={classes.openButton}
       startIcon={<AddIcon />}
       onClick={() => setOpen(true)}
     >
-      Add Card
+      Add another card
     </Button>
   );
 

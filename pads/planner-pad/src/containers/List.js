@@ -4,17 +4,18 @@
 
 import assert from 'assert';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/MoreVert';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { ArchiveButton, RestoreButton } from '../components';
+import { ListSettingsMenu } from '../components';
 import AddCard from './AddCard';
 import DraggableCard from './DraggableCard';
 
@@ -27,8 +28,13 @@ const useStyles = makeStyles(theme => ({
     width: 240
   },
   header: {
+    display: 'flex',
+    flexDirection: 'row',
     marginBottom: 10,
     lineHeight: 'inherit !important'
+  },
+  content: {
+    padding: 10
   },
   list: {
     minHeight: theme.spacing(5),
@@ -41,16 +47,26 @@ const useStyles = makeStyles(theme => ({
   newList: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    maxHeight: 142
+    maxHeight: 142,
+    position: 'relative',
+    marginRight: theme.spacing(2)
   },
   addSubtitle: {
     color: theme.palette.grey[300],
     marginTop: theme.spacing(2)
+  },
+  newCardSettingsButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
   }
 }));
 
-const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled }) => {
+const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled, showArchived, onToggleShowArchived, showMenuOnNewCard = false }) => {
   const classes = useStyles();
+  const [listSettingsOpen, setListSettingsOpen] = useState(false);
+  const listSettingsAnchor = useRef();
+  const newListSettingsAnchor = useRef();
 
   const handleTitleUpdate = (title) => {
     onUpdateList({ title });
@@ -62,15 +78,33 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
   };
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
-
   if (onNewList) {
     if (embedded) return null;
     return (
       <div className={clsx(classes.root, className, classes.newList)}>
+        {showMenuOnNewCard && (
+          <IconButton
+            className={classes.newCardSettingsButton}
+            size='small'
+            onClick={() => setListSettingsOpen(true)}
+            ref={newListSettingsAnchor}
+          >
+            <SettingsIcon />
+          </IconButton>
+        )}
         <IconButton onClick={onNewList}>
           <AddIcon />
         </IconButton>
         <Typography className={classes.addSubtitle} variant='h5'>New List</Typography>
+        <ListSettingsMenu
+          anchorEl={newListSettingsAnchor.current}
+          open={listSettingsOpen}
+          onClose={() => setListSettingsOpen(false)}
+          deleted={false}
+          onToggleArchive={undefined}
+          showArchived={showArchived}
+          onToggleShowArchived={onToggleShowArchived}
+        />
       </div>
     );
   }
@@ -85,6 +119,13 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
           onUpdate={handleTitleUpdate}
           bareInput={true}
         />
+        <IconButton
+          size='small'
+          onClick={() => setListSettingsOpen(true)}
+          ref={listSettingsAnchor}
+        >
+          <SettingsIcon />
+        </IconButton>
       </div>
       <Droppable direction="vertical" type="list" droppableId={list.id}>
         {({ innerRef, placeholder }) => (
@@ -109,12 +150,16 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
       </Droppable>
       {!embedded && (<>
         <AddCard onAddCard={title => onAddCard(title, list.id)} />
-        {list.properties.deleted ? (
-          <RestoreButton onClick={handleToggleArchive}>Restore</RestoreButton>
-        ) : (
-          <ArchiveButton onClick={handleToggleArchive}>Archive</ArchiveButton>
-        )}
       </>)}
+      <ListSettingsMenu
+        anchorEl={listSettingsAnchor.current}
+        open={listSettingsOpen}
+        onClose={() => setListSettingsOpen(false)}
+        deleted={list.properties.deleted}
+        onToggleArchive={handleToggleArchive}
+        showArchived={showArchived}
+        onToggleShowArchived={onToggleShowArchived}
+      />
     </div>
   );
 };

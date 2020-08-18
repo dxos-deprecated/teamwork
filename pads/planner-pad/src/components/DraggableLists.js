@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => {
 
     scrollBox: {
       width: '100%',
+      height: '100%',
       maxWidth: '100vw',
       display: 'flex',
       padding: 10
@@ -39,7 +40,8 @@ const useStyles = makeStyles(theme => {
     list: {
       '&:not(:last-child)': {
         marginRight: 10
-      }
+      },
+      overflowY: 'scroll'
     },
 
     initializeButton: {
@@ -48,7 +50,7 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled }) => {
+export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled, showArchived, onToggleShowArchived }) => {
   const classes = useStyles();
 
   const onDragEnd = async (result) => {
@@ -104,6 +106,8 @@ export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList
                         onOpenCard={onOpenCard}
                         onAddCard={handleAddCard}
                         embedded={embedded}
+                        showArchived={showArchived}
+                        onToggleShowArchived={onToggleShowArchived}
                       />
                     </div>
                   )}
@@ -114,6 +118,9 @@ export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList
               className={classes.newList}
               embedded={embedded}
               onNewList={handleAddList}
+              showMenuOnNewCard={lists.length === 0}
+              showArchived={showArchived}
+              onToggleShowArchived={onToggleShowArchived}
             />
           </div>
         )}

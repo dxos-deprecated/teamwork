@@ -5,9 +5,7 @@
 import assert from 'assert';
 import React, { useState, useEffect } from 'react';
 
-import Checkbox from '@material-ui/core/Checkbox';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { makeStyles } from '@material-ui/core/styles';
 
 import DraggableLists from '../components/DraggableLists';
@@ -17,13 +15,9 @@ import CardDetailsDialog from './CardDetailsDialog';
 const useStyles = makeStyles(theme => {
   return {
     containerRoot: {
-      overflow: 'scroll',
+      overflowY: 'hidden',
+      overflowX: 'scroll',
       height: '100%'
-    },
-
-    visibilityToggle: {
-      marginLeft: theme.spacing(3),
-      marginTop: theme.spacing(2)
     },
 
     spinner: {
@@ -113,18 +107,6 @@ export const Board = ({ topic, itemId, embedded }) => {
   return (
     <div className={classes.containerRoot}>
       { isDragDisabled && <CircularProgress className={classes.spinner} />}
-      <div className={classes.visibilityToggle}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showArchived}
-              value={showArchived}
-              onChange={() => setShowArchived(!showArchived)}
-            />
-          }
-          label='Show archived'
-        />
-      </div>
       <DraggableLists
         handleMoveList={handleMoveList}
         handleMoveCard={handleMoveCard}
@@ -138,6 +120,8 @@ export const Board = ({ topic, itemId, embedded }) => {
         handleAddCard={handleAddCard}
         handleUpdateList={handleUpdateListOrCard}
         handleAddList={handleAddList}
+        showArchived={showArchived}
+        onToggleShowArchived={() => setShowArchived(prev => !prev)}
       />
       <CardDetailsDialog
         open={!!selectedCard}
