@@ -70,6 +70,7 @@ const Root = ({ config, client }) => {
           errorHandler={new ErrorHandler()}
           router={router}
           pads={pads}
+          issuesLink='https://github.com/dxos/teamwork/issues/new'
         >
           <CheckForErrors>
             <HashRouter>
