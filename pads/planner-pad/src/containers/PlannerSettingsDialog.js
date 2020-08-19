@@ -66,14 +66,14 @@ const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, itemModel
         onUpdate={description => setDescription(description)}
       />
       <Button
-          variant="outlined"
-          size="small"
-          disabled={initialized || pendingInitialization}
-          onClick={() => setPendingInitialization(true)}
-          className={clsx(classes.settingsItem, classes.initializeButton)}
-        >
-          Initialize
-        </Button>
+        variant="outlined"
+        size="small"
+        disabled={initialized || pendingInitialization}
+        onClick={() => setPendingInitialization(true)}
+        className={clsx(classes.settingsItem, classes.initializeButton)}
+      >
+        Initialize
+      </Button>
     </ItemSettings>
   );
 };
