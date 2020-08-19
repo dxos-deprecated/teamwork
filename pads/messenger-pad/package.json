@@ -1,6 +1,6 @@
 {
   "name": "@dxos/messenger-pad",
-  "version": "1.0.1-beta.10",
+  "version": "1.0.1-beta.11",
   "main": "dist/index.js",
   "private": false,
   "scripts": {
