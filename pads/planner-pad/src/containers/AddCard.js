@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   buttonContainer: {
     marginTop: 10,
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between'
   },
   card: {
     padding: 20
@@ -45,6 +45,11 @@ const AddCard = (props) => {
     }
   };
 
+  const handleCancel = () => {
+    setTitle('');
+    setOpen(false);
+  };
+
   const handleAdd = () => {
     onAddCard(title);
     setOpen(false);
@@ -54,6 +59,8 @@ const AddCard = (props) => {
   const handleKeyDown = (ev) => {
     if (ev.key === 'Enter') {
       handleAdd();
+    } else if (ev.key === 'Escape') {
+      handleCancel();
     }
   };
 
@@ -81,6 +88,14 @@ const AddCard = (props) => {
         onChange={ev => setTitle(ev.target.value)}
       />
       <div className={classes.buttonContainer}>
+        <Button
+          size="small"
+          color="primary"
+          variant="text"
+          onClick={handleCancel}
+        >
+          Cancel
+        </Button>
         <Button
           size="small"
           color="primary"
