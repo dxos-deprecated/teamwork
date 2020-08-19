@@ -131,7 +131,6 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
         {({ innerRef, placeholder }) => (
           <div ref={innerRef} className={classes.list}>
             {cards
-              .filter(card => !card.deleted)
               .map((card, index) => (
                 <Draggable key={card.id} draggableId={card.id} index={index} isDragDisabled={isDragDisabled}>
                   {(provided) => (
@@ -140,6 +139,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
                       card={card}
                       provided={provided}
                       onOpenCard={onOpenCard}
+                      listDeleted={list.properties.deleted}
                     />
                   )}
                 </Draggable>
@@ -148,7 +148,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
           </div>
         )}
       </Droppable>
-      {!embedded && (<>
+      {!embedded && !list.properties.deleted && (<>
         <AddCard onAddCard={title => onAddCard(title, list.id)} />
       </>)}
       <ListSettingsMenu

@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const DraggableCard = ({ card, provided, onOpenCard }) => {
+const DraggableCard = ({ card, provided, onOpenCard, listDeleted }) => {
   const classes = useStyles();
 
   return (
@@ -27,6 +27,7 @@ const DraggableCard = ({ card, provided, onOpenCard }) => {
       ref={provided.innerRef}
     >
       <MiniCard
+        listDeleted={listDeleted}
         cardProperties={card.properties}
         onOpenCard={() => onOpenCard(card.id)}
         style={provided.draggableProps.style}
