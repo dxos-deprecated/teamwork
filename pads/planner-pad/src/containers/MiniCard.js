@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
   },
   deleted: {
     backgroundColor: theme.palette.grey[300]
+  },
+  listDeleted: {
+    backgroundColor: theme.palette.grey[200]
   }
 }));
 
@@ -25,10 +28,13 @@ const InnerCard = (props) => {
 
 const MiniCard = (props) => {
   const classes = useStyles();
-  const { className, style, onOpenCard, cardProperties } = props;
+  const { className, style, onOpenCard, cardProperties, listDeleted } = props;
+  const deletedClassName = cardProperties.deleted
+    ? classes.deleted
+    : (listDeleted ? classes.listDeleted : '');
 
   return (
-    <MuiCard className={clsx(classes.root, className, cardProperties.deleted ? classes.deleted : '')} onMouseUp={onOpenCard}>
+    <MuiCard className={clsx(classes.root, className, deletedClassName)} onMouseUp={onOpenCard}>
       <InnerCard style={style} classes={classes} cardProperties={cardProperties} />
     </MuiCard>
   );
