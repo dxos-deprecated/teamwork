@@ -10,3 +10,9 @@ export const toggleLabel = (currentLabels, toggledLabel) => {
   }
   return { ...currentLabels, [toggledLabel]: !(currentLabels[toggledLabel] === true) };
 };
+
+export const labelColorLookup = {
+  red: '#F08080',
+  yellow: '#FFD700',
+  green: '#9ACD32'
+};

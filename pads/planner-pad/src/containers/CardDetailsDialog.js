@@ -5,6 +5,7 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,11 +15,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CheckIcon from '@material-ui/icons/Check';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutline from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { EditableText } from '@dxos/react-ux';
 
 import { ArchiveButton, RestoreButton } from '../components';
-import { PLANNER_LABELS, toggleLabel } from '../model/labels';
+import { PLANNER_LABELS, toggleLabel, labelColorLookup } from '../model/labels';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,8 +36,8 @@ const useStyles = makeStyles(theme => ({
   labelSection: {
     marginTop: theme.spacing(4),
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start'
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   labelsTitle: {
     // color: theme.palette.grey[300]
@@ -42,6 +45,10 @@ const useStyles = makeStyles(theme => ({
   labelButton: {
     marginTop: theme.spacing(1),
     width: 150
+  },
+  label: {
+    marginRight: theme.spacing(1),
+    width: 80
   }
 }));
 
@@ -54,7 +61,7 @@ const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate 
     onCardUpdate({ labels: toggleLabel(card.properties.labels, toggledLabel) });
   };
 
-  console.warn(card.properties)
+  console.warn(card.properties);
 
   return (
     <Dialog classes={{ paper: classes.root }} open={open} maxWidth='md' onClose={onClose}>
@@ -72,18 +79,17 @@ const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate 
           onUpdate={(title) => onCardUpdate({ title })}
         />
         <div className={classes.labelSection}>
-          <Typography className={classes.labelsTitle} variant='body2'>Labels:</Typography>
+          <Typography className={classes.labelsTitle} variant='body1'>Labels:</Typography>
           {PLANNER_LABELS.map(label => (
-            <Button
-              className={classes.labelButton}
+            <Chip
+              className={classes.label}
               key={label}
-              style={{ backgroundColor: label }}
+              label={label}
+              style={{ backgroundColor: labelColorLookup[label] }}
               onClick={() => handleToggleLabel(label)}
-              startIcon={card.properties.labels && card.properties.labels[label] && <CheckIcon />}
+              avatar={card.properties.labels && (card.properties.labels[label] ? <CheckIcon /> : <span style={{ width: '18px' }} />)}
               size="small"
-            >
-                {label}
-            </Button>
+            />
           ))}
         </div>
       </DialogContent>

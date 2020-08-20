@@ -5,10 +5,10 @@
 import clsx from 'clsx';
 import React from 'react';
 
-import { Typography, Card as MuiCard, Button, Chip } from '@material-ui/core';
+import { Typography, Card as MuiCard, Button, Chip, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { PLANNER_LABELS } from '../model/labels';
+import { PLANNER_LABELS, labelColorLookup} from '../model/labels';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   label: {
     marginRight: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     // width: 30,
     // height: 20
   }
@@ -52,14 +53,15 @@ const MiniCard = (props) => {
           {PLANNER_LABELS
             .filter(x => cardProperties.labels[x])
             .map(label => (
-              <Chip
-                label='&nbsp;'
-                key={label}
-                size="small"
-                style={{ backgroundColor: label }}
-                disabled={true}
-                className={classes.label}
-              />
+              <Tooltip key={label} title={label}>
+                <Chip
+                  label='&nbsp;&nbsp;'
+                  size="small"
+                  style={{ backgroundColor: labelColorLookup[label] }}
+                  disabled={false}
+                  className={classes.label}
+                />
+              </Tooltip>
             )
           )}
         </div>
