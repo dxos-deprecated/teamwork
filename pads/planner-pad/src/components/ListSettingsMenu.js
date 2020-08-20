@@ -6,9 +6,14 @@ import React from 'react';
 
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuItem from '@material-ui/core/MenuItem';
+import SearchIcon from '@material-ui/icons/Search';
+import Divider from '@material-ui/core/Divider';
 
-export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived }) => {
+import { PLANNER_LABELS, toggleLabel, labelColorLookup, defaultLabelNames } from '../model/labels';
+
+export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
   const handleToggleArchive = () => {
     onToggleArchive();
     onClose();
@@ -16,6 +21,11 @@ export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArc
 
   const handleToggleShowArchived = () => {
     onToggleShowArchived();
+    onClose();
+  };
+
+  const handlelabelSettings = () => {
+    onOpenLabelsDialog();
     onClose();
   };
 
@@ -29,6 +39,27 @@ export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArc
       <MenuItem button onClick={handleToggleShowArchived}>
         <ListItemText primary={showArchived ? 'Hide archived' : 'Show archived'} />
       </MenuItem>
+      {onOpenLabelsDialog && (
+        <MenuItem button onClick={handlelabelSettings}>
+          <ListItemText primary='Labels' />
+        </MenuItem>
+      )}
+      {onFilterByLabel && (
+        <>
+          <Divider />
+          {PLANNER_LABELS.map(label => (
+            <MenuItem key={label} button onClick={() => onFilterByLabel(filterByLabel === label ? undefined : label)}>
+              {filterByLabel === label && (
+                <ListItemIcon><SearchIcon /></ListItemIcon>
+              )}
+              <ListItemText primary={defaultLabelNames[label]} />
+            </MenuItem>
+          ))}
+          <MenuItem button onClick={() => onFilterByLabel(undefined)}>
+            <ListItemText primary='Clear filter' />
+          </MenuItem>
+        </>
+      )}
     </Menu>
   );
 };

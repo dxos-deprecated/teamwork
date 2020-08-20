@@ -39,7 +39,7 @@ const InnerCard = (props) => {
 
 const MiniCard = (props) => {
   const classes = useStyles();
-  const { className, style, onOpenCard, cardProperties, listDeleted } = props;
+  const { className, style, onOpenCard, cardProperties, listDeleted, labelnames } = props;
   const deletedClassName = cardProperties.deleted
     ? classes.deleted
     : (listDeleted ? classes.listDeleted : '');
@@ -51,7 +51,7 @@ const MiniCard = (props) => {
           {PLANNER_LABELS
             .filter(x => cardProperties.labels[x])
             .map(label => (
-              <Tooltip key={label} title={label}>
+              <Tooltip key={label} title={labelnames[label]}>
                 <Chip
                   label='&nbsp;&nbsp;'
                   size="small"

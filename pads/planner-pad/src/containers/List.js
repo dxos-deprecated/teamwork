@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled, showArchived, onToggleShowArchived, showMenuOnNewCard = false }) => {
+const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled, showArchived, onToggleShowArchived, onOpenLabelsDialog, labelnames, onFilterByLabel, filterByLabel, showMenuOnNewCard = false }) => {
   const classes = useStyles();
   const [listSettingsOpen, setListSettingsOpen] = useState(false);
   const listSettingsAnchor = useRef();
@@ -104,6 +104,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
           onToggleArchive={undefined}
           showArchived={showArchived}
           onToggleShowArchived={onToggleShowArchived}
+          onOpenLabelsDialog={onOpenLabelsDialog}
         />
       </div>
     );
@@ -140,6 +141,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
                       provided={provided}
                       onOpenCard={onOpenCard}
                       listDeleted={list.properties.deleted}
+                      labelnames={labelnames}
                     />
                   )}
                 </Draggable>
@@ -159,6 +161,9 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
         onToggleArchive={handleToggleArchive}
         showArchived={showArchived}
         onToggleShowArchived={onToggleShowArchived}
+        onOpenLabelsDialog={onOpenLabelsDialog}
+        onFilterByLabel={onFilterByLabel}
+        filterByLabel={filterByLabel}
       />
     </div>
   );

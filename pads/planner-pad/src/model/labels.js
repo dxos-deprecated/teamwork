@@ -16,3 +16,9 @@ export const labelColorLookup = {
   yellow: '#FFD700',
   green: '#9ACD32'
 };
+
+export const defaultLabelNames = {
+  red: 'red',
+  yellow: 'yellow',
+  green: 'green'
+};
