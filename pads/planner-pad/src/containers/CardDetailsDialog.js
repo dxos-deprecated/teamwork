@@ -56,8 +56,6 @@ const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate 
     onCardUpdate({ labels: toggleLabel(card.properties.labels, toggledLabel) });
   };
 
-  console.warn(card.properties);
-
   return (
     <Dialog classes={{ paper: classes.root }} open={open} maxWidth='md' onClose={onClose}>
       <DialogTitle>
