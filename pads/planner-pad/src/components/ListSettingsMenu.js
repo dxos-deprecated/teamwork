@@ -4,14 +4,14 @@
 
 import React from 'react';
 
+import Divider from '@material-ui/core/Divider';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
-import Divider from '@material-ui/core/Divider';
 
-import { PLANNER_LABELS, toggleLabel, labelColorLookup, defaultLabelNames } from '../model/labels';
+import { PLANNER_LABELS, defaultLabelNames } from '../model/labels';
 
 export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
   const handleToggleArchive = () => {

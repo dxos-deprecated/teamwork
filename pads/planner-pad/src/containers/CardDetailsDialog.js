@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   labelSection: {
     marginTop: theme.spacing(4),
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
   labelButton: {
     marginTop: theme.spacing(1),

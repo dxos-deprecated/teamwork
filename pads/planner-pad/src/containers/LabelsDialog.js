@@ -5,7 +5,6 @@
 import React from 'react';
 
 import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,12 +13,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
-import CheckIcon from '@material-ui/icons/Check';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { ArchiveButton, RestoreButton } from '../components';
-import { PLANNER_LABELS, toggleLabel, labelColorLookup, defaultLabelNames } from '../model/labels';
+import { PLANNER_LABELS, labelColorLookup, defaultLabelNames } from '../model/labels';
 
 const useStyles = makeStyles(theme => ({
   root: {
