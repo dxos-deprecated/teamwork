@@ -55,9 +55,6 @@ export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArc
               <ListItemText primary={defaultLabelNames[label]} />
             </MenuItem>
           ))}
-          <MenuItem button onClick={() => onFilterByLabel(undefined)}>
-            <ListItemText primary='Clear filter' />
-          </MenuItem>
         </>
       )}
     </Menu>
