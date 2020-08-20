@@ -15,8 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 import CheckIcon from '@material-ui/icons/Check';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import CheckBoxOutline from '@material-ui/icons/CheckBoxOutlineBlank';
 
 import { EditableText } from '@dxos/react-ux';
 
@@ -38,9 +36,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  labelsTitle: {
-    // color: theme.palette.grey[300]
   },
   labelButton: {
     marginTop: theme.spacing(1),
@@ -79,7 +74,7 @@ const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate 
           onUpdate={(title) => onCardUpdate({ title })}
         />
         <div className={classes.labelSection}>
-          <Typography className={classes.labelsTitle} variant='body1'>Labels:</Typography>
+          <Typography variant='body1'>Labels:</Typography>
           {PLANNER_LABELS.map(label => (
             <Chip
               className={classes.label}
