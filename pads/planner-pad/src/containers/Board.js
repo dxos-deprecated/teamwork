@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import DraggableLists from '../components/DraggableLists';
 import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import CardDetailsDialog from './CardDetailsDialog';
+import LabelsDialog from './LabelsDialog';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -34,6 +35,8 @@ export const Board = ({ topic, itemId, embedded }) => {
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
   const [isDragDisabled, setIsDragDisabled] = useState(false);
+  const [labelsDialogOpen, setLabelsDialogOpen] = useState(false);
+  const [filterByLabel, setFilterByLabel] = useState(undefined);
 
   const itemModel = useItems(topic, itemId);
   const board = itemModel.getById(itemId);
@@ -47,7 +50,8 @@ export const Board = ({ topic, itemId, embedded }) => {
     .sort(positionCompare);
 
   const cards = cardsCache
-    .filter(c => showArchived || !c.properties.deleted);
+    .filter(c => showArchived || !c.properties.deleted)
+    .filter(c => !filterByLabel || (c.properties.labels && c.properties.labels[filterByLabel]));
 
   const getCardsForList = listId => cards
     .filter(card => card.properties.listId === listId)
@@ -122,6 +126,10 @@ export const Board = ({ topic, itemId, embedded }) => {
         handleAddList={handleAddList}
         showArchived={showArchived}
         onToggleShowArchived={() => setShowArchived(prev => !prev)}
+        onOpenLabelsDialog={() => setLabelsDialogOpen(true)}
+        labelnames={board.metadata.labelnames}
+        onFilterByLabel={(label) => setFilterByLabel(label)}
+        filterByLabel={filterByLabel}
       />
       <CardDetailsDialog
         open={!!selectedCard}
@@ -129,6 +137,13 @@ export const Board = ({ topic, itemId, embedded }) => {
         onToggleArchive={handleToggleArchive}
         card={selectedCard}
         onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
+        labelnames={board.metadata.labelnames}
+      />
+      <LabelsDialog
+        open={labelsDialogOpen}
+        onClose={() => setLabelsDialogOpen(false)}
+        labelnames={board.metadata.labelnames}
+        onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
       />
     </div>
   );
