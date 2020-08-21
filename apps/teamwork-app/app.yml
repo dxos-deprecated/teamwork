@@ -1,11 +1,5 @@
-#
-# Copyright 2020 DXOS.org
-#
-
-id: 'wrn:app:dxos.io/teamwork'
-name: dxos.io/teamwork
-displayName: Teamwork
-version: 0.0.1
-baseUrl: /teamwork
-package: QmVwEZd8KKsKs5QSch3kY4KeaMmupVu1Wy9a5L7hhfowHV
+name: Teamwork
+version: 0.0.2
 build: yarn dist
+package:
+  /: Qmev85qURzZHgYfyBDmU7gYUjwaQ4KicxQcsjNiE9XMVcX
