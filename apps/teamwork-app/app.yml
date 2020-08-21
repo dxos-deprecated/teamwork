@@ -1,5 +1,5 @@
 name: Teamwork
-version: 0.0.2
+version: 0.0.3
 build: yarn dist
 package:
-  /: Qmev85qURzZHgYfyBDmU7gYUjwaQ4KicxQcsjNiE9XMVcX
+  /: QmVTZaYs3AHBsqH9uWEBnPE6U98Edsi753AQZ8i6Noi2uG
