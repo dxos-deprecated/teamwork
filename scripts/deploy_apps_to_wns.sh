@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-# TODO(telackey): Real cert or add trust to Kube CA.
-export NODE_TLS_REJECT_UNAUTHORIZED=0
-
 for appdir in `find ./apps -name '*-app' -type d | grep -v node_modules`; do
   pushd $appdir
 
