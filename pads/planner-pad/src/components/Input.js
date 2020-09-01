@@ -18,10 +18,14 @@ const useStyles = makeStyles(() => ({
 /**
  * Editable text field.
  */
-export const Input = (props) => {
+export const Input = ({
+  className,
+  value,
+  onUpdate,
+  multiline,
+  ...textFieldProps
+}) => {
   const classes = useStyles();
-  const { className, value, onUpdate, multiline, ...textFieldProps } = props;
-
   const [text, setText] = useState(value);
   const original = value;
 

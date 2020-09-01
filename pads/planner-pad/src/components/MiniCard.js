@@ -33,15 +33,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const InnerCard = (props) => {
-  const { cardProperties } = props;
+const InnerCard = ({ cardProperties }) => {
   return <Typography variant="body1">{cardProperties.title}</Typography>;
 };
 
-export const MiniCard = (props) => {
+export const MiniCard = ({
+  className,
+  style,
+  onOpenCard,
+  cardProperties,
+  listDeleted
+}) => {
   const classes = useStyles();
   const { names } = useLabels();
-  const { className, style, onOpenCard, cardProperties, listDeleted } = props;
   const deletedClassName = cardProperties.deleted
     ? classes.deleted
     : (listDeleted ? classes.listDeleted : '');
