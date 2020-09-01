@@ -93,8 +93,7 @@ const List = ({
     open: listSettingsOpen,
     onClose: () => setListSettingsOpen(false),
     showArchived: showArchived,
-    onToggleShowArchived: onToggleShowArchived,
-    onToggleArchive: handleToggleArchive
+    onToggleShowArchived: onToggleShowArchived
   };
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
@@ -172,6 +171,7 @@ const List = ({
         {...commonListSettingsProps}
         anchorEl={listSettingsAnchor.current}
         deleted={list.properties.deleted}
+        onToggleArchive={handleToggleArchive}
       />
     </div>
   );
