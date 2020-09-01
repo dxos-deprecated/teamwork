@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const AddCard = (props) => {
+export const AddCard = (props) => {
   const classes = useStyles();
   const { onAddCard } = props;
   const [title, setTitle] = useState('');
