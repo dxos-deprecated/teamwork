@@ -8,9 +8,8 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import List from '../containers/List';
 import { getInsertedPositionAtIndex, getChangedPositionAtIndex } from '../model';
-import { defaultLabelNames } from '../model/labels';
+import List from './List';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -51,7 +50,22 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel, labelnames = defaultLabelNames }) => {
+export const DraggableLists = ({
+  boardId,
+  lists,
+  isDragDisabled,
+  getCardsForList,
+  embedded,
+  onOpenCard,
+  handleAddCard,
+  handleUpdateList,
+  handleAddList,
+  handleMoveList,
+  handleMoveCard,
+  onDragDisabled,
+  showArchived,
+  onToggleShowArchived
+}) => {
   const classes = useStyles();
 
   const onDragEnd = async (result) => {
@@ -109,16 +123,14 @@ export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList
                         embedded={embedded}
                         showArchived={showArchived}
                         onToggleShowArchived={onToggleShowArchived}
-                        onOpenLabelsDialog={onOpenLabelsDialog}
-                        labelnames={labelnames}
-                        onFilterByLabel={onFilterByLabel}
-                        filterByLabel={filterByLabel}
                       />
                     </div>
                   )}
                 </Draggable>
               ))}
             </div>
+
+            {/* The new list placeholder */}
             <List
               className={classes.newList}
               embedded={embedded}

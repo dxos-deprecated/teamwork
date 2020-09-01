@@ -15,9 +15,7 @@ import SettingsIcon from '@material-ui/icons/MoreVert';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { ListSettingsMenu } from '../components';
-import AddCard from './AddCard';
-import DraggableCard from './DraggableCard';
+import { DraggableCard, AddCard, ListSettingsMenu } from '../components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,7 +60,20 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, className, embedded, isDragDisabled, showArchived, onToggleShowArchived, onOpenLabelsDialog, labelnames, onFilterByLabel, filterByLabel, showMenuOnNewCard = false }) => {
+const List = ({
+  embedded,
+  showArchived,
+  onToggleShowArchived,
+  className = '',
+  list = undefined,
+  cards = undefined,
+  onUpdateList = undefined,
+  onOpenCard = undefined,
+  onAddCard = undefined,
+  isDragDisabled = undefined,
+  onNewList = undefined,
+  showMenuOnNewCard = false // menu on new card is shown only if it is the only card left
+}) => {
   const classes = useStyles();
   const [listSettingsOpen, setListSettingsOpen] = useState(false);
   const listSettingsAnchor = useRef();
@@ -75,6 +86,14 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
   const handleToggleArchive = () => {
     assert(list);
     onUpdateList({ deleted: !list.properties.deleted });
+  };
+
+  // Common props used by regular list settings, and new list placeholder settings
+  const commonListSettingsProps = {
+    open: listSettingsOpen,
+    onClose: () => setListSettingsOpen(false),
+    showArchived: showArchived,
+    onToggleShowArchived: onToggleShowArchived
   };
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
@@ -97,14 +116,10 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
         </IconButton>
         <Typography className={classes.addSubtitle} variant='h5'>New List</Typography>
         <ListSettingsMenu
+          {...commonListSettingsProps}
           anchorEl={newListSettingsAnchor.current}
-          open={listSettingsOpen}
-          onClose={() => setListSettingsOpen(false)}
           deleted={false}
-          onToggleArchive={undefined}
-          showArchived={showArchived}
-          onToggleShowArchived={onToggleShowArchived}
-          onOpenLabelsDialog={onOpenLabelsDialog}
+          labelFilteringDisabled={true}
         />
       </div>
     );
@@ -141,7 +156,6 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
                       provided={provided}
                       onOpenCard={onOpenCard}
                       listDeleted={list.properties.deleted}
-                      labelnames={labelnames}
                     />
                   )}
                 </Draggable>
@@ -154,17 +168,10 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
         <AddCard onAddCard={title => onAddCard(title, list.id)} />
       </>)}
       <ListSettingsMenu
+        {...commonListSettingsProps}
         anchorEl={listSettingsAnchor.current}
-        open={listSettingsOpen}
-        onClose={() => setListSettingsOpen(false)}
         deleted={list.properties.deleted}
         onToggleArchive={handleToggleArchive}
-        showArchived={showArchived}
-        onToggleShowArchived={onToggleShowArchived}
-        onOpenLabelsDialog={onOpenLabelsDialog}
-        onFilterByLabel={onFilterByLabel}
-        filterByLabel={filterByLabel}
-        labelnames={labelnames}
       />
     </div>
   );

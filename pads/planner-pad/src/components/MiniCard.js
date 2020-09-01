@@ -8,7 +8,7 @@ import React from 'react';
 import { Typography, Card as MuiCard, Chip, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { PLANNER_LABELS, labelColorLookup } from '../model/labels';
+import { useLabels } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,14 +32,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const InnerCard = (props) => {
-  const { cardProperties } = props;
+const InnerCard = ({ cardProperties }) => {
   return <Typography variant="body1">{cardProperties.title}</Typography>;
 };
 
-const MiniCard = (props) => {
+export const MiniCard = ({
+  style,
+  onOpenCard,
+  cardProperties,
+  listDeleted,
+  className = ''
+}) => {
   const classes = useStyles();
-  const { className, style, onOpenCard, cardProperties, listDeleted, labelnames } = props;
+  const { names, labels, colorLookup } = useLabels();
   const deletedClassName = cardProperties.deleted
     ? classes.deleted
     : (listDeleted ? classes.listDeleted : '');
@@ -48,14 +53,14 @@ const MiniCard = (props) => {
     <MuiCard className={clsx(classes.root, className, deletedClassName)} onMouseUp={onOpenCard}>
       {cardProperties.labels && (
         <div className={classes.labels}>
-          {PLANNER_LABELS
+          {labels
             .filter(x => cardProperties.labels[x])
             .map(label => (
-              <Tooltip key={label} title={labelnames[label]}>
+              <Tooltip key={label} title={names[label]}>
                 <Chip
                   label='&nbsp;&nbsp;'
                   size="small"
-                  style={{ backgroundColor: labelColorLookup[label] }}
+                  style={{ backgroundColor: colorLookup[label] }}
                   disabled={false}
                   className={classes.label}
                 />

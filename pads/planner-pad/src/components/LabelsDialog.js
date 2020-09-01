@@ -16,7 +16,7 @@ import AssignmentIcon from '@material-ui/icons/AssignmentTurnedIn';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { PLANNER_LABELS, labelColorLookup, defaultLabelNames } from '../model/labels';
+import { useLabels } from '../hooks';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,8 +37,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LabelsDialog = ({ open, onClose, onUpdate, labelnames = defaultLabelNames }) => {
+export const LabelsDialog = ({ open, onClose, onUpdate }) => {
   const classes = useStyles();
+  const { names, labels, colorLookup } = useLabels();
 
   return (
     <Dialog classes={{ paper: classes.root }} open={open} maxWidth='md' onClose={onClose}>
@@ -51,13 +52,13 @@ const LabelsDialog = ({ open, onClose, onUpdate, labelnames = defaultLabelNames 
 
       <DialogContent>
         <div className={classes.labelSection}>
-          {PLANNER_LABELS.map(label => (
+          {labels.map(label => (
             <EditableText
               className={classes.label}
               key={label}
-              value={labelnames[label]}
-              onUpdate={(value) => onUpdate({ ...labelnames, [label]: value })}
-              style={{ backgroundColor: labelColorLookup[label] }}
+              value={names[label]}
+              onUpdate={(value) => onUpdate({ ...names, [label]: value })}
+              style={{ backgroundColor: colorLookup[label] }}
             />
           ))}
         </div>

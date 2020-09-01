@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const DraggableCard = ({ card, provided, onOpenCard, listDeleted, labelnames }) => {
+export const DraggableCard = ({ card, provided, onOpenCard, listDeleted }) => {
   const classes = useStyles();
 
   return (
@@ -31,7 +31,6 @@ const DraggableCard = ({ card, provided, onOpenCard, listDeleted, labelnames }) 
         cardProperties={card.properties}
         onOpenCard={() => onOpenCard(card.id)}
         style={provided.draggableProps.style}
-        labelnames={labelnames}
       />
     </div>
   );

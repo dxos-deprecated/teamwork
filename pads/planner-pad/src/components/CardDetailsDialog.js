@@ -18,8 +18,9 @@ import CheckIcon from '@material-ui/icons/Check';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { ArchiveButton, RestoreButton } from '../components';
-import { PLANNER_LABELS, toggleLabel, labelColorLookup, defaultLabelNames } from '../model/labels';
+import { ArchiveButton, RestoreButton } from '.';
+import { useLabels } from '../hooks';
+import { toggleLabel } from '../model/labels';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,8 +44,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate, labelnames = defaultLabelNames }) => {
+export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate }) => {
   const classes = useStyles();
+  const { names, labels, colorLookup } = useLabels();
 
   if (!card) return null;
 
@@ -69,12 +71,12 @@ const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate,
         />
         <div className={classes.labelSection}>
           <Typography variant='body1'>Labels:</Typography>
-          {PLANNER_LABELS.map(label => (
+          {labels.map(label => (
             <Chip
               className={classes.label}
               key={label}
-              label={labelnames[label]}
-              style={{ backgroundColor: labelColorLookup[label] }}
+              label={names[label]}
+              style={{ backgroundColor: colorLookup[label] }}
               onClick={() => handleToggleLabel(label)}
               avatar={card.properties.labels && (card.properties.labels[label] ? <CheckIcon /> : <span style={{ width: '18px' }} />)}
               size="small"

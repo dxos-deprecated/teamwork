@@ -8,10 +8,11 @@ import React, { useState, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
-import DraggableLists from '../components/DraggableLists';
+import { CardDetailsDialog, LabelsDialog } from '../components';
+import { labelsContext } from '../hooks';
 import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
-import CardDetailsDialog from './CardDetailsDialog';
-import LabelsDialog from './LabelsDialog';
+import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
+import DraggableLists from './DraggableLists';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -109,42 +110,47 @@ export const Board = ({ topic, itemId, embedded }) => {
   };
 
   return (
-    <div className={classes.containerRoot}>
-      { isDragDisabled && <CircularProgress className={classes.spinner} />}
-      <DraggableLists
-        handleMoveList={handleMoveList}
-        handleMoveCard={handleMoveCard}
-        lists={lists}
-        boardId={board.itemId}
-        isDragDisabled={isDragDisabled}
-        onDragDisabled={() => setIsDragDisabled(true)}
-        getCardsForList={getCardsForList}
-        embedded={embedded}
-        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
-        handleAddCard={handleAddCard}
-        handleUpdateList={handleUpdateListOrCard}
-        handleAddList={handleAddList}
-        showArchived={showArchived}
-        onToggleShowArchived={() => setShowArchived(prev => !prev)}
-        onOpenLabelsDialog={() => setLabelsDialogOpen(true)}
-        labelnames={board.metadata.labelnames}
-        onFilterByLabel={(label) => setFilterByLabel(label)}
-        filterByLabel={filterByLabel}
-      />
-      <CardDetailsDialog
-        open={!!selectedCard}
-        onClose={() => setSelectedCard(undefined)}
-        onToggleArchive={handleToggleArchive}
-        card={selectedCard}
-        onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
-        labelnames={board.metadata.labelnames}
-      />
-      <LabelsDialog
-        open={labelsDialogOpen}
-        onClose={() => setLabelsDialogOpen(false)}
-        labelnames={board.metadata.labelnames}
-        onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
-      />
-    </div>
+    <labelsContext.Provider
+      value={{
+        filterByLabel,
+        names: board.metadata.labelnames ?? defaultLabelNames,
+        onFilterByLabel: (label) => setFilterByLabel(label),
+        onOpenLabelsDialog: () => setLabelsDialogOpen(true),
+        labels: PLANNER_LABELS,
+        colorLookup: labelColorLookup
+      }}
+    >
+      <div className={classes.containerRoot}>
+        { isDragDisabled && <CircularProgress className={classes.spinner} />}
+        <DraggableLists
+          handleMoveList={handleMoveList}
+          handleMoveCard={handleMoveCard}
+          lists={lists}
+          boardId={board.itemId}
+          isDragDisabled={isDragDisabled}
+          onDragDisabled={() => setIsDragDisabled(true)}
+          getCardsForList={getCardsForList}
+          embedded={embedded}
+          onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
+          handleAddCard={handleAddCard}
+          handleUpdateList={handleUpdateListOrCard}
+          handleAddList={handleAddList}
+          showArchived={showArchived}
+          onToggleShowArchived={() => setShowArchived(prev => !prev)}
+        />
+        <CardDetailsDialog
+          open={!!selectedCard}
+          onClose={() => setSelectedCard(undefined)}
+          onToggleArchive={handleToggleArchive}
+          card={selectedCard}
+          onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
+        />
+        <LabelsDialog
+          open={labelsDialogOpen}
+          onClose={() => setLabelsDialogOpen(false)}
+          onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
+        />
+      </div>
+    </labelsContext.Provider>
   );
 };

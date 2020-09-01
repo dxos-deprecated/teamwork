@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { PLANNER_LABELS, defaultLabelNames, labelColorLookup } from '../model/labels';
+import { useLabels } from '../hooks';
 
 const useStyles = makeStyles({
   root: {
@@ -21,8 +21,18 @@ const useStyles = makeStyles({
   }
 });
 
-export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel, labelnames = defaultLabelNames }) => {
+export const ListSettingsMenu = ({
+  anchorEl,
+  open,
+  onClose,
+  deleted,
+  showArchived,
+  onToggleShowArchived,
+  onToggleArchive = undefined,
+  labelFilteringDisabled = false
+}) => {
   const classes = useStyles();
+  const { names, filterByLabel, onFilterByLabel, onOpenLabelsDialog, labels, colorLookup } = useLabels();
 
   const handleToggleArchive = () => {
     onToggleArchive();
@@ -49,24 +59,24 @@ export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArc
       <MenuItem button onClick={handleToggleShowArchived}>
         <ListItemText primary={showArchived ? 'Hide archived' : 'Show archived'} />
       </MenuItem>
-      {onOpenLabelsDialog && (
+      {!labelFilteringDisabled && (
         <MenuItem button onClick={handleLabelSettings}>
           <ListItemText primary='Label Settings' />
         </MenuItem>
       )}
-      {onFilterByLabel && (
+      {!labelFilteringDisabled && (
         <>
           <Divider />
           <MenuItem disabled={true}>Filters:</MenuItem>
-          {PLANNER_LABELS.map(label => (
+          {labels.map(label => (
             <MenuItem
               key={label}
               button
               onClick={() => onFilterByLabel(filterByLabel === label ? undefined : label)}
               selected={filterByLabel === label}
             >
-              <ListItemIcon><SearchIcon htmlColor={labelColorLookup[label]} /></ListItemIcon>
-              <Typography variant="inherit" noWrap>{labelnames[label]}</Typography>
+              <ListItemIcon><SearchIcon htmlColor={colorLookup[label]} /></ListItemIcon>
+              <Typography variant="inherit" noWrap>{names[label]}</Typography>
             </MenuItem>
           ))}
         </>
