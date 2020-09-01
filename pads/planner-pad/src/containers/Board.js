@@ -110,7 +110,9 @@ export const Board = ({ topic, itemId, embedded }) => {
   };
 
   return (
-    <labelsContext.Provider value={{ names: board.metadata.labelnames ?? defaultLabelNames }}>
+    <labelsContext.Provider
+      value={{ names: board.metadata.labelnames ?? defaultLabelNames }}
+    >
       <div className={classes.containerRoot}>
         { isDragDisabled && <CircularProgress className={classes.spinner} />}
         <DraggableLists

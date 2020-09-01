@@ -50,7 +50,25 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
+export const DraggableLists = ({
+  boardId,
+  lists,
+  isDragDisabled,
+  getCardsForList,
+  embedded,
+  onOpenCard,
+  handleAddCard,
+  handleUpdateList,
+  handleAddList,
+  handleMoveList,
+  handleMoveCard,
+  onDragDisabled,
+  showArchived,
+  onToggleShowArchived,
+  onOpenLabelsDialog,
+  onFilterByLabel,
+  filterByLabel
+}) => {
   const classes = useStyles();
 
   const onDragEnd = async (result) => {
