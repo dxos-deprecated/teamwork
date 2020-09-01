@@ -117,6 +117,8 @@ export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList
                 </Draggable>
               ))}
             </div>
+
+            {/* The new list placeholder */}
             <List
               className={classes.newList}
               embedded={embedded}

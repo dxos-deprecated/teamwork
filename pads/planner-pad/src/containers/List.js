@@ -61,21 +61,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const List = ({
-  onNewList,
-  list,
-  cards,
-  onUpdateList,
-  onOpenCard,
-  onAddCard,
-  className,
   embedded,
-  isDragDisabled,
   showArchived,
   onToggleShowArchived,
-  onOpenLabelsDialog,
-  onFilterByLabel,
-  filterByLabel,
-  showMenuOnNewCard = false
+  className = '',
+  list = undefined,
+  cards = undefined,
+  onUpdateList = undefined,
+  onOpenCard = undefined,
+  onAddCard = undefined,
+  isDragDisabled = undefined,
+  onOpenLabelsDialog = undefined,
+  onFilterByLabel = undefined,
+  filterByLabel = undefined,
+  onNewList = undefined,
+  showMenuOnNewCard = false // menu on new card is shown only if it is the only card left
 }) => {
   const classes = useStyles();
   const [listSettingsOpen, setListSettingsOpen] = useState(false);
@@ -89,6 +89,18 @@ const List = ({
   const handleToggleArchive = () => {
     assert(list);
     onUpdateList({ deleted: !list.properties.deleted });
+  };
+
+  // Common props used by regular list settings, and new list placeholder settings
+  const commonListSettingsProps = {
+    open: listSettingsOpen,
+    onClose: () => setListSettingsOpen(false),
+    showArchived: showArchived,
+    onToggleShowArchived: onToggleShowArchived,
+    onOpenLabelsDialog: onOpenLabelsDialog,
+    onToggleArchive: handleToggleArchive,
+    onFilterByLabel: onFilterByLabel,
+    filterByLabel: filterByLabel
   };
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
@@ -111,14 +123,9 @@ const List = ({
         </IconButton>
         <Typography className={classes.addSubtitle} variant='h5'>New List</Typography>
         <ListSettingsMenu
+          {...commonListSettingsProps}
           anchorEl={newListSettingsAnchor.current}
-          open={listSettingsOpen}
-          onClose={() => setListSettingsOpen(false)}
           deleted={false}
-          onToggleArchive={undefined}
-          showArchived={showArchived}
-          onToggleShowArchived={onToggleShowArchived}
-          onOpenLabelsDialog={onOpenLabelsDialog}
         />
       </div>
     );
@@ -167,16 +174,9 @@ const List = ({
         <AddCard onAddCard={title => onAddCard(title, list.id)} />
       </>)}
       <ListSettingsMenu
+        {...commonListSettingsProps}
         anchorEl={listSettingsAnchor.current}
-        open={listSettingsOpen}
-        onClose={() => setListSettingsOpen(false)}
         deleted={list.properties.deleted}
-        onToggleArchive={handleToggleArchive}
-        showArchived={showArchived}
-        onToggleShowArchived={onToggleShowArchived}
-        onOpenLabelsDialog={onOpenLabelsDialog}
-        onFilterByLabel={onFilterByLabel}
-        filterByLabel={filterByLabel}
       />
     </div>
   );
