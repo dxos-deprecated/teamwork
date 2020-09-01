@@ -71,9 +71,6 @@ const List = ({
   onOpenCard = undefined,
   onAddCard = undefined,
   isDragDisabled = undefined,
-  onOpenLabelsDialog = undefined,
-  onFilterByLabel = undefined,
-  filterByLabel = undefined,
   onNewList = undefined,
   showMenuOnNewCard = false // menu on new card is shown only if it is the only card left
 }) => {
@@ -97,10 +94,7 @@ const List = ({
     onClose: () => setListSettingsOpen(false),
     showArchived: showArchived,
     onToggleShowArchived: onToggleShowArchived,
-    onOpenLabelsDialog: onOpenLabelsDialog,
-    onToggleArchive: handleToggleArchive,
-    onFilterByLabel: onFilterByLabel,
-    filterByLabel: filterByLabel
+    onToggleArchive: handleToggleArchive
   };
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
@@ -126,6 +120,7 @@ const List = ({
           {...commonListSettingsProps}
           anchorEl={newListSettingsAnchor.current}
           deleted={false}
+          labelFilteringDisabled={true}
         />
       </div>
     );

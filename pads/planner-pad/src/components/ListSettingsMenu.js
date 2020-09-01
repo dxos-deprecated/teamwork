@@ -29,13 +29,11 @@ export const ListSettingsMenu = ({
   deleted,
   showArchived,
   onToggleShowArchived,
-  filterByLabel = undefined,
-  onOpenLabelsDialog = undefined,
   onToggleArchive = undefined,
-  onFilterByLabel = undefined
+  labelFilteringDisabled = false
 }) => {
   const classes = useStyles();
-  const { names } = useLabels();
+  const { names, filterByLabel, onFilterByLabel, onOpenLabelsDialog } = useLabels();
 
   const handleToggleArchive = () => {
     onToggleArchive();
@@ -62,12 +60,12 @@ export const ListSettingsMenu = ({
       <MenuItem button onClick={handleToggleShowArchived}>
         <ListItemText primary={showArchived ? 'Hide archived' : 'Show archived'} />
       </MenuItem>
-      {onOpenLabelsDialog && (
+      {!labelFilteringDisabled && (
         <MenuItem button onClick={handleLabelSettings}>
           <ListItemText primary='Label Settings' />
         </MenuItem>
       )}
-      {onFilterByLabel && (
+      {!labelFilteringDisabled && (
         <>
           <Divider />
           <MenuItem disabled={true}>Filters:</MenuItem>

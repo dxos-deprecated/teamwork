@@ -64,10 +64,7 @@ export const DraggableLists = ({
   handleMoveCard,
   onDragDisabled,
   showArchived,
-  onToggleShowArchived,
-  onOpenLabelsDialog,
-  onFilterByLabel,
-  filterByLabel
+  onToggleShowArchived
 }) => {
   const classes = useStyles();
 
@@ -126,9 +123,6 @@ export const DraggableLists = ({
                         embedded={embedded}
                         showArchived={showArchived}
                         onToggleShowArchived={onToggleShowArchived}
-                        onOpenLabelsDialog={onOpenLabelsDialog}
-                        onFilterByLabel={onFilterByLabel}
-                        filterByLabel={filterByLabel}
                       />
                     </div>
                   )}

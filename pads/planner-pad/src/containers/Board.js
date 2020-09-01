@@ -111,7 +111,12 @@ export const Board = ({ topic, itemId, embedded }) => {
 
   return (
     <labelsContext.Provider
-      value={{ names: board.metadata.labelnames ?? defaultLabelNames }}
+      value={{
+        filterByLabel,
+        names: board.metadata.labelnames ?? defaultLabelNames,
+        onFilterByLabel: (label) => setFilterByLabel(label),
+        onOpenLabelsDialog: () => setLabelsDialogOpen(true)
+      }}
     >
       <div className={classes.containerRoot}>
         { isDragDisabled && <CircularProgress className={classes.spinner} />}
@@ -130,9 +135,6 @@ export const Board = ({ topic, itemId, embedded }) => {
           handleAddList={handleAddList}
           showArchived={showArchived}
           onToggleShowArchived={() => setShowArchived(prev => !prev)}
-          onOpenLabelsDialog={() => setLabelsDialogOpen(true)}
-          onFilterByLabel={(label) => setFilterByLabel(label)}
-          filterByLabel={filterByLabel}
         />
         <CardDetailsDialog
           open={!!selectedCard}
