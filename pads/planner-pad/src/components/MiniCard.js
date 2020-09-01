@@ -9,7 +9,6 @@ import { Typography, Card as MuiCard, Chip, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useLabels } from '../hooks';
-import { PLANNER_LABELS, labelColorLookup } from '../model/labels';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,7 +44,7 @@ export const MiniCard = ({
   className = ''
 }) => {
   const classes = useStyles();
-  const { names } = useLabels();
+  const { names, labels, colorLookup } = useLabels();
   const deletedClassName = cardProperties.deleted
     ? classes.deleted
     : (listDeleted ? classes.listDeleted : '');
@@ -54,14 +53,14 @@ export const MiniCard = ({
     <MuiCard className={clsx(classes.root, className, deletedClassName)} onMouseUp={onOpenCard}>
       {cardProperties.labels && (
         <div className={classes.labels}>
-          {PLANNER_LABELS
+          {labels
             .filter(x => cardProperties.labels[x])
             .map(label => (
               <Tooltip key={label} title={names[label]}>
                 <Chip
                   label='&nbsp;&nbsp;'
                   size="small"
-                  style={{ backgroundColor: labelColorLookup[label] }}
+                  style={{ backgroundColor: colorLookup[label] }}
                   disabled={false}
                   className={classes.label}
                 />

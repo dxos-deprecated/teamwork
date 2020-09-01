@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
 import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
-import { defaultLabelNames } from '../model/labels';
+import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
 import DraggableLists from './DraggableLists';
 
 const useStyles = makeStyles(theme => {
@@ -115,7 +115,9 @@ export const Board = ({ topic, itemId, embedded }) => {
         filterByLabel,
         names: board.metadata.labelnames ?? defaultLabelNames,
         onFilterByLabel: (label) => setFilterByLabel(label),
-        onOpenLabelsDialog: () => setLabelsDialogOpen(true)
+        onOpenLabelsDialog: () => setLabelsDialogOpen(true),
+        labels: PLANNER_LABELS,
+        colorLookup: labelColorLookup
       }}
     >
       <div className={classes.containerRoot}>

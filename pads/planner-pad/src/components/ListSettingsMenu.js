@@ -14,7 +14,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { useLabels } from '../hooks';
-import { PLANNER_LABELS, labelColorLookup } from '../model/labels';
 
 const useStyles = makeStyles({
   root: {
@@ -33,7 +32,7 @@ export const ListSettingsMenu = ({
   labelFilteringDisabled = false
 }) => {
   const classes = useStyles();
-  const { names, filterByLabel, onFilterByLabel, onOpenLabelsDialog } = useLabels();
+  const { names, filterByLabel, onFilterByLabel, onOpenLabelsDialog, labels, colorLookup } = useLabels();
 
   const handleToggleArchive = () => {
     onToggleArchive();
@@ -69,14 +68,14 @@ export const ListSettingsMenu = ({
         <>
           <Divider />
           <MenuItem disabled={true}>Filters:</MenuItem>
-          {PLANNER_LABELS.map(label => (
+          {labels.map(label => (
             <MenuItem
               key={label}
               button
               onClick={() => onFilterByLabel(filterByLabel === label ? undefined : label)}
               selected={filterByLabel === label}
             >
-              <ListItemIcon><SearchIcon htmlColor={labelColorLookup[label]} /></ListItemIcon>
+              <ListItemIcon><SearchIcon htmlColor={colorLookup[label]} /></ListItemIcon>
               <Typography variant="inherit" noWrap>{names[label]}</Typography>
             </MenuItem>
           ))}
