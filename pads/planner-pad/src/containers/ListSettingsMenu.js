@@ -22,7 +22,18 @@ const useStyles = makeStyles({
   }
 });
 
-export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
+export const ListSettingsMenu = ({
+  anchorEl,
+  open,
+  onClose,
+  deleted,
+  showArchived,
+  onToggleShowArchived,
+  filterByLabel = undefined,
+  onOpenLabelsDialog = undefined,
+  onToggleArchive = undefined,
+  onFilterByLabel = undefined
+}) => {
   const classes = useStyles();
   const { names } = useLabels();
 
