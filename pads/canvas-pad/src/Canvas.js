@@ -3,6 +3,7 @@
 //
 
 import assert from 'assert';
+import clsx from 'clsx';
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,10 +16,13 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flex: 1
+  },
+  embeddedRoot: {
+    minHeight: 450
   }
 }));
 
-export const Canvas = ({ topic, itemId }) => {
+export const Canvas = ({ topic, itemId, embedded }) => {
   assert(topic);
   assert(itemId);
 
@@ -32,7 +36,7 @@ export const Canvas = ({ topic, itemId }) => {
   const objects = model.objects.filter(o => !!(o.properties.type && o.properties.bounds));
 
   return (
-    <div className={classes.root}>
+    <div className={clsx(classes.root, embedded ? classes.embeddedRoot : '')}>
       <GemCanvas objects={objects} model={model} />
     </div>
   );
