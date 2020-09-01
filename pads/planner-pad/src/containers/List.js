@@ -164,6 +164,7 @@ const List = ({ onNewList, list, cards, onUpdateList, onOpenCard, onAddCard, cla
         onOpenLabelsDialog={onOpenLabelsDialog}
         onFilterByLabel={onFilterByLabel}
         filterByLabel={filterByLabel}
+        labelnames={labelnames}
       />
     </div>
   );

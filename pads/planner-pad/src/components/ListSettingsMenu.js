@@ -13,7 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import { PLANNER_LABELS, defaultLabelNames } from '../model/labels';
 
-export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
+export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel, labelnames = defaultLabelNames }) => {
   const handleToggleArchive = () => {
     onToggleArchive();
     onClose();
@@ -52,7 +52,7 @@ export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArc
               {filterByLabel === label && (
                 <ListItemIcon><SearchIcon /></ListItemIcon>
               )}
-              <ListItemText primary={defaultLabelNames[label]} />
+              <ListItemText primary={labelnames[label]} />
             </MenuItem>
           ))}
         </>
