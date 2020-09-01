@@ -8,8 +8,8 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import List from '../containers/List';
 import { getInsertedPositionAtIndex, getChangedPositionAtIndex } from '../model';
+import List from './List';
 
 const useStyles = makeStyles(theme => {
   return {

@@ -8,11 +8,11 @@ import React, { useState, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
-import DraggableLists from '../components/DraggableLists';
 import { labelsContext } from '../hooks';
 import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import { defaultLabelNames } from '../model/labels';
 import CardDetailsDialog from './CardDetailsDialog';
+import DraggableLists from './DraggableLists';
 import LabelsDialog from './LabelsDialog';
 
 const useStyles = makeStyles(theme => {
