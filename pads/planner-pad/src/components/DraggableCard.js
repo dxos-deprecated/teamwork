@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const DraggableCard = ({ card, provided, onOpenCard, listDeleted }) => {
+export const DraggableCard = ({ card, provided, onOpenCard, listDeleted }) => {
   const classes = useStyles();
 
   return (

@@ -38,7 +38,7 @@ const InnerCard = (props) => {
   return <Typography variant="body1">{cardProperties.title}</Typography>;
 };
 
-const MiniCard = (props) => {
+export const MiniCard = (props) => {
   const classes = useStyles();
   const { names } = useLabels();
   const { className, style, onOpenCard, cardProperties, listDeleted } = props;
