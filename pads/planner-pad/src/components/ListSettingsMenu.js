@@ -13,7 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 
-import { PLANNER_LABELS, defaultLabelNames, labelColorLookup } from '../model/labels';
+import { useLabels } from '../hooks';
+import { PLANNER_LABELS, labelColorLookup } from '../model/labels';
 
 const useStyles = makeStyles({
   root: {
@@ -21,8 +22,9 @@ const useStyles = makeStyles({
   }
 });
 
-export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel, labelnames = defaultLabelNames }) => {
+export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArchive, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
   const classes = useStyles();
+  const { names } = useLabels();
 
   const handleToggleArchive = () => {
     onToggleArchive();
@@ -66,7 +68,7 @@ export const ListSettingsMenu = ({ anchorEl, open, onClose, deleted, onToggleArc
               selected={filterByLabel === label}
             >
               <ListItemIcon><SearchIcon htmlColor={labelColorLookup[label]} /></ListItemIcon>
-              <Typography variant="inherit" noWrap>{labelnames[label]}</Typography>
+              <Typography variant="inherit" noWrap>{names[label]}</Typography>
             </MenuItem>
           ))}
         </>

@@ -9,7 +9,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
 import DraggableLists from '../components/DraggableLists';
+import { labelsContext } from '../hooks';
 import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
+import { defaultLabelNames } from '../model/labels';
 import CardDetailsDialog from './CardDetailsDialog';
 import LabelsDialog from './LabelsDialog';
 
@@ -109,42 +111,41 @@ export const Board = ({ topic, itemId, embedded }) => {
   };
 
   return (
-    <div className={classes.containerRoot}>
-      { isDragDisabled && <CircularProgress className={classes.spinner} />}
-      <DraggableLists
-        handleMoveList={handleMoveList}
-        handleMoveCard={handleMoveCard}
-        lists={lists}
-        boardId={board.itemId}
-        isDragDisabled={isDragDisabled}
-        onDragDisabled={() => setIsDragDisabled(true)}
-        getCardsForList={getCardsForList}
-        embedded={embedded}
-        onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
-        handleAddCard={handleAddCard}
-        handleUpdateList={handleUpdateListOrCard}
-        handleAddList={handleAddList}
-        showArchived={showArchived}
-        onToggleShowArchived={() => setShowArchived(prev => !prev)}
-        onOpenLabelsDialog={() => setLabelsDialogOpen(true)}
-        labelnames={board.metadata.labelnames}
-        onFilterByLabel={(label) => setFilterByLabel(label)}
-        filterByLabel={filterByLabel}
-      />
-      <CardDetailsDialog
-        open={!!selectedCard}
-        onClose={() => setSelectedCard(undefined)}
-        onToggleArchive={handleToggleArchive}
-        card={selectedCard}
-        onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
-        labelnames={board.metadata.labelnames}
-      />
-      <LabelsDialog
-        open={labelsDialogOpen}
-        onClose={() => setLabelsDialogOpen(false)}
-        labelnames={board.metadata.labelnames}
-        onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
-      />
-    </div>
+    <labelsContext.Provider value={{ names: board.metadata.labelnames ?? defaultLabelNames }}>
+      <div className={classes.containerRoot}>
+        { isDragDisabled && <CircularProgress className={classes.spinner} />}
+        <DraggableLists
+          handleMoveList={handleMoveList}
+          handleMoveCard={handleMoveCard}
+          lists={lists}
+          boardId={board.itemId}
+          isDragDisabled={isDragDisabled}
+          onDragDisabled={() => setIsDragDisabled(true)}
+          getCardsForList={getCardsForList}
+          embedded={embedded}
+          onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
+          handleAddCard={handleAddCard}
+          handleUpdateList={handleUpdateListOrCard}
+          handleAddList={handleAddList}
+          showArchived={showArchived}
+          onToggleShowArchived={() => setShowArchived(prev => !prev)}
+          onOpenLabelsDialog={() => setLabelsDialogOpen(true)}
+          onFilterByLabel={(label) => setFilterByLabel(label)}
+          filterByLabel={filterByLabel}
+        />
+        <CardDetailsDialog
+          open={!!selectedCard}
+          onClose={() => setSelectedCard(undefined)}
+          onToggleArchive={handleToggleArchive}
+          card={selectedCard}
+          onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
+        />
+        <LabelsDialog
+          open={labelsDialogOpen}
+          onClose={() => setLabelsDialogOpen(false)}
+          onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
+        />
+      </div>
+    </labelsContext.Provider>
   );
 };

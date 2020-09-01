@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import List from '../containers/List';
 import { getInsertedPositionAtIndex, getChangedPositionAtIndex } from '../model';
-import { defaultLabelNames } from '../model/labels';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -51,7 +50,7 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel, labelnames = defaultLabelNames }) => {
+export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList, embedded, onOpenCard, handleAddCard, handleUpdateList, handleAddList, handleMoveList, handleMoveCard, onDragDisabled, showArchived, onToggleShowArchived, onOpenLabelsDialog, onFilterByLabel, filterByLabel }) => {
   const classes = useStyles();
 
   const onDragEnd = async (result) => {
@@ -110,7 +109,6 @@ export const DraggableLists = ({ boardId, lists, isDragDisabled, getCardsForList
                         showArchived={showArchived}
                         onToggleShowArchived={onToggleShowArchived}
                         onOpenLabelsDialog={onOpenLabelsDialog}
-                        labelnames={labelnames}
                         onFilterByLabel={onFilterByLabel}
                         filterByLabel={filterByLabel}
                       />
