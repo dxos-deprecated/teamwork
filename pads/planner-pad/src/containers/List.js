@@ -15,8 +15,7 @@ import SettingsIcon from '@material-ui/icons/MoreVert';
 
 import { EditableText } from '@dxos/react-ux';
 
-import { DraggableCard, AddCard } from '../components';
-import ListSettingsMenu from './ListSettingsMenu';
+import { DraggableCard, AddCard, ListSettingsMenu } from '../components';
 
 const useStyles = makeStyles(theme => ({
   root: {

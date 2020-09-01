@@ -23,7 +23,15 @@ const useStyles = makeStyles(theme => ({
   initializeButton: {}
 }));
 
-const PlannerSettingsDialog = ({ topic, open, onClose, onCancel, item, itemModel, listsModel }) => {
+const PlannerSettingsDialog = ({
+  topic,
+  open,
+  onClose,
+  onCancel,
+  item,
+  itemModel,
+  listsModel
+}) => {
   const lists = listsModel ? listsModel.getObjectsByType(LIST_TYPE) : undefined;
   const classes = useStyles();
   const newListsModel = useModel({ model: ObjectModel, options: { type: LIST_TYPE, topic } });
