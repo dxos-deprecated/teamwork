@@ -38,11 +38,11 @@ const InnerCard = ({ cardProperties }) => {
 };
 
 export const MiniCard = ({
-  className,
   style,
   onOpenCard,
   cardProperties,
-  listDeleted
+  listDeleted,
+  className = ''
 }) => {
   const classes = useStyles();
   const { names } = useLabels();
