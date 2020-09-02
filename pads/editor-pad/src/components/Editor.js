@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -13,7 +13,9 @@ import MessengerPad from '@dxos/messenger-pad';
 import { useProfile } from '@dxos/react-client';
 
 import { useDataChannel } from '../data-channel';
+import { docToMarkdown } from '../markdown';
 import { useDocumentUpdateModel } from '../model';
+import MarkdownIcon from './MarkdownIcon';
 import Pad from './Pad';
 
 const useEditorClasses = makeStyles(theme => ({
@@ -102,10 +104,12 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   };
 };
 
-export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
-  const { publicKey, username } = useProfile();
+export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
+  const downloadLink = useRef();
   const classes = useEditorClasses();
   const [editor, setEditor] = useState();
+
+  const { publicKey, username } = useProfile();
   const [statusData, broadcastStatus] = useDataChannel(itemId);
 
   const customButtons = onToggleMessenger ? [
@@ -114,6 +118,19 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem, onT
       title: 'Messenger',
       icon: MessengerPad.icon,
       onClick: onToggleMessenger,
+      enabled: () => true,
+      active: () => false
+    },
+    { divider: true },
+    {
+      name: 'download_markdown',
+      title: 'Download as Markdown',
+      icon: MarkdownIcon,
+      onClick: () => {
+        const text = docToMarkdown(documentUpdateModel.doc);
+        downloadLink.current.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        downloadLink.current.click();
+      },
       enabled: () => true,
       active: () => false
     }
@@ -157,26 +174,29 @@ export const Editor = ({ topic, itemId, pads = [], items = [], onCreateItem, onT
   if (!documentUpdateModel) return null;
 
   return (
-    <DXOSEditor
-      key={documentUpdateModel.doc.clientID}
-      toolbar={{ customButtons }}
-      schema="full"
-      sync={{
-        id: publicKey,
-        doc: documentUpdateModel.doc,
-        status: {
-          onLocalUpdate: broadcastStatus
-        }
-      }}
-      contextMenu={{
-        getOptions: handleContextMenuGetOptions,
-        onSelect: handleContextMenuOptionSelect,
-        renderItem: handleContextMenuRenderItem
-      }}
-      onCreated={handleEditorCreated}
-      reactElementRenderFn={handleReactElementRender}
-      classes={classes}
-      initialFontSize={14}
-    />
+    <>
+      <a ref={downloadLink} download={`${title}.md`} style={{ display: 'none' }} />
+      <DXOSEditor
+        key={documentUpdateModel.doc.clientID}
+        toolbar={{ customButtons }}
+        schema="full"
+        sync={{
+          id: publicKey,
+          doc: documentUpdateModel.doc,
+          status: {
+            onLocalUpdate: broadcastStatus
+          }
+        }}
+        contextMenu={{
+          getOptions: handleContextMenuGetOptions,
+          onSelect: handleContextMenuOptionSelect,
+          renderItem: handleContextMenuRenderItem
+        }}
+        onCreated={handleEditorCreated}
+        reactElementRenderFn={handleReactElementRender}
+        classes={classes}
+        initialFontSize={14}
+      />
+    </>
   );
 };
