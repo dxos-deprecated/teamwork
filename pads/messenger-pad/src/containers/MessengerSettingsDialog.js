@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/icons/AssignmentTurnedIn';
 
-import { ItemSettings } from '@dxos/react-appkit';
+import { ItemSettings, download } from '@dxos/react-appkit';
 
 import { useChannelMessages } from '../model';
 import serializeChat from '../serialize-chat';
@@ -26,11 +26,7 @@ export const MessengerSettingsDialog = ({ topic, open, onClose, onCancel, item }
 
   const handleDownload = () => {
     assert(item);
-    const file = new Blob([serializeChat(item, messages)], { type: 'text/plain' });
-    const element = document.createElement('a');
-    element.href = URL.createObjectURL(file);
-    element.download = `${item.displayName || 'chat-log'}.md`;
-    element.click();
+    download(serializeChat(item, messages), `${item.displayName || 'chat-log'}.md`);
   };
 
   return (
