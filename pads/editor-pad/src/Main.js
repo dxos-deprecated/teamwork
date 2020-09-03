@@ -47,12 +47,19 @@ const EditorPad = ({ party, topic, itemId }) => {
     return createItem(type);
   };
 
+  const item = items.find(item => item.itemId === itemId);
+
+  if (!item) {
+    return null;
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.container}>
         <Editor
           topic={topic}
           itemId={itemId}
+          title={item.displayName}
           pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
           items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
           onCreateItem={handleCreateItem}
