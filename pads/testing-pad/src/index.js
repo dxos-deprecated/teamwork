@@ -5,7 +5,7 @@
 import Icon from '@material-ui/icons/BugReport';
 
 import { Main } from './Main';
-import { TYPE_TESTING_PAD } from './model';
+import { TYPE_TESTING_PAD, TYPE_TESTING_ITEM } from './model';
 
 export * from './model';
 
@@ -17,5 +17,6 @@ export default {
   icon: Icon,
   main: Main,
   type: TYPE_TESTING_PAD,
+  contentType: TYPE_TESTING_ITEM,
   description: 'DXOS demos & tests'
 };

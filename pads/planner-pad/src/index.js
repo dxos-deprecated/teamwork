@@ -7,7 +7,7 @@ import Icon from '@material-ui/icons/AssignmentTurnedIn';
 import { Board } from './containers/Board';
 import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
 import { BOARD_TYPE } from './model/board';
-
+import { LIST_TYPE, CARD_TYPE } from './model/list';
 export { LIST_TYPE, CARD_TYPE } from './model/list';
 
 export default {
@@ -18,6 +18,7 @@ export default {
   icon: Icon,
   main: Board,
   type: BOARD_TYPE,
+  contentType: [LIST_TYPE, CARD_TYPE],
   description: 'Plan your projects',
   settings: PlannerSettingsDialog
 };

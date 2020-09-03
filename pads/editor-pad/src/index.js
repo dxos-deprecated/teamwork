@@ -5,7 +5,7 @@
 import Icon from '@material-ui/icons/Description';
 
 import Main from './Main';
-import { TYPE_EDITOR_DOCUMENT } from './model';
+import { TYPE_EDITOR_DOCUMENT, TYPE_EDITOR_UPDATE } from './model';
 
 export default {
   // TODO(elmasse): READ THIS FROM PAD.YML
@@ -15,5 +15,6 @@ export default {
   icon: Icon,
   main: Main,
   type: TYPE_EDITOR_DOCUMENT,
+  contentType: TYPE_EDITOR_UPDATE,
   description: 'Write collaboratively'
 };
