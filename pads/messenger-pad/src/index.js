@@ -5,7 +5,7 @@
 import Icon from '@material-ui/icons/Chat';
 
 import { Channel, MessengerSettingsDialog } from './containers';
-import { TYPE_MESSENGER_CHANNEL } from './model';
+import { TYPE_MESSENGER_CHANNEL, TYPE_MESSENGER_MESSAGE } from './model';
 
 export * from './model';
 
@@ -17,6 +17,7 @@ export default {
   icon: Icon,
   main: Channel,
   type: TYPE_MESSENGER_CHANNEL,
+  contentType: TYPE_MESSENGER_MESSAGE,
   description: 'Chat with friends',
   settings: MessengerSettingsDialog
 };
