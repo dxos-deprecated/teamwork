@@ -42,6 +42,7 @@ const Home = () => {
   const parties = useParties();
 
   const [inProgress, setInProgress] = useState(false);
+  const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
 
   const createParty = async () => {
     if (inProgress) {
@@ -74,7 +75,9 @@ const Home = () => {
   };
 
   return (
-    <AppContainer>
+    <AppContainer
+      onPartyFromFile={() => setPartyFromFileOpen(true)}
+    >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
         {parties.sort(sortBySubscribedAndName).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
@@ -82,7 +85,12 @@ const Home = () => {
           </Grid>
         ))}
         <Grid item zeroMinWidth>
-          <PartyCard onNewParty={createParty} />
+          <PartyCard
+            onNewParty={createParty}
+            partyFromFileOpen={partyFromFileOpen}
+            onPartyFromFileClosed={() => setPartyFromFileOpen(false)}
+            client={client}
+          />
         </Grid>
       </Grid>
     </AppContainer>
