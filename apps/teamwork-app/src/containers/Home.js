@@ -7,8 +7,8 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
-import { AppContainer, PartyCard, PartyCardContainer } from '@dxos/react-appkit';
-import { useClient, useParties } from '@dxos/react-client';
+import { AppContainer, PartyCard, PartyCardContainer, IpfsHelper } from '@dxos/react-appkit';
+import { useClient, useParties, useConfig } from '@dxos/react-client';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -40,9 +40,12 @@ const Home = () => {
   const classes = useStyles();
   const client = useClient();
   const parties = useParties();
+  const config = useConfig();
 
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
+
+  const ipfs = new IpfsHelper(config.ipfs.gateway);
 
   const createParty = async () => {
     if (inProgress) {
@@ -81,7 +84,7 @@ const Home = () => {
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
         {parties.sort(sortBySubscribedAndName).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
-            <PartyCardContainer party={party} />
+            <PartyCardContainer party={party} ipfs={ipfs} />
           </Grid>
         ))}
         <Grid item zeroMinWidth>
