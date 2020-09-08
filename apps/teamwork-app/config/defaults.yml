@@ -27,6 +27,9 @@ services:
   wns:
     server: "https://wns1.kube.moon.dxos.network/api"
     chainId: "devnet-2"
+  ipfs:
+    server: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/api"
+    gateway: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/"
 
 debug:
     mode: 'development'

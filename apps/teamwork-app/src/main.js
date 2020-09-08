@@ -20,7 +20,7 @@ import Root from './containers/Root';
 
   const {
     client: { feedStorage, keyStorage, swarm },
-    services: { wns: { server, chainId } },
+    services: { wns: { server, chainId }, ipfs },
     ...config
   } = cfg.values;
 
@@ -38,7 +38,7 @@ import Root from './containers/Root';
 
   ReactDOM.render(
     <Root
-      config={config}
+      config={{ ipfs, ...config }}
       client={client}
     />,
     document.getElementById(cfg.get('app.rootElement'))

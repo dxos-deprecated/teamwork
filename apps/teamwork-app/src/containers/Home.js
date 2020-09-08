@@ -2,13 +2,22 @@
 // Copyright 2020 DXOS.org
 //
 
+import assert from 'assert';
 import React, { useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
-import { AppContainer, PartyCard, PartyCardContainer } from '@dxos/react-appkit';
-import { useClient, useParties } from '@dxos/react-client';
+import { keyToString } from '@dxos/crypto';
+import {
+  AppContainer,
+  PartyCard,
+  PartyCardContainer,
+  IpfsHelper,
+  PartyFromFileDialog,
+  PartyFromIpfsDialog
+} from '@dxos/react-appkit';
+import { useClient, useParties, useConfig } from '@dxos/react-client';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -40,9 +49,13 @@ const Home = () => {
   const classes = useStyles();
   const client = useClient();
   const parties = useParties();
+  const config = useConfig();
 
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
+  const [partyFromIpfsOpen, setPartyFromIpfsOpen] = useState(false);
+
+  const ipfs = new IpfsHelper(config.ipfs.gateway);
 
   const createParty = async () => {
     if (inProgress) {
@@ -74,25 +87,44 @@ const Home = () => {
     return a.displayName < b.displayName ? -1 : 1;
   };
 
+  const handleImport = async (data) => {
+    const parsed = JSON.parse(data);
+    assert(Array.isArray(parsed));
+    const newParty = await client.partyManager.createParty();
+    const newPartyTopic = keyToString(newParty.publicKey);
+    const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
+    parsed.forEach(msg => newPartyModel.appendMessage(msg));
+  };
+
   return (
     <AppContainer
       onPartyFromFile={() => setPartyFromFileOpen(true)}
+      onPartyFromIpfs={() => setPartyFromIpfsOpen(true)}
     >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
         {parties.sort(sortBySubscribedAndName).map((party) => (
           <Grid key={party.publicKey.toString()} item zeroMinWidth>
-            <PartyCardContainer party={party} />
+            <PartyCardContainer party={party} ipfs={ipfs} />
           </Grid>
         ))}
         <Grid item zeroMinWidth>
           <PartyCard
             onNewParty={createParty}
-            partyFromFileOpen={partyFromFileOpen}
-            onPartyFromFileClosed={() => setPartyFromFileOpen(false)}
             client={client}
           />
         </Grid>
       </Grid>
+      <PartyFromFileDialog
+        open={partyFromFileOpen}
+        onClose={() => setPartyFromFileOpen(false)}
+        onImport={handleImport}
+      />
+      <PartyFromIpfsDialog
+        open={partyFromIpfsOpen}
+        onClose={() => setPartyFromIpfsOpen(false)}
+        onImport={handleImport}
+        ipfs={ipfs}
+      />
     </AppContainer>
   );
 };
