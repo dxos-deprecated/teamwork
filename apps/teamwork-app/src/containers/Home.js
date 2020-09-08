@@ -3,11 +3,21 @@
 //
 
 import React, { useState } from 'react';
+import assert from 'assert';
+
+import { keyToString } from '@dxos/crypto';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
-import { AppContainer, PartyCard, PartyCardContainer, IpfsHelper } from '@dxos/react-appkit';
+import {
+  AppContainer,
+  PartyCard,
+  PartyCardContainer,
+  IpfsHelper,
+  PartyFromFileDialog,
+  PartyFromIpfsDialog
+} from '@dxos/react-appkit';
 import { useClient, useParties, useConfig } from '@dxos/react-client';
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +54,7 @@ const Home = () => {
 
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
+  const [partyFromIpfsOpen, setPartyFromIpfsOpen] = useState(false);
 
   const ipfs = new IpfsHelper(config.ipfs.gateway);
 
@@ -77,9 +88,19 @@ const Home = () => {
     return a.displayName < b.displayName ? -1 : 1;
   };
 
+  const handleImport = async (data) => {
+    const parsed = JSON.parse(data);
+    assert(Array.isArray(parsed));
+    const newParty = await client.partyManager.createParty();
+    const newPartyTopic = keyToString(newParty.publicKey);
+    const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
+    parsed.forEach(msg => newPartyModel.appendMessage(msg));
+  };
+
   return (
     <AppContainer
       onPartyFromFile={() => setPartyFromFileOpen(true)}
+      onPartyFromIpfs={() => setPartyFromIpfsOpen(true)}
     >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
         {parties.sort(sortBySubscribedAndName).map((party) => (
@@ -90,12 +111,21 @@ const Home = () => {
         <Grid item zeroMinWidth>
           <PartyCard
             onNewParty={createParty}
-            partyFromFileOpen={partyFromFileOpen}
-            onPartyFromFileClosed={() => setPartyFromFileOpen(false)}
             client={client}
           />
         </Grid>
       </Grid>
+      <PartyFromFileDialog
+        open={partyFromFileOpen}
+        onClose={() => setPartyFromFileOpen(false)}
+        onImport={handleImport}
+      />
+      <PartyFromIpfsDialog
+        open={partyFromIpfsOpen}
+        onClose={() => setPartyFromIpfsOpen(false)}
+        onImport={handleImport}
+        ipfs={ipfs}
+      />
     </AppContainer>
   );
 };
