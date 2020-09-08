@@ -2,14 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
 import assert from 'assert';
-
-import { keyToString } from '@dxos/crypto';
+import React, { useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
+import { keyToString } from '@dxos/crypto';
 import {
   AppContainer,
   PartyCard,
