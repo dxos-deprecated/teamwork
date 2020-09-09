@@ -10,7 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
 import MessengerPad from '@dxos/messenger-pad';
-import { useProfile } from '@dxos/react-client';
+import { IpfsHelper } from '@dxos/react-appkit';
+import { useProfile, useConfig } from '@dxos/react-client';
 
 import { useDataChannel } from '../data-channel';
 import { docToMarkdown } from '../markdown';
@@ -107,6 +108,10 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
 export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
   const downloadLink = useRef();
   const classes = useEditorClasses();
+  const config = useConfig();
+
+  const ipfs = new IpfsHelper(config.ipfs.gateway);
+
   const [editor, setEditor] = useState();
 
   const { publicKey, username } = useProfile();
@@ -159,6 +164,21 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     );
   }
 
+  async function handleImageUpload (imageFile) {
+    const cid = await ipfs.upload(imageFile, imageFile.type);
+    return ipfs.url(cid);
+  }
+
+  // When copy image from an http URL
+  // async function imageSrcParser (imageSrc) {
+  //   if (imageSrc.startsWith(config.ipfs.gateway)) return imageSrc;
+
+  //   const imageResponse = await fetch(imageSrc);
+  //   const imageFile = await imageResponse.blob();
+  //   const cid = await ipfs.upload(imageFile, imageFile.type);
+  //   return ipfs.url(cid);
+  // }
+
   const {
     handleContextMenuGetOptions,
     handleContextMenuRenderItem,
@@ -192,6 +212,8 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
           onSelect: handleContextMenuOptionSelect,
           renderItem: handleContextMenuRenderItem
         }}
+        onImageUpload={handleImageUpload}
+        // imageSourceParser={imageSrcParser}
         onCreated={handleEditorCreated}
         reactElementRenderFn={handleReactElementRender}
         classes={classes}
