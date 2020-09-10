@@ -7,6 +7,8 @@ import React, { useCallback, useState, useEffect, useRef } from 'react';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
 import MessengerPad from '@dxos/messenger-pad';
@@ -135,6 +137,36 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
         const text = docToMarkdown(documentUpdateModel.doc);
         downloadLink.current.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
         downloadLink.current.click();
+      },
+      enabled: () => true,
+      active: () => false
+    },
+    {
+      name: 'save_ipfs',
+      title: 'Save to IPFS as Markdown',
+      icon: CloudUploadIcon,
+      onClick: async () => {
+        const text = docToMarkdown(documentUpdateModel.doc);
+
+        const mdFile = new File([text], { type: 'text/markdown' });
+
+        const cid = await ipfs.upload(mdFile, mdFile.type);
+        console.log(ipfs.url(cid));
+      },
+      enabled: () => true,
+      active: () => false
+    },
+    {
+      name: 'load_ipfs',
+      title: 'Load from IPFS',
+      icon: CloudDownloadIcon,
+      onClick: async () => {
+        // const text = docToMarkdown(documentUpdateModel.doc);
+
+        // const mdFile = new File([text], { type: 'text/markdown' });
+
+        // const cid = await ipfs.upload(mdFile, mdFile.type);
+        // console.log(ipfs.url(cid));
       },
       enabled: () => true,
       active: () => false
