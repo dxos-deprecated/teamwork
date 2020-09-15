@@ -6,9 +6,15 @@ import React, { useCallback, useState, useEffect, useRef } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import Snackbar from '@material-ui/core/Snackbar';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -20,7 +26,7 @@ import { IpfsHelper } from '@dxos/react-appkit';
 import { useProfile, useConfig } from '@dxos/react-client';
 
 import { useDataChannel } from '../data-channel';
-import { docToMarkdown } from '../markdown';
+import { docToMarkdown, markdownToDoc } from '../markdown';
 import { useDocumentUpdateModel } from '../model';
 import MarkdownIcon from './MarkdownIcon';
 import Pad from './Pad';
@@ -130,9 +136,13 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
-  const ipfs = new IpfsHelper(config.ipfs.gateway);
+  const [loadFromIpfsDialogOpen, setLoadFromIpfsDialogOpen] = useState(false);
+  const [loadFromIpfsCid, setLoadFromIpfsCid] = useState('');
+  const [loadFromIpfsError, setLoadFromIpfsError] = useState(null);
 
   const [editor, setEditor] = useState();
+
+  const ipfs = new IpfsHelper(config.ipfs.gateway);
 
   const { publicKey, username } = useProfile();
   const [statusData, broadcastStatus] = useDataChannel(itemId);
@@ -205,13 +215,8 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
       name: 'load_ipfs',
       title: 'Load from IPFS',
       icon: CloudDownloadIcon,
-      onClick: async () => {
-        // const text = docToMarkdown(documentUpdateModel.doc);
-
-        // const mdFile = new File([text], { type: 'text/markdown' });
-
-        // const cid = await ipfs.upload(mdFile, mdFile.type);
-        // console.log(ipfs.url(cid));
+      onClick: () => {
+        setLoadFromIpfsDialogOpen(true);
       },
       enabled: () => true,
       active: () => false
@@ -246,10 +251,35 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     return ipfs.url(cid);
   }
 
-  const handleSnackbarClose = (event, reason) => {
+  function handleSnackbarClose (event, reason) {
     if (reason === 'clickaway') return;
     setSnackbarOpen(false);
-  };
+  }
+
+  function handleLoadFromIpfsDialogClose () {
+    setLoadFromIpfsDialogOpen(false);
+    setLoadFromIpfsError(null);
+    setLoadFromIpfsCid('');
+  }
+
+  function handleLoadFromIPFSChange (event) {
+    setLoadFromIpfsCid(event.target.value);
+  }
+
+  async function handleLoadFromIPFS () {
+    try {
+      const text = await ipfs.download(loadFromIpfsCid);
+
+      markdownToDoc(text, documentUpdateModel.doc);
+
+      handleLoadFromIpfsDialogClose();
+
+      setSnackbarMessage('Document loaded from IPFS!');
+      setSnackbarOpen(true);
+    } catch (error) {
+      setLoadFromIpfsError(error.message);
+    }
+  }
 
   // When copy image from an http URL
   // async function imageSrcParser (imageSrc) {
@@ -287,12 +317,44 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
           severity="success"
           onClose={handleSnackbarClose}
           classes={{
-            message: classes.snackAlertMessage
+            message: typeof snackbarMessage !== 'string' ? classes.snackAlertMessage : undefined
           }}
         >
           {snackbarMessage}
         </Alert>
       </Snackbar>
+
+      <Dialog
+        open={loadFromIpfsDialogOpen}
+        onClose={handleLoadFromIpfsDialogClose}
+        maxWidth='sm'
+        aria-labelledby="form-dialog-title"
+        fullWidth
+      >
+        <DialogTitle id="form-dialog-title">Load document from IPFS</DialogTitle>
+        <DialogContent>
+          <TextField
+            value={loadFromIpfsCid}
+            onChange={handleLoadFromIPFSChange}
+            autoFocus
+            margin="dense"
+            label="CID"
+            type="text"
+            fullWidth
+            required
+            error={Boolean(loadFromIpfsError)}
+            helperText={loadFromIpfsError}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleLoadFromIpfsDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleLoadFromIPFS} color="primary">
+            Load
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <a ref={downloadLink} download={`${title}.md`} style={{ display: 'none' }} />
 
