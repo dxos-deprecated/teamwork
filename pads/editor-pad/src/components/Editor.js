@@ -3,12 +3,16 @@
 //
 
 import React, { useCallback, useState, useEffect, useRef } from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
+import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
+import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Alert from '@material-ui/lab/Alert';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
 import MessengerPad from '@dxos/messenger-pad';
@@ -41,6 +45,17 @@ const useEditorClasses = makeStyles(theme => ({
     '& reactelement': {
       display: 'inline-block'
     }
+  },
+  snackButton: {
+    '&:first-child': {
+      marginLeft: theme.spacing(8)
+    },
+
+    marginLeft: theme.spacing()
+  },
+
+  snackAlertMessage: {
+    padding: '3px 0 0'
   }
 }));
 
@@ -112,6 +127,9 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   const classes = useEditorClasses();
   const config = useConfig();
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
   const ipfs = new IpfsHelper(config.ipfs.gateway);
 
   const [editor, setEditor] = useState();
@@ -143,7 +161,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     },
     {
       name: 'save_ipfs',
-      title: 'Save to IPFS as Markdown',
+      title: 'Upload to IPFS as Markdown',
       icon: CloudUploadIcon,
       onClick: async () => {
         const text = docToMarkdown(documentUpdateModel.doc);
@@ -151,7 +169,34 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
         const mdFile = new File([text], { type: 'text/markdown' });
 
         const cid = await ipfs.upload(mdFile, mdFile.type);
-        console.log(ipfs.url(cid));
+        const url = ipfs.url(cid);
+
+        setSnackbarMessage(
+          <>
+            Document uploaded to IPFS!
+            <Button
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              variant="outlined"
+              color="inherit"
+              size="small"
+              className={classes.snackButton}
+            >
+              Open
+            </Button>
+            <CopyToClipboard text={url}>
+              <Button
+                variant="outlined"
+                color="inherit"
+                size="small"
+                className={classes.snackButton}
+              >COPY</Button>
+            </CopyToClipboard>
+          </>
+        );
+
+        setSnackbarOpen(true);
       },
       enabled: () => true,
       active: () => false
@@ -201,6 +246,11 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     return ipfs.url(cid);
   }
 
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setSnackbarOpen(false);
+  };
+
   // When copy image from an http URL
   // async function imageSrcParser (imageSrc) {
   //   if (imageSrc.startsWith(config.ipfs.gateway)) return imageSrc;
@@ -227,7 +277,25 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
 
   return (
     <>
+      <Snackbar
+        open={snackbarOpen}
+        onClose={handleSnackbarClose}
+        autoHideDuration={5000}
+      >
+        <Alert
+          variant="filled"
+          severity="success"
+          onClose={handleSnackbarClose}
+          classes={{
+            message: classes.snackAlertMessage
+          }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
       <a ref={downloadLink} download={`${title}.md`} style={{ display: 'none' }} />
+
       <DXOSEditor
         key={documentUpdateModel.doc.clientID}
         toolbar={{ customButtons }}
