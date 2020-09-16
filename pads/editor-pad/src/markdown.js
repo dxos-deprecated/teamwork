@@ -15,11 +15,8 @@ import * as Y from 'yjs';
 import { remark2XmlFragment } from './remark-xml-fragment';
 
 Y.XmlElement.prototype.toString = function () {
-  console.log('to string brodi');
-
   const attrs = this.getAttributes();
 
-  console.log(this.nodeName.toLocaleLowerCase(), attrs);
   const stringBuilder = [];
   const keys = [];
 
