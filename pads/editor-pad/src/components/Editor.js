@@ -9,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -26,8 +25,8 @@ import { IpfsHelper } from '@dxos/react-appkit';
 import { useProfile, useConfig } from '@dxos/react-client';
 
 import { useDataChannel } from '../data-channel';
-import { docToMarkdown, markdownToDoc } from '../markdown';
 import { useDocumentUpdateModel } from '../model';
+import { docToMarkdown, markdownToDoc } from '../transform';
 import MarkdownIcon from './MarkdownIcon';
 import Pad from './Pad';
 
@@ -277,6 +276,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
       setSnackbarMessage('Document loaded from IPFS!');
       setSnackbarOpen(true);
     } catch (error) {
+      console.error(error);
       setLoadFromIpfsError(error.message);
     }
   }

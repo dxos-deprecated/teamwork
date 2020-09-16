@@ -2,6 +2,8 @@
 // Copyright 2019 DXOS.org
 //
 
+import rehypeParse from 'rehype-parse';
+import unified from 'unified';
 import { Text, XmlElement } from 'yjs';
 
 const tagName = node => {
@@ -23,6 +25,10 @@ const tagName = node => {
 
     case 'thematicBreak':
       return 'horizontal_rule';
+
+    case 'block_react_element':
+    case 'inline_react_element':
+      return node.type;
 
     default:
       // Snake case
@@ -56,6 +62,11 @@ const copyDefinition = (node, xmlElement) => {
       attrs.push(['alt', node.alt], ['title', node.title], ['src', node.url]);
       break;
 
+    case 'block_react_element':
+    case 'inline_react_element':
+      attrs.push(['props', JSON.parse(decodeURI(node.properties.props))], ['className', node.properties.className]);
+      break;
+
     default:
       break;
   }
@@ -78,6 +89,17 @@ export function remark2XmlFragment (doc) {
 
     if (node.type === 'text') {
       return new Text(node.value);
+    }
+
+    if (node.type === 'html') {
+      const hast = unified()
+        .use(rehypeParse, { fragment: true })
+        .parse(node.value);
+
+      const childNode = hast.children[0];
+      childNode.type = childNode.tagName;
+
+      return compiler(childNode);
     }
 
     let xmlElement = new XmlElement(tagName(node));
