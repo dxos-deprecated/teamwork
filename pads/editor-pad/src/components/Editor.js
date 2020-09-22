@@ -58,7 +58,6 @@ const useEditorClasses = makeStyles(theme => ({
 
     marginLeft: theme.spacing()
   },
-
   snackAlertMessage: {
     padding: '3px 0 0'
   }
@@ -130,7 +129,6 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
 export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
   const downloadLink = useRef();
   const classes = useEditorClasses();
-  const config = useConfig();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -141,10 +139,11 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
 
   const [editor, setEditor] = useState();
 
-  const ipfs = new IpfsHelper(config.ipfs.gateway);
-
   const { publicKey, username } = useProfile();
   const [statusData, broadcastStatus] = useDataChannel(itemId);
+
+  const config = useConfig();
+  const ipfs = new IpfsHelper(config.ipfs.gateway);
 
   const customButtons = onToggleMessenger ? [
     {
@@ -168,6 +167,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
       enabled: () => true,
       active: () => false
     },
+    { divider: true },
     {
       name: 'save_ipfs',
       title: 'Upload to IPFS as Markdown',
