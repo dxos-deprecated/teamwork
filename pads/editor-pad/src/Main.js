@@ -5,7 +5,6 @@
 import assert from 'assert';
 import React, { useState } from 'react';
 
-import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 import MessengerPad from '@dxos/messenger-pad';
@@ -16,7 +15,22 @@ import { useItems, TYPE_EDITOR_DOCUMENT } from './model';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flex: 1
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column'
+  },
+
+  container: {
+    display: 'flex',
+    flex: 1,
+    [theme.breakpoints.up('subMbp')]: {
+      margin: 'auto'
+    },
+    maxWidth: 800
+  },
+
+  messengerContainer: {
+    width: 400
   }
 }));
 
@@ -40,8 +54,8 @@ const EditorPad = ({ party, topic, itemId }) => {
   }
 
   return (
-    <Grid container justify="center" className={classes.root}>
-      <Grid item>
+    <div className={classes.root}>
+      <div className={classes.container}>
         <Editor
           topic={topic}
           itemId={itemId}
@@ -50,19 +64,19 @@ const EditorPad = ({ party, topic, itemId }) => {
           items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
           onCreateItem={handleCreateItem}
           onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
-          />
-      </Grid>
-      <Grid item>
+        />
         {messengerOpen && (
-          <MessengerPad.main
-            embedded
-            party={party}
-            topic={topic}
-            itemId={itemId}
+          <div className={classes.messengerContainer}>
+            <MessengerPad.main
+              embedded
+              party={party}
+              topic={topic}
+              itemId={itemId}
             />
+          </div>
         )}
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 };
 
