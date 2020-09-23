@@ -20,13 +20,13 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Alert from '@material-ui/lab/Alert';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
+import { docToMarkdown, markdownToDoc } from '@dxos/editor-core';
 import MessengerPad from '@dxos/messenger-pad';
 import { IpfsHelper } from '@dxos/react-appkit';
 import { useProfile, useConfig } from '@dxos/react-client';
 
 import { useDataChannel } from '../data-channel';
 import { useDocumentUpdateModel } from '../model';
-import { docToMarkdown, markdownToDoc } from '../transform';
 import MarkdownIcon from './MarkdownIcon';
 import Pad from './Pad';
 
