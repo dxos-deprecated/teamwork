@@ -14,7 +14,7 @@
     "@dxos/async": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "^1.0.0-beta.27",
-    "@dxos/editor": "^1.0.0-beta.26",
+    "@dxos/editor": "^1.0.0-beta.33",
     "@dxos/react-appkit": "^1.1.0-beta.12",
     "@dxos/react-router": "^1.1.0-beta.12",
     "@dxos/react-ux": "^1.1.0-beta.12",

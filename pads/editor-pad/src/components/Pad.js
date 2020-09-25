@@ -5,7 +5,6 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
-// import Typography from '@material-ui/core/Typography';
 
 export const useStyles = makeStyles(() => ({
   padContainer: {
@@ -30,10 +29,6 @@ export const Pad = ({ title, icon, children }) => {
   return (
     <div className={classes.padContainer}>
       <div className={classes.padContent}>{children}</div>
-      {/* <div className={classes.padInfo}>
-        <Icon className={classes.padInfoIcon} />
-        <Typography variant="button">{title}</Typography>
-      </div> */}
     </div>
   );
 };
