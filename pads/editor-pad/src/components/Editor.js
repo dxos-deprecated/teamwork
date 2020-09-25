@@ -1,33 +1,26 @@
 //
 // Copyright 2020 DXOS.org
 //
-
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { Button } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import Snackbar from '@material-ui/core/Snackbar';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Alert from '@material-ui/lab/Alert';
 
 import { Editor as DXOSEditor } from '@dxos/editor';
-import { docToMarkdown, markdownToDoc } from '@dxos/editor-core';
+import { docToMarkdown } from '@dxos/editor-core';
 import MessengerPad from '@dxos/messenger-pad';
 import { IpfsHelper } from '@dxos/react-appkit';
 import { useProfile, useConfig } from '@dxos/react-client';
 
 import { useDataChannel } from '../data-channel';
 import { useDocumentUpdateModel } from '../model';
-import MarkdownIcon from './MarkdownIcon';
+import IpfsMenu from './IpfsMenu';
+import MarkdownMenu from './MarkdownMenu';
 import Pad from './Pad';
 
 const useEditorClasses = makeStyles(theme => ({
@@ -126,16 +119,22 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   };
 };
 
-export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
+export const Editor = ({
+  topic,
+  itemId,
+  title,
+  pads = [],
+  items = [],
+  onCreateItem,
+  onEditorCreated,
+  onToggleMessenger,
+  onToggleMarkdownView
+}) => {
   const downloadLink = useRef();
   const classes = useEditorClasses();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-
-  const [loadFromIpfsDialogOpen, setLoadFromIpfsDialogOpen] = useState(false);
-  const [loadFromIpfsCid, setLoadFromIpfsCid] = useState('');
-  const [loadFromIpfsError, setLoadFromIpfsError] = useState(null);
 
   const [editor, setEditor] = useState();
 
@@ -145,88 +144,87 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   const config = useConfig();
   const ipfs = new IpfsHelper(config.ipfs.gateway);
 
-  const customButtons = onToggleMessenger ? [
+  const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
+
+  const customButtons = [
+    { divider: true },
     {
+      name: 'markdown',
+      component: () => (
+        <MarkdownMenu
+        onDownload={handleMarkdownDownload}
+        onPreviewOpen={onToggleMarkdownView}
+        />
+      )
+    },
+    { divider: true },
+    {
+      name: 'ipfs',
+      component: () => (
+        <IpfsMenu
+          topic={topic}
+          itemId={itemId}
+          onImported={handleIpfsImported}
+          onUploaded={handleIpfsUploaded}
+        />
+      )
+    },
+    { divider: true },
+    onToggleMessenger ? {
       name: 'messenger',
       title: 'Messenger',
       icon: MessengerPad.icon,
       onClick: onToggleMessenger,
       enabled: () => true,
       active: () => false
-    },
-    { divider: true },
-    {
-      name: 'download_markdown',
-      title: 'Download as Markdown',
-      icon: MarkdownIcon,
-      onClick: () => {
-        const text = docToMarkdown(documentUpdateModel.doc);
-        downloadLink.current.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-        downloadLink.current.click();
-      },
-      enabled: () => true,
-      active: () => false
-    },
-    { divider: true },
-    {
-      name: 'save_ipfs',
-      title: 'Upload to IPFS as Markdown',
-      icon: CloudUploadIcon,
-      onClick: async () => {
-        const text = docToMarkdown(documentUpdateModel.doc);
+    } : undefined
+  ];
 
-        const mdFile = new File([text], { type: 'text/markdown' });
+  function handleMarkdownDownload () {
+    const text = docToMarkdown(documentUpdateModel.doc);
+    downloadLink.current.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    downloadLink.current.click();
+  }
 
-        const cid = await ipfs.upload(mdFile, mdFile.type);
-        const url = ipfs.url(cid);
+  function handleIpfsImported () {
+    setSnackbarMessage('Document loaded from IPFS!');
+    setSnackbarOpen(true);
+  }
 
-        setSnackbarMessage(
-          <>
-            Document uploaded to IPFS!
-            <Button
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              variant="outlined"
-              color="inherit"
-              size="small"
-              className={classes.snackButton}
-            >
-              Open
-            </Button>
-            <CopyToClipboard text={url}>
-              <Button
-                variant="outlined"
-                color="inherit"
-                size="small"
-                className={classes.snackButton}
-              >COPY</Button>
-            </CopyToClipboard>
-          </>
-        );
+  function handleIpfsUploaded (url) {
+    setSnackbarMessage(
+      <>
+        Document uploaded to IPFS!
+        <Button
+          href={url}
+          target="_blank"
+          rel="noreferrer"
+          variant="outlined"
+          color="inherit"
+          size="small"
+          className={classes.snackButton}
+        >
+          Open
+        </Button>
+        <CopyToClipboard text={url}>
+          <Button
+            variant="outlined"
+            color="inherit"
+            size="small"
+            className={classes.snackButton}
+          >COPY</Button>
+        </CopyToClipboard>
+      </>
+    );
 
-        setSnackbarOpen(true);
-      },
-      enabled: () => true,
-      active: () => false
-    },
-    {
-      name: 'load_ipfs',
-      title: 'Load from IPFS',
-      icon: CloudDownloadIcon,
-      onClick: () => {
-        setLoadFromIpfsDialogOpen(true);
-      },
-      enabled: () => true,
-      active: () => false
-    }
-  ] : [];
-
-  const documentUpdateModel = useDocumentUpdateModel(topic, itemId);
+    setSnackbarOpen(true);
+  }
 
   function handleEditorCreated (editor) {
     // Set peer name for status
     editor.sync.status.setUserName(username);
+
+    onEditorCreated(editor);
 
     setEditor(editor);
   }
@@ -253,32 +251,6 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   function handleSnackbarClose (event, reason) {
     if (reason === 'clickaway') return;
     setSnackbarOpen(false);
-  }
-
-  function handleLoadFromIpfsDialogClose () {
-    setLoadFromIpfsDialogOpen(false);
-    setLoadFromIpfsError(null);
-    setLoadFromIpfsCid('');
-  }
-
-  function handleLoadFromIPFSChange (event) {
-    setLoadFromIpfsCid(event.target.value);
-  }
-
-  async function handleLoadFromIPFS () {
-    try {
-      const text = await ipfs.download(loadFromIpfsCid);
-
-      markdownToDoc(text, documentUpdateModel.doc);
-
-      handleLoadFromIpfsDialogClose();
-
-      setSnackbarMessage('Document loaded from IPFS!');
-      setSnackbarOpen(true);
-    } catch (error) {
-      console.error(error);
-      setLoadFromIpfsError(error.message);
-    }
   }
 
   // When copy image from an http URL
@@ -323,38 +295,6 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
           {snackbarMessage}
         </Alert>
       </Snackbar>
-
-      <Dialog
-        open={loadFromIpfsDialogOpen}
-        onClose={handleLoadFromIpfsDialogClose}
-        maxWidth='sm'
-        aria-labelledby="form-dialog-title"
-        fullWidth
-      >
-        <DialogTitle id="form-dialog-title">Load document from IPFS</DialogTitle>
-        <DialogContent>
-          <TextField
-            value={loadFromIpfsCid}
-            onChange={handleLoadFromIPFSChange}
-            autoFocus
-            margin="dense"
-            label="CID"
-            type="text"
-            fullWidth
-            required
-            error={Boolean(loadFromIpfsError)}
-            helperText={loadFromIpfsError}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleLoadFromIpfsDialogClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleLoadFromIPFS} color="primary">
-            Load
-          </Button>
-        </DialogActions>
-      </Dialog>
 
       <a ref={downloadLink} download={`${title}.md`} style={{ display: 'none' }} />
 
