@@ -24,14 +24,35 @@ const useStyles = makeStyles(theme => ({
   root: {
     flex: 1,
     height: 'fill-available',
+    alignItems: 'center',
+    overflow: 'overlay',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
 
-    '& > div': {
-      height: 'inherit'
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+
+      '& > div': {
+        minHeight: 600,
+        width: '100%'
+      }
     }
   },
 
+  editor: {
+    height: 'inherit'
+  },
+
   markdownView: {
-    overflowY: 'auto'
+    overflowY: 'auto',
+    alignSelf: 'stretch'
+  },
+
+  messenger: {
+    [theme.breakpoints.down('md')]: {
+      minHeight: 'auto'
+    }
   }
 }));
 
@@ -84,8 +105,8 @@ const EditorPad = ({ party, topic, itemId }) => {
   }
 
   return (
-    <Grid container justify='center' className={classes.root}>
-      <Grid item xs={6}>
+    <Grid container className={classes.root} alignItems="stretch">
+      <Grid item xs={12} lg={6} xl={6} className={classes.editor}>
         <Editor
           topic={topic}
           itemId={itemId}
@@ -100,7 +121,7 @@ const EditorPad = ({ party, topic, itemId }) => {
       </Grid>
 
       {markdownViewOpen && (
-        <Grid item xs={6} className={classes.markdownView}>
+        <Grid item xs={12} xl={6} className={classes.markdownView}>
           <SyntaxHighlighter
             language="markdown"
             style={github}
@@ -109,7 +130,9 @@ const EditorPad = ({ party, topic, itemId }) => {
               margin: theme.spacing(1),
               whiteSpace: 'break-spaces',
               wordBreak: 'break-all',
-              overflowX: 'hidden'
+              overflowX: 'hidden',
+              border: `1px solid ${theme.palette.primary.main}`,
+              height: `calc(100% - ${theme.spacing(2)}px)`
             }}
           >
             {markdownContent}
@@ -118,7 +141,7 @@ const EditorPad = ({ party, topic, itemId }) => {
       )}
 
       {messengerOpen && (
-        <Grid item xs={6}>
+        <Grid item xs={12} xl={6} className={classes.messenger}>
           <MessengerPad.main
             embedded
             party={party}
