@@ -25,7 +25,7 @@
     "@dxos/botkit-client": "^1.1.0-beta.12",
     "@dxos/canvas-pad": "^1.0.1-beta.11",
     "@dxos/config": "^1.0.0-beta.73",
-    "@dxos/credentials": "^1.0.1-beta.17",
+    "@dxos/credentials": "^0.2.7",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "^1.0.0-beta.27",
