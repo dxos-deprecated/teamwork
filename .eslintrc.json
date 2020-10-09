@@ -8,6 +8,7 @@
     "eslint-plugin-local-rules"
   ],
   "rules": {
+    "no-unused-expressions": "off",
     "indent": "off",
     "local-rules/header": ["error"],
     "camelcase": "off",
