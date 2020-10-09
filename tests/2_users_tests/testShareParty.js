@@ -21,24 +21,35 @@ describe('Share party', () => {
         userB = new User('UserB')
     })
 
-    afterEach(() => {
-        userA.closeBrowser()
-        userB.closeBrowser()
-    })
-    
-    it('Checks if UserB has UserA icon in his party after accepting invitation by link', async () => {
+    // afterEach(() => {
+    //     userA.closeBrowser()
+    //     userB.closeBrowser()
+    // })
 
-        await userA.launchBrowser(firefox,startUrl)
+    it.only('UserB sees specific Party name after accepting invitation by link', async () => {
+        await userA.launchBrowser(firefox, startUrl)
         await userA.createWallet()
-        await userA.createParty()
+        const partyName = await userA.createParty()
         await userA.inviteUnknownUserToParty()
 
         await userB.launchBrowser(firefox, await userA.getShareLink())
         await userB.createWallet()
         await userB.fillPasscode(await userA.getPasscode())
 
-        // ALSO CHECK IF NOT THROWING ANYTHING
-        // expect(userB.isUserInParty("haha")).to.not.throw()
-        expect(await userB.isUserInParty(userA.name)).to.be.true
+        expect(await userB.getFirstPartyName()).to.be.equal(partyName)
+    }).timeout(timeout)
+    
+    it('Checks if UserB has UserA icon in his party after accepting invitation by link', async () => {
+
+        await userA.launchBrowser(firefox,startUrl)
+        await userA.createWallet()
+        const partyName = await userA.createParty()
+        await userA.inviteUnknownUserToParty()
+
+        await userB.launchBrowser(firefox, await userA.getShareLink())
+        await userB.createWallet()
+        await userB.fillPasscode(await userA.getPasscode())
+
+        expect(await userB.isUserInParty(partyName,userA.name)).to.be.true
     }).timeout(timeout)
 })
