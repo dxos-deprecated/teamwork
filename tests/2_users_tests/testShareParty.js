@@ -23,16 +23,16 @@ describe('Share party', () => {
         userB = new User('UserB');
     });
 
-    // afterEach(() => {
-    //     userA.closeBrowser()
-    //     userB.closeBrowser()
-    // })
+    afterEach(() => {
+        userA.closeBrowser();
+        userB.closeBrowser();
+    });
 
-    it.only('UserB sees specific Party name after accepting invitation by link', async () => {
+    it('UserB sees specific party after pasting invitation link the first time', async () => {
         await userA.launchBrowser(firefox, startUrl);
         await userA.createWallet();
         const partyName = await userA.createParty();
-        await userA.inviteUnknownUserToParty();
+        await userA.inviteUnknownUserToParty(1);
 
         await userB.launchBrowser(firefox, await userA.getShareLink());
         await userB.createWallet();
@@ -41,11 +41,11 @@ describe('Share party', () => {
         expect(await userB.getFirstPartyName()).to.be.equal(partyName);
     }).timeout(timeout);
 
-    it('Checks if UserB has UserA icon in his party after accepting invitation by link', async () => {
+    it('UserB has UserA icon in his party after pasting invitation link the first time', async () => {
         await userA.launchBrowser(firefox, startUrl);
         await userA.createWallet();
         const partyName = await userA.createParty();
-        await userA.inviteUnknownUserToParty();
+        await userA.inviteUnknownUserToParty(1);
 
         await userB.launchBrowser(firefox, await userA.getShareLink());
         await userB.createWallet();
@@ -53,4 +53,18 @@ describe('Share party', () => {
 
         expect(await userB.isUserInParty(partyName, userA.name)).to.be.true;
     }).timeout(timeout);
+
+    it.skip('UserB sees specific party after pasting invitation link second time', async () => {
+        await userA.launchBrowser(firefox, startUrl);
+        await userA.createWallet();
+        await userA.createParty();
+        await userA.inviteUnknownUserToParty(1);
+
+        await userB.launchBrowser(firefox, await userA.getShareLink());
+        await userB.createWallet();
+        await userB.fillPasscode(await userA.getPasscode());
+
+        const partyName = await userA.createParty();
+        await userA.inviteKnownUserToParty(partyName);
+    });
 });

@@ -45,27 +45,50 @@ class User {
 
     async createParty () {
         const cardsSelector = '//div[contains(@class,\'MuiGrid-item\')]';
+        const cardTitlesSelector = '//div[contains(@class,\'MuiGrid-item\')]//h2';
         await this.page.waitForSelector(cardsSelector);
-        const initialCardsNumber = (await this.page.$$(cardsSelector)).length;
+        const initialCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
 
         const newPartyButtonSelector = '(//button[@name=\'new-party\'])[1]';
         await this.page.waitForSelector(newPartyButtonSelector);
         await this.page.click(newPartyButtonSelector);
 
-        while (initialCardsNumber === (await this.page.$$(cardsSelector)).length) {
+        while (initialCardNames.length === (await this.page.$$(cardTitlesSelector)).length) {
             await this.page.waitForTimeout(50);
         }
 
-        return await this.getFirstPartyName();
+        const currentCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
+        const newCardName = currentCardNames.filter(card => !initialCardNames.includes(card))[0];
+
+        return newCardName;
     }
 
-    async inviteUnknownUserToParty () {
-        const addMemberButtonSelector = '(//div[@title=\'Share\'])[1]';
+    async clickSharePartyButton (partyIdx) {
+        const addMemberButtonSelector = `(//div[@title='Share'])[${partyIdx}]`;
         await this.page.waitForSelector(addMemberButtonSelector);
         await this.page.click(addMemberButtonSelector);
+    }
+
+    async inviteUnknownUserToParty (partyIdx) {
+        await this.clickSharePartyButton(partyIdx);
+
         const inviteUserButtonSelector = textButtonSelector('Invite User');
         await this.page.waitForSelector(inviteUserButtonSelector);
         await this.page.click(inviteUserButtonSelector);
+    }
+
+    async inviteKnownUserToParty (partyName) {
+        await this.shareParty(partyName);
+    }
+
+    async shareParty (partyName) {
+        const cardsSelector = '//div[contains(@class,\'MuiGrid-item\')]';
+        const cardTitlesSelector = '//div[contains(@class,\'MuiGrid-item\')]//h2';
+        await this.page.waitForSelector(cardsSelector);
+        const initialCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
+
+        const partyIdx = initialCardNames.findIndex(cardName => cardName === partyName) + 1;
+        await this.clickSharePartyButton(partyIdx);
     }
 
     async getShareLink () {
@@ -127,6 +150,17 @@ class User {
             return await this.page.$eval(firstPartyNameSelector, partyName => partyName.innerHTML);
         } catch (error) {
             console.log(`${this.name} did not select firstParty`);
+            return null;
+        }
+    }
+
+    async getPartyNames () {
+        const partyNamesSelector = '//div[contains(@class,\'MuiGrid-item\')]//*[contains(@class,\'MuiCardHeader-content\')]/*';
+        await this.page.waitForSelector(partyNamesSelector, { timeout: 1e5 });
+        try {
+            return await this.page.$$eval(partyNamesSelector, partyName => partyName.innerHTML);
+        } catch (error) {
+            console.log(`${this.name} did not select any party name`);
             return null;
         }
     }
