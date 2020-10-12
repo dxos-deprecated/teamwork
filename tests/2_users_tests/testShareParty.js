@@ -24,18 +24,18 @@ describe('Share party', () => {
         userB = new User('UserB');
     });
 
-    // afterEach(() => {
-    //     userA.closeBrowser();
-    //     userB.closeBrowser();
-    // });
+    afterEach(() => {
+        userA.closeBrowser();
+        userB.closeBrowser();
+    });
 
     it('UserB sees specific party after pasting invitation link the first time', async () => {
         await userA.launchBrowser(browser, startUrl);
         await userA.createWallet();
         const partyName = await userA.createParty();
-        await userA.inviteUnknownUserToParty(1);
+        const shareLink = await userA.inviteUnknownUserToParty(1);
 
-        await userB.launchBrowser(browser, await userA.getShareLink());
+        await userB.launchBrowser(browser, shareLink);
         await userB.createWallet();
         await userB.fillPasscode(await userA.getPasscode());
 
@@ -46,16 +46,16 @@ describe('Share party', () => {
         await userA.launchBrowser(browser, startUrl);
         await userA.createWallet();
         const partyName = await userA.createParty();
-        await userA.inviteUnknownUserToParty(1);
+        const shareLink = await userA.inviteUnknownUserToParty(1);
 
-        await userB.launchBrowser(browser, await userA.getShareLink());
+        await userB.launchBrowser(browser, shareLink);
         await userB.createWallet();
         await userB.fillPasscode(await userA.getPasscode());
 
         expect(await userB.isUserInParty(partyName, userA.name)).to.be.true;
     }).timeout(timeout);
 
-    it.only('UserB sees specific party after pasting invitation link second time', async () => {
+    it('UserB sees specific party after pasting invitation link second time', async () => {
         await userA.launchBrowser(browser, startUrl);
         await userA.createWallet();
         const firstPartyName = await userA.createParty();
@@ -67,7 +67,6 @@ describe('Share party', () => {
 
         // NOTE: as long as userB does not see userA in party, userA has some weird name of userB
         await userB.isUserInParty(firstPartyName, userA.name);
-        // const initialPartyNames = await userB.getPartyNames();
 
         await userA.closeSharePartyDialog();
         const secondPartyName = await userA.createParty();
@@ -79,8 +78,6 @@ describe('Share party', () => {
         });
         const currentPartyNames = await userB.getPartyNames();
         expect(currentPartyNames.length).to.be.equal(2);
-
-        // const newName = currentPartyNames.filter(name => !initialPartyNames.includes(name));
 
     }).timeout(timeout);
 });
