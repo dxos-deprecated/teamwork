@@ -30,9 +30,12 @@
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
     "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream",
-    "playwright": "mocha ./tests/test-share-party.test.js"
+    "playwright": "mocha --require @babel/register ./tests/test-share-party.test.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0-0",
+    "@babel/register": "^7.0.0",
     "@dxos/cli": "^1.1.0-beta.0",
     "@dxos/cli-app": "^1.1.0-beta.0",
     "@dxos/cli-wns": "^1.1.0-beta.0",
