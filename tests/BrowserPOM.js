@@ -5,7 +5,7 @@
 const headless = !!process.env.CI;
 const slowMo = process.env.CI ? 0 : 200;
 
-class BrowserPOM {
+export class BrowserPOM {
     browser = null
     context = null
     page = null
@@ -31,5 +31,3 @@ class BrowserPOM {
         }
     }
 }
-
-module.exports = { BrowserPOM }

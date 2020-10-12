@@ -1,9 +1,9 @@
 //
 // Copyright 2020 DXOS.org
 //
-const { BrowserPOM } = require('./BrowserPOM.js');
+import { BrowserPOM } from './BrowserPOM.js';
 
-class UserPOM extends BrowserPOM {
+export class UserPOM extends BrowserPOM {
     name = ''
 
     constructor (_name) {
@@ -167,5 +167,3 @@ class UserPOM extends BrowserPOM {
 }
 
 const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;
-
-module.exports = { UserPOM };

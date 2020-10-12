@@ -2,14 +2,14 @@
 //
 // Copyright 2020 DXOS.org
 //
-const { firefox } = require('playwright');
+import { firefox } from 'playwright';
 
-const { UserPOM } = require('./UserPOM.js');
+import { UserPOM } from './UserPOM.js';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
 
-const launchUsers = async () => {
+export const launchUsers = async () => {
     const userA = new UserPOM('UserA');
     const userB = new UserPOM('UserB');
 
@@ -24,5 +24,3 @@ const launchUsers = async () => {
 
     return { userA, userB, partyName };
 };
-
-module.exports = { launchUsers };

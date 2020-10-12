@@ -2,10 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
-const chai = require('chai');
-const mocha = require('mocha');
+import chai from 'chai';
+import mocha from 'mocha';
 
-const { launchUsers } = require('./launch-users.js');
+import { launchUsers } from './launch-users.js';
 
 const { expect } = chai;
 const { beforeEach, afterEach, describe, it } = mocha; // eslint-disable-line no-unused-vars
