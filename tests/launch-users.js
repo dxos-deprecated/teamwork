@@ -4,14 +4,14 @@
 //
 const { firefox } = require('playwright');
 
-const { User } = require('./User.js');
+const { UserPOM } = require('./UserPOM.js');
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
 
 const launchUsers = async () => {
-    const userA = new User('UserA');
-    const userB = new User('UserB');
+    const userA = new UserPOM('UserA');
+    const userB = new UserPOM('UserB');
 
     await userA.launchBrowser(browser, startUrl);
     await userA.createWallet();

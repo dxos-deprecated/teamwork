@@ -10,8 +10,6 @@ const { launchUsers } = require('./launch-users.js');
 const { expect } = chai;
 const { beforeEach, afterEach, describe, it } = mocha; // eslint-disable-line no-unused-vars
 
-// const timeout = 1e6;
-
 describe('Share party', function () {
     this.timeout(1e6);
 

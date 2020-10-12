@@ -1,29 +1,14 @@
 //
 // Copyright 2020 DXOS.org
 //
+const { BrowserPOM } = require('./BrowserPOM.js');
 
-const headless = !!process.env.CI;
-const slowMo = process.env.CI ? 0 : 200;
-
-class User {
+class UserPOM extends BrowserPOM {
     name = ''
-    browser = null
-    context = null
-    page = null
 
     constructor (_name) {
+        super();
         this.name = _name;
-    }
-
-    async launchBrowser (_browser, _startUrl) {
-        this.browser = await _browser.launch({ headless, slowMo });
-        this.context = await this.browser.newContext();
-        this.page = await this.context.newPage();
-        await this.page.goto(_startUrl, { waitUntil: 'load' });
-    }
-
-    async closeBrowser () {
-        await this.browser.close();
     }
 
     async createWallet () {
@@ -91,10 +76,9 @@ class User {
 
     async inviteKnownUserToParty (partyName, userName) {
         await this.shareParty(partyName);
-        console.log('Share dialog opened');
         const addUserButtonSelector = `//*[contains(@class,'MuiDialog-container')]//td[text()='${userName}']/following::*[contains(@class,'MuiIconButton-label')]`;
-        console.log('Waiting for addUserButton');
         await this.page.waitForSelector(addUserButtonSelector);
+
         const shareLink = { url: null };
         await this.subscribeForLink(shareLink);
         await this.page.click(addUserButtonSelector);
@@ -104,14 +88,12 @@ class User {
     }
 
     async shareParty (partyName) {
-        console.log('Share: ' + partyName);
         const cardsSelector = '//div[contains(@class,\'MuiGrid-item\')]';
         const cardTitlesSelector = '//div[contains(@class,\'MuiGrid-item\')]//h2';
         await this.page.waitForSelector(cardsSelector);
         const initialCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
 
         const partyIdx = initialCardNames.findIndex(cardName => cardName === partyName) + 1;
-        console.log('PartyIdx: ' + partyIdx);
         await this.clickSharePartyButton(partyIdx);
     }
 
@@ -169,30 +151,21 @@ class User {
         try {
             await this.page.waitForSelector(partyNamesSelector, { timeout: 2 * 1e3 });
         } catch (error) {
+            console.log(`${this.name} did not select any party name`);
             return [];
         }
         try {
             const partyNames = await this.page.$$eval(partyNamesSelector, partyNamesTags => {
                 return partyNamesTags.map(tag => tag.innerHTML);
             });
-            return partyNames || [];
+            return partyNames;
         } catch (error) {
             console.log(`${this.name} did not select any party name`);
             return null;
         }
     }
-
-    async goToPage (url) {
-        await this.page.goto(url);
-    }
-
-    async waitUntil (predicate) {
-        while (!(await predicate())) {
-            await this.page.waitForTimeout(50);
-        }
-    }
 }
 
-const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`; 
+const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;
 
-module.exports = { User };
+module.exports = { UserPOM };
