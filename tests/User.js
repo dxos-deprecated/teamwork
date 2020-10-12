@@ -48,25 +48,24 @@ class User {
         const cardsSelector = '//div[contains(@class,\'MuiGrid-item\')]';
         const cardTitlesSelector = '//div[contains(@class,\'MuiGrid-item\')]//h2';
         await this.page.waitForSelector(cardsSelector);
-        const initialCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
+        const initialPartyNames = await this.getPartyNames();
 
         const newPartyButtonSelector = '(//button[@name=\'new-party\'])[1]';
         await this.page.waitForSelector(newPartyButtonSelector);
         await this.page.click(newPartyButtonSelector);
 
-        while (initialCardNames.length === (await this.page.$$(cardTitlesSelector)).length) {
+        while (initialPartyNames.length === (await this.page.$$(cardTitlesSelector)).length) {
             await this.page.waitForTimeout(50);
         }
 
-        const currentCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
-        const newCardName = currentCardNames.filter(card => !initialCardNames.includes(card))[0];
+        const currentPartyNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
+        const newCardName = currentPartyNames.filter(card => !initialPartyNames.includes(card))[0];
 
         return newCardName;
     }
 
     async clickSharePartyButton (partyIdx) {
         const shareButtonSelector = `(//div[@name='share'])[${partyIdx}]`;
-        // NOTE: weird behaviour: will fail unless you hover first 'Share' button, then it will get title attribute... Weird
         await this.page.waitForSelector(shareButtonSelector);
         await this.page.click(shareButtonSelector);
     }
@@ -128,21 +127,6 @@ class User {
         });
     }
 
-    // async getShareLink () {
-    //     const linkRegex = /(https?:\/\/)/g;
-    //     let link = null;
-
-    //     await this.page.waitForEvent('console', message => {
-    //         if (message.text().match(linkRegex)) {
-    //             link = message.text();
-    //             return true;
-    //         }
-    //         return false;
-    //     });
-
-    //     return link;
-    // }
-
     async getPasscode () {
         const passcodeSelector = '//span[contains(@class,\'passcode\')]';
         await this.page.waitForSelector(passcodeSelector);
@@ -180,20 +164,13 @@ class User {
         return await this.page.$eval(userAvatarSelector, avatar => !!avatar);
     }
 
-    async getFirstPartyName () {
-        const firstPartyNameSelector = '(//div[contains(@class,\'MuiGrid-item\')]//*[contains(@class,\'MuiCardHeader-content\')])[1]/*';
-        await this.page.waitForSelector(firstPartyNameSelector, { timeout: 1e5 });
-        try {
-            return await this.page.$eval(firstPartyNameSelector, partyName => partyName.innerHTML);
-        } catch (error) {
-            console.log(`${this.name} did not select firstParty`);
-            return null;
-        }
-    }
-
     async getPartyNames () {
         const partyNamesSelector = '//div[contains(@class,\'MuiGrid-item\')]//*[contains(@class,\'MuiCardHeader-content\')]/*';
-        await this.page.waitForSelector('.party-header-title', { timeout: 1e5 });
+        try {
+            await this.page.waitForSelector(partyNamesSelector, { timeout: 2 * 1e3 });
+        } catch (error) {
+            return [];
+        }
         try {
             const partyNames = await this.page.$$eval(partyNamesSelector, partyNamesTags => {
                 return partyNamesTags.map(tag => tag.innerHTML);
@@ -206,7 +183,6 @@ class User {
     }
 
     async goToPage (url) {
-        // this.page = await this.context.newPage();
         await this.page.goto(url);
     }
 
