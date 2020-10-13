@@ -34,10 +34,10 @@ const initialState = {
 };
 
 const pads = [
-  MessengerPad,
-  EditorPad,
-  PlannerPad,
-  CanvasApp,
+  // MessengerPad
+  // EditorPad,
+  // PlannerPad,
+  // CanvasApp,
   TestingPad
 ];
 

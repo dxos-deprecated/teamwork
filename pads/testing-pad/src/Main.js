@@ -3,6 +3,7 @@
 //
 
 import ColorHash from 'color-hash';
+import debug from 'debug';
 import React, { useRef, useState, useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core';
@@ -11,10 +12,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import { useProfile } from '@dxos/react-client';
+import { keyToBuffer } from '@dxos/crypto';
+import { ObjectModel } from '@dxos/object-model';
+import { useProfile, useParty, useItems } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-ux';
 
-import { useItems } from './model';
+import { TYPE_TESTING_ITEM } from './model';
 
 const colorHash = new ColorHash({ saturation: 1 });
 
@@ -48,14 +51,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Main = ({ itemId, topic }) => {
+export const Main = ({ item, topic }) => {
+  const party = useParty(keyToBuffer(topic));
   const classes = useStyles();
 
-  /** @type {EchoModel} */
-  const { objects, createItem } = useItems(topic, itemId);
+  const createItem = async (properties) => {
+    const itemId = await party.database.createItem({
+      model: ObjectModel,
+      type: TYPE_TESTING_ITEM,
+      parrent: item.id,
+      parent: item.id,
+      props: { properties }
+    });
+    console.log('created:', itemId);
+  };
+  // const objects = item.children;
+
+  const items = useItems({ partyKey: keyToBuffer(topic) })
+  const objects = items.filter(o => o.parent?.id === item.id || o.parrent?.id === item.id);
+
+  // const { objects, createItem } =
+  // const objects -=
   const { publicKey } = useProfile();
 
-  function addItem (count) {
+  async function addItem (count) {
     for (let i = 0; i < count; i++) {
       createItem({ addedBy: publicKey, count: 0 });
     }
@@ -64,15 +83,15 @@ export const Main = ({ itemId, topic }) => {
   const renderCount = useRef(0);
   renderCount.current++;
 
-  const [addPeriodically, setAddPeriodically] = useState(false);
-  useEffect(() => {
-    if (addPeriodically) {
-      const intervalId = setInterval(() => {
-        addItem(100);
-      }, 1000);
-      return () => clearInterval(intervalId);
-    }
-  }, [addPeriodically]);
+  // const [addPeriodically, setAddPeriodically] = useState(false);
+  // useEffect(() => {
+  //   if (addPeriodically) {
+  //     const intervalId = setInterval(() => {
+  //       addItem(100);
+  //     }, 1000);
+  //     return () => clearInterval(intervalId);
+  //   }
+  // }, [addPeriodically]);
 
   const [selectedId, setSelectedId] = useState();
   const selectedItem = selectedId !== undefined ? objects.find(i => i.id === selectedId) : undefined;
@@ -89,7 +108,7 @@ export const Main = ({ itemId, topic }) => {
         <Button color="primary" onClick={() => addItem(10)}>+10</Button>
         <Button color="primary" onClick={() => addItem(100)}>+100</Button>
 
-        <FormControlLabel
+        {/* <FormControlLabel
           className={classes.label}
           control={
             <Checkbox
@@ -98,7 +117,7 @@ export const Main = ({ itemId, topic }) => {
             />
           }
           label="Running"
-        />
+        /> */}
 
         <div className={classes.expand} />
         <div className={classes.data}>
@@ -112,10 +131,10 @@ export const Main = ({ itemId, topic }) => {
             key={item.id}
             className={classes.cell}
             style={{
-              backgroundColor: colorHash.hex(item.properties.addedBy?.toString('hex'))
+              backgroundColor: colorHash.hex(item?.properties?.addedBy?.toString('hex'))
             }}
             onClick={() => setSelectedId(item.id)}
-          >{item.properties.count > 0 ? item.properties.count : ''}</div>
+          >{item?.properties?.count > 0 ? item?.properties?.count : ''}</div>
         ))}
       </div>
 

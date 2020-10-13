@@ -91,7 +91,7 @@ const Home = () => {
     const parsed = JSON.parse(data);
     assert(Array.isArray(parsed));
     const newParty = await client.partyManager.createParty();
-    const newPartyTopic = keyToString(newParty.publicKey);
+    const newPartyTopic = keyToString(newParty.key);
     const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
     parsed.forEach(msg => newPartyModel.appendMessage(msg));
   };
@@ -103,7 +103,7 @@ const Home = () => {
     >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
         {parties.sort(sortBySubscribedAndName).map((party) => (
-          <Grid key={party.publicKey.toString()} item zeroMinWidth>
+          <Grid key={party.key.toString()} item zeroMinWidth>
             <PartyCardContainer party={party} ipfs={ipfs} />
           </Grid>
         ))}

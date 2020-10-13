@@ -18,6 +18,6 @@ export default {
   main: Channel,
   type: TYPE_MESSENGER_CHANNEL,
   contentType: TYPE_MESSENGER_MESSAGE,
-  description: 'Chat with friends',
-  settings: MessengerSettingsDialog
+  description: 'Chat with friends'
+  // settings: MessengerSettingsDialog
 };
