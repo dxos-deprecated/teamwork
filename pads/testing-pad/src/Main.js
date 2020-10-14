@@ -63,7 +63,6 @@ export const Main = ({ item, topic }) => {
       parent: item.id,
       props: { properties }
     });
-    console.log('created:', itemId);
   };
 
   const objects = useItems({ partyKey: keyToBuffer(topic), parent: item.id });

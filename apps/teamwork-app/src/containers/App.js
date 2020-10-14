@@ -37,7 +37,7 @@ const App = () => {
   const classes = useStyles();
   const { topic, item: itemId } = useParams();
   const [pads] = usePads();
-  const items = useItems({ partyKey: keyToBuffer(topic), type: pads[0].type });
+  const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const item = items.find(i => i.id === itemId);
   // const { model } = useItems(topic);
   // const item = model.getById(itemId);
