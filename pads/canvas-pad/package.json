@@ -28,8 +28,8 @@
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "0.2.0-dev.26+4d80584",
     "@dxos/gem-canvas": "^1.0.0-beta.7",
-    "@dxos/react-appkit": "^1.1.0-beta.12",
-    "@dxos/react-ux": "^1.1.0-beta.12",
+    "@dxos/react-appkit": "^2.1.1",
+    "@dxos/react-ux": "^2.1.1",
     "clsx": "^1.1.0",
     "debug": "^4.1.1",
     "react": "^16.13.1",
@@ -37,7 +37,7 @@
   },
   "peerDependencies": {
     "@dxos/crypto": "^1.0.0-beta.1",
-    "@dxos/react-client": "^1.1.0-beta.12",
+    "@dxos/react-client": "^2.1.1",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "*"
@@ -50,7 +50,7 @@
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.1",
     "@babel/plugin-proposal-optional-chaining": "^7.10.1",
     "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.1",
+    "@babel/preset-react": "^7.10.4",
     "@dxos/app-cli": "^1.0.0-beta.50",
     "@rollup/plugin-babel": "^5.0.3",
     "@storybook/addon-knobs": "^5.3.18",
