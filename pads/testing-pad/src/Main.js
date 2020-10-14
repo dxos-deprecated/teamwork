@@ -76,7 +76,6 @@ export const Main = ({ item, topic }) => {
 
   async function addItem (count) {
     for (let i = 0; i < count; i++) {
-      console.log('createing an item')
       createItem({ addedBy: publicKey, count: 0 });
     }
   }
