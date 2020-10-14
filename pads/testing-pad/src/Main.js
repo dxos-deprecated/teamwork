@@ -65,13 +65,9 @@ export const Main = ({ item, topic }) => {
     });
     console.log('created:', itemId);
   };
-  // const objects = item.children;
 
-  const items = useItems({ partyKey: keyToBuffer(topic) })
-  const objects = items.filter(o => o.parent?.id === item.id || o.parrent?.id === item.id);
+  const objects = useItems({ partyKey: keyToBuffer(topic), parent: item.id });
 
-  // const { objects, createItem } =
-  // const objects -=
   const { publicKey } = useProfile();
 
   async function addItem (count) {
