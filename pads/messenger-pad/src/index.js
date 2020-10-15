@@ -26,7 +26,7 @@ export default {
   register: async (client) => {
     await client.modelFactory.registerModel(MessengerModel);
   },
-  create: async ({client, party}, { name }) => {
+  create: async ({ client, party }, { name }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: TYPE_MESSENGER_CHANNEL,
