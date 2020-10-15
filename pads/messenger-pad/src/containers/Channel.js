@@ -4,23 +4,23 @@
 
 import assert from 'assert';
 import clsx from 'clsx';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 
-import Badge from '@material-ui/core/Badge';
+// import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import TableContainer from '@material-ui/core/TableContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import Send from '@material-ui/icons/Send';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+// import VideocamIcon from '@material-ui/icons/Videocam';
+// import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
 import { keyToBuffer } from '@dxos/crypto';
 import { Editor } from '@dxos/editor';
 import { useParty } from '@dxos/react-client';
 
 import Messages from '../components/Messages';
-import Videos from '../components/Videos';
-import { useEphemeralSwarm } from '../ephemeral-swarm';
+// import Videos from '../components/Videos';
+// import { useEphemeralSwarm } from '../ephemeral-swarm';
 import { useChannelMessages } from '../model';
 
 const useStyles = makeStyles(theme => ({
@@ -117,10 +117,10 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
   const classes = useStyles();
 
   const [messages, createMessage] = useChannelMessages(topic, itemId, party);
-  const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
+  // const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
   const editorClasses = useEditorStyles();
 
-  const [videoEnabled, setVideoEnabled] = useState(false);
+  // const [videoEnabled, setVideoEnabled] = useState(false);
   const editor = useRef();
 
   function handleEditorCreated (editorInstance) {
@@ -166,19 +166,19 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
           <IconButton onClick={handleSubmit}>
             <Send />
           </IconButton>
-          <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded} edge="start">
+          {/* <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded} edge="start">
             {videoEnabled
               ? <VideocamOffIcon />
               : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
-          </IconButton>
+          </IconButton> */}
         </div>
       </div>
 
-      {videoEnabled && (
+      {/* {videoEnabled && (
         <div className={classes.videos}>
           <Videos connections={connections} streamsWithMetaData={streamsWithMetaData} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
