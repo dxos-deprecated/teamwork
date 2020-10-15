@@ -4,23 +4,24 @@
 
 import assert from 'assert';
 import clsx from 'clsx';
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 
-import Badge from '@material-ui/core/Badge';
+// import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import TableContainer from '@material-ui/core/TableContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import Send from '@material-ui/icons/Send';
-import VideocamIcon from '@material-ui/icons/Videocam';
-import VideocamOffIcon from '@material-ui/icons/VideocamOff';
+// import VideocamIcon from '@material-ui/icons/Videocam';
+// import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
+import { keyToBuffer } from '@dxos/crypto';
 import { Editor } from '@dxos/editor';
-import { usePads } from '@dxos/react-appkit';
+import { useParty } from '@dxos/react-client';
 
 import Messages from '../components/Messages';
-import Videos from '../components/Videos';
-import { useEphemeralSwarm } from '../ephemeral-swarm';
-import { useChannelMessages, useItems } from '../model';
+// import Videos from '../components/Videos';
+// import { useEphemeralSwarm } from '../ephemeral-swarm';
+import { useChannelMessages } from '../model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -108,88 +109,26 @@ const useEditorStyles = makeStyles(theme => {
   };
 });
 
-const queryFilter = query => items => {
-  return items.filter(item => item.displayName.toLowerCase().includes(query.toLowerCase()));
-};
-
-const useSuggestionsMenuHandlers = (topic, pads, items, editor, createItem) => {
-  function handleSuggestionsGetOptions (query) {
-    const filter = queryFilter(query);
-    let insertOptions = filter(items).map(item => ({
-      id: item.itemId,
-      label: item.displayName
-    }));
-
-    if (insertOptions.length > 0) {
-      insertOptions = [{ subheader: 'Insert items' }, ...insertOptions];
-    }
-
-    let createItemOptions = filter(pads).map(pad => ({
-      id: `create-${pad.type}`,
-      label: `New ${pad.displayName}`,
-      create: true,
-      type: pad.type
-    }));
-
-    if (createItemOptions.length > 0) {
-      createItemOptions = [{ subheader: 'Create items' }, ...createItemOptions];
-    }
-
-    return [...insertOptions, ...createItemOptions];
-  }
-
-  async function handleSuggestionsOptionSelect (option, { prosemirrorView }) {
-    let item;
-    if (option.create) {
-      item = await createItem(option.type);
-    } else {
-      item = items.find(item => item.itemId === option.id);
-    }
-
-    const title = `@${item.displayName}`;
-    const href = `/app/${topic}/${item.itemId}`;
-
-    const { tr } = prosemirrorView.state;
-
-    editor.insertLink(title, title, href, tr);
-    editor.insertText(' ', tr);
-    editor.scrollIntoView(tr);
-
-    prosemirrorView.dispatch(tr);
-  }
-
-  return {
-    handleSuggestionsGetOptions,
-    handleSuggestionsOptionSelect
-  };
-};
-
 export const Channel = ({ topic, itemId, narrow, embedded }) => {
   assert(topic);
   assert(itemId);
+  const party = useParty(keyToBuffer(topic));
 
   const classes = useStyles();
 
-  const [messages, createMessage] = useChannelMessages(topic, itemId);
-  const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
+  const [messages, createMessage] = useChannelMessages(topic, itemId, party);
+  // const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
   const editorClasses = useEditorStyles();
 
-  const [videoEnabled, setVideoEnabled] = useState(false);
-  const [pads] = usePads();
-  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
-
+  // const [videoEnabled, setVideoEnabled] = useState(false);
   const editor = useRef();
-
-  const {
-    handleSuggestionsGetOptions,
-    handleSuggestionsOptionSelect
-  } = useSuggestionsMenuHandlers(topic, pads, items, editor.current, createItem);
 
   function handleEditorCreated (editorInstance) {
     editor.current = editorInstance;
   }
 
   function handleSubmit () {
+    if (!editor || !editor.current) return;
     const value = editor
       .current
       .getContentHtml()
@@ -218,11 +157,6 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
         </TableContainer>
 
         <Editor
-          suggestions={{
-            getOptions: handleSuggestionsGetOptions,
-            onSelect: handleSuggestionsOptionSelect,
-            maxListHeight: 500
-          }}
           onCreated={handleEditorCreated}
           onKeyDown={handleKeyDown}
           classes={editorClasses}
@@ -232,19 +166,19 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
           <IconButton onClick={handleSubmit}>
             <Send />
           </IconButton>
-          <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded} edge="start">
+          {/* <IconButton onClick={() => setVideoEnabled(current => !current)} disabled={embedded} edge="start">
             {videoEnabled
               ? <VideocamOffIcon />
               : <Badge badgeContent={streams.length} color="primary"><VideocamIcon /></Badge>}
-          </IconButton>
+          </IconButton> */}
         </div>
       </div>
 
-      {videoEnabled && (
+      {/* {videoEnabled && (
         <div className={classes.videos}>
           <Videos connections={connections} streamsWithMetaData={streamsWithMetaData} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };
