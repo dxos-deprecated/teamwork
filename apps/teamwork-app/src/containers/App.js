@@ -2,20 +2,17 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useEffect, useState } from 'react';
+import debug from 'debug';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { useProfile, useItems } from '@dxos/react-client';
 
-import { noop } from '@dxos/async';
 import { keyToBuffer } from '@dxos/crypto';
-import { ObjectModel } from '@dxos/echo-db';
-import { LIST_TYPE, BOARD_TYPE } from '@dxos/planner-pad';
-import { AppContainer, usePads, useAppRouter, DefaultItemList, DefaultSettingsDialog } from '@dxos/react-appkit';
-import { useModel, useClient } from '@dxos/react-client';
-import debug from 'debug'
-debug.enable('dxos:*')
+import { AppContainer, usePads, useAppRouter, DefaultItemList } from '@dxos/react-appkit';
+import { useItems } from '@dxos/react-client';
+
+debug.enable('dxos:*');
 
 const useStyles = makeStyles(theme => ({
   main: {

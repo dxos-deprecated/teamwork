@@ -3,13 +3,10 @@
 //
 
 import ColorHash from 'color-hash';
-import debug from 'debug';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import { keyToBuffer } from '@dxos/crypto';
@@ -56,7 +53,7 @@ export const Main = ({ item, topic }) => {
   const classes = useStyles();
 
   const createItem = async (properties) => {
-    const itemId = await party.database.createItem({
+    await party.database.createItem({
       model: ObjectModel,
       type: TYPE_TESTING_ITEM,
       parrent: item.id,

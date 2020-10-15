@@ -7,7 +7,7 @@ import Icon from '@material-ui/icons/Chat';
 import { MessengerModel } from '@dxos/messenger-model';
 import { ObjectModel } from '@dxos/object-model';
 
-import { Channel, MessengerSettingsDialog } from './containers';
+import { Channel } from './containers';
 import { TYPE_MESSENGER_CHANNEL, TYPE_MESSENGER_MESSAGE } from './model';
 
 export * from './model';
