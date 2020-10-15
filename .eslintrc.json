@@ -4,6 +4,9 @@
   "extends": [
     "semistandard"
   ],
+  "env": {
+    "jest": true
+  },
   "plugins": [
     "eslint-plugin-local-rules"
   ],
