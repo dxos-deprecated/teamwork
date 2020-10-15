@@ -1585,6 +1585,33 @@
     lodash.set "^4.3.2"
     lodash.unset "^4.5.2"
 
+"@dxos/model-adapter@^2.0.3":
+  version "2.0.3"
+  resolved "http://npm.dev.dxos.network:5736/@dxos%2fmodel-adapter/-/model-adapter-2.0.3.tgz#9a5a5d3b8f2cfa0a00fba612a2113a67c1d9fbdd"
+  integrity sha512-IdLEfS343zg0E+3c9LXBtWL+ZeB4cmtvHXBCQfndOex9g9fSYP17y2JF6D9hm11mgNRinPYnTFUWH9v6FOWwug==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/crypto" "^1.0.0-beta.7"
+    "@dxos/echo-protocol" "^2.0.3"
+    "@dxos/feed-store" "^1.2.0-beta.30"
+    "@dxos/model-factory" "^2.0.3"
+    "@dxos/util" "^2.0.3"
+    "@types/buffer-json" "^2.0.0"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    buffer-json "^2.0.0"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
 "@dxos/model-factory@^1.0.0-beta.28":
   version "1.0.0-beta.28"
   resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-1.0.0-beta.28.tgz#8fa142731e1b94a8d1228d399e37f31192d44ea0"
@@ -1730,6 +1757,15 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
+
+"@dxos/protobuf-compiler@^0.2.0":
+  version "0.2.2"
+  resolved "http://npm.dev.dxos.network:5736/@dxos%2fprotobuf-compiler/-/protobuf-compiler-0.2.2.tgz#b20a0c5bef71e472d2fe5829f5d5b54b30186494"
+  integrity sha512-DfnobkcSp2Ev01LOlcfK4zH3+tG4zojXkkuc32h2xqqjxTJ1P5cqahVccmHgowbO2Pj7fc7ijixB2M85xxKt7Q==
+  dependencies:
+    argparse "^2.0.1"
+    chalk "^4.1.0"
+    read-pkg "^5.2.0"
 
 "@dxos/protocol-network-generator@^1.1.0-beta.2":
   version "1.1.0-beta.17"
@@ -1949,6 +1985,27 @@
   version "2.0.3"
   resolved "https://registry.npmjs.org/@dxos/util/-/util-2.0.3.tgz#30fef3b5dfc5c15f247870e7f82c71884c662db3"
   integrity sha512-+YeA3zlZAAGvim3pPQSDQzwgFwq5mGYguvT5kRl9EbqPqEkgZPvADqOTzaVkZ7sdQJOWrdwgUeLpI+L+0ZH0Pg==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/crypto" "^1.0.0-beta.7"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
+"@dxos/util@^2.1.0":
+  version "2.1.0"
+  resolved "http://npm.dev.dxos.network:5736/@dxos%2futil/-/util-2.1.0.tgz#758dac7ae8f0521112aba0b8bab8cc3baa1dfbe8"
+  integrity sha512-3V4xUxCoQiilkr3+AdUR4wMzflmFvFyt8PmVosvUVYfn0obQuF63EsNDhGUF1dAC+DgCl+DRet+Ig7ZhXxDe8Q==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.0"
@@ -4235,6 +4292,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/buffer-json@^2.0.0":
+  version "2.0.0"
+  resolved "http://npm.dev.dxos.network:5736/@types%2fbuffer-json/-/buffer-json-2.0.0.tgz#6ec0ee9ba7334a378a9c1d849bccc1b079a33554"
+  integrity sha512-nFKOrY93Tvv5Tobws+YbkGlPOJsn1nVpZah3BlSyQ4EniFm97KLvSr54tZ5xQp8mlf/XxbYwskNCYQB9EdrPlQ==
+
 "@types/chance@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/chance/-/chance-1.1.0.tgz#7d8e6bd0506344d94c042f692d59d20f8eb7d66d"
@@ -5225,6 +5287,11 @@ argparse@^1.0.7:
   integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   dependencies:
     sprintf-js "~1.0.2"
+
+argparse@^2.0.1:
+  version "2.0.1"
+  resolved "http://npm.dev.dxos.network:5736/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
+  integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
 arr-diff@^4.0.0:
   version "4.0.0"
@@ -19883,6 +19950,11 @@ typeforce@^1.11.5:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.18.0.tgz#d7416a2c5845e085034d70fcc5b6cc4a90edbfdc"
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
+
+typescript@^4.0.3:
+  version "4.0.3"
+  resolved "http://npm.dev.dxos.network:5736/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
+  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
 
 uglify-js@^3.1.4:
   version "3.11.1"

@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import CanvasApp from '@dxos/canvas-pad';
@@ -34,7 +34,7 @@ const initialState = {
 };
 
 const pads = [
-  // MessengerPad
+  MessengerPad,
   // EditorPad,
   // PlannerPad,
   // CanvasApp,
@@ -43,6 +43,7 @@ const pads = [
 
 const Root = ({ config, client }) => {
   const publicUrl = window.location.pathname;
+  const [registered, setRegistered] = useState(false);
 
   const router = { ...DefaultRouter, publicUrl };
   const { routes } = router;
@@ -61,6 +62,20 @@ const Root = ({ config, client }) => {
       }
     }
   };
+
+  useEffect(() => {
+    const registerPadModels = async () => {
+      for (let i = 0; i < pads.length; i++) {
+        if (pads[i].register) {
+          await pads[i].register(client);
+        }
+      }
+      setRegistered(true);
+    };
+    registerPadModels();
+  }, []);
+
+  if (!registered) return null;
 
   return (
     <Theme base={themeBase}>

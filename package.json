@@ -18,7 +18,8 @@
     "packages": [
       "apps/*",
       "pads/*",
-      "bots/*"
+      "bots/*",
+      "packages/*"
     ]
   },
   "scripts": {
