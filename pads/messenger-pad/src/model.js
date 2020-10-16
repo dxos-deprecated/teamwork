@@ -26,7 +26,6 @@ export const useChannelMessages = (topic, channelId, party) => {
   client.modelFactory.registerModel(MessengerModel);
   const [messenger] = useItems({ partyKey: party.key, parent: channelId });
 
-  console.log('messenger', messenger);
   if (!messenger) return [[], () => {}];
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
