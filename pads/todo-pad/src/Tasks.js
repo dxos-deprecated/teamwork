@@ -1,0 +1,86 @@
+//
+// Copyright 2020 DXOS.org
+//
+
+// File initially copied from the Tutorial's Tasks app
+
+import React, { useState } from 'react';
+
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 760,
+    margin: '0 auto',
+    backgroundColor: theme.palette.background.paper
+  }
+}));
+
+export default function Tasks ({ title, items, onAdd, onUpdate }) {
+  const classes = useStyles();
+  const [newTask, setNewTask] = useState('');
+
+  const handleNewTaskChange = (event) => setNewTask(event.target.value);
+
+  const handleAdd = async () => {
+    await onAdd({ text: newTask });
+    setNewTask('');
+  };
+
+  const handleToggleComplete = item => async (event) => {
+    await onUpdate(item, { completed: event.target.checked });
+  };
+
+  return (
+    <List className={classes.root}>
+      <Typography align="center" variant="h3">{title}</Typography>
+      <ListItem>
+        <ListItemText>
+          <TextField
+            value={newTask}
+            onChange={handleNewTaskChange}
+            margin="normal"
+            required
+            fullWidth
+            autoComplete="false"
+            autoFocus
+            />
+        </ListItemText>
+        <ListItemIcon>
+          <IconButton disabled={!newTask} onClick={handleAdd}>
+            <AddIcon />
+          </IconButton>
+        </ListItemIcon>
+      </ListItem>
+      {items.map((item) => {
+        const text = item.model.getProperty('text');
+        const completed = item.model.getProperty('completed');
+        const labelId = `checkbox-list-secondary-label-${item.id}`;
+        return (
+          <ListItem key={item.id} button>
+            <ListItemText id={labelId} primary={text} />
+            <ListItemSecondaryAction>
+              <Checkbox
+                edge="end"
+                onChange={handleToggleComplete(item)}
+                checked={completed || false}
+                inputProps={{ 'aria-labelledby': labelId }}
+              />
+            </ListItemSecondaryAction>
+          </ListItem>
+        );
+      })}
+    </List>
+  );
+}
