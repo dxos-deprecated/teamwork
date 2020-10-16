@@ -9,7 +9,7 @@ import { ErrorHandler } from '@dxos/debug';
 // import CanvasApp from '@dxos/canvas-pad';
 // import EditorPad from '@dxos/editor-pad';
 import MessengerPad from '@dxos/messenger-pad';
-// import PlannerPad from '@dxos/planner-pad';
+import PlannerPad from '@dxos/planner-pad';
 // import TestingPad from '@dxos/testing-pad';
 import {
   SET_LAYOUT,
@@ -37,7 +37,7 @@ const initialState = {
 const pads = [
   MessengerPad,
   // EditorPad,
-  // PlannerPad,
+  PlannerPad,
   // CanvasApp,
   // TestingPad,
   TodoPad

@@ -57,11 +57,11 @@ export const DraggableLists = ({
   getCardsForList,
   embedded,
   onOpenCard,
-  handleAddCard,
-  handleUpdateList,
-  handleAddList,
-  handleMoveList,
-  handleMoveCard,
+  onAddCard,
+  onUpdateList,
+  onAddList,
+  onMoveList,
+  onMoveCard,
   onDragDisabled,
   showArchived,
   onToggleShowArchived
@@ -78,17 +78,17 @@ export const DraggableLists = ({
     if (source.droppableId === boardId) { // Dragging entire lists.
       const movingDown = destination.index > source.index;
       const position = getChangedPositionAtIndex(lists, destination.index, movingDown);
-      handleMoveList(draggableId, { position });
+      await onMoveList(draggableId, { position });
     } else { // Dragging cards
       const cardsInList = getCardsForList(destination.droppableId);
       if (source.droppableId === destination.droppableId) {
         // moving in the same list
         const movingDown = destination.index > source.index;
         const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown);
-        handleMoveCard(draggableId, { position });
+        await onMoveCard(draggableId, { position });
       } else {
         // moving to another list
-        handleMoveCard(draggableId, {
+        await onMoveCard(draggableId, {
           position: getInsertedPositionAtIndex(cardsInList, destination.index),
           listId: destination.droppableId
         });
@@ -117,9 +117,9 @@ export const DraggableLists = ({
                         key={list.id}
                         list={list}
                         cards={getCardsForList(list.id)}
-                        onUpdateList={handleUpdateList(list.id)}
+                        onUpdateList={onUpdateList(list.id)}
                         onOpenCard={onOpenCard}
-                        onAddCard={handleAddCard}
+                        onAddCard={onAddCard}
                         embedded={embedded}
                         showArchived={showArchived}
                         onToggleShowArchived={onToggleShowArchived}
@@ -134,7 +134,7 @@ export const DraggableLists = ({
             <List
               className={classes.newList}
               embedded={embedded}
-              onNewList={handleAddList}
+              onNewList={onAddList}
               showMenuOnNewCard={lists.length === 0}
               showArchived={showArchived}
               onToggleShowArchived={onToggleShowArchived}
