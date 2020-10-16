@@ -5,10 +5,10 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-// import CanvasApp from '@dxos/canvas-pad';
 import { ErrorHandler } from '@dxos/debug';
+// import CanvasApp from '@dxos/canvas-pad';
 // import EditorPad from '@dxos/editor-pad';
-// import MessengerPad from '@dxos/messenger-pad';
+import MessengerPad from '@dxos/messenger-pad';
 // import PlannerPad from '@dxos/planner-pad';
 // import TestingPad from '@dxos/testing-pad';
 import {
@@ -35,7 +35,7 @@ const initialState = {
 };
 
 const pads = [
-  // MessengerPad,
+  MessengerPad,
   // EditorPad,
   // PlannerPad,
   // CanvasApp,
