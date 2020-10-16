@@ -5,7 +5,7 @@ name: Build and Publish to WNS
 
 on:
   push:
-    branches: [ release ]
+    branches: [ DISABLE ]
 
 jobs:
   publish:
