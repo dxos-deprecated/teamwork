@@ -47,10 +47,10 @@ export const MiniCard = ({
 
   return (
     <MuiCard className={clsx(classes.root, className, deletedClassName)} onMouseUp={onOpenCard}>
-      {card.model.getProperty('label') && (
+      {card.model.getProperty('labels') && (
         <div className={classes.labels}>
           {labels
-            .filter(x => card.model.getProperty('label')[x])
+            .filter(x => card.model.getProperty('labels')[x])
             .map(label => (
               <Tooltip key={label} title={names[label]}>
                 <Chip

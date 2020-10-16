@@ -57,15 +57,15 @@ export const Board = ({ topic, embedded, item }) => {
   // const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
   // const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
 
-  // const lists = listsCache
-  //   .filter(c => showArchived || !c.properties.deleted)
-  //   .sort(positionCompare);
+  const visibleLists = lists
+    .filter(c => showArchived || !c.model.getProperty('deleted'))
+    .sort(positionCompare);
 
-  // const cards = cardsCache
-  //   .filter(c => showArchived || !c.properties.deleted)
-  //   .filter(c => !filterByLabel || (c.properties.labels && c.properties.labels[filterByLabel]));
+  const visibleCards = cards
+    .filter(c => showArchived || !c.model.getProperty('deleted'))
+    .filter(c => !filterByLabel || (c.model.getProperty('labels') && c.model.getProperty('labels')[filterByLabel]));
 
-  const getCardsForList = listId => cards
+  const getCardsForList = listId => visibleCards
     .filter(card => card.model.getProperty('listId') === listId)
     .sort(positionCompare);
 
@@ -95,7 +95,10 @@ export const Board = ({ topic, embedded, item }) => {
     });
   };
   // const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
-  const handleUpdateListOrCard = (listId) => (properties) => { throw new Error('not implemented'); };
+  const handleUpdateListOrCard = (listId) => async (prop, value) => {
+    const listOrCard = lists.find(l => l.id === listId) || cards.find(l => l.id === listId);
+    await listOrCard.model.setProperty(prop, value);
+   };
 
   const handleAddCard = async (title, listId) => {
     const cardsInList = getCardsForList(listId);
@@ -107,11 +110,11 @@ export const Board = ({ topic, embedded, item }) => {
     });
   };
 
-  // const handleToggleArchive = () => {
-  //   assert(selectedCard);
-  //   listsModel.updateItem(selectedCard.id, { deleted: !selectedCard.properties.deleted });
-  //   setSelectedCard(undefined);
-  // };
+  const handleToggleArchive = async () => {
+    assert(selectedCard);
+    await selectedCard.model.setProperty('deleted', !selectedCard.model.getProperty('deleted'));
+    setSelectedCard(undefined);
+  };
 
   const handleMoveList = async (id, { position }) => {
     // setListsCache(old => {
@@ -154,7 +157,7 @@ export const Board = ({ topic, embedded, item }) => {
         <DraggableLists
           handleMoveList={handleMoveList}
           handleMoveCard={handleMoveCard}
-          lists={lists}
+          lists={visibleLists}
           boardId={item.id}
           isDragDisabled={isDragDisabled}
           onDragDisabled={() => setIsDragDisabled(true)}
@@ -167,14 +170,14 @@ export const Board = ({ topic, embedded, item }) => {
           showArchived={showArchived}
           onToggleShowArchived={() => setShowArchived(prev => !prev)}
         />
-        {/* <CardDetailsDialog
+        <CardDetailsDialog
           open={!!selectedCard}
           onClose={() => setSelectedCard(undefined)}
           onToggleArchive={handleToggleArchive}
           card={selectedCard}
           onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
         />
-        <LabelsDialog
+        {/* <LabelsDialog
           open={labelsDialogOpen}
           onClose={() => setLabelsDialogOpen(false)}
           onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}

@@ -80,12 +80,12 @@ const List = ({
   const newListSettingsAnchor = useRef();
 
   const handleTitleUpdate = (title) => {
-    onUpdateList({ title });
+    onUpdateList('title', title);
   };
 
   const handleToggleArchive = () => {
     assert(list);
-    onUpdateList({ deleted: !list.properties.deleted });
+    onUpdateList('deleted', !list.model.getProperty('deleted'));
   };
 
   // Common props used by regular list settings, and new list placeholder settings
