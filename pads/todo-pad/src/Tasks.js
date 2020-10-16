@@ -17,13 +17,16 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 760,
-    margin: '0 auto',
-    backgroundColor: theme.palette.background.paper
+    margin: '0 auto'
+  },
+  deleteButton: {
+    color: theme.palette.grey[300]
   }
 }));
 
@@ -42,9 +45,13 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
     await onUpdate(item, { completed: event.target.checked });
   };
 
+  const handleDelete = item => async () => {
+    await onUpdate(item, { deleted: true });
+  };
+
   return (
     <List className={classes.root}>
-      <Typography align="center" variant="h3">{title}</Typography>
+      <Typography align="center" variant="h4">{title}</Typography>
       <ListItem>
         <ListItemText>
           <TextField
@@ -63,23 +70,28 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
           </IconButton>
         </ListItemIcon>
       </ListItem>
-      {items.map((item) => {
-        const text = item.model.getProperty('text');
-        const completed = item.model.getProperty('completed');
-        const labelId = `checkbox-list-secondary-label-${item.id}`;
-        return (
-          <ListItem key={item.id} button>
-            <ListItemText id={labelId} primary={text} />
-            <ListItemSecondaryAction>
-              <Checkbox
-                edge="end"
-                onChange={handleToggleComplete(item)}
-                checked={completed || false}
-                inputProps={{ 'aria-labelledby': labelId }}
-              />
-            </ListItemSecondaryAction>
-          </ListItem>
-        );
+      {items
+        .filter(item => !item.model.getProperty('deleted'))
+        .map((item) => {
+          const text = item.model.getProperty('text');
+          const completed = item.model.getProperty('completed');
+          const labelId = `checkbox-list-secondary-label-${item.id}`;
+          return (
+            <ListItem key={item.id} button>
+              <ListItemText id={labelId} primary={text} />
+              <ListItemSecondaryAction>
+                <IconButton onClick={handleDelete(item)}>
+                  <DeleteIcon className={classes.deleteButton} />
+                </IconButton>
+                <Checkbox
+                  edge="end"
+                  onChange={handleToggleComplete(item)}
+                  checked={completed || false}
+                  inputProps={{ 'aria-labelledby': labelId }}
+                />
+              </ListItemSecondaryAction>
+            </ListItem>
+          );
       })}
     </List>
   );

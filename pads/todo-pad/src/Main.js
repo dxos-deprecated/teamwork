@@ -15,14 +15,17 @@ export const Main = ({ item, topic }) => {
   const items = useItems({ partyKey: party.key, parent: item.id });
 
   const handleAdd = async (props) => {
-    await addTask(party, props);
+    await addTask({ party, item }, props);
   };
 
-  const handleUpdate = async (item, { completed }) => {
-    await item.model.setProperty('completed', completed);
+  const handleUpdate = async (item, { completed, deleted }) => {
+    await item.model.setProperty('completed', !!completed);
+    await item.model.setProperty('deleted', !!deleted);
   };
+
+  const title = item._model.getProperty('title') || 'Untitled';
 
   return (
-    <Tasks items={items} onUpdate={handleUpdate} onAdd={handleAdd} title={party.key.toString('hex')} />
+    <Tasks items={items} onUpdate={handleUpdate} onAdd={handleAdd} title={title} />
   );
 };

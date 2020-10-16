@@ -20,14 +20,14 @@ export default {
   type: TYPE_TODO_PAD,
   contentType: TYPE_TODO_ITEM,
   description: 'DXOS simple todo list',
-  create: async ({ client, party }, { name }) => {
+  create: async ({ party }, { name }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: TYPE_TODO_PAD,
       props: { title: name || 'untitled' }
     });
-    await addTask(party, { completed: false, text: 'Outstanding task' });
-    await addTask(party, { completed: true, text: 'Completed task' });
+    await addTask({ party, item }, { completed: false, text: 'Outstanding task' });
+    await addTask({ party, item }, { completed: true, text: 'Completed task' });
     return item.id;
   }
 };
