@@ -116,8 +116,8 @@ export const Board = ({ topic, embedded, item }) => {
       <div className={classes.containerRoot}>
         { isDragDisabled && <CircularProgress className={classes.spinner} />}
         <DraggableLists
-          handleMoveList={handleMoveList}
-          handleMoveCard={handleMoveCard}
+          onMoveList={handleMoveList}
+          onMoveCard={handleMoveCard}
           lists={visibleLists}
           boardId={item.id}
           isDragDisabled={isDragDisabled}
@@ -125,9 +125,9 @@ export const Board = ({ topic, embedded, item }) => {
           getCardsForList={getCardsForList}
           embedded={embedded}
           onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
-          handleAddCard={handleAddCard}
-          handleUpdateList={handleUpdateListOrCard}
-          handleAddList={handleAddList}
+          onAddCard={handleAddCard}
+          onUpdateList={handleUpdateListOrCard}
+          onAddList={handleAddList}
           showArchived={showArchived}
           onToggleShowArchived={() => setShowArchived(prev => !prev)}
         />
