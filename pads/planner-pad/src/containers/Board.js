@@ -3,7 +3,7 @@
 //
 
 import assert from 'assert';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
