@@ -126,11 +126,10 @@ const List = ({
   }
 
   return (
-    <div className={clsx(classes.root, className, list.properties.deleted ? classes.deleted : '')}>
+    <div className={clsx(classes.root, className, list.model.getProperty('deleted') ? classes.deleted : '')}>
       <div className={classes.header}>
         <EditableText
-          key={list.properties.title}
-          value={list.properties.title || 'untitled list'}
+          value={list.model.getProperty('title') || 'untitled list'}
           disabled={embedded}
           onUpdate={handleTitleUpdate}
           bareInput={true}
@@ -155,7 +154,7 @@ const List = ({
                       card={card}
                       provided={provided}
                       onOpenCard={onOpenCard}
-                      listDeleted={list.properties.deleted}
+                      listDeleted={list.model.getProperty('deleted')}
                     />
                   )}
                 </Draggable>
@@ -164,13 +163,13 @@ const List = ({
           </div>
         )}
       </Droppable>
-      {!embedded && !list.properties.deleted && (<>
+      {!embedded && !list.model.getProperty('deleted') && (<>
         <AddCard onAddCard={title => onAddCard(title, list.id)} />
       </>)}
       <ListSettingsMenu
         {...commonListSettingsProps}
         anchorEl={listSettingsAnchor.current}
-        deleted={list.properties.deleted}
+        deleted={list.model.getProperty('deleted')}
         onToggleArchive={handleToggleArchive}
       />
     </div>

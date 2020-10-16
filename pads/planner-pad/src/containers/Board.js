@@ -8,9 +8,13 @@ import React, { useState, useEffect } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { keyToBuffer } from '@dxos/crypto';
+import { ObjectModel } from '@dxos/object-model';
+import { useItems, useParty } from '@dxos/react-client';
+
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
-import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
+import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
 import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
 import DraggableLists from './DraggableLists';
 
@@ -31,89 +35,114 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const Board = ({ topic, itemId, embedded }) => {
+export const Board = ({ topic, embedded, item }) => {
   const classes = useStyles();
+  const party = useParty(keyToBuffer(topic));
+  const lists = useItems({ partyKey: party.key, parent: item.id, type: LIST_TYPE });
+  const cards = useItems({ partyKey: party.key, parent: item.id, type: CARD_TYPE });
+
+  console.log('lists', lists);
+  console.log('cards', cards);
+
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
   const [isDragDisabled, setIsDragDisabled] = useState(false);
   const [labelsDialogOpen, setLabelsDialogOpen] = useState(false);
   const [filterByLabel, setFilterByLabel] = useState(undefined);
 
-  const itemModel = useItems(topic, itemId);
-  const board = itemModel.getById(itemId);
-  const listsModel = useList(topic, itemId);
+  // const itemModel = useItems(topic, itemId);
+  // const board = itemModel.getById(itemId);
+  // const listsModel = useList(topic, itemId);
 
-  const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
-  const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
+  // const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
+  // const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
 
-  const lists = listsCache
-    .filter(c => showArchived || !c.properties.deleted)
-    .sort(positionCompare);
+  // const lists = listsCache
+  //   .filter(c => showArchived || !c.properties.deleted)
+  //   .sort(positionCompare);
 
-  const cards = cardsCache
-    .filter(c => showArchived || !c.properties.deleted)
-    .filter(c => !filterByLabel || (c.properties.labels && c.properties.labels[filterByLabel]));
+  // const cards = cardsCache
+  //   .filter(c => showArchived || !c.properties.deleted)
+  //   .filter(c => !filterByLabel || (c.properties.labels && c.properties.labels[filterByLabel]));
 
   const getCardsForList = listId => cards
-    .filter(card => card.properties.listId === listId)
+    .filter(card => card.model.getProperty('listId') === listId)
     .sort(positionCompare);
 
-  useEffect(() => {
-    const updateHandler = () => {
-      setListsCache(listsModel.getObjectsByType(LIST_TYPE));
-      setCardsCache(listsModel.getObjectsByType(CARD_TYPE));
-      setIsDragDisabled(false);
-    };
+  // useEffect(() => {
+  //   const updateHandler = () => {
+  //     setListsCache(listsModel.getObjectsByType(LIST_TYPE));
+  //     setCardsCache(listsModel.getObjectsByType(CARD_TYPE));
+  //     setIsDragDisabled(false);
+  //   };
 
-    if (listsModel) {
-      listsModel.on('update', updateHandler);
-      return () => listsModel.off('update', updateHandler);
-    }
-  }, [listsModel]);
+  //   if (listsModel) {
+  //     listsModel.on('update', updateHandler);
+  //     return () => listsModel.off('update', updateHandler);
+  //   }
+  // }, [listsModel]);
 
-  if (!board || !listsModel) {
-    return null;
-  }
+  // if (!board || !listsModel) {
+  //   return null;
+  // }
 
-  const handleAddList = () => listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
-  const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
+  const handleAddList = async () => {
+    await party.database.createItem({
+      model: ObjectModel,
+      type: LIST_TYPE,
+      parent: item.id,
+      props: { title: 'New List', position: getLastPosition(lists) }
+    });
+  };
+  // const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
+  const handleUpdateListOrCard = (listId) => (properties) => { throw new Error('not implemented'); };
 
-  const handleAddCard = (title, listId) => {
+  const handleAddCard = async (title, listId) => {
     const cardsInList = getCardsForList(listId);
-    listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
-  };
-
-  const handleToggleArchive = () => {
-    assert(selectedCard);
-    listsModel.updateItem(selectedCard.id, { deleted: !selectedCard.properties.deleted });
-    setSelectedCard(undefined);
-  };
-
-  const handleMoveList = (id, newProperties) => {
-    setListsCache(old => {
-      const moved = old.find(x => x.id === id);
-      const newCache = [...old].filter(x => x.id !== id);
-      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
-      return newCache;
+    await party.database.createItem({
+      model: ObjectModel,
+      type: CARD_TYPE,
+      parent: item.id,
+      props: { title, position: getLastPosition(cardsInList), listId }
     });
-    listsModel.updateItem(id, newProperties);
   };
 
-  const handleMoveCard = (id, newProperties) => {
-    setCardsCache(old => {
-      const moved = old.find(x => x.id === id);
-      const newCache = [...old].filter(x => x.id !== id);
-      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
-      return newCache;
-    });
-    listsModel.updateItem(id, newProperties);
+  // const handleToggleArchive = () => {
+  //   assert(selectedCard);
+  //   listsModel.updateItem(selectedCard.id, { deleted: !selectedCard.properties.deleted });
+  //   setSelectedCard(undefined);
+  // };
+
+  const handleMoveList = async (id, { position }) => {
+    // setListsCache(old => {
+    //   const moved = old.find(x => x.id === id);
+    //   const newCache = [...old].filter(x => x.id !== id);
+    //   newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
+    //   return newCache;
+    // });
+    const list = lists.find(l => l.id === id);
+    (position !== undefined) && await list.model.setProperty('position', position);
+    setIsDragDisabled(false);
+  };
+
+  const handleMoveCard = async (id, { position, listId }) => {
+    // setCardsCache(old => {
+    //   const moved = old.find(x => x.id === id);
+    //   const newCache = [...old].filter(x => x.id !== id);
+    //   newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
+    //   return newCache;
+    // });
+    const card = cards.find(l => l.id === id);
+    (position !== undefined) && await card.model.setProperty('position', position);
+    (listId !== undefined) && await card.model.setProperty('listId', listId);
+    setIsDragDisabled(false);
   };
 
   return (
     <labelsContext.Provider
       value={{
         filterByLabel,
-        names: board.metadata.labelnames ?? defaultLabelNames,
+        names: defaultLabelNames,
         onFilterByLabel: (label) => setFilterByLabel(label),
         onOpenLabelsDialog: () => setLabelsDialogOpen(true),
         labels: PLANNER_LABELS,
@@ -126,7 +155,7 @@ export const Board = ({ topic, itemId, embedded }) => {
           handleMoveList={handleMoveList}
           handleMoveCard={handleMoveCard}
           lists={lists}
-          boardId={board.itemId}
+          boardId={item.id}
           isDragDisabled={isDragDisabled}
           onDragDisabled={() => setIsDragDisabled(true)}
           getCardsForList={getCardsForList}
@@ -138,7 +167,7 @@ export const Board = ({ topic, itemId, embedded }) => {
           showArchived={showArchived}
           onToggleShowArchived={() => setShowArchived(prev => !prev)}
         />
-        <CardDetailsDialog
+        {/* <CardDetailsDialog
           open={!!selectedCard}
           onClose={() => setSelectedCard(undefined)}
           onToggleArchive={handleToggleArchive}
@@ -149,7 +178,7 @@ export const Board = ({ topic, itemId, embedded }) => {
           open={labelsDialogOpen}
           onClose={() => setLabelsDialogOpen(false)}
           onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
-        />
+        /> */}
       </div>
     </labelsContext.Provider>
   );
