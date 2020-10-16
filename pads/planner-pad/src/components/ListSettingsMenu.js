@@ -50,7 +50,7 @@ export const ListSettingsMenu = ({
   };
 
   return (
-    <Menu anchorEl={anchorEl} open={open} onClose={onClose} className={classes.root}>
+    <Menu anchorEl={anchorEl} open={open} onClose={onClose} className={classes.root} variant='menu'>
       {onToggleArchive && (
         <MenuItem button onClick={handleToggleArchive}>
           <ListItemText primary={deleted ? 'Restore' : 'Archive'} />
@@ -59,16 +59,13 @@ export const ListSettingsMenu = ({
       <MenuItem button onClick={handleToggleShowArchived}>
         <ListItemText primary={showArchived ? 'Hide archived' : 'Show archived'} />
       </MenuItem>
-      {!labelFilteringDisabled && (
-        <MenuItem button onClick={handleLabelSettings}>
-          <ListItemText primary='Label Settings' />
-        </MenuItem>
-      )}
-      {!labelFilteringDisabled && (
-        <>
-          <Divider />
-          <MenuItem disabled={true}>Filters:</MenuItem>
-          {labels.map(label => (
+      {!labelFilteringDisabled && ([
+          <MenuItem key='label-settings' button onClick={handleLabelSettings}>
+            <ListItemText primary='Label Settings' />
+          </MenuItem>,
+          <Divider key='divider' />,
+          <MenuItem key='filters' disabled={true}>Filters:</MenuItem>,
+          ...labels.map(label => (
             <MenuItem
               key={label}
               button
@@ -78,8 +75,8 @@ export const ListSettingsMenu = ({
               <ListItemIcon><SearchIcon htmlColor={colorLookup[label]} /></ListItemIcon>
               <Typography variant="inherit" noWrap>{names[label]}</Typography>
             </MenuItem>
-          ))}
-        </>
+          ))
+        ]
       )}
     </Menu>
   );
