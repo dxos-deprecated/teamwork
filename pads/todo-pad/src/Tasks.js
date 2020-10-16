@@ -23,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: 760,
-    margin: '0 auto'
+    margin: '0 auto',
+    overflowY: 'scroll',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   deleteButton: {
     color: theme.palette.grey[300]
@@ -49,6 +52,17 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
     await onUpdate(item, { deleted: true });
   };
 
+  const handleKeyDown = (ev) => {
+    if (ev.key === 'Enter') {
+      handleAdd();
+    } else if (ev.key === 'Escape') {
+      setNewTask('');
+    }
+  };
+
+  const tasks = items.filter(item => !item.model.getProperty('deleted'));
+  tasks.reverse(); // newest tasks first
+
   return (
     <List className={classes.root}>
       <Typography align="center" variant="h4">{title}</Typography>
@@ -62,6 +76,7 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
             fullWidth
             autoComplete="false"
             autoFocus
+            onKeyDown={handleKeyDown}
             />
         </ListItemText>
         <ListItemIcon>
@@ -70,28 +85,26 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
           </IconButton>
         </ListItemIcon>
       </ListItem>
-      {items
-        .filter(item => !item.model.getProperty('deleted'))
-        .map((item) => {
-          const text = item.model.getProperty('text');
-          const completed = item.model.getProperty('completed');
-          const labelId = `checkbox-list-secondary-label-${item.id}`;
-          return (
-            <ListItem key={item.id} button>
-              <ListItemText id={labelId} primary={text} />
-              <ListItemSecondaryAction>
-                <IconButton onClick={handleDelete(item)}>
-                  <DeleteIcon className={classes.deleteButton} />
-                </IconButton>
-                <Checkbox
-                  edge="end"
-                  onChange={handleToggleComplete(item)}
-                  checked={completed || false}
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemSecondaryAction>
-            </ListItem>
-          );
+      {tasks.map((item) => {
+        const text = item.model.getProperty('text');
+        const completed = item.model.getProperty('completed');
+        const labelId = `checkbox-list-secondary-label-${item.id}`;
+        return (
+          <ListItem key={item.id} button>
+            <ListItemText id={labelId} primary={text} />
+            <ListItemSecondaryAction>
+              <IconButton onClick={handleDelete(item)}>
+                <DeleteIcon className={classes.deleteButton} />
+              </IconButton>
+              <Checkbox
+                edge="end"
+                onChange={handleToggleComplete(item)}
+                checked={completed || false}
+                inputProps={{ 'aria-labelledby': labelId }}
+              />
+            </ListItemSecondaryAction>
+          </ListItem>
+        );
       })}
     </List>
   );
