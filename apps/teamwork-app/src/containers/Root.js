@@ -11,7 +11,6 @@ import { ErrorHandler } from '@dxos/debug';
 // import MessengerPad from '@dxos/messenger-pad';
 // import PlannerPad from '@dxos/planner-pad';
 // import TestingPad from '@dxos/testing-pad';
-import TodoPad from '@dxos/todo-pad';
 import {
   SET_LAYOUT,
   AppKitContextProvider,
@@ -23,6 +22,7 @@ import {
   Theme
 } from '@dxos/react-appkit';
 import { ClientProvider } from '@dxos/react-client';
+import TodoPad from '@dxos/todo-pad';
 
 import App from './App';
 import Home from './Home';
