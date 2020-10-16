@@ -14,7 +14,7 @@ import { useItems, useParty } from '@dxos/react-client';
 
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
-import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
+import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE } from '../model';
 import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
 import DraggableLists from './DraggableLists';
 
@@ -41,21 +41,11 @@ export const Board = ({ topic, embedded, item }) => {
   const lists = useItems({ partyKey: party.key, parent: item.id, type: LIST_TYPE });
   const cards = useItems({ partyKey: party.key, parent: item.id, type: CARD_TYPE });
 
-  console.log('lists', lists);
-  console.log('cards', cards);
-
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
   const [isDragDisabled, setIsDragDisabled] = useState(false);
   const [labelsDialogOpen, setLabelsDialogOpen] = useState(false);
   const [filterByLabel, setFilterByLabel] = useState(undefined);
-
-  // const itemModel = useItems(topic, itemId);
-  // const board = itemModel.getById(itemId);
-  // const listsModel = useList(topic, itemId);
-
-  // const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
-  // const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
 
   const visibleLists = lists
     .filter(c => showArchived || !c.model.getProperty('deleted'))
@@ -68,23 +58,6 @@ export const Board = ({ topic, embedded, item }) => {
   const getCardsForList = listId => visibleCards
     .filter(card => card.model.getProperty('listId') === listId)
     .sort(positionCompare);
-
-  // useEffect(() => {
-  //   const updateHandler = () => {
-  //     setListsCache(listsModel.getObjectsByType(LIST_TYPE));
-  //     setCardsCache(listsModel.getObjectsByType(CARD_TYPE));
-  //     setIsDragDisabled(false);
-  //   };
-
-  //   if (listsModel) {
-  //     listsModel.on('update', updateHandler);
-  //     return () => listsModel.off('update', updateHandler);
-  //   }
-  // }, [listsModel]);
-
-  // if (!board || !listsModel) {
-  //   return null;
-  // }
 
   const handleAddList = async () => {
     await party.database.createItem({
@@ -117,24 +90,12 @@ export const Board = ({ topic, embedded, item }) => {
   };
 
   const handleMoveList = async (id, { position }) => {
-    // setListsCache(old => {
-    //   const moved = old.find(x => x.id === id);
-    //   const newCache = [...old].filter(x => x.id !== id);
-    //   newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
-    //   return newCache;
-    // });
     const list = lists.find(l => l.id === id);
     (position !== undefined) && await list.model.setProperty('position', position);
     setIsDragDisabled(false);
   };
 
   const handleMoveCard = async (id, { position, listId }) => {
-    // setCardsCache(old => {
-    //   const moved = old.find(x => x.id === id);
-    //   const newCache = [...old].filter(x => x.id !== id);
-    //   newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
-    //   return newCache;
-    // });
     const card = cards.find(l => l.id === id);
     (position !== undefined) && await card.model.setProperty('position', position);
     (listId !== undefined) && await card.model.setProperty('listId', listId);
@@ -145,7 +106,7 @@ export const Board = ({ topic, embedded, item }) => {
     <labelsContext.Provider
       value={{
         filterByLabel,
-        names: defaultLabelNames,
+        names: item.model.getProperty('labelnames') ?? defaultLabelNames,
         onFilterByLabel: (label) => setFilterByLabel(label),
         onOpenLabelsDialog: () => setLabelsDialogOpen(true),
         labels: PLANNER_LABELS,
@@ -177,11 +138,11 @@ export const Board = ({ topic, embedded, item }) => {
           card={selectedCard}
           onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
         />
-        {/* <LabelsDialog
+        <LabelsDialog
           open={labelsDialogOpen}
           onClose={() => setLabelsDialogOpen(false)}
-          onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
-        /> */}
+          onUpdate={(labelnames) => item.model.setProperty('labelnames', labelnames)}
+        />
       </div>
     </labelsContext.Provider>
   );

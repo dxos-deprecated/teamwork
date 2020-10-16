@@ -78,17 +78,17 @@ export const DraggableLists = ({
     if (source.droppableId === boardId) { // Dragging entire lists.
       const movingDown = destination.index > source.index;
       const position = getChangedPositionAtIndex(lists, destination.index, movingDown);
-      handleMoveList(draggableId, { position });
+      await handleMoveList(draggableId, { position });
     } else { // Dragging cards
       const cardsInList = getCardsForList(destination.droppableId);
       if (source.droppableId === destination.droppableId) {
         // moving in the same list
         const movingDown = destination.index > source.index;
         const position = getChangedPositionAtIndex(cardsInList, destination.index, movingDown);
-        handleMoveCard(draggableId, { position });
+        await handleMoveCard(draggableId, { position });
       } else {
         // moving to another list
-        handleMoveCard(draggableId, {
+        await handleMoveCard(draggableId, {
           position: getInsertedPositionAtIndex(cardsInList, destination.index),
           listId: destination.droppableId
         });

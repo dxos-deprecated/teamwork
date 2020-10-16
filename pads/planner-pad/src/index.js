@@ -8,9 +8,8 @@ import { ObjectModel } from '@dxos/object-model';
 
 import { Board } from './containers/Board';
 // import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
-import { BOARD_TYPE } from './model/board';
-import { LIST_TYPE, CARD_TYPE } from './model/list';
-export { LIST_TYPE, CARD_TYPE } from './model/list';
+import { BOARD_TYPE, LIST_TYPE, CARD_TYPE } from './model';
+export { BOARD_TYPE, LIST_TYPE, CARD_TYPE } from './model';
 
 export default {
   // TODO(elmasse): READ THIS FROM PAD.YML
