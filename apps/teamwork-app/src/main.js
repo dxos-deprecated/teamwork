@@ -40,7 +40,8 @@ import Root from './containers/Root';
   });
 
   try {
-    await client.initialize();
+    // TODO(burdon): This is called by Provider.
+    // await client.initialize();
 
     ReactDOM.render(
       <Root
@@ -58,8 +59,9 @@ import Root from './containers/Root';
         <h1>ERROR</h1>
         <div>{String(ex)}</div>
         <br />
-        <button onClick={() => {
-          storage.destroy();
+        <button onClick={async () => {
+          await storage.destroy();
+          window.location.reload();
         }}>Reset storage</button>
       </div>,
       document.body
