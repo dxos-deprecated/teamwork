@@ -15,7 +15,6 @@ import { useParty, useItems } from '@dxos/react-client';
 import { TYPE_TODO_PAD } from '@dxos/todo-pad';
 
 import { Editor } from './components/Editor';
-import { TYPE_EDITOR_DOCUMENT } from './model';
 
 const useStyles = makeStyles(theme => ({
   root: {
