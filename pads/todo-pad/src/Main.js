@@ -15,16 +15,16 @@ export const Main = ({ itemId, topic }) => {
   const party = useParty(keyToBuffer(topic));
   const items = useItems({ partyKey: party.key, parent: itemId });
 
+  if (!item) return null;
+
   const handleAdd = async (props) => {
-    await addTask({ party, item }, props);
+    await addTask({ party, itemId }, props);
   };
 
   const handleUpdate = async (item, { completed, deleted }) => {
     await item.model.setProperty('completed', !!completed);
     await item.model.setProperty('deleted', !!deleted);
   };
-
-  if (!item) return null;
 
   const title = item.model.getProperty('title') || 'Untitled';
 
