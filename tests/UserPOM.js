@@ -101,7 +101,7 @@ export class UserPOM extends BrowserPOM {
     }
 
     async subscribeForLink (shareLink) {
-        const linkRegex = /(https?:\/\/)/g;
+        const linkRegex = /==$/g;
 
         this.page.waitForEvent('console', message => {
             if (message.text().match(linkRegex)) {
@@ -121,6 +121,9 @@ export class UserPOM extends BrowserPOM {
     async fillPasscode (passcode) {
         await this.page.waitForSelector('input');
         await this.page.fill('input', passcode);
+        const sendButtonSelector = textButtonSelector('Send');
+        await this.page.waitForSelector(sendButtonSelector);
+        await this.page.click(sendButtonSelector);
     }
 
     async isPartyExisting (partyName) {
@@ -167,6 +170,21 @@ export class UserPOM extends BrowserPOM {
             return null;
         }
     }
+
+    async redeemParty (sharelink) {
+        const moreButtonSelector = `//button[contains(@aria-label,'More')]`;
+        await this.page.waitForSelector(moreButtonSelector);
+        await this.page.click(moreButtonSelector);
+        const redeemPartySelector = `//li[text()='Redeem party']`;
+        await this.page.waitForSelector(redeemPartySelector);
+        await this.page.click(redeemPartySelector);
+        await this.page.waitForSelector('textarea');
+        await this.page.fill('textarea', sharelink);
+        const sendButtonSelector = textButtonSelector('Send');
+        await this.page.waitForSelector(sendButtonSelector);
+        await this.page.click(sendButtonSelector);
+    }
+
 }
 
 const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;
