@@ -17,6 +17,8 @@ jobs:
           yarn build
           yarn lint
           yarn test
+      - name: Playwright tests
+        run: |
           yarn start & 
           sleep 10 
           yarn playwright
