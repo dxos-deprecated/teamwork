@@ -112,11 +112,10 @@ const useEditorStyles = makeStyles(theme => {
 export const Channel = ({ topic, itemId, narrow, embedded }) => {
   assert(topic);
   assert(itemId);
-  const party = useParty(keyToBuffer(topic));
 
   const classes = useStyles();
 
-  const [messages, createMessage] = useChannelMessages(topic, itemId, party);
+  const [messages, createMessage] = useChannelMessages(topic, itemId);
   // const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
   const editorClasses = useEditorStyles();
 

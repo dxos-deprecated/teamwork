@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { createId, humanize } from '@dxos/crypto';
+import { createId, humanize, keyToBuffer } from '@dxos/crypto';
 import { MessengerModel } from '@dxos/messenger-model';
 import { useItems, useProfile } from '@dxos/react-client';
 import { useClient } from '@dxos/react-client/dist/es/hooks/client';
@@ -18,13 +18,13 @@ export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
  * @param channelId
  * @returns {[Object[], function]}
  */
-export const useChannelMessages = (topic, channelId, party) => {
+export const useChannelMessages = (topic, channelId) => {
   assert(topic);
   assert(channelId);
   const { username } = useProfile();
   const client = useClient();
   client.modelFactory.registerModel(MessengerModel);
-  const [messenger] = useItems({ partyKey: party.key, parent: channelId });
+  const [messenger] = useItems({ partyKey: keyToBuffer(topic), parent: channelId });
 
   if (!messenger) return [[], () => {}];
   return [messenger.model.messages, text => {

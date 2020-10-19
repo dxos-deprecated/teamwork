@@ -34,24 +34,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EditorPad = ({ party, topic, itemId }) => {
+const EditorPad = ({ topic, item, itemId }) => {
   assert(topic);
   assert(itemId);
 
   const classes = useStyles();
   const [pads] = usePads();
-  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
+  // const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
   const [messengerOpen, setMessengerOpen] = useState(false);
 
   const handleCreateItem = (type) => {
     return createItem(type);
   };
-
-  const item = items.find(item => item.itemId === itemId);
-
-  if (!item) {
-    return null;
-  }
 
   return (
     <div className={classes.root}>
@@ -60,12 +54,12 @@ const EditorPad = ({ party, topic, itemId }) => {
           topic={topic}
           itemId={itemId}
           title={item.displayName}
-          pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
-          items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
+          // pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
+          // items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
           onCreateItem={handleCreateItem}
-          onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
+          // onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
-        {messengerOpen && (
+        {/* {messengerOpen && (
           <div className={classes.messengerContainer}>
             <MessengerPad.main
               embedded
@@ -74,7 +68,7 @@ const EditorPad = ({ party, topic, itemId }) => {
               itemId={itemId}
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

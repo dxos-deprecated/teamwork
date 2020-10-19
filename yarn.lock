@@ -1467,6 +1467,32 @@
     readable-stream "^3.6.0"
     source-map-support "^0.5.12"
 
+"@dxos/echo-protocol@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-protocol/-/echo-protocol-2.1.1.tgz#53f6a613601ac8ca6414a7023d6ef5af37879a33"
+  integrity sha512-HG5iUCp0pVme14VhOtas8lyh52MR79MjXqFe0inxbxqctqy3JJbsFwQvWJwY0Hwctn1GOqS4hdNizYARGjCXTg==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/credentials" "^2.0.0"
+    "@dxos/crypto" "^1.0.0-beta.7"
+    "@dxos/feed-store" "^1.2.0-beta.30"
+    "@dxos/util" "^2.1.1"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/readable-stream" "^2.3.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    readable-stream "^3.6.0"
+    source-map-support "^0.5.12"
+
 "@dxos/editor-core@^1.0.0-beta.33":
   version "1.0.0-beta.33"
   resolved "https://registry.yarnpkg.com/@dxos/editor-core/-/editor-core-1.0.0-beta.33.tgz#1d34666215ba0820306cc96f6f62694e2706c7d3"
@@ -1662,6 +1688,30 @@
     "@dxos/echo-protocol" "^2.1.0"
     "@dxos/feed-store" "^1.2.0-beta.30"
     "@dxos/util" "^2.1.0"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
+"@dxos/model-factory@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-2.1.1.tgz#eebd60fc4a32373eead6cbb6b7dc970dce438b31"
+  integrity sha512-FheBx3y3h1DFlOPr/JH15HWJnDAWbDxKjXQjPPQs3JSqRuT5F6ML9AoVraGEU03UcQICbMNK4bQ4FIigBizsLg==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/crypto" "^1.0.0-beta.7"
+    "@dxos/echo-protocol" "^2.1.1"
+    "@dxos/feed-store" "^1.2.0-beta.30"
+    "@dxos/util" "^2.1.1"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -1895,17 +1945,17 @@
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
 
-"@dxos/text-model@^2.0.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-2.1.0.tgz#42a594157df6c86556cd9e61b00745a320d21eef"
-  integrity sha512-t0M9OAlQm1BkwW9svJNCnE7lsnVRDdhDmOA0tht2WlYxbyurG13vAh4Fscwas+Hh77mimjt0oyFrXsksxbNBuA==
+"@dxos/text-model@^2.1.1-alpha.0":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-2.1.1.tgz#6880d568d3b1382f12e1eccf3e12733df70017ec"
+  integrity sha512-M3C2KgmMLwPMLyHcfrIbWz5+2U0UsRp0AOPL9oCCpab2/5Fa5f1fFWgS386cK44SEjz8f69JIdD2BaVfpZ60BQ==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^1.1.0-beta.0"
     "@dxos/crypto" "^1.0.0-beta.7"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/model-factory" "^2.1.0"
-    "@dxos/util" "^2.1.0"
+    "@dxos/model-factory" "^2.1.1"
+    "@dxos/util" "^2.1.1"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -1923,6 +1973,27 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.1.0.tgz#758dac7ae8f0521112aba0b8bab8cc3baa1dfbe8"
   integrity sha512-3V4xUxCoQiilkr3+AdUR4wMzflmFvFyt8PmVosvUVYfn0obQuF63EsNDhGUF1dAC+DgCl+DRet+Ig7ZhXxDe8Q==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/crypto" "^1.0.0-beta.7"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
+"@dxos/util@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.1.1.tgz#9f8947fef035416543f96a3113fd935c8e007d78"
+  integrity sha512-llappCSP2tOiToAndEWXZfYsBUEJG9+EfCFbjUNGMmQp/AdDETvbzNcB9KrPTBMjeaZxwk/vWbzDMj5YZVn5Bw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.0"
