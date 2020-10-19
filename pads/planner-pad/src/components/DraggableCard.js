@@ -28,7 +28,7 @@ export const DraggableCard = ({ card, provided, onOpenCard, listDeleted }) => {
     >
       <MiniCard
         listDeleted={listDeleted}
-        cardProperties={card.properties}
+        card={card}
         onOpenCard={() => onOpenCard(card.id)}
         style={provided.draggableProps.style}
       />

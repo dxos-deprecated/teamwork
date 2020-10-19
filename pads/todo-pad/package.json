@@ -1,5 +1,5 @@
 {
-  "name": "@dxos/testing-pad",
+  "name": "@dxos/todo-pad",
   "version": "1.0.1-beta.11",
   "main": "dist/index.js",
   "private": true,

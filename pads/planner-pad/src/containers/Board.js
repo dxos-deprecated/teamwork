@@ -3,14 +3,18 @@
 //
 
 import assert from 'assert';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { keyToBuffer } from '@dxos/crypto';
+import { ObjectModel } from '@dxos/object-model';
+import { useItems, useParty } from '@dxos/react-client';
+
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
-import { useItems, positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, useList } from '../model';
+import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE } from '../model';
 import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
 import DraggableLists from './DraggableLists';
 
@@ -31,89 +35,78 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const Board = ({ topic, itemId, embedded }) => {
+export const Board = ({ topic, embedded, item }) => {
   const classes = useStyles();
+  const party = useParty(keyToBuffer(topic));
+  const lists = useItems({ partyKey: party.key, parent: item.id, type: LIST_TYPE });
+  const cards = useItems({ partyKey: party.key, parent: item.id, type: CARD_TYPE });
+
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
   const [isDragDisabled, setIsDragDisabled] = useState(false);
   const [labelsDialogOpen, setLabelsDialogOpen] = useState(false);
   const [filterByLabel, setFilterByLabel] = useState(undefined);
 
-  const itemModel = useItems(topic, itemId);
-  const board = itemModel.getById(itemId);
-  const listsModel = useList(topic, itemId);
-
-  const [listsCache, setListsCache] = useState(listsModel.getObjectsByType(LIST_TYPE));
-  const [cardsCache, setCardsCache] = useState(listsModel.getObjectsByType(CARD_TYPE));
-
-  const lists = listsCache
-    .filter(c => showArchived || !c.properties.deleted)
+  const visibleLists = lists
+    .filter(c => showArchived || !c.model.getProperty('deleted'))
     .sort(positionCompare);
 
-  const cards = cardsCache
-    .filter(c => showArchived || !c.properties.deleted)
-    .filter(c => !filterByLabel || (c.properties.labels && c.properties.labels[filterByLabel]));
+  const visibleCards = cards
+    .filter(c => showArchived || !c.model.getProperty('deleted'))
+    .filter(c => !filterByLabel || (c.model.getProperty('labels') && c.model.getProperty('labels')[filterByLabel]));
 
-  const getCardsForList = listId => cards
-    .filter(card => card.properties.listId === listId)
+  const getCardsForList = listId => visibleCards
+    .filter(card => card.model.getProperty('listId') === listId)
     .sort(positionCompare);
 
-  useEffect(() => {
-    const updateHandler = () => {
-      setListsCache(listsModel.getObjectsByType(LIST_TYPE));
-      setCardsCache(listsModel.getObjectsByType(CARD_TYPE));
-      setIsDragDisabled(false);
-    };
+  const handleAddList = async () => {
+    await party.database.createItem({
+      model: ObjectModel,
+      type: LIST_TYPE,
+      parent: item.id,
+      props: { title: 'New List', position: getLastPosition(lists) }
+    });
+  };
+  // const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
+  const handleUpdateListOrCard = (listId) => async (prop, value) => {
+    const listOrCard = lists.find(l => l.id === listId) || cards.find(l => l.id === listId);
+    await listOrCard.model.setProperty(prop, value);
+   };
 
-    if (listsModel) {
-      listsModel.on('update', updateHandler);
-      return () => listsModel.off('update', updateHandler);
-    }
-  }, [listsModel]);
-
-  if (!board || !listsModel) {
-    return null;
-  }
-
-  const handleAddList = () => listsModel.createItem(LIST_TYPE, { title: 'New List', position: getLastPosition(lists) });
-  const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
-
-  const handleAddCard = (title, listId) => {
+  const handleAddCard = async (title, listId) => {
     const cardsInList = getCardsForList(listId);
-    listsModel.createItem(CARD_TYPE, { listId, title, position: getLastPosition(cardsInList) });
+    await party.database.createItem({
+      model: ObjectModel,
+      type: CARD_TYPE,
+      parent: item.id,
+      props: { title, position: getLastPosition(cardsInList), listId }
+    });
   };
 
-  const handleToggleArchive = () => {
+  const handleToggleArchive = async () => {
     assert(selectedCard);
-    listsModel.updateItem(selectedCard.id, { deleted: !selectedCard.properties.deleted });
+    await selectedCard.model.setProperty('deleted', !selectedCard.model.getProperty('deleted'));
     setSelectedCard(undefined);
   };
 
-  const handleMoveList = (id, newProperties) => {
-    setListsCache(old => {
-      const moved = old.find(x => x.id === id);
-      const newCache = [...old].filter(x => x.id !== id);
-      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
-      return newCache;
-    });
-    listsModel.updateItem(id, newProperties);
+  const handleMoveList = async (id, { position }) => {
+    const list = lists.find(l => l.id === id);
+    (position !== undefined) && await list.model.setProperty('position', position);
+    setIsDragDisabled(false);
   };
 
-  const handleMoveCard = (id, newProperties) => {
-    setCardsCache(old => {
-      const moved = old.find(x => x.id === id);
-      const newCache = [...old].filter(x => x.id !== id);
-      newCache.push({ ...moved, properties: { ...moved.properties, ...newProperties } });
-      return newCache;
-    });
-    listsModel.updateItem(id, newProperties);
+  const handleMoveCard = async (id, { position, listId }) => {
+    const card = cards.find(l => l.id === id);
+    (position !== undefined) && await card.model.setProperty('position', position);
+    (listId !== undefined) && await card.model.setProperty('listId', listId);
+    setIsDragDisabled(false);
   };
 
   return (
     <labelsContext.Provider
       value={{
         filterByLabel,
-        names: board.metadata.labelnames ?? defaultLabelNames,
+        names: item.model.getProperty('labelnames') ?? defaultLabelNames,
         onFilterByLabel: (label) => setFilterByLabel(label),
         onOpenLabelsDialog: () => setLabelsDialogOpen(true),
         labels: PLANNER_LABELS,
@@ -123,18 +116,18 @@ export const Board = ({ topic, itemId, embedded }) => {
       <div className={classes.containerRoot}>
         { isDragDisabled && <CircularProgress className={classes.spinner} />}
         <DraggableLists
-          handleMoveList={handleMoveList}
-          handleMoveCard={handleMoveCard}
-          lists={lists}
-          boardId={board.itemId}
+          onMoveList={handleMoveList}
+          onMoveCard={handleMoveCard}
+          lists={visibleLists}
+          boardId={item.id}
           isDragDisabled={isDragDisabled}
           onDragDisabled={() => setIsDragDisabled(true)}
           getCardsForList={getCardsForList}
           embedded={embedded}
           onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
-          handleAddCard={handleAddCard}
-          handleUpdateList={handleUpdateListOrCard}
-          handleAddList={handleAddList}
+          onAddCard={handleAddCard}
+          onUpdateList={handleUpdateListOrCard}
+          onAddList={handleAddList}
           showArchived={showArchived}
           onToggleShowArchived={() => setShowArchived(prev => !prev)}
         />
@@ -148,7 +141,7 @@ export const Board = ({ topic, itemId, embedded }) => {
         <LabelsDialog
           open={labelsDialogOpen}
           onClose={() => setLabelsDialogOpen(false)}
-          onUpdate={(labelnames) => itemModel.updateItem(board.itemId, { labelnames })}
+          onUpdate={(labelnames) => item.model.setProperty('labelnames', labelnames)}
         />
       </div>
     </labelsContext.Provider>

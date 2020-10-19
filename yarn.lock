@@ -49,6 +49,7 @@
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.12.1.tgz#980b115a05929ef3ce1b6af9bf50e5a5cf668667"
   integrity sha512-6bGmltqzIJrinwRRdczQsMhruSi9Sqty9Te+/5hudn4Izx/JYRhW1QELpR+CIL0gC/c9A7WroH6FmkDGxmWx3w==
+
   dependencies:
     "@babel/code-frame" "^7.10.4"
     "@babel/generator" "^7.12.1"
@@ -969,6 +970,24 @@
     "@babel/plugin-transform-react-jsx-source" "^7.12.1"
     "@babel/plugin-transform-react-pure-annotations" "^7.12.1"
 
+"@babel/register@^7.0.0":
+  version "7.11.5"
+  resolved "https://registry.yarnpkg.com/@babel/register/-/register-7.11.5.tgz#79becf89e0ddd0fba8b92bc279bc0f5d2d7ce2ea"
+  integrity sha512-CAml0ioKX+kOAvBQDHa/+t1fgOt3qkTIz0TrRtRAT6XY0m5qYZXR85k6/sLCNPMGhYDlCFHCYuU0ybTJbvlC6w==
+  dependencies:
+    find-cache-dir "^2.0.0"
+    lodash "^4.17.19"
+    make-dir "^2.1.0"
+    pirates "^4.0.0"
+    source-map-support "^0.5.16"
+
+    "@babel/plugin-transform-react-display-name" "^7.12.1"
+    "@babel/plugin-transform-react-jsx" "^7.12.1"
+    "@babel/plugin-transform-react-jsx-development" "^7.12.1"
+    "@babel/plugin-transform-react-jsx-self" "^7.12.1"
+    "@babel/plugin-transform-react-jsx-source" "^7.12.1"
+    "@babel/plugin-transform-react-pure-annotations" "^7.12.1"
+
 "@babel/runtime@7.11.2":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
@@ -1427,6 +1446,37 @@
     "@types/json-stable-stringify" "^1.0.32"
     "@types/lodash" "^4.14.159"
     "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    crypto-js "^4.0.0"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    json-stable-stringify "^1.0.1"
+    lodash.merge "^4.6.2"
+    pify "^5.0.0"
+    protobufjs "^6.9.0"
+    pump "^3.0.0"
+    random-access-memory "^3.1.1"
+    source-map-support "^0.5.12"
+    stream-buffers "^3.0.2"
+
+"@dxos/echo-protocol@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-protocol/-/echo-protocol-2.1.0.tgz#8a6509a58537347b178f5ecdce0011757f0bc717"
+  integrity sha512-Vl+sUo1lhMfKsdIzoPDKV+SxF1w4bbFORFSLYZW8OuGZqsVqPWmUskN9cqosbXavBXdG+7GELePstMKZZKbOUg==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.0"
+    "@dxos/credentials" "^2.0.0"
+    "@dxos/crypto" "^1.0.0-beta.7"
+    "@dxos/feed-store" "^1.2.0-beta.30"
+    "@dxos/util" "^2.1.0"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/json-stable-stringify" "^1.0.32"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/readable-stream" "^2.3.9"
     "@types/stream-buffers" "^3.0.2"
     crypto-js "^4.0.0"
     debug "^4.1.1"
@@ -6770,6 +6820,21 @@ check-types@^8.0.3:
   version "8.0.3"
   resolved "https://registry.yarnpkg.com/check-types/-/check-types-8.0.3.tgz#3356cca19c889544f2d7a95ed49ce508a0ecf552"
   integrity sha512-YpeKZngUmG65rLudJ4taU7VLkOCTMhNl/u4ctNC56LQS/zJTyNH0Lrtwm1tfTsbLlwvlfsA2d1c8vCf/Kh2KwQ==
+
+chokidar@3.4.2, chokidar@^3.3.0, chokidar@^3.4.1:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.4.2.tgz#38dc8e658dec3809741eb3ef7bb0a47fe424232d"
+  integrity sha512-IZHaDeBeI+sZJRX7lGcXsdzgvZqKv6sECqsbErJA4mHWfpRrD8B97kSFN4cQz6nGBGiuFia1MKR4d6c1o8Cv7A==
+  dependencies:
+    anymatch "~3.1.1"
+    braces "~3.0.2"
+    glob-parent "~5.1.0"
+    is-binary-path "~2.1.0"
+    is-glob "~4.0.1"
+    normalize-path "~3.0.0"
+    readdirp "~3.4.0"
+  optionalDependencies:
+    fsevents "~2.1.2"
 
 chokidar@2.1.8, chokidar@^2.0.4, chokidar@^2.1.8:
   version "2.1.8"
@@ -12819,6 +12884,11 @@ jest@^26.0.1:
     import-local "^3.0.2"
     jest-cli "^26.5.3"
 
+jpeg-js@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/jpeg-js/-/jpeg-js-0.4.2.tgz#8b345b1ae4abde64c2da2fe67ea216a114ac279d"
+  integrity sha512-+az2gi/hvex7eLTMTlbRLOhH6P6WFdk2ITI8HJsaH2VqYO0I594zXSYEP+tf4FW+8Cy68ScDXoAsQdyQanv3sw==
+
 js-data-structs@^1.1.2:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/js-data-structs/-/js-data-structs-1.1.3.tgz#9f7c1ad60bac5f6302081d7a5c5b6c547406b773"
@@ -13562,6 +13632,25 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
+
+lockfile-lint-api@^5.1.6:
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/lockfile-lint-api/-/lockfile-lint-api-5.1.6.tgz#74d1e14c0c8270232607eb11e518a92f6f6b1ddd"
+  integrity sha512-liJ1p/NkHbE2Wx5fRw8T1io+x2b2DttVvXpHLm4x7QC8pW3Lc6sHqV4T7cM6rAOs4fF2O9sAt7SEtuN2sX91qA==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    debug "^4.1.1"
+    object-hash "^2.0.1"
+
+lockfile-lint@^4.3.7:
+  version "4.3.7"
+  resolved "https://registry.yarnpkg.com/lockfile-lint/-/lockfile-lint-4.3.7.tgz#68c9d1dc129292cd85a71b2d7f65a9e2fe4333be"
+  integrity sha512-hOHVJyHxtrK6cgYlKoaWveVOCz/w4IXlhmxM+RSWW7f1lA3ENJaRL9eNS9AO0PBKx4P/KMXuker0KzExNDenRg==
+  dependencies:
+    cosmiconfig "^6.0.0"
+    debug "^4.1.1"
+    lockfile-lint-api "^5.1.6"
+    yargs "^15.0.2"
 
 lockfile-lint-api@^5.1.6:
   version "5.1.6"
