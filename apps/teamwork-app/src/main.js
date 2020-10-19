@@ -12,6 +12,7 @@ import { Keyring, KeyStore } from '@dxos/credentials';
 import { createStorage } from '@dxos/random-access-multi-storage';
 import { Registry } from '@wirelineio/registry-client';
 
+import { ErrorView } from './components/ErrorView';
 import { loadConfig } from './config';
 import Root from './containers/Root';
 
@@ -51,20 +52,6 @@ import Root from './containers/Root';
       document.getElementById(cfg.get('app.rootElement'))
     );
   } catch (ex) {
-    // TODO(burdon): Do something different in prod. (Factor out error control with reset button).
-    console.error(ex);
-    console.log(JSON.stringify(cfg.values, undefined, 2));
-    ReactDOM.render(
-      <div>
-        <h1>ERROR</h1>
-        <div>{String(ex)}</div>
-        <br />
-        <button onClick={async () => {
-          await storage.destroy();
-          window.location.reload();
-        }}>Reset storage</button>
-      </div>,
-      document.body
-    );
+    ReactDOM.render(<ErrorView config={cfg} error={ex} storage={storage} />, document.body);
   }
 })();
