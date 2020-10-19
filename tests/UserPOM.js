@@ -172,10 +172,10 @@ export class UserPOM extends BrowserPOM {
     }
 
     async redeemParty (sharelink) {
-        const moreButtonSelector = `//button[contains(@aria-label,'More')]`;
+        const moreButtonSelector = '//button[contains(@aria-label,\'More\')]';
         await this.page.waitForSelector(moreButtonSelector);
         await this.page.click(moreButtonSelector);
-        const redeemPartySelector = `//li[text()='Redeem party']`;
+        const redeemPartySelector = '//li[text()=\'Redeem party\']';
         await this.page.waitForSelector(redeemPartySelector);
         await this.page.click(redeemPartySelector);
         await this.page.waitForSelector('textarea');
@@ -184,7 +184,6 @@ export class UserPOM extends BrowserPOM {
         await this.page.waitForSelector(sendButtonSelector);
         await this.page.click(sendButtonSelector);
     }
-
 }
 
 const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;
