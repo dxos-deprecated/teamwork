@@ -40,6 +40,7 @@ describe('Share party', function () {
         expect(await userB.isUserInParty(partyName, userA.username)).to.be.true;
     });
 
+    // skipped until the offline invitation flow is re-implemented in SDK
     it.skip('UserB sees specific party after pasting invitation link second time', async function () {
         await userB.isUserInParty(partyName, userA.username);
 

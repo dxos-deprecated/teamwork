@@ -21,14 +21,10 @@ export const launchUsers = async () => {
     const partyName = await userA.createParty();
     const shareLink = await userA.inviteUnknownUserToParty(1);
 
-    console.log('User A launched');
-
     await userB.launchBrowser(browser, startUrl);
     await userB.createWallet();
     await userB.redeemParty(shareLink);
     await userB.fillPasscode(await userA.getPasscode());
-
-    console.log('User B launched');
 
     return { userA, userB, partyName };
 };

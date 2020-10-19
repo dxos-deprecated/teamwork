@@ -66,12 +66,15 @@ export class UserPOM extends BrowserPOM {
 
         const inviteUserButtonSelector = textButtonSelector('Invite User');
         await this.page.waitForSelector(inviteUserButtonSelector);
+
         const shareLink = { url: null };
         await this.subscribeForLink(shareLink);
         await this.page.click(inviteUserButtonSelector);
+
         const copyButtonSelector = '//button[contains(@title,\'Copy to clipboard\')]';
         await this.page.waitForSelector(copyButtonSelector);
         await this.page.click(copyButtonSelector);
+
         await this.waitUntil(() => !!shareLink.url);
 
         return shareLink.url;
@@ -175,11 +178,13 @@ export class UserPOM extends BrowserPOM {
         const moreButtonSelector = '//button[contains(@aria-label,\'More\')]';
         await this.page.waitForSelector(moreButtonSelector);
         await this.page.click(moreButtonSelector);
+
         const redeemPartySelector = '//li[text()=\'Redeem party\']';
         await this.page.waitForSelector(redeemPartySelector);
         await this.page.click(redeemPartySelector);
         await this.page.waitForSelector('textarea');
         await this.page.fill('textarea', sharelink);
+
         const sendButtonSelector = textButtonSelector('Send');
         await this.page.waitForSelector(sendButtonSelector);
         await this.page.click(sendButtonSelector);
