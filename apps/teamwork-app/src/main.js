@@ -26,7 +26,7 @@ import Root from './containers/Root';
     ...config
   } = cfg.values;
 
-  debug.enable(cfg.get('debug.logging', 'dxos:*')); // TODO(burdon): Use .? syntax.
+  debug.enable(cfg.values.debug?.logging ?? 'dxos:*');
 
   // TODO(burdon): Change API to return class (not function with expando properties).
   const storage = createStorage(feedStorage.root, feedStorage.type);
