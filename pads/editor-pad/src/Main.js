@@ -7,11 +7,12 @@ import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/styles';
 
+import { keyToBuffer } from '@dxos/crypto';
 import MessengerPad from '@dxos/messenger-pad';
-import { usePads } from '@dxos/react-appkit';
+// import { usePads } from '@dxos/react-appkit';
+import { useParty } from '@dxos/react-client';
 
 import { Editor } from './components/Editor';
-import { useItems, TYPE_EDITOR_DOCUMENT } from './model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,24 +35,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EditorPad = ({ party, topic, itemId }) => {
+const EditorPad = ({ topic, item, itemId }) => {
   assert(topic);
   assert(itemId);
 
+  const party = useParty(keyToBuffer(topic));
   const classes = useStyles();
-  const [pads] = usePads();
-  const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
+  // const [pads] = usePads();
+  // const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
   const [messengerOpen, setMessengerOpen] = useState(false);
 
-  const handleCreateItem = (type) => {
-    return createItem(type);
-  };
-
-  const item = items.find(item => item.itemId === itemId);
-
-  if (!item) {
-    return null;
-  }
+  // const handleCreateItem = (type) => {
+  //   return createItem(type);
+  // };
 
   return (
     <div className={classes.root}>
@@ -60,9 +56,9 @@ const EditorPad = ({ party, topic, itemId }) => {
           topic={topic}
           itemId={itemId}
           title={item.displayName}
-          pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
-          items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
-          onCreateItem={handleCreateItem}
+          // pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
+          // items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
+          // onCreateItem={handleCreateItem}
           onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
         {messengerOpen && (

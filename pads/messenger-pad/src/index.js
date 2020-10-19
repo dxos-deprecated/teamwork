@@ -34,6 +34,7 @@ export default {
     });
     await party.database.createItem({
       model: MessengerModel,
+      type: TYPE_MESSENGER_MESSAGE,
       parent: item.id
     });
     return item.id;
