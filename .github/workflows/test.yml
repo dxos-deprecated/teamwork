@@ -17,5 +17,4 @@ jobs:
           yarn build
           yarn lint
           yarn test
-          yarn start & 
-          yarn playwright
+          yarn start & (sleep 10 && yarn playwright)
