@@ -8,14 +8,14 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { keyToBuffer } from '@dxos/crypto';
-import MessengerPad from '@dxos/messenger-pad';
+import MessengerPad, { TYPE_MESSENGER_CHANNEL } from '@dxos/messenger-pad';
+import { BOARD_TYPE } from '@dxos/planner-pad';
 import { usePads } from '@dxos/react-appkit';
 import { useParty, useItems } from '@dxos/react-client';
+import { TYPE_TODO_PAD } from '@dxos/todo-pad';
 
 import { Editor } from './components/Editor';
 import { TYPE_EDITOR_DOCUMENT } from './model';
-import { TYPE_MESSENGER_CHANNEL } from '@dxos/messenger-pad';
-import { BOARD_TYPE } from '@dxos/planner-pad';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -52,7 +52,7 @@ const EditorPad = ({ topic, item, itemId }) => {
   //   return createItem(type);
   // };
 
-  const embeddablePads = [BOARD_TYPE, TYPE_MESSENGER_CHANNEL]
+  const embeddablePads = [BOARD_TYPE, TYPE_MESSENGER_CHANNEL, TYPE_TODO_PAD];
 
   return (
     <div className={classes.root}>
