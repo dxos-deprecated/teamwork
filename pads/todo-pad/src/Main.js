@@ -23,7 +23,7 @@ export const Main = ({ item, topic }) => {
     await item.model.setProperty('deleted', !!deleted);
   };
 
-  const title = item._model.getProperty('title') || 'Untitled';
+  const title = item.model.getProperty('title') || 'Untitled';
 
   return (
     <Tasks items={items} onUpdate={handleUpdate} onAdd={handleAdd} title={title} />

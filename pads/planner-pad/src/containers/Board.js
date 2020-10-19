@@ -14,7 +14,7 @@ import { useItems, useParty } from '@dxos/react-client';
 
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
-import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE } from '../model';
+import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, BOARD_TYPE } from '../model';
 import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
 import DraggableLists from './DraggableLists';
 
@@ -35,11 +35,12 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const Board = ({ topic, embedded, item }) => {
+export const Board = ({ topic, embedded, itemId }) => {
+  const [item] = useItems({ partyKey: keyToBuffer(topic), type: BOARD_TYPE, id: itemId });
   const classes = useStyles();
   const party = useParty(keyToBuffer(topic));
-  const lists = useItems({ partyKey: party.key, parent: item.id, type: LIST_TYPE });
-  const cards = useItems({ partyKey: party.key, parent: item.id, type: CARD_TYPE });
+  const lists = useItems({ partyKey: party.key, parent: itemId, type: LIST_TYPE });
+  const cards = useItems({ partyKey: party.key, parent: itemId, type: CARD_TYPE });
 
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
@@ -63,7 +64,7 @@ export const Board = ({ topic, embedded, item }) => {
     await party.database.createItem({
       model: ObjectModel,
       type: LIST_TYPE,
-      parent: item.id,
+      parent: itemId,
       props: { title: 'New List', position: getLastPosition(lists) }
     });
   };
@@ -78,7 +79,7 @@ export const Board = ({ topic, embedded, item }) => {
     await party.database.createItem({
       model: ObjectModel,
       type: CARD_TYPE,
-      parent: item.id,
+      parent: itemId,
       props: { title, position: getLastPosition(cardsInList), listId }
     });
   };
@@ -102,6 +103,8 @@ export const Board = ({ topic, embedded, item }) => {
     setIsDragDisabled(false);
   };
 
+  if (!item) return null;
+
   return (
     <labelsContext.Provider
       value={{
@@ -119,7 +122,7 @@ export const Board = ({ topic, embedded, item }) => {
           onMoveList={handleMoveList}
           onMoveCard={handleMoveCard}
           lists={visibleLists}
-          boardId={item.id}
+          boardId={itemId}
           isDragDisabled={isDragDisabled}
           onDragDisabled={() => setIsDragDisabled(true)}
           getCardsForList={getCardsForList}
