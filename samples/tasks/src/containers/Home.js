@@ -33,7 +33,7 @@ const Home = () => {
       <Paper>
         <List dense>
           {parties
-            .map(party => keyToString(party.publicKey))
+            .map(party => keyToString(party.key))
             .map(topic => (
               <ListItem
                 key={topic}

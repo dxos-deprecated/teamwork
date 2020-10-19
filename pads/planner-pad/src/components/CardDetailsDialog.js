@@ -50,8 +50,8 @@ export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCard
 
   if (!card) return null;
 
-  const handleToggleLabel = (toggledLabel) => {
-    onCardUpdate({ labels: toggleLabel(card.properties.labels, toggledLabel) });
+  const handleToggleLabel = async (toggledLabel) => {
+    await onCardUpdate('labels', toggleLabel(card.model.getProperty('labels'), toggledLabel));
   };
 
   return (
@@ -66,8 +66,8 @@ export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCard
       <DialogContent>
         <EditableText
           label='Title'
-          value={card.properties && card.properties.title}
-          onUpdate={(title) => onCardUpdate({ title })}
+          value={card.model.getProperty('title')}
+          onUpdate={(title) => onCardUpdate('title', title)}
         />
         <div className={classes.labelSection}>
           <Typography variant='body1'>Labels:</Typography>
@@ -78,7 +78,7 @@ export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCard
               label={names[label]}
               style={{ backgroundColor: colorLookup[label] }}
               onClick={() => handleToggleLabel(label)}
-              avatar={card.properties.labels && (card.properties.labels[label] ? <CheckIcon /> : <span style={{ width: '18px' }} />)}
+              avatar={card.model.getProperty('labels') && (card.model.getProperty('labels')[label] ? <CheckIcon /> : <span style={{ width: '18px' }} />)}
               size="small"
             />
           ))}
@@ -86,7 +86,7 @@ export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCard
       </DialogContent>
 
       <DialogActions>
-        {!card.properties.deleted ? (
+        {!card.model.getProperty('deleted') ? (
           <ArchiveButton onClick={onToggleArchive}>Archive</ArchiveButton>
         ) : (
           <RestoreButton onClick={onToggleArchive}>Restore</RestoreButton>

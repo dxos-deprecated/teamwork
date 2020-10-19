@@ -18,15 +18,17 @@
     "packages": [
       "apps/*",
       "pads/*",
-      "bots/*"
+      "bots/*",
+      "packages/*"
     ]
   },
   "scripts": {
     "build": "lerna run build",
     "dist": "lerna run dist",
     "clean": "lerna run clean",
-    "lint": "lerna run lint -- && eslint 'tests/**/*.js'",
-    "lint:fix": "lerna run lint -- --fix && eslint 'tests/**/*.js' --fix",
+    "lint": "lerna run lint -- && yarn run lint:lockfile",
+    "lint:fix": "lerna run lint -- --fix && yarn run lint:lockfile",
+    "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn npm codeload.github.com --validate-https",
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
     "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream",
@@ -52,5 +54,6 @@
     "lerna": "^3.19.0",
     "mocha": "^8.1.3",
     "playwright": "^1.4.2"
+    "lockfile-lint": "^4.3.7"
   }
 }

@@ -1,0 +1,21 @@
+{
+  "name": "@dxos/messenger-model",
+  "version": "1.0.0",
+  "main": "dist/src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn build:protobuf && tsc --build",
+    "build:protobuf": "mkdir -p src/proto/gen && build-protobuf src/proto/defs/messenger.proto -o src/proto/gen"
+  },
+  "dependencies": {
+    "@dxos/codec-protobuf": "^0.2.0",
+    "@dxos/model-factory": "^2.0.0",
+    "@dxos/util": "^2.1.0",
+    "debug": "^4.2.0"
+  },
+  "devDependencies": {
+    "@dxos/protobuf-compiler": "^0.2.0",
+    "typescript": "^4.0.3"
+  },
+  "private": "true"
+}

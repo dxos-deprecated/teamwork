@@ -32,29 +32,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const InnerCard = ({ cardProperties }) => {
-  return <Typography variant="body1">{cardProperties.title}</Typography>;
-};
-
 export const MiniCard = ({
   style,
   onOpenCard,
-  cardProperties,
+  card,
   listDeleted,
   className = ''
 }) => {
   const classes = useStyles();
   const { names, labels, colorLookup } = useLabels();
-  const deletedClassName = cardProperties.deleted
+  const deletedClassName = card.model.getProperty('deleted')
     ? classes.deleted
     : (listDeleted ? classes.listDeleted : '');
 
   return (
     <MuiCard className={clsx(classes.root, className, deletedClassName)} onMouseUp={onOpenCard}>
-      {cardProperties.labels && (
+      {card.model.getProperty('labels') && (
         <div className={classes.labels}>
           {labels
-            .filter(x => cardProperties.labels[x])
+            .filter(x => card.model.getProperty('labels')[x])
             .map(label => (
               <Tooltip key={label} title={names[label]}>
                 <Chip
@@ -69,7 +65,7 @@ export const MiniCard = ({
           )}
         </div>
       )}
-      <InnerCard style={style} classes={classes} cardProperties={cardProperties} />
+      <Typography variant="body1">{card.model.getProperty('title')}</Typography>
     </MuiCard>
   );
 };
