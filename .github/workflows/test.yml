@@ -17,3 +17,4 @@ jobs:
           yarn build
           yarn lint
           yarn test
+          yarn playwright
