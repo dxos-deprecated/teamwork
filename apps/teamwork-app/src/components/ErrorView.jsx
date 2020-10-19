@@ -59,7 +59,7 @@ export const ErrorView = ({ config, error, storage }) => {
           <p className={classes.title}>Something went wrong.</p>
           <p>Please try again, or <a target="_blank" rel="noreferrer" href="https://github.com/dxos/teamwork/issues/new">Report this issue</a>.</p>
           <p>Details:</p>
-          <code className={classes.code}>{String(error)}</code>
+          <code className={classes.code}>{String(error?.stack)}</code>
           {isDev && <>
             <p>Configuration:</p>
             <code className={classes.code}>{JSON.stringify(config.values, undefined, 2)}</code>
