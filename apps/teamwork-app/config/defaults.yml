@@ -18,7 +18,6 @@ client:
   swarm:
     signal: "wss://apollo1.kube.moon.dxos.network/dxos/signal"
     ice:
-      - urls: "stun:stun.wirelne.ninja:3478"
       - urls: "turn:stun.wireline.ninja:3478"
         username: "wireline"
         credential: "wireline"
