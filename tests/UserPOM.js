@@ -4,11 +4,11 @@
 import { BrowserPOM } from './BrowserPOM.js';
 
 export class UserPOM extends BrowserPOM {
-    name = ''
+    username = ''
 
-    constructor (_name) {
+    constructor (_username) {
         super();
-        this.name = _name;
+        this.username = _username;
     }
 
     async createWallet () {
@@ -17,7 +17,7 @@ export class UserPOM extends BrowserPOM {
         await this.page.click(walletButtonSelector);
 
         await this.page.waitForSelector('input');
-        await this.page.fill('input', this.name);
+        await this.page.fill('input', this.username);
 
         const nextButtonSelector = textButtonSelector('Next');
         await this.page.click(nextButtonSelector);
@@ -69,6 +69,9 @@ export class UserPOM extends BrowserPOM {
         const shareLink = { url: null };
         await this.subscribeForLink(shareLink);
         await this.page.click(inviteUserButtonSelector);
+        const copyButtonSelector = '//button[contains(@title,\'Copy to clipboard\')]';
+        await this.page.waitForSelector(copyButtonSelector);
+        await this.page.click(copyButtonSelector);
         await this.waitUntil(() => !!shareLink.url);
 
         return shareLink.url;
@@ -151,7 +154,7 @@ export class UserPOM extends BrowserPOM {
         try {
             await this.page.waitForSelector(partyNamesSelector, { timeout: 2 * 1e3 });
         } catch (error) {
-            console.log(`${this.name} did not select any party name`);
+            console.log(`${this.username} did not select any party name tag`);
             return [];
         }
         try {
@@ -160,7 +163,7 @@ export class UserPOM extends BrowserPOM {
             });
             return partyNames;
         } catch (error) {
-            console.log(`${this.name} did not select any party name`);
+            console.log(`${this.username} did not select any party name`);
             return null;
         }
     }

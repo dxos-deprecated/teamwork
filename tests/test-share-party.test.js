@@ -23,8 +23,8 @@ describe('Share party', function () {
     });
 
     afterEach(async function () {
-        await userA.closeBrowser();
-        await userB.closeBrowser();
+        userA && await userA.closeBrowser();
+        userB && await userB.closeBrowser();
     });
 
     it('UserB sees specific party after pasting invitation link the first time', async function () {
