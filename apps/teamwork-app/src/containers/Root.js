@@ -7,7 +7,7 @@ import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import { ErrorHandler } from '@dxos/debug';
 // import CanvasApp from '@dxos/canvas-pad';
-// import EditorPad from '@dxos/editor-pad';
+import EditorPad from '@dxos/editor-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
 // import TestingPad from '@dxos/testing-pad';
@@ -36,7 +36,7 @@ const initialState = {
 
 const pads = [
   MessengerPad,
-  // EditorPad,
+  EditorPad,
   PlannerPad,
   // CanvasApp,
   // TestingPad,
