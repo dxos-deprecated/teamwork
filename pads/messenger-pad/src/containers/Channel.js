@@ -6,17 +6,15 @@ import assert from 'assert';
 import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 
+import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import TableContainer from '@material-ui/core/TableContainer';
 import { makeStyles } from '@material-ui/core/styles';
 import Send from '@material-ui/icons/Send';
-import Badge from '@material-ui/core/Badge';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
-import { keyToBuffer } from '@dxos/crypto';
 import { Editor } from '@dxos/editor';
-import { useParty } from '@dxos/react-client';
 
 import Messages from '../components/Messages';
 import Videos from '../components/Videos';
