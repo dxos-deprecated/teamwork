@@ -19,5 +19,5 @@ export const useDocumentUpdateModel = (topic, documentId) => {
   assert(topic);
   assert(documentId);
   const [editor] = useItems({ partyKey: keyToBuffer(topic), parent: documentId });
-  return editor;
+  return editor && editor.model && editor.model.model; // using adapter
 };

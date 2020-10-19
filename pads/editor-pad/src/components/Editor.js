@@ -359,7 +359,6 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
       <a ref={downloadLink} download={`${title}.md`} style={{ display: 'none' }} />
 
       <DXOSEditor
-        key={documentUpdateModel.doc.clientID}
         toolbar={{ customButtons }}
         schema="full"
         sync={{
