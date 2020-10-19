@@ -18,6 +18,6 @@ export const TYPE_EDITOR_UPDATE = TYPE_TEXT_MODEL_UPDATE;
 export const useDocumentUpdateModel = (topic, documentId) => {
   assert(topic);
   assert(documentId);
-  const [editor] = useItems({ partyKey: keyToBuffer(topic), parent: documentId });
+  const [editor] = useItems({ partyKey: keyToBuffer(topic), parent: documentId, type: TYPE_EDITOR_UPDATE });
   return editor && editor.model && editor.model.model; // using adapter
 };

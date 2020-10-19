@@ -4,6 +4,8 @@
 
 import Icon from '@material-ui/icons/Description';
 
+import { MessengerModel } from '@dxos/messenger-model';
+import { TYPE_MESSENGER_MESSAGE } from '@dxos/messenger-pad';
 import { createModelAdapter } from '@dxos/model-adapter';
 import { ObjectModel } from '@dxos/object-model';
 import { TextModel } from '@dxos/text-model';
@@ -32,9 +34,18 @@ export default {
       type: TYPE_EDITOR_DOCUMENT,
       props: { title: name || 'random-name' }
     });
+
+    // adapter for text-model containing document updates
     await party.database.createItem({
       model: TextModelAdapter,
       type: TYPE_EDITOR_UPDATE,
+      parent: item.id
+    });
+
+    // model for in-editor messenger functionality
+    await party.database.createItem({
+      model: MessengerModel,
+      type: TYPE_MESSENGER_MESSAGE,
       parent: item.id
     });
     return item.id;
