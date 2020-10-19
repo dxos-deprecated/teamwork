@@ -41,9 +41,6 @@ import Root from './containers/Root';
   });
 
   try {
-    // TODO(burdon): This is called by Provider.
-    // await client.initialize();
-
     ReactDOM.render(
       <Root
         config={{ ipfs, ...config }}
