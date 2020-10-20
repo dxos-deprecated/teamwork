@@ -1,7 +1,7 @@
-
 //
 // Copyright 2020 DXOS.org
 //
+
 import { firefox } from 'playwright';
 
 import { UserPOM } from './UserPOM.js';

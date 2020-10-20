@@ -8,7 +8,7 @@ import mocha from 'mocha';
 import { launchUsers } from './launch-users.js';
 
 const { expect } = chai;
-const { beforeEach, afterEach, describe, it } = mocha; // eslint-disable-line no-unused-vars
+const { beforeEach, afterEach, describe, it } = mocha;
 
 describe('Share party', function () {
     this.timeout(1e6);
@@ -32,11 +32,13 @@ describe('Share party', function () {
             return (await userB.getPartyNames()).length > 0;
         });
 
+        // eslint-disable-next-line no-unused-expressions
         expect(await userB.getPartyNames()).to.not.be.empty;
         expect((await userB.getPartyNames())[0]).to.be.equal(partyName);
     });
 
     it('UserB has UserA icon in his party after pasting invitation link the first time', async function () {
+        // eslint-disable-next-line no-unused-expressions
         expect(await userB.isUserInParty(partyName, userA.username)).to.be.true;
     });
 

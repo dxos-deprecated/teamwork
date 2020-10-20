@@ -1,6 +1,7 @@
 //
 // Copyright 2020 DXOS.org
 //
+
 import { BrowserPOM } from './BrowserPOM.js';
 
 export class UserPOM extends BrowserPOM {
