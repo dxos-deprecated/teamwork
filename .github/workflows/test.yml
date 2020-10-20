@@ -20,5 +20,5 @@ jobs:
       - name: Playwright tests
         run: |
           yarn start & 
-          sleep 10 
+          sleep 20 
           yarn playwright
