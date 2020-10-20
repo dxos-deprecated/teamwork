@@ -47,9 +47,10 @@ const EditorPad = ({ topic, item, itemId }) => {
   const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const [messengerOpen, setMessengerOpen] = useState(false);
 
-  // const handleCreateItem = (type) => {
-  //   return createItem(type);
-  // };
+  const handleCreateItem = async (type) => {
+    const pad = pads.find(p => p.type === type);
+    return await pad.create({ party }, {});
+  };
 
   const embeddablePads = [BOARD_TYPE, TYPE_MESSENGER_CHANNEL, TYPE_TODO_PAD];
 
@@ -62,7 +63,7 @@ const EditorPad = ({ topic, item, itemId }) => {
           title={item.displayName}
           pads={pads.filter(pad => embeddablePads.includes(pad.type))}
           items={items.filter(item => embeddablePads.includes(item.type))}
-          // onCreateItem={handleCreateItem}
+          onCreateItem={handleCreateItem}
           onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
         {messengerOpen && (
