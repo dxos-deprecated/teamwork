@@ -67,12 +67,12 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   function handleContextMenuGetOptions () {
     let insertOptions = items.map(item => ({
       id: item.id,
-      label: item.displayName,
+      label: item.model.getProperty('title') || 'Untitled',
       fn: () => {
         editor.createReactElement({
           type: item.type,
-          itemId: item.itemId,
-          title: item.displayName,
+          itemId: item.id,
+          title: item.model.getProperty('title') || 'Untitled',
           topic
         });
       }
@@ -82,7 +82,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
       insertOptions = [{ subheader: 'Insert items' }, ...insertOptions];
     }
 
-    let createItemOptions = pads.map(pad => ({
+    let createItemOptions = onCreateItem === undefined ? [] : pads.map(pad => ({
       id: `create-${pad.type}`,
       label: `New ${pad.displayName}`,
       create: true,
@@ -91,8 +91,8 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
 
         editor.createReactElement({
           type: pad.type,
-          itemId: item.itemId,
-          title: item.displayName,
+          itemId: item.id,
+          title: item.model.getProperty('title') || 'Untitled',
           topic
         });
       }
@@ -126,7 +126,7 @@ const useContextMenuHandlers = ({ topic, pads, items, onCreateItem, editor }) =>
   };
 };
 
-export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateItem, onToggleMessenger = undefined }) => {
+export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateItem = undefined, onToggleMessenger = undefined }) => {
   const downloadLink = useRef();
   const classes = useEditorClasses();
 
