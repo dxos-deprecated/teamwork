@@ -43,7 +43,7 @@ const pads = [
   TodoPad
 ];
 
-const Root = ({ config, client }) => {
+const Root = ({ client }) => {
   const publicUrl = window.location.pathname;
   const [registered, setRegistered] = useState(false);
 
@@ -81,7 +81,7 @@ const Root = ({ config, client }) => {
 
   return (
     <Theme base={themeBase}>
-      <ClientProvider client={client} config={config}>
+      <ClientProvider client={client}>
         <AppKitContextProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}

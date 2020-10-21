@@ -6,7 +6,7 @@ import discoverySwarmWebRTC from '@geut/discovery-swarm-webrtc';
 import { useState, useEffect } from 'react';
 
 import { keyToBuffer, discoveryKey } from '@dxos/crypto';
-import { useClient } from '@dxos/react-client/dist/es/hooks/client';
+import { useClient } from '@dxos/react-client';
 
 /**
  * Hook used for joining peers into an ad-hoc, ephemeral swarm.

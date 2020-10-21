@@ -48,6 +48,6 @@ export default {
       type: TYPE_MESSENGER_MESSAGE,
       parent: item.id
     });
-    return item.id;
+    return item;
   }
 };

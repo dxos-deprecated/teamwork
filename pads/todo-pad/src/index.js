@@ -28,6 +28,6 @@ export default {
     });
     await addTask({ party, itemId: item.id }, { completed: true, text: 'Completed task' });
     await addTask({ party, itemId: item.id }, { completed: false, text: 'Outstanding task' });
-    return item.id;
+    return item;
   }
 };

@@ -54,6 +54,6 @@ export default {
       parent: item.id,
       props: { title: 'First task', position: 0, listId: todoList.id }
     });
-    return item.id;
+    return item;
   }
 };
