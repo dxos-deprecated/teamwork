@@ -37,34 +37,10 @@ const App = () => {
   const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const item = items.find(i => i.id === itemId);
   const [itemSettingsOpen, setItemSettingsOpen] = useState(false);
-  // const { model } = useItems(topic);
-  // const item = model.getById(itemId);
-  // const client = useClient();
-
-  // TODO(burdon): Create hook.
-  // useEffect(() => {
-  //   if (topic) {
-  //     client.partyManager.openParty(keyToBuffer(topic)).then(noop);
-  //   }
-  // }, [topic]);
-
-  // const listsModel = useModel({ model: ObjectModel, options: { type: [LIST_TYPE], topic, itemId } });
-
-  // if (!model || !item || !pad) {
-  //   return null;
-  // }
-
-  // const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
-  const Settings = DefaultSettingsDialog;
-
-  // if (pad.type === BOARD_TYPE) {
-  //   if (!listsModel) {
-  //     return null;
-  //   }
-  // }
-
+      
   if (!item) return null;
   const pad = pads.find(pad => pad.type === item.type);
+  const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
 
   return (
     <>

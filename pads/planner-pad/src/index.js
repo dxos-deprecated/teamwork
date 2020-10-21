@@ -7,7 +7,7 @@ import Icon from '@material-ui/icons/AssignmentTurnedIn';
 import { ObjectModel } from '@dxos/object-model';
 
 import { Board } from './containers/Board';
-// import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
+import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
 import { BOARD_TYPE, LIST_TYPE, CARD_TYPE } from './model';
 export { BOARD_TYPE, LIST_TYPE, CARD_TYPE } from './model';
 
@@ -21,13 +21,14 @@ export default {
   type: BOARD_TYPE,
   contentType: [LIST_TYPE, CARD_TYPE],
   description: 'Plan your projects',
-  // settings: PlannerSettingsDialog,
-  create: async ({ party }, { name }) => {
+  settings: PlannerSettingsDialog,
+  create: async ({ party }, { name }, { description }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: BOARD_TYPE,
       props: { title: name || 'untitled' }
     });
+    await item.model.setProperty('description', description || '');
 
     const todoList = await party.database.createItem({
       model: ObjectModel,
