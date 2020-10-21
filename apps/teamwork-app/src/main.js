@@ -20,13 +20,13 @@ import Root from './containers/Root';
 
   const {
     client: { feedStorage, keyStorage, swarm },
-    services: { wns: { server, chainId }, ipfs },
-    ...config
+    services: { wns: { server, chainId } }
   } = cfg.values;
 
   const keyring = new Keyring(new KeyStore(leveljs(`${keyStorage.root}/keystore`)));
 
   const client = new Client({
+    ...cfg.values,
     storage: createStorage(feedStorage.root, feedStorage.type),
     keyring,
     swarm,
@@ -38,7 +38,6 @@ import Root from './containers/Root';
 
   ReactDOM.render(
     <Root
-      config={{ ipfs, ...config }}
       client={client}
     />,
     document.getElementById(cfg.get('app.rootElement'))

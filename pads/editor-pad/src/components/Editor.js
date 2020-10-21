@@ -143,7 +143,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   const [statusData, broadcastStatus] = useDataChannel(itemId);
 
   const config = useConfig();
-  const ipfs = new IpfsHelper(config.ipfs.gateway);
+  const ipfs = new IpfsHelper(config.services.ipfs.gateway);
 
   const customButtons = onToggleMessenger ? [
     {
@@ -283,7 +283,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
 
   // When copy image from an http URL
   // async function imageSrcParser (imageSrc) {
-  //   if (imageSrc.startsWith(config.ipfs.gateway)) return imageSrc;
+  //   if (imageSrc.startsWith(config.services.ipfs.gateway)) return imageSrc;
 
   //   const imageResponse = await fetch(imageSrc);
   //   const imageFile = await imageResponse.blob();
