@@ -6,8 +6,7 @@ import assert from 'assert';
 
 import { createId, humanize, keyToBuffer } from '@dxos/crypto';
 import { MessengerModel } from '@dxos/messenger-model';
-import { useItems, useProfile } from '@dxos/react-client';
-import { useClient } from '@dxos/react-client/dist/es/hooks/client';
+import { useItems, useProfile, useClient } from '@dxos/react-client';
 
 export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
 export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
