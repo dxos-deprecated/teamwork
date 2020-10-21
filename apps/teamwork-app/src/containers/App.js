@@ -3,13 +3,13 @@
 //
 
 import debug from 'debug';
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 
 import { keyToBuffer } from '@dxos/crypto';
-import { AppContainer, usePads, useAppRouter, DefaultItemList } from '@dxos/react-appkit';
+import { AppContainer, usePads, useAppRouter, DefaultItemList, DefaultSettingsDialog } from '@dxos/react-appkit';
 import { useItems } from '@dxos/react-client';
 
 debug.enable('dxos:*');
@@ -36,10 +36,10 @@ const App = () => {
   const [pads] = usePads();
   const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const item = items.find(i => i.id === itemId);
+  const [itemSettingsOpen, setItemSettingsOpen] = useState(false);
   // const { model } = useItems(topic);
   // const item = model.getById(itemId);
   // const client = useClient();
-  // const [itemSettingsOpen, setItemSettingsOpen] = useState(false);
 
   // TODO(burdon): Create hook.
   // useEffect(() => {
@@ -55,6 +55,7 @@ const App = () => {
   // }
 
   // const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
+  const Settings = DefaultSettingsDialog;
 
   // if (pad.type === BOARD_TYPE) {
   //   if (!listsModel) {
@@ -68,7 +69,7 @@ const App = () => {
   return (
     <>
       <AppContainer
-        // onSettingsOpened={() => setItemSettingsOpen(true)}
+        onSettingsOpened={() => setItemSettingsOpen(true)}
         sidebarContent={<DefaultItemList />}
         onHomeNavigation={() => router.push({ path: '/home' })}
       >
@@ -76,16 +77,14 @@ const App = () => {
           {pad && <pad.main topic={topic} itemId={itemId} item={item} />}
         </div>
       </AppContainer>
-      {/* <Settings
+      <Settings
         topic={topic}
         open={itemSettingsOpen}
         onClose={() => setItemSettingsOpen(false)}
         onCancel={() => setItemSettingsOpen(false)}
         item={item}
-        itemModel={model}
         Icon={pad && pad.icon}
-        listsModel={listsModel}
-      /> */}
+      />
     </>
   );
 };
