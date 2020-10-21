@@ -830,7 +830,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-runtime@^7.0.0", "@babel/plugin-transform-runtime@^7.10.1", "@babel/plugin-transform-runtime@^7.9.0":
+"@babel/plugin-transform-runtime@^7.0.0", "@babel/plugin-transform-runtime@^7.10.1", "@babel/plugin-transform-runtime@^7.12.1", "@babel/plugin-transform-runtime@^7.9.0":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.12.1.tgz#04b792057eb460389ff6a4198e377614ea1e7ba5"
   integrity sha512-Ac/H6G9FEIkS2tXsZjL4RAdS3L3WHxci0usAnz7laPWUmFiGtj7tIASChqKZMHTSQTQY6xDbOq+V1/vIq3QrWg==
@@ -5896,7 +5896,7 @@ babel-loader@^8.0.0, babel-loader@^8.1.0:
     pify "^4.0.1"
     schema-utils "^2.6.5"
 
-babel-plugin-add-module-exports@^1.0.0, babel-plugin-add-module-exports@^1.0.2:
+babel-plugin-add-module-exports@^1.0.0, babel-plugin-add-module-exports@^1.0.2, babel-plugin-add-module-exports@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/babel-plugin-add-module-exports/-/babel-plugin-add-module-exports-1.0.4.tgz#6caa4ddbe1f578c6a5264d4d3e6c8a2720a7ca2b"
   integrity sha512-g+8yxHUZ60RcyaUpfNzy56OtWW+x9cyEe9j+CranqLiqbju2yf/Cy6ZtYK40EZxtrdHllzlVZgLmcOUCTlJ7Jg==
