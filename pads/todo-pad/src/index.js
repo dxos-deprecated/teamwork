@@ -26,8 +26,8 @@ export default {
       type: TYPE_TODO_PAD,
       props: { title: name || 'untitled' }
     });
-    await addTask({ party, item }, { completed: true, text: 'Completed task' });
-    await addTask({ party, item }, { completed: false, text: 'Outstanding task' });
-    return item.id;
+    await addTask({ party, itemId: item.id }, { completed: true, text: 'Completed task' });
+    await addTask({ party, itemId: item.id }, { completed: false, text: 'Outstanding task' });
+    return item;
   }
 };

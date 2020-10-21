@@ -8,9 +8,11 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { keyToBuffer } from '@dxos/crypto';
-import MessengerPad from '@dxos/messenger-pad';
-// import { usePads } from '@dxos/react-appkit';
-import { useParty } from '@dxos/react-client';
+import MessengerPad, { TYPE_MESSENGER_CHANNEL } from '@dxos/messenger-pad';
+import { BOARD_TYPE } from '@dxos/planner-pad';
+import { usePads } from '@dxos/react-appkit';
+import { useParty, useItems } from '@dxos/react-client';
+import { TYPE_TODO_PAD } from '@dxos/todo-pad';
 
 import { Editor } from './components/Editor';
 
@@ -41,13 +43,16 @@ const EditorPad = ({ topic, item, itemId }) => {
 
   const party = useParty(keyToBuffer(topic));
   const classes = useStyles();
-  // const [pads] = usePads();
-  // const { items, createItem } = useItems(topic, pads.map((pad) => pad.type));
+  const [pads] = usePads();
+  const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const [messengerOpen, setMessengerOpen] = useState(false);
 
-  // const handleCreateItem = (type) => {
-  //   return createItem(type);
-  // };
+  const handleCreateItem = async (type) => {
+    const pad = pads.find(p => p.type === type);
+    return await pad.create({ party }, {});
+  };
+
+  const embeddablePads = [BOARD_TYPE, TYPE_MESSENGER_CHANNEL, TYPE_TODO_PAD];
 
   return (
     <div className={classes.root}>
@@ -56,9 +61,9 @@ const EditorPad = ({ topic, item, itemId }) => {
           topic={topic}
           itemId={itemId}
           title={item.displayName}
-          // pads={pads.filter(pad => pad.type !== TYPE_EDITOR_DOCUMENT)}
-          // items={items.filter(item => item.type !== TYPE_EDITOR_DOCUMENT)}
-          // onCreateItem={handleCreateItem}
+          pads={pads.filter(pad => embeddablePads.includes(pad.type))}
+          items={items.filter(item => embeddablePads.includes(item.type))}
+          onCreateItem={handleCreateItem}
           onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
         {messengerOpen && (

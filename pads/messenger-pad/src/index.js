@@ -30,13 +30,13 @@ export default {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: TYPE_MESSENGER_CHANNEL,
-      props: { title: name || 'random-name' }
+      props: { title: name || 'untitled' }
     });
     await party.database.createItem({
       model: MessengerModel,
       type: TYPE_MESSENGER_MESSAGE,
       parent: item.id
     });
-    return item.id;
+    return item;
   }
 };

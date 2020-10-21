@@ -32,7 +32,7 @@ export default {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: TYPE_EDITOR_DOCUMENT,
-      props: { title: name || 'random-name' }
+      props: { title: name || 'untitled' }
     });
 
     // adapter for text-model containing document updates
@@ -48,6 +48,6 @@ export default {
       type: TYPE_MESSENGER_MESSAGE,
       parent: item.id
     });
-    return item.id;
+    return item;
   }
 };
