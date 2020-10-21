@@ -31,7 +31,7 @@ export const useChannelMessages = (topic, channelId) => {
       id: createId(),
       text,
       sender: humanize(username),
-      timestamp: Date.now().toString(),
+      timestamp: Date.now().toString()
     });
   }];
 };

@@ -37,7 +37,7 @@ const App = () => {
   const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const item = items.find(i => i.id === itemId);
   const [itemSettingsOpen, setItemSettingsOpen] = useState(false);
-      
+
   if (!item) return null;
   const pad = pads.find(pad => pad.type === item.type);
   const Settings = (pad && pad.settings) ? pad.settings : DefaultSettingsDialog;
