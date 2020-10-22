@@ -19,7 +19,7 @@ for appdir in `find ./apps -name '*-app' -type d | grep -v node_modules`; do
   WNS_VERSION=`yarn -s wire wns name resolve wrn://${WNS_ORG}/application/${PKG_NAME}${PKG_CHANNEL} | jq -r '.records[0].attributes.version'`
   
   if [ -z "$WNS_VERSION" ]; then
-    WNS_VERSION="0.0.1"
+    WNS_VERSION="${PKG_VERSION}"
   fi
   
   cat <<EOF > app.yml
@@ -27,7 +27,10 @@ name: $PKG_NAME
 build: yarn dist
 version: $WNS_VERSION
 EOF
-  
+
+  cat app.yml
+  echo "wrn://${WNS_ORG}/application/${PKG_NAME}${PKG_CHANNEL}"
+
   yarn -s wire app deploy --name "wrn://${WNS_ORG}/application/${PKG_NAME}${PKG_CHANNEL}"
 
   popd
