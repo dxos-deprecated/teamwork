@@ -17,6 +17,7 @@ jobs:
           yarn build
           yarn lint
           yarn test
+          yarn dist --scope '@dxos/teamwork'
       - name: Playwright tests
         run: |
           yarn start & 
