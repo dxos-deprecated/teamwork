@@ -5,7 +5,7 @@ name: Build and Publish to WNS
 
 on:
   push:
-    branches: [ DISABLE ]
+    branches: [ beta ]
 
 jobs:
   publish:
@@ -21,6 +21,7 @@ jobs:
         run: |
           git config --global user.email "npm@dxos.network"
           git config --global user.name "DXOS"
+
           
           yarn install
           yarn build
@@ -33,6 +34,8 @@ jobs:
 
           # Publish to WNS
           yarn wire profile init --name $WIRE_PROFILE --template-url https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/QmcVUWB3a5JAhc8nJD1UYoWpkPXiqpuXWCBzemyBvzUCXD
+
+          export PKG_CHANNEL="@beta"
           scripts/deploy_apps_to_wns.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
