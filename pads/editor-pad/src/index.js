@@ -26,7 +26,7 @@ export default {
   contentType: TYPE_EDITOR_UPDATE,
   description: 'Write collaboratively',
   register: async (client) => {
-    await client.modelFactory.registerModel(TextModelAdapter);
+    await client.registerModel(TextModelAdapter);
   },
   create: async ({ client, party }, { name }) => {
     const item = await party.database.createItem({

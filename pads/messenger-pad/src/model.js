@@ -22,7 +22,7 @@ export const useChannelMessages = (topic, channelId) => {
   assert(channelId);
   const { username } = useProfile();
   const client = useClient();
-  client.modelFactory.registerModel(MessengerModel);
+  client.registerModel(MessengerModel);
   const [messenger] = useItems({ partyKey: keyToBuffer(topic), parent: channelId, type: TYPE_MESSENGER_MESSAGE });
 
   if (!messenger) return [[], () => {}];
