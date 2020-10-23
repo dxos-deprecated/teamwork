@@ -40,6 +40,8 @@ import Root from './containers/Root';
     swarm
   });
 
+  await client.initialize();
+
   try {
     ReactDOM.render(
       <Root
