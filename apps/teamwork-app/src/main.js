@@ -22,8 +22,7 @@ import Root from './containers/Root';
   // TODO(burdon): Why isn't config passed to the app? Make canonical.
   const {
     client: { feedStorage, keyStorage, swarm },
-    services: { wns: { server, chainId }, ipfs },
-    ...config
+    services: { wns: { server, chainId } }
   } = cfg.values;
 
   debug.enable(cfg.values.debug?.logging ?? 'dxos:*');
@@ -34,6 +33,7 @@ import Root from './containers/Root';
   const registry = new Registry(server, chainId);
 
   const client = new Client({
+    ...cfg.values,
     storage,
     keyring,
     registry,
@@ -43,7 +43,6 @@ import Root from './containers/Root';
   try {
     ReactDOM.render(
       <Root
-        config={{ ipfs, ...config }}
         client={client}
       />,
       document.getElementById(cfg.get('app.rootElement'))

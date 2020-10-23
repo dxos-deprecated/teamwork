@@ -7,7 +7,7 @@ import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import { ErrorHandler } from '@dxos/debug';
 // import CanvasApp from '@dxos/canvas-pad';
-// import EditorPad from '@dxos/editor-pad';
+import EditorPad from '@dxos/editor-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
 // import TestingPad from '@dxos/testing-pad';
@@ -36,14 +36,14 @@ const initialState = {
 
 const pads = [
   MessengerPad,
-  // EditorPad,
+  EditorPad,
   PlannerPad,
   // CanvasApp,
   // TestingPad,
   TodoPad
 ];
 
-const Root = ({ config, client }) => {
+const Root = ({ client }) => {
   const publicUrl = window.location.pathname;
   const [registered, setRegistered] = useState(false);
 
@@ -81,7 +81,7 @@ const Root = ({ config, client }) => {
 
   return (
     <Theme base={themeBase}>
-      <ClientProvider client={client} config={config}>
+      <ClientProvider client={client}>
         <AppKitContextProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}

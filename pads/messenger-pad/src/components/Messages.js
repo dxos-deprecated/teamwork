@@ -52,7 +52,7 @@ const Messages = ({ messages }) => {
                 component="span"
                 variant="caption"
               >
-                {moment(timestamp).format('LT')}
+                {moment(parseInt(timestamp)).format('LT')}
               </Typography>
             </TableCell>
             <TableCell>
