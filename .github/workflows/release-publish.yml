@@ -1,11 +1,11 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build and Publish to WNS
+name: release - Build and Publish to WNS
 
 on:
   push:
-    branches: [ DISABLE ]
+    branches: [ release ]
 
 jobs:
   publish:
@@ -29,10 +29,11 @@ jobs:
 
           # Uncomment for NPM publishing.
           # npm whoami
-          # yarn lerna publish -y prerelease --dist-tag="beta" --force-publish
+          # yarn lerna publish --force-publish
 
           # Publish to WNS
           yarn wire profile init --name $WIRE_PROFILE --template-url https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/QmcVUWB3a5JAhc8nJD1UYoWpkPXiqpuXWCBzemyBvzUCXD
+
           scripts/deploy_apps_to_wns.sh
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
