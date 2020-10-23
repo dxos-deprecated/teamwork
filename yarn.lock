@@ -1142,6 +1142,20 @@
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
+"@dxos/botkit-client@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/botkit-client/-/botkit-client-2.5.0-beta.0.tgz#697d7a37b0559046094f915fac4970cea0f18c78"
+  integrity sha512-ocu0zBzhjSAtwguFQjRQH7qZFgd5ctfMnQYAP8HGoF5nVNoB+l5uz/M0ivvaNVnU0cCMaYTquiahKmJhnVBcSQ==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.1"
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/debug" "^1.0.0-beta.73"
+    "@dxos/network-manager" "^1.0.0-beta.108"
+    "@dxos/protocol-plugin-bot" "^1.1.0-beta.18"
+    assert "^2.0.0"
+    debug "^4.1.1"
+    hypercore-crypto "^1.0.0"
+
 "@dxos/broadcast@^1.0.0-beta.6":
   version "1.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@dxos/broadcast/-/broadcast-1.0.0-beta.10.tgz#a4590aacd36f3e91bfd1b4aee5f964bb68206e32"
@@ -1299,6 +1313,49 @@
   version "2.4.0-beta.0"
   resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.4.0-beta.0.tgz#ce4c0282b9ccabb210a61aa7647fec2cc854eeb9"
   integrity sha512-YCVe4NDOQ6dLT15R+tWXO3BDQrx19e6HH76Evg4lz/DK++02rwFUogmvZAsWFgpa31Whw9O33ncUMF7uAv+eag==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.1"
+    "@dxos/credentials" "^2.0.0"
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/debug" "^1.0.0-beta.73"
+    "@dxos/echo-db" beta
+    "@dxos/feed-store" "^1.2.0-beta.1"
+    "@dxos/metrics" "^1.0.0-beta.6"
+    "@dxos/model-factory" beta
+    "@dxos/network-manager" "^1.0.0-beta.108"
+    "@dxos/object-model" beta
+    "@dxos/protocol" "^1.1.0-alpha.4"
+    "@dxos/protocol-plugin-replicator" "^1.1.0-alpha.4"
+    "@dxos/util" beta
+    "@geut/discovery-swarm-webrtc" "^3.0.0-beta.3"
+    assert "^2.0.0"
+    buffer-json-encoding "^1.0.2"
+    canonicalize "^1.0.1"
+    debug "^4.1.1"
+    del "^5.1.0"
+    end-of-stream "^1.4.4"
+    hypertrie "^3.8.0"
+    lodash.debounce "^4.0.8"
+    lodash.defaults "^4.2.0"
+    lodash.defaultsdeep "^4.6.1"
+    lodash.get "^4.4.2"
+    lodash.pickby "^4.6.0"
+    lodash.set "^4.3.2"
+    lodash.unset "^4.5.2"
+    memdown "^5.1.0"
+    multi-read-stream "^2.0.0"
+    p-limit "^2.3.0"
+    pify "^4.0.1"
+    pump "^3.0.0"
+    pumpify "^2.0.1"
+    queue-microtask "^1.1.3"
+    through2 "^3.0.1"
+    wrtc "^0.4.3"
+
+"@dxos/client@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/client/-/client-2.5.0-beta.0.tgz#92c1363dec4de2b760872b9e2a9f643ccd0f8e27"
+  integrity sha512-8uC8WMd68A4uscKn47XcEeGCzlRmj5408FFZTaxYyQxZxrd5CmxfbfqPbdnV/f3H+cYFy1y5V2I1+4cIk33hHg==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
     "@dxos/credentials" "^2.0.0"
@@ -2091,6 +2148,39 @@
     string-hash "^1.1.3"
     url-join "^4.0.1"
 
+"@dxos/react-appkit@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/react-appkit/-/react-appkit-2.5.0-beta.0.tgz#7ab374650a77de679e143ac9dafdebc0307ccff1"
+  integrity sha512-dNQ+dmu5RwHdhHhqp706+FY9ZWd8k18Uu5A57xbcJ6sq8TpLPw8j5+HH9KOURkUhOUqH8fs6CX87l5XdYMSRNw==
+  dependencies:
+    "@dxos/botkit-client" "^2.5.0-beta.0"
+    "@dxos/credentials" "^2.0.0"
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/debug" "^1.0.0-beta.73"
+    "@dxos/metrics" "^1.0.0-beta.6"
+    "@dxos/react-client" "^2.5.0-beta.0"
+    "@dxos/react-json-tree" "^0.11.3"
+    "@dxos/react-router" "^2.5.0-beta.0"
+    "@dxos/react-ux" "^2.5.0-beta.0"
+    "@dxos/view-model" "^1.0.0-beta.28"
+    "@material-ui/core" "^4.9.0"
+    "@material-ui/icons" "^4.5.1"
+    "@material-ui/lab" "^4.0.0-alpha.42"
+    assert "^2.0.0"
+    chance "^1.1.6"
+    clsx "^1.0.4"
+    color-hash "^1.0.3"
+    lodash.defaults "^4.2.0"
+    lodash.defaultsdeep "^4.6.1"
+    mobile-detect "^1.4.4"
+    moment "^2.24.0"
+    react-copy-to-clipboard "^5.0.2"
+    react-hotkeys "^2.0.0"
+    react-router "^5.1.2"
+    react-router-dom "^5.1.2"
+    string-hash "^1.1.3"
+    url-join "^4.0.1"
+
 "@dxos/react-client@^2.4.0-beta.0":
   version "2.4.0-beta.0"
   resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.4.0-beta.0.tgz#fc1ac227ad70507ca0861eb9fb88255fc822ce24"
@@ -2098,6 +2188,25 @@
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
     "@dxos/client" "^2.4.0-beta.0"
+    "@dxos/credentials" "^2.0.0"
+    "@dxos/crypto" "^1.0.0-beta.0"
+    "@dxos/debug" "^1.0.0-beta.73"
+    "@dxos/metrics" "^1.0.0-beta.6"
+    "@dxos/random-access-multi-storage" "^1.1.0-beta.4"
+    level-js "^5.0.1"
+    memdown "^5.1.0"
+    pify "^4.0.1"
+    react-display-name "^0.2.5"
+    react-router-dom "^5.1.2"
+    use-deep-compare-effect "^1.3.0"
+
+"@dxos/react-client@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/react-client/-/react-client-2.5.0-beta.0.tgz#6eae489c8232d5bf06cb53f6cb2f3fbba35a7c96"
+  integrity sha512-6V9JFA3hVnYITaLIA6B+aBueZYm3IRRKrnROxnzN0pZtqWWSC1bza6HHJAeQllqGKnF8OXHWlVV00iHZOEvlMA==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.1"
+    "@dxos/client" "^2.5.0-beta.0"
     "@dxos/credentials" "^2.0.0"
     "@dxos/crypto" "^1.0.0-beta.0"
     "@dxos/debug" "^1.0.0-beta.73"
@@ -2131,10 +2240,37 @@
     react-router-dom "^5.1.2"
     uuid "^3.3.3"
 
+"@dxos/react-router@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/react-router/-/react-router-2.5.0-beta.0.tgz#790bdd5e61a7e035f4ddf786fec34dc063a6a983"
+  integrity sha512-oK48r8sg+q6PcCByNr1txAathxJvSl3kOm8f1T7ykaHlTIKG3svF6hIQ3uvL3pFRuV7ivxPMP3Q3unWdFV8BZA==
+  dependencies:
+    "@material-ui/core" "^4.9.0"
+    "@material-ui/icons" "^4.5.1"
+    clsx "^1.0.4"
+    query-string "^6.9.0"
+    react-router "^5.1.2"
+    react-router-dom "^5.1.2"
+    uuid "^3.3.3"
+
 "@dxos/react-ux@^2.4.0-beta.0":
   version "2.4.0-beta.0"
   resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.4.0-beta.0.tgz#87a012cbff319da8eab42a8979836c8b05610975"
   integrity sha512-cSlWwVqQhxKVjIy7prZ/XW9ngKOxK594YiOHQpOHBkPK0I8KcztAuWb84KmcoNmA1DEjLqZxDr0uJV2srARrng==
+  dependencies:
+    "@dxos/crypto" "^1.0.0-beta.1"
+    "@dxos/debug" "^1.0.0-beta.73"
+    "@material-ui/core" "^4.9.0"
+    "@material-ui/icons" "^4.5.1"
+    "@material-ui/lab" "^4.0.0-alpha.42"
+    clsx "^1.0.4"
+    lodash.isplainobject "^4.0.6"
+    uuid "^3.3.3"
+
+"@dxos/react-ux@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmjs.org/@dxos/react-ux/-/react-ux-2.5.0-beta.0.tgz#3985d89f850aa3ec3cd9505ac58b770e93ffc438"
+  integrity sha512-9+Zy25/h2BJgE3prxo1AdUxid2Mzd0GvpLRs9X6Jr6TNVAQ1fjPE36fr/AjO1qgv6BKe72fXbPXK/l2ZcB7/cw==
   dependencies:
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.73"
