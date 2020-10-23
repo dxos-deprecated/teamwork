@@ -30,7 +30,7 @@ export default {
     });
     await item.model.setProperty('description', description || '');
 
-    const todoList = await party.database.createItem({
+    await party.database.createItem({
       model: ObjectModel,
       type: LIST_TYPE,
       parent: item.id,
@@ -47,13 +47,6 @@ export default {
       type: LIST_TYPE,
       parent: item.id,
       props: { title: 'Done', position: 2 }
-    });
-
-    await party.database.createItem({
-      model: ObjectModel,
-      type: CARD_TYPE,
-      parent: item.id,
-      props: { title: 'First task', position: 0, listId: todoList.id }
     });
     return item;
   }
