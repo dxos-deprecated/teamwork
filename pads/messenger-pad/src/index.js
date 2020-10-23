@@ -24,7 +24,7 @@ export default {
   description: 'Chat with friends',
   settings: MessengerSettingsDialog,
   register: async (client) => {
-    await client.modelFactory.registerModel(MessengerModel);
+    await client.registerModel(MessengerModel);
   },
   create: async ({ client, party }, { name }) => {
     const item = await party.database.createItem({
