@@ -55,7 +55,7 @@ const Home = () => {
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
   const [partyFromIpfsOpen, setPartyFromIpfsOpen] = useState(false);
 
-  const ipfs = new IpfsHelper(config.services.ipfs.gateway);
+  const ipfs = new IpfsHelper(config.ipfs.gateway);
 
   const createParty = async () => {
     if (inProgress) {
