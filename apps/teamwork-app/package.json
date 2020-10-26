@@ -14,9 +14,7 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "start": "VERBOSE=true NODE_ENV=development webpack-dev-server",
     "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
-    "build:storybook": "build-storybook -c .storybook -o ./out --quiet"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "dependencies": {
     "@babel/runtime": "7.11.2",
@@ -75,8 +73,6 @@
     "@babel/preset-react": "^7.10.4",
     "@geut/discovery-swarm-webrtc": "^4.0.2",
     "@rollup/plugin-babel": "^5.0.3",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/react": "^5.3.18",
     "@types/chance": "^1.1.0",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
