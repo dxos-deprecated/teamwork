@@ -33,9 +33,8 @@ const PlannerSettingsDialog = ({
 
   const handleClose = ({ name }) => {
     if (item) {
-      if (description !== undefined) {
-        item.model.setProperty('description', description);
-      }
+      item.model.setProperty('title', name);
+      item.model.setProperty('description', description);
     }
     onClose({ name }, { description });
   };
