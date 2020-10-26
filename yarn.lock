@@ -1128,10 +1128,10 @@
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
-"@dxos/botkit-client@^2.5.1-alpha.0":
-  version "2.5.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-2.5.1-alpha.0.tgz#1135b374ecf1525a63506a4dc1a6ba5c508b707c"
-  integrity sha512-JtMmkpEEgR6naddZPBR7PU0kSTw4kngiidj5TPOctzXscABv5DZRcnaqAjlTXI4xM6aKms1XkaXH0p7mh4o1HA==
+"@dxos/botkit-client@^2.6.4-alpha.0":
+  version "2.6.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-2.6.4-alpha.0.tgz#1eeb62aee32304a7a466798c4621ef7caee7deb8"
+  integrity sha512-rzXGYXELalLxxqZjeU1DLO6vP9t+0ed0kaDcyCM3nS8IcHKQNHk7OdHdlCBrs+6pXEwcZTWRcCLI/PCvx9hECA==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
     "@dxos/crypto" "^1.0.0-beta.1"
@@ -1295,10 +1295,10 @@
     semver "^7.1.1"
     yargs "^11.0.0"
 
-"@dxos/client@^2.5.1-alpha.0":
-  version "2.5.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.5.1-alpha.0.tgz#6566b8a8f1e446da76554c95ef8dab4cd921ef13"
-  integrity sha512-5+6uzEj6D/yM6nbw1MR5OQ9vy/DwsT3rR7TuvZprgaTJImlWFn5Pr7JbBrZg8lOhTpR8o4hSiDR2LqqRsGq9Mw==
+"@dxos/client@^2.6.4-alpha.0":
+  version "2.6.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.6.4-alpha.0.tgz#b56f2048317f5f24a90862f8e8c7171856f571c2"
+  integrity sha512-W3x7WOkQUEj2n8FVIdiReq3QE0hzKlCTnc62KaD0TUV2xp7M5tftjvoEHU56u7T2MRKhWFGEYegFlDFo7pEgPw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
     "@dxos/credentials" "^2.0.0"
@@ -1314,6 +1314,7 @@
     "@dxos/protocol-plugin-replicator" "^1.1.0-alpha.4"
     "@dxos/util" beta
     "@geut/discovery-swarm-webrtc" "^3.0.0-beta.3"
+    "@wirelineio/registry-client" "^1.1.0-beta.2"
     assert "^2.0.0"
     buffer-json-encoding "^1.0.2"
     canonicalize "^1.0.1"
@@ -1321,6 +1322,7 @@
     del "^5.1.0"
     end-of-stream "^1.4.4"
     hypertrie "^3.8.0"
+    level-js "^5.0.2"
     lodash.debounce "^4.0.8"
     lodash.defaults "^4.2.0"
     lodash.defaultsdeep "^4.6.1"
@@ -2058,20 +2060,20 @@
     random-access-web "^2.0.3"
     source-map-support "^0.5.16"
 
-"@dxos/react-appkit@^2.5.1-alpha.0":
-  version "2.5.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-appkit/-/react-appkit-2.5.1-alpha.0.tgz#f3313e49f222ed69127f557b14270ddb73f6e8e8"
-  integrity sha512-dzOfWNKU25kFmRwIaS2yz7Q0f2jGAzqLuwGxyCJE7KEKnAxrMeiFpbVUii0p+9psbR5HLtjKdgL2WdBqgIKtFw==
+"@dxos/react-appkit@^2.6.4-alpha.0":
+  version "2.6.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-appkit/-/react-appkit-2.6.4-alpha.0.tgz#fdc5d3d3e40c6c73150268ff75544a1a93a7356c"
+  integrity sha512-Vy6KHkd7cmDeNUjaqvsZgEz77d2i7o/WcbYT6WJj1j4yUSVyM48DIyL6Y4f+A760x8WEA6r/6vOO/fvI6P8teA==
   dependencies:
-    "@dxos/botkit-client" "^2.5.1-alpha.0"
+    "@dxos/botkit-client" "^2.6.4-alpha.0"
     "@dxos/credentials" "^2.0.0"
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.73"
     "@dxos/metrics" "^1.0.0-beta.6"
-    "@dxos/react-client" "^2.5.1-alpha.0"
+    "@dxos/react-client" "^2.6.4-alpha.0"
     "@dxos/react-json-tree" "^0.11.3"
-    "@dxos/react-router" "^2.5.1-alpha.0"
-    "@dxos/react-ux" "^2.5.1-alpha.0"
+    "@dxos/react-router" "^2.6.4-alpha.0"
+    "@dxos/react-ux" "^2.6.4-alpha.0"
     "@dxos/view-model" "^1.0.0-beta.28"
     "@material-ui/core" "^4.9.0"
     "@material-ui/icons" "^4.5.1"
@@ -2091,13 +2093,13 @@
     string-hash "^1.1.3"
     url-join "^4.0.1"
 
-"@dxos/react-client@^2.5.1-alpha.0":
-  version "2.5.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.5.1-alpha.0.tgz#d34a3f6a8f5794b3d0ef7e4da2554becc1e97df3"
-  integrity sha512-+FQz0Lvj7VxsufeVQ7VScUtKDFfLNtI7FNMSqfjiCi1LbCVVZsdKrl48eundCEoBEekrbVSgsX+04i2yGbN8Ww==
+"@dxos/react-client@^2.6.4-alpha.0":
+  version "2.6.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.6.4-alpha.0.tgz#442db306a22ba3538c3965aa4147b2583c5d6d47"
+  integrity sha512-AzEbOA91DXHogjbwO0//wVQfyCNAY2WkPhUlnhPfLPGF/pdUTOoVMI2P5snZxAh8HtbQdl1z4JVjWfxeyJFapw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.1"
-    "@dxos/client" "^2.5.1-alpha.0"
+    "@dxos/client" "^2.6.4-alpha.0"
     "@dxos/credentials" "^2.0.0"
     "@dxos/crypto" "^1.0.0-beta.0"
     "@dxos/debug" "^1.0.0-beta.73"
@@ -2118,10 +2120,10 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-router@^2.5.1-alpha.0":
-  version "2.5.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-router/-/react-router-2.5.1-alpha.0.tgz#00f836cba821a26d2ae1de01a1a50db5e8020616"
-  integrity sha512-dIZ83iORy59yopgkTgSt8X/d0jABaTYhFNeEe+wDwxC9iUVyUmTtiXnFRi9yiymFBCvY+j3S+S4zQrB+2Le8PA==
+"@dxos/react-router@^2.6.4-alpha.0":
+  version "2.6.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-router/-/react-router-2.6.4-alpha.0.tgz#a82edb77b35a3547dc5996995bc3117154ed2861"
+  integrity sha512-0En9bzcEZroHgtuhSOJnBJG3reo6vBJ7NYxl9/+eZM+2/Izkh7tyBRuwf6N5PivynSh2SYzoio4AXBKVI3luQg==
   dependencies:
     "@material-ui/core" "^4.9.0"
     "@material-ui/icons" "^4.5.1"
@@ -2131,10 +2133,10 @@
     react-router-dom "^5.1.2"
     uuid "^3.3.3"
 
-"@dxos/react-ux@^2.5.1-alpha.0":
-  version "2.5.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.5.1-alpha.0.tgz#6ba7de19e86add9f37befca61f1d59217b2affc5"
-  integrity sha512-39Pfb3rZ54C6KHXvBFaQg4OJc6Daf4tEkU21ZEMTkee/Z+mzKoBEBIjsV0RQMx+bwkzbKA82DSDElFNOlvObvg==
+"@dxos/react-ux@^2.6.4-alpha.0":
+  version "2.6.4-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.6.4-alpha.0.tgz#00054dcbbd609fd7ac10106216ca301383bfad7f"
+  integrity sha512-bOQxQn32yyvvc9WeBbeiM90/CHTyH8NAh7W+2Rxd6AkuZu7VZstwCbopwH+32XCSV61nKQk9Vf7aoq0furpB6Q==
   dependencies:
     "@dxos/crypto" "^1.0.0-beta.1"
     "@dxos/debug" "^1.0.0-beta.73"
@@ -13729,7 +13731,7 @@ level-js@^2.1.3:
     typedarray-to-buffer "~1.0.0"
     xtend "~2.1.2"
 
-level-js@^5.0.1:
+level-js@^5.0.1, level-js@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/level-js/-/level-js-5.0.2.tgz#5e280b8f93abd9ef3a305b13faf0b5397c969b55"
   integrity sha512-SnBIDo2pdO5VXh02ZmtAyPP6/+6YTJg2ibLtl9C34pWvmtMEmRTWpra+qO/hifkUtBTOtfx6S9vLDjBsBK4gRg==
