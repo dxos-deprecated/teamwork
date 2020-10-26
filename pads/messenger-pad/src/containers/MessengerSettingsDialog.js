@@ -29,10 +29,17 @@ export const MessengerSettingsDialog = ({ topic, open, onClose, onCancel, item }
     download(serializeChat(item, messages), `${item.model.getProperty('title') || 'chat-log'}.md`);
   };
 
+  const handleClose = ({ name }) => {
+    if (item) {
+      item.model.setProperty('title', name);
+    }
+    onClose({ name });
+  };
+
   return (
     <ItemSettings
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       onCancel={onCancel}
       item={item}
       closingDisabled={false}
