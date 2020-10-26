@@ -8,11 +8,12 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { keyToBuffer } from '@dxos/crypto';
-import MessengerPad, { TYPE_MESSENGER_CHANNEL } from '@dxos/messenger-pad';
-import { BOARD_TYPE } from '@dxos/planner-pad';
 import { usePads } from '@dxos/react-appkit';
 import { useParty, useItems } from '@dxos/react-client';
-import { TYPE_TODO_PAD } from '@dxos/todo-pad';
+
+import MessengerPad, { MESSENGER_PAD } from '@dxos/messenger-pad';
+import { PLANNER_PAD } from '@dxos/planner-pad';
+import { TASKS_PAD } from '@dxos/tasks-pad';
 
 import { Editor } from './components/Editor';
 
@@ -52,7 +53,7 @@ const EditorPad = ({ topic, item, itemId }) => {
     return await pad.create({ party }, {});
   };
 
-  const embeddablePads = [BOARD_TYPE, TYPE_MESSENGER_CHANNEL, TYPE_TODO_PAD];
+  const embeddablePads = [PLANNER_PAD, TASKS_PAD, MESSENGER_PAD];
 
   return (
     <div className={classes.root}>
@@ -66,6 +67,8 @@ const EditorPad = ({ topic, item, itemId }) => {
           onCreateItem={handleCreateItem}
           onToggleMessenger={() => setMessengerOpen(oldValue => !oldValue)}
         />
+
+        {/* TODO(burdon): Factor out. */}
         {messengerOpen && (
           <div className={classes.messengerContainer}>
             <MessengerPad.main

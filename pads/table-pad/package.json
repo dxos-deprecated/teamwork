@@ -1,5 +1,5 @@
 {
-  "name": "@dxos/todo-pad",
+  "name": "@dxos/table-pad",
   "version": "1.0.1-beta.11",
   "main": "dist/index.js",
   "private": true,
@@ -14,6 +14,7 @@
     "@dxos/async": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "^2.1.1-alpha.0",
+    "@dxos/gem-spore": "^1.0.0-beta.25",
     "@dxos/object-model": "^2.0.0",
     "@dxos/react-appkit": "^2.5.1-alpha.0",
     "@dxos/react-router": "^2.5.1-alpha.0",
@@ -25,7 +26,8 @@
     "clsx": "^1.0.4",
     "color-hash": "^1.0.3",
     "moment": "^2.24.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-virtualized": "^9.22.2"
   },
   "peerDependencies": {
     "@dxos/crypto": "^1.0.0-beta.1",

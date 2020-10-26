@@ -6,11 +6,15 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import { ErrorHandler } from '@dxos/debug';
+
 // import CanvasApp from '@dxos/canvas-pad';
 import EditorPad from '@dxos/editor-pad';
+import TablePad from '@dxos/table-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
+import TasksPad from '@dxos/tasks-pad';
 // import TestingPad from '@dxos/testing-pad';
+
 import {
   SET_LAYOUT,
   AppKitContextProvider,
@@ -21,8 +25,8 @@ import {
   SystemRoutes,
   Theme
 } from '@dxos/react-appkit';
+
 import { ClientProvider } from '@dxos/react-client';
-import TodoPad from '@dxos/todo-pad';
 
 import App from './App';
 import Home from './Home';
@@ -35,12 +39,13 @@ const initialState = {
 };
 
 const pads = [
-  MessengerPad,
-  EditorPad,
-  PlannerPad,
   // CanvasApp,
+  EditorPad,
+  MessengerPad,
+  PlannerPad,
+  TasksPad,
+  TablePad
   // TestingPad,
-  TodoPad
 ];
 
 const Root = ({ client }) => {
@@ -77,7 +82,9 @@ const Root = ({ client }) => {
     registerPadModels();
   }, []);
 
-  if (!registered) return null;
+  if (!registered) {
+    return null;
+  }
 
   return (
     <Theme base={themeBase}>
@@ -102,7 +109,6 @@ const Root = ({ client }) => {
                     {SystemRoutes(router)}
                     <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
                     <Route exact path={routes.app} component={App} />
-
                     <Route exact path="/home" component={Home} />
                     <Redirect to="/home" />
                   </Switch>

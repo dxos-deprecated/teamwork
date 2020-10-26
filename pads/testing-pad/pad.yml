@@ -1,4 +1,4 @@
-name: example.com/testing
-displayName: Testing 
+name: dxos.org/testing
+displayName: Testing
 build: yarn dist
-version: 0.0.0
+version: 1.0.0

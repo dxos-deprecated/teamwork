@@ -1,4 +1,4 @@
-name: example.com/messenger
-displayName: Messenger 
+name: dxos.org/messenger
+displayName: Messenger
 build: yarn dist
-version: 0.0.0
+version: 1.0.0

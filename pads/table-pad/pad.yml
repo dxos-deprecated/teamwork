@@ -1,0 +1,4 @@
+name: dxos.org/table
+displayName: Table
+build: yarn dist
+version: 1.0.0

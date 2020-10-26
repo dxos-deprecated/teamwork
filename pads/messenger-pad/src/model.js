@@ -8,8 +8,9 @@ import { createId, humanize, keyToBuffer } from '@dxos/crypto';
 import { MessengerModel } from '@dxos/messenger-model';
 import { useItems, useProfile, useClient } from '@dxos/react-client';
 
-export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
-export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
+export const MESSENGER_PAD = 'dxos.org/pad/messenger';
+export const MESSENGER_TYPE_CHANNEL = 'dxos.org/type/messenger/channel';
+export const MESSENGER_TYPE_MESSAGE = 'dxos.org/type/messenger/message';
 
 /**
  * Provides channel messages and appender.
@@ -23,9 +24,12 @@ export const useChannelMessages = (topic, channelId) => {
   const { username } = useProfile();
   const client = useClient();
   client.registerModel(MessengerModel);
-  const [messenger] = useItems({ partyKey: keyToBuffer(topic), parent: channelId, type: TYPE_MESSENGER_MESSAGE });
+  const [messenger] = useItems({ partyKey: keyToBuffer(topic), parent: channelId, type: MESSENGER_TYPE_MESSAGE });
 
-  if (!messenger) return [[], () => {}];
+  if (!messenger) {
+    return [[], () => {}];
+  }
+
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
       id: createId(),

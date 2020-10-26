@@ -8,46 +8,47 @@ import { ObjectModel } from '@dxos/object-model';
 
 import { Board } from './containers/Board';
 import PlannerSettingsDialog from './containers/PlannerSettingsDialog';
-import { BOARD_TYPE, LIST_TYPE, CARD_TYPE } from './model';
-export { BOARD_TYPE, LIST_TYPE, CARD_TYPE } from './model';
+import { PLANNER_PAD, PLANNER_TYPE_BOARD, PLANNER_TYPE_LIST, PLANNER_TYPE_CARD } from './model';
+
+export * from './model';
 
 export default {
-  // TODO(elmasse): READ THIS FROM PAD.YML
-  name: 'example.com/board',
+  name: PLANNER_PAD,
+  type: PLANNER_TYPE_BOARD,
+  contentType: [PLANNER_TYPE_LIST, PLANNER_TYPE_CARD],
   displayName: 'Board',
-
+  description: 'Project kanban',
   icon: Icon,
   main: Board,
-  type: BOARD_TYPE,
-  contentType: [LIST_TYPE, CARD_TYPE],
-  description: 'Plan your projects',
   settings: PlannerSettingsDialog,
   create: async ({ party }, { name }, { description }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
-      type: BOARD_TYPE,
+      type: PLANNER_TYPE_BOARD,
       props: { title: name || 'untitled' }
     });
     await item.model.setProperty('description', description || '');
 
+    // TODO(burdon): Create array.
     await party.database.createItem({
       model: ObjectModel,
-      type: LIST_TYPE,
+      type: PLANNER_TYPE_LIST,
       parent: item.id,
-      props: { title: 'TODO', position: 0 }
+      props: { title: 'Icebox', position: 0 }
     });
     await party.database.createItem({
       model: ObjectModel,
-      type: LIST_TYPE,
+      type: PLANNER_TYPE_LIST,
       parent: item.id,
-      props: { title: 'In Progress', position: 1 }
+      props: { title: 'Started', position: 1 }
     });
     await party.database.createItem({
       model: ObjectModel,
-      type: LIST_TYPE,
+      type: PLANNER_TYPE_LIST,
       parent: item.id,
       props: { title: 'Done', position: 2 }
     });
+
     return item;
   }
 };

@@ -5,16 +5,16 @@
 import Icon from '@material-ui/icons/Brush';
 
 import { Canvas } from './Canvas';
-import { TYPE_CANVAS_DOCUMENT, TYPE_CANVAS_ECHO_OBJECT } from './model';
+import { CANVAS_PAD, CANVAS_TYPE_DIAGRAM, CANVAS_TYPE_OBJECT } from './model';
+
+export * from './model';
 
 export default {
-  // TODO(elmasse): READ THIS FROM PAD.YML
-  name: 'example.com/canvas',
+  name: CANVAS_PAD,
+  type: CANVAS_TYPE_DIAGRAM,
+  contentType: CANVAS_TYPE_OBJECT,
   displayName: 'Canvas',
-
+  description: 'Technical diagrams',
   icon: Icon,
-  main: Canvas,
-  type: TYPE_CANVAS_DOCUMENT,
-  contentType: TYPE_CANVAS_ECHO_OBJECT,
-  description: 'Draw collaboratively'
+  main: Canvas
 };
