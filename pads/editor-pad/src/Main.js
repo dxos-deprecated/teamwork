@@ -11,9 +11,9 @@ import { keyToBuffer } from '@dxos/crypto';
 import { usePads } from '@dxos/react-appkit';
 import { useParty, useItems } from '@dxos/react-client';
 
-import MessengerPad, { MESSENGER_PAD } from '@dxos/messenger-pad';
-import { PLANNER_PAD } from '@dxos/planner-pad';
-import { TASKS_PAD } from '@dxos/tasks-pad';
+import TasksPad from '@dxos/tasks-pad';
+import MessengerPad from '@dxos/messenger-pad';
+import PlannerPad from '@dxos/planner-pad';
 
 import { Editor } from './components/Editor';
 
@@ -53,7 +53,7 @@ const EditorPad = ({ topic, item, itemId }) => {
     return await pad.create({ party }, {});
   };
 
-  const embeddablePads = [PLANNER_PAD, TASKS_PAD, MESSENGER_PAD];
+  const embeddablePads = [PlannerPad.type, TasksPad.type, MessengerPad.type];
 
   return (
     <div className={classes.root}>
