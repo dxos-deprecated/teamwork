@@ -21,7 +21,7 @@ export default {
   icon: Icon,
   main: Board,
   settings: PlannerSettingsDialog,
-  create: async ({ party }, { name }, { description }) => {
+  create: async ({ party }, { name }, { description = '' } = {}) => {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: PLANNER_TYPE_BOARD,

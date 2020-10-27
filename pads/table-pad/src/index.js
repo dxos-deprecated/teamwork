@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import Icon from '@material-ui/icons/CheckBoxOutlined';
+import Icon from '@material-ui/icons/ViewColumn';
 
 import { ObjectModel } from '@dxos/object-model';
 
