@@ -152,12 +152,11 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
   }
 
   const createItem = () => console.warn('not implemented;');
-  console.log('items', items)
 
   const {
     handleSuggestionsGetOptions,
     handleSuggestionsOptionSelect
-  } = useSuggestionsMenuHandlers(topic, pads, items, editor.current, createItem);
+  } = useSuggestionsMenuHandlers(topic, pads, items, editor.current, createItem, itemId);
 
   return (
     <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })}>

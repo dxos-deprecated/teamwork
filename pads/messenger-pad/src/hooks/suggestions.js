@@ -2,23 +2,22 @@
 // Copyright 2020 DXOS.org
 //
 
-const getItemTitle = item => item.model ? item.model.getProperty('title') : item.displayName
+const getItemTitle = item => item.model ? item.model.getProperty('title') : item.displayName;
 
 const queryFilter = query => items => {
-  console.log('queryFilter items', items);
   return items.filter(item => {
     const label = getItemTitle(item);
     return label?.toLowerCase()?.includes(query.toLowerCase());
   });
 };
 
-export const useSuggestionsMenuHandlers = (topic, pads, items, editor, createItem) => {
+export const useSuggestionsMenuHandlers = (topic, pads, items, editor, createItem, itemId) => {
   function handleSuggestionsGetOptions (query) {
     const filter = queryFilter(query);
     let insertOptions = filter(items).map(item => ({
       id: item.id,
       label: item.model.getProperty('title') || 'untitled'
-    }));
+    })).filter(item => item.id !== itemId);
 
     if (insertOptions.length > 0) {
       insertOptions = [{ subheader: 'Insert items' }, ...insertOptions];
