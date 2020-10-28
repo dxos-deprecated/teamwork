@@ -21,18 +21,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const MessengerSettingsDialog = ({ topic, open, onClose, onCancel, item }) => {
-  const [messages] = useChannelMessages(topic, (item && item.itemId) || 'creating-item');
+  const [messages] = useChannelMessages(topic, (item && item.id) || 'creating-item');
   const classes = useStyles();
 
   const handleDownload = () => {
     assert(item);
-    download(serializeChat(item, messages), `${item.displayName || 'chat-log'}.md`);
+    download(serializeChat(item, messages), `${item.model.getProperty('title') || 'chat-log'}.md`);
+  };
+
+  const handleClose = ({ name }) => {
+    if (item) {
+      item.model.setProperty('title', name);
+    }
+    onClose({ name });
   };
 
   return (
     <ItemSettings
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       onCancel={onCancel}
       item={item}
       closingDisabled={false}

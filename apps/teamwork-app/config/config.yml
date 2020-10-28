@@ -4,9 +4,9 @@
 #
 
 app:
-  name: 'Teamwork'
-client:
-  keyStorage:
-    root: "dxos/teamwork-local/keys"
-  feedStorage:
-    root: "dxos/teamwork-local/feeds"
+  name: Teamwork
+storagePath: dxos/teamwork-local
+storageType: persistent
+wns:
+  server: "https://wns1.kube.moon.dxos.network/api"
+  chainId: "devnet-2"

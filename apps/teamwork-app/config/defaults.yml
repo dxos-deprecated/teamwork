@@ -8,28 +8,21 @@ app:
 
 devtools: true
 
-client:
-  keyStorage:
-    root: "dxos/apps/keys"
+storagePath: dxos/teamwork-v1
+storageType: persistent
 
-  feedStorage:
-    root: "dxos/apps/feeds"
-
-  swarm:
-    signal: "wss://apollo1.kube.moon.dxos.network/dxos/signal"
-    ice:
-      - urls: "stun:stun.wirelne.ninja:3478"
-      - urls: "turn:stun.wireline.ninja:3478"
-        username: "wireline"
-        credential: "wireline"
-
-services:
-  wns:
-    server: "https://wns1.kube.moon.dxos.network/api"
-    chainId: "devnet-2"
-  ipfs:
-    server: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/api"
-    gateway: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/"
+swarm:
+  signal: "wss://apollo1.kube.moon.dxos.network/dxos/signal"
+  ice:
+    - urls: "turn:stun.wireline.ninja:3478"
+      username: "wireline"
+      credential: "wireline"
+wns:
+  server: "https://wns1.kube.moon.dxos.network/api"
+  chainId: "devnet-2"
+ipfs:
+  server: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/api"
+  gateway: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/"
 
 debug:
     mode: 'development'

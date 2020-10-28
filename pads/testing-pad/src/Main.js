@@ -14,7 +14,7 @@ import { ObjectModel } from '@dxos/object-model';
 import { useProfile, useParty, useItems } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-ux';
 
-import { TYPE_TESTING_ITEM } from './model';
+import { TESTING_TYPE_ITEM } from './model';
 
 const colorHash = new ColorHash({ saturation: 1 });
 
@@ -55,8 +55,7 @@ export const Main = ({ item, topic }) => {
   const createItem = async (properties) => {
     await party.database.createItem({
       model: ObjectModel,
-      type: TYPE_TESTING_ITEM,
-      parrent: item.id,
+      type: TESTING_TYPE_ITEM,
       parent: item.id,
       props: { properties }
     });
@@ -66,11 +65,11 @@ export const Main = ({ item, topic }) => {
 
   const { publicKey } = useProfile();
 
-  async function addItem (count) {
+  const addItem = async (count) => {
     for (let i = 0; i < count; i++) {
-      createItem({ addedBy: publicKey, count: 0 });
+      await createItem({ addedBy: publicKey, count: 0 });
     }
-  }
+  };
 
   const renderCount = useRef(0);
   renderCount.current++;
@@ -100,7 +99,8 @@ export const Main = ({ item, topic }) => {
         <Button color="primary" onClick={() => addItem(10)}>+10</Button>
         <Button color="primary" onClick={() => addItem(100)}>+100</Button>
 
-        {/* <FormControlLabel
+        {/*
+        <FormControlLabel
           className={classes.label}
           control={
             <Checkbox
@@ -109,7 +109,8 @@ export const Main = ({ item, topic }) => {
             />
           }
           label="Running"
-        /> */}
+        />
+        */}
 
         <div className={classes.expand} />
         <div className={classes.data}>

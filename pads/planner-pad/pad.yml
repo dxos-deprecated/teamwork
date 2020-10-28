@@ -1,4 +1,4 @@
-name: example.com/planner
-displayName: Planner 
+name: dxos.org/planner
+displayName: Planner
 build: yarn dist
-version: 0.0.0
+version: 1.0.0

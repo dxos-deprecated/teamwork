@@ -4,13 +4,13 @@
 
 import assert from 'assert';
 
-import { createId, humanize } from '@dxos/crypto';
+import { createId, humanize, keyToBuffer } from '@dxos/crypto';
 import { MessengerModel } from '@dxos/messenger-model';
-import { useItems, useProfile } from '@dxos/react-client';
-import { useClient } from '@dxos/react-client/dist/es/hooks/client';
+import { useItems, useProfile, useClient } from '@dxos/react-client';
 
-export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
-export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
+export const MESSENGER_PAD = 'dxos.org/pad/messenger';
+export const MESSENGER_TYPE_CHANNEL = 'dxos.org/type/messenger/channel';
+export const MESSENGER_TYPE_MESSAGE = 'dxos.org/type/messenger/message';
 
 /**
  * Provides channel messages and appender.
@@ -18,22 +18,26 @@ export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
  * @param channelId
  * @returns {[Object[], function]}
  */
-export const useChannelMessages = (topic, channelId, party) => {
+export const useChannelMessages = (topic, channelId) => {
   assert(topic);
   assert(channelId);
-  const { username } = useProfile();
+  const partyKey = keyToBuffer(topic);
+  const profile = useProfile();
   const client = useClient();
-  client.modelFactory.registerModel(MessengerModel);
-  const [messenger] = useItems({ partyKey: party.key, parent: channelId });
 
-  console.log('messenger', messenger);
-  if (!messenger) return [[], () => {}];
+  client.registerModel(MessengerModel);
+
+  const [messenger] = useItems({ partyKey, parent: channelId, type: MESSENGER_TYPE_MESSAGE });
+
+  if (!messenger) {
+    return [[], () => {}];
+  }
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
       id: createId(),
       text,
-      sender: humanize(username),
-      timestamp: Date.now()
+      sender: profile.username || humanize(profile.publicKey),
+      timestamp: Date.now().toString()
     });
   }];
 };

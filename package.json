@@ -19,7 +19,8 @@
       "apps/*",
       "pads/*",
       "bots/*",
-      "packages/*"
+      "packages/*",
+      "models/*"
     ]
   },
   "scripts": {
@@ -31,13 +32,24 @@
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn npm codeload.github.com --validate-https",
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
-    "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream"
+    "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream",
+    "playwright": "mocha --require @babel/register ./tests/test-share-party.test.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-export-default-from": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "@babel/register": "^7.0.0",
     "@dxos/cli": "^1.1.0-beta.0",
     "@dxos/cli-app": "^1.1.0-beta.0",
     "@dxos/cli-wns": "^1.1.0-beta.0",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "chai": "^4.2.0",
     "eslint": "^7.5.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.1",
@@ -47,6 +59,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "lerna": "^3.19.0",
-    "lockfile-lint": "^4.3.7"
+    "lockfile-lint": "^4.3.7",
+    "mocha": "^8.1.3",
+    "playwright": "^1.4.2"
   }
 }

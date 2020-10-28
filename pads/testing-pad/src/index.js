@@ -5,18 +5,16 @@
 import Icon from '@material-ui/icons/BugReport';
 
 import { Main } from './Main';
-import { TYPE_TESTING_PAD, TYPE_TESTING_ITEM } from './model';
+import { TESTING_PAD, TESTING_TYPE_ITEMS, TESTING_TYPE_ITEM } from './model';
 
 export * from './model';
 
 export default {
-  // TODO(elmasse): READ THIS FROM PAD.YML
-  name: 'example.com/testing',
+  name: TESTING_PAD,
+  type: TESTING_TYPE_ITEMS,
+  contentType: TESTING_TYPE_ITEM,
   displayName: 'Testing',
-
+  description: 'Testing pad',
   icon: Icon,
-  main: Main,
-  type: TYPE_TESTING_PAD,
-  contentType: TYPE_TESTING_ITEM,
-  description: 'DXOS demos & tests'
+  main: Main
 };

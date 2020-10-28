@@ -2,27 +2,27 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-// import CanvasApp from '@dxos/canvas-pad';
 import { ErrorHandler } from '@dxos/debug';
-// import EditorPad from '@dxos/editor-pad';
-// import MessengerPad from '@dxos/messenger-pad';
-// import PlannerPad from '@dxos/planner-pad';
-// import TestingPad from '@dxos/testing-pad';
+// import CanvasApp from '@dxos/canvas-pad';
+import EditorPad from '@dxos/editor-pad';
+import MessengerPad from '@dxos/messenger-pad';
+import PlannerPad from '@dxos/planner-pad';
 import {
   SET_LAYOUT,
-  AppKitContextProvider,
-  CheckForErrors,
+  AppKitProvider,
   DefaultRouter,
   Registration,
   RequireWallet,
   SystemRoutes,
-  Theme
+  Theme,
+  ClientInitializer
 } from '@dxos/react-appkit';
-import { ClientProvider } from '@dxos/react-client';
-import TodoPad from '@dxos/todo-pad';
+import TablePad from '@dxos/table-pad';
+import TasksPad from '@dxos/tasks-pad';
+// import TestingPad from '@dxos/testing-pad';
 
 import App from './App';
 import Home from './Home';
@@ -35,17 +35,17 @@ const initialState = {
 };
 
 const pads = [
-  // MessengerPad,
-  // EditorPad,
-  // PlannerPad,
   // CanvasApp,
+  EditorPad,
+  MessengerPad,
+  PlannerPad,
+  TasksPad,
+  TablePad
   // TestingPad,
-  TodoPad
 ];
 
-const Root = ({ config, client }) => {
+const Root = ({ clientConfig }) => {
   const publicUrl = window.location.pathname;
-  const [registered, setRegistered] = useState(false);
 
   const router = { ...DefaultRouter, publicUrl };
   const { routes } = router;
@@ -65,31 +65,16 @@ const Root = ({ config, client }) => {
     }
   };
 
-  useEffect(() => {
-    const registerPadModels = async () => {
-      for (let i = 0; i < pads.length; i++) {
-        if (pads[i].register) {
-          await pads[i].register(client);
-        }
-      }
-      setRegistered(true);
-    };
-    registerPadModels();
-  }, []);
-
-  if (!registered) return null;
-
   return (
     <Theme base={themeBase}>
-      <ClientProvider client={client} config={config}>
-        <AppKitContextProvider
+      <ClientInitializer config={clientConfig}>
+        <AppKitProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
           router={router}
           pads={pads}
           issuesLink='https://github.com/dxos/teamwork/issues/new'
         >
-          <CheckForErrors>
             <HashRouter>
               <Switch>
                 <Route exact path={routes.register} component={Registration} />
@@ -102,16 +87,14 @@ const Root = ({ config, client }) => {
                     {SystemRoutes(router)}
                     <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
                     <Route exact path={routes.app} component={App} />
-
                     <Route exact path="/home" component={Home} />
                     <Redirect to="/home" />
                   </Switch>
                 </RequireWallet>
               </Switch>
             </HashRouter>
-          </CheckForErrors>
-        </AppKitContextProvider>
-      </ClientProvider>
+        </AppKitProvider>
+      </ClientInitializer>
     </Theme>
   );
 };

@@ -2,5 +2,6 @@
 // Copyright 2020 DXOS.org
 //
 
-export const TYPE_TESTING_PAD = 'wrn_dxos_org_teamwork_testing_pad';
-export const TYPE_TESTING_ITEM = 'wrn_dxos_org_teamwork_testing_item';
+export const TESTING_PAD = 'dxos.org/pad/testing';
+export const TESTING_TYPE_ITEMS = 'dxos.org/type/testing/item3';
+export const TESTING_TYPE_ITEM = 'dxos.org/type/testing/item';

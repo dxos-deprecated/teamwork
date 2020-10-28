@@ -7,35 +7,36 @@ import Icon from '@material-ui/icons/Chat';
 import { MessengerModel } from '@dxos/messenger-model';
 import { ObjectModel } from '@dxos/object-model';
 
-import { Channel } from './containers';
-import { TYPE_MESSENGER_CHANNEL, TYPE_MESSENGER_MESSAGE } from './model';
+import { Channel, MessengerSettingsDialog } from './containers';
+import { MESSENGER_PAD, MESSENGER_TYPE_CHANNEL, MESSENGER_TYPE_MESSAGE } from './model';
 
 export * from './model';
 
 export default {
-  // TODO(elmasse): READ THIS FROM PAD.YML
-  name: 'example.com/messenger',
+  name: MESSENGER_PAD,
+  type: MESSENGER_TYPE_CHANNEL,
+  contentType: MESSENGER_TYPE_MESSAGE,
   displayName: 'Messenger',
-
+  description: 'Group messaging',
   icon: Icon,
   main: Channel,
-  type: TYPE_MESSENGER_CHANNEL,
-  contentType: TYPE_MESSENGER_MESSAGE,
-  description: 'Chat with friends',
-  // settings: MessengerSettingsDialog
+  settings: MessengerSettingsDialog,
   register: async (client) => {
-    await client.modelFactory.registerModel(MessengerModel);
+    await client.registerModel(MessengerModel);
   },
   create: async ({ client, party }, { name }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
-      type: TYPE_MESSENGER_CHANNEL,
-      props: { title: name || 'random-name' }
+      type: MESSENGER_TYPE_CHANNEL,
+      props: { title: name || 'untitled' }
     });
+
     await party.database.createItem({
       model: MessengerModel,
+      type: MESSENGER_TYPE_MESSAGE,
       parent: item.id
     });
-    return item.id;
+
+    return item;
   }
 };

@@ -1,0 +1,4 @@
+name: dxos.org/tasks
+displayName: Tasks
+build: yarn dist
+version: 1.0.0
