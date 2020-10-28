@@ -14,11 +14,15 @@ import Send from '@material-ui/icons/Send';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
+import { keyToBuffer } from '@dxos/crypto';
 import { Editor } from '@dxos/editor';
+import { usePads } from '@dxos/react-appkit';
+import { useItems } from '@dxos/react-client';
 
 import Messages from '../components/Messages';
 import Videos from '../components/Videos';
 import { useEphemeralSwarm } from '../ephemeral-swarm';
+import { useSuggestionsMenuHandlers } from '../hooks';
 import { useChannelMessages } from '../model';
 
 const useStyles = makeStyles(theme => ({
@@ -112,7 +116,8 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
   assert(itemId);
 
   const classes = useStyles();
-
+  const [pads] = usePads();
+  const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const [messages, createMessage] = useChannelMessages(topic, itemId);
   const [connections, streams, streamsWithMetaData] = useEphemeralSwarm(itemId);
   const editorClasses = useEditorStyles();
@@ -146,6 +151,13 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
     }
   }
 
+  const createItem = () => console.warn('not implemented;');
+
+  const {
+    handleSuggestionsGetOptions,
+    handleSuggestionsOptionSelect
+  } = useSuggestionsMenuHandlers(topic, pads, items, editor.current, createItem, itemId);
+
   return (
     <div className={clsx(classes.root, { [classes.rootNarrow]: narrow })}>
       <div className={classes.content}>
@@ -154,6 +166,12 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
         </TableContainer>
 
         <Editor
+          suggestions={{
+            getOptions: handleSuggestionsGetOptions,
+            onSelect: handleSuggestionsOptionSelect,
+            maxListHeight: 500,
+            triggerEventKeys: ['#']
+          }}
           onCreated={handleEditorCreated}
           onKeyDown={handleKeyDown}
           classes={editorClasses}
