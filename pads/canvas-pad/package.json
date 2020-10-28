@@ -26,7 +26,7 @@
     "@dxos/async": "^1.0.0-beta.1",
     "@dxos/crypto": "^1.0.0-beta.1",
     "@dxos/debug": "^1.0.0-beta.73",
-    "@dxos/echo-db": "^2.1.1-alpha.0",
+    "@dxos/echo-db": "^2.4.0-beta.0",
     "@dxos/gem-canvas": "^1.0.0-beta.7",
     "@dxos/react-appkit": "^2.6.5-alpha.0",
     "@dxos/react-ux": "^2.6.5-alpha.0",
