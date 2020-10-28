@@ -56,7 +56,7 @@
 - [ ] Leave video chat on Machine B
 - [ ] Reference existing task list in messenger
 - [ ] Reference existing text document in messenger
-- [ ] Reference existing 
+- [ ] Reference existing board in messenger
 
 ### Text editor:
 - [ ] Create text document
@@ -79,7 +79,7 @@
 
 ### Bots:
 - [ ] Invite storage bot to party
-- [ ] Verify that storgage bot works
+- [ ] Verify that storage bot works
 
 ### Parties operations:
 - [ ] Rename party
