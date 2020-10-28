@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    margin: 'auto'
   },
 
   container: {
