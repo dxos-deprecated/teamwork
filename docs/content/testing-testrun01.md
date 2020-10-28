@@ -1,8 +1,20 @@
-### Setup:
+### Instructions:
 * You should be testing using 2 machines with 2 different browsers ( Brave / Chrome / Firefox are initial targets ).
 * If that's no posssible, use two different profiles of Chrome / Brave on a single machine.
 * Reset browser local storage between test runs.
-* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with fist two lines being date and version of Teamwork tested.
+* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with questionaire below filled out.
+
+### Details:
+- [ ] Date: _____
+- [ ] Teamwork version: _____
+- [ ] KUBE: _____
+- [ ] Using: 1 machine / 2 machines
+- [ ] Browser 1: _____
+- [ ] Browser 2: _____
+- [ ] Video recording: _____ / nope
+
+### Setup:
+- [ ] Reset both browsers storage
 
 ### Kube/Console:
 - [ ] Open Your browser and go to https://apollo1.kube.moon.dxos.network/ on both machines 
@@ -37,10 +49,22 @@
 - [ ] Post from Machine A
 - [ ] Post from Machine B
 - [ ] Download chat logs as markdown
+- [ ] Join video chat from Machine A
+- [ ] Join video chat from Machine B
+- [ ] Verify that both video and audio work well on both machines
+- [ ] Leave video chat on Machine A
+- [ ] Leave video chat on Machine B
+- [ ] Reference existing task list in messenger
+- [ ] Reference existing text document in messenger
+- [ ] Reference existing 
+
 ### Text editor:
 - [ ] Create text document
 - [ ] Edit text document from Machine A
 - [ ] Edit text document from Machine B
+- [ ] Verify that presence indicators are moving acurately, without delay
+- [ ] Verify that presence indicators are showing correct usernames 
+- [ ] Verify that presence indicators are showing 
 - [ ] Use text chat inside text document from Machine A
 - [ ] Use text chat inside text document from Machine B
 - [ ] Download text document as markdown
@@ -48,19 +72,24 @@
 - [ ] Add image (IPFS?)
 - [ ] Embedd existing planner board inside text document
 - [ ] Embedd new planner board inside document
+- [ ] Embedd existing task list inside document
 - [ ] Embedd new task list inside document 
-- [ ] Embedd messenger inside document
+- [ ] Embedd existing messenger inside document
+- [ ] Embedd new messenger inside document
 
 ### Bots:
-- [ ] Invite storage bot to party (TODO(Chris): Add longer instructions)
-- [ ] Verify that storgage bot works (TODO(Chris): Add longer instructions)
+- [ ] Invite storage bot to party
+- [ ] Verify that storgage bot works
 
 ### Parties operations:
 - [ ] Rename party
 - [ ] Archive party
+- [ ] Verify that You can see archived parties
 - [ ] Unarchive party
+- [ ] Verify that You can see the unarchived party
 - [ ] Download party to localhost
 - [ ] Restore party form localhost
 - [ ] Rename documents inside party
 - [ ] Save party to IPFS
 - [ ] Load party from IPFS
+- [ ] Reset storage from home screen
