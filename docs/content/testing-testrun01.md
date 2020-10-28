@@ -5,63 +5,62 @@
 * Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with fist two lines being date and version of Teamwork tested.
 
 ### Kube/Console:
-- [x] Open Your browser and go to https://apollo1.kube.moon.dxos.network/ on both machines 
-- [x] Click on Apps on both machines
-- [x] Click on Teamwork@Alpha on both machines
+- [ ] Open Your browser and go to https://apollo1.kube.moon.dxos.network/ on both machines 
+- [ ] Click on Apps on both machines
+- [ ] Click on Teamwork@Alpha on both machines
 
 ### Basic functionality:
-- [x] Create new identity on Machine A
-- [x] Download seed phrase on Machine A
-- [x] Create new party on Machine A
-- [x] Invite Machine B from Machine A
-- [x] Join the party from Machine B
+- [ ] Create new identity on Machine A
+- [ ] Download seed phrase on Machine A
+- [ ] Create new party on Machine A
+- [ ] Invite Machine B from Machine A
+- [ ] Join the party from Machine B
 
 ### Planner:
-- [x] Create planner board from Machine A
-- [x] Verify that board is showing up on Machine B
-- [x] Create new column in planner board on Machine B
-- [x] Rename newly created column on Machine B
-- [x] Verify that two above changes are visible on Machine A
-- [x] Create 3 new items on Machine A
-- [x] Move item 1 to Doing on Machine A
-- [x] Move item 1 to Done on Machine A
-- [x] Verify that 3 above changes are visible on Machine B
-- [x] Move item 2 to Done on Machine B
-- [x] Archive item 1
-- [x] Unarchive item 1
-- [x] Add red tag to item 2
-- [x] Remove red tag from item 2
+- [ ] Create planner board from Machine A
+- [ ] Verify that board is showing up on Machine B
+- [ ] Create new column in planner board on Machine B
+- [ ] Rename newly created column on Machine B
+- [ ] Verify that two above changes are visible on Machine A
+- [ ] Create 3 new items on Machine A
+- [ ] Move item 1 to Doing on Machine A
+- [ ] Move item 1 to Done on Machine A
+- [ ] Verify that 3 above changes are visible on Machine B
+- [ ] Move item 2 to Done on Machine B
+- [ ] Archive item 1
+- [ ] Unarchive item 1
+- [ ] Add red tag to item 2
+- [ ] Remove red tag from item 2
 
 ### Messenger:
-- [x] Create chat room
-- [x] Post from Machine A
-- [x] Post from Machine B
-- [x] Download chat logs as markdown
-
+- [ ] Create chat room
+- [ ] Post from Machine A
+- [ ] Post from Machine B
+- [ ] Download chat logs as markdown
 ### Text editor:
-- [x] Create text document
-- [x] Edit text document from Machine A
-- [x] Edit text document from Machine B
-- [x] Use text chat inside text document from Machine A
-- [x] Use text chat inside text document from Machine B
-- [x] Download text document as markdown
-- [x] Upload text document to IPFS
-- [x] Add image (IPFS?)
-- [x] Embedd existing planner board inside text document
-- [x] Embedd new planner board inside document
-- [x] Embedd new task list inside document 
-- [x] Embedd messenger inside document
+- [ ] Create text document
+- [ ] Edit text document from Machine A
+- [ ] Edit text document from Machine B
+- [ ] Use text chat inside text document from Machine A
+- [ ] Use text chat inside text document from Machine B
+- [ ] Download text document as markdown
+- [ ] Upload text document to IPFS
+- [ ] Add image (IPFS?)
+- [ ] Embedd existing planner board inside text document
+- [ ] Embedd new planner board inside document
+- [ ] Embedd new task list inside document 
+- [ ] Embedd messenger inside document
 
 ### Bots:
 - [ ] Invite storage bot to party (TODO(Chris): Add longer instructions)
 - [ ] Verify that storgage bot works (TODO(Chris): Add longer instructions)
 
 ### Parties operations:
-- [x] Rename party
-- [x] Archive party
-- [x] Unarchive party
+- [ ] Rename party
+- [ ] Archive party
+- [ ] Unarchive party
 - [ ] Download party to localhost
 - [ ] Restore party form localhost
-- [x] Rename documents inside party
+- [ ] Rename documents inside party
 - [ ] Save party to IPFS
 - [ ] Load party from IPFS
