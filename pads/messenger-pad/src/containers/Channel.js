@@ -14,6 +14,7 @@ import Send from '@material-ui/icons/Send';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
 
+import { keyToBuffer } from '@dxos/crypto';
 import { Editor } from '@dxos/editor';
 import { usePads } from '@dxos/react-appkit';
 import { useItems } from '@dxos/react-client';
@@ -23,7 +24,6 @@ import Videos from '../components/Videos';
 import { useEphemeralSwarm } from '../ephemeral-swarm';
 import { useSuggestionsMenuHandlers } from '../hooks';
 import { useChannelMessages } from '../model';
-import { keyToBuffer } from '@dxos/crypto';
 
 const useStyles = makeStyles(theme => ({
   root: {
