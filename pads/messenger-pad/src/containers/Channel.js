@@ -169,7 +169,8 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
           suggestions={{
             getOptions: handleSuggestionsGetOptions,
             onSelect: handleSuggestionsOptionSelect,
-            maxListHeight: 500
+            maxListHeight: 500,
+            triggerEventKeys: ['#']
           }}
           onCreated={handleEditorCreated}
           onKeyDown={handleKeyDown}

@@ -46,7 +46,7 @@ export const useSuggestionsMenuHandlers = (topic, pads, items, editor, createIte
       item = items.find(item => item.id === option.id);
     }
 
-    const title = `@${getItemTitle(item)}`;
+    const title = `#${getItemTitle(item)}`;
     const href = `/app/${topic}/${item.id}`;
 
     const { tr } = prosemirrorView.state;
