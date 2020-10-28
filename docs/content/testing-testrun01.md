@@ -2,6 +2,7 @@
 * You should be testing using 2 machines with 2 different browsers ( Brave / Chrome / Firefox are initial targets ).
 * If that's no posssible, use two different profiles of Chrome / Brave on a single machine.
 * Reset browser local storage between test runs.
+* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with fist two lines being date and version of Teamwork tested.
 
 ### Kube/Console:
 - [ ] Open Your browser and go to https://apollo1.kube.moon.dxos.network/ on both machines 
@@ -31,6 +32,12 @@
 - [ ] Add red tag to item 2
 - [ ] Remove red tag from item 2
 
+### Messenger:
+- [ ] Create chat room
+- [ ] Post from Machine A
+- [ ] Post from Machine B
+- [ ] Download chat logs as markdown
+
 ### Text editor:
 - [ ] Create text document
 - [ ] Edit text document from Machine A
@@ -40,13 +47,10 @@
 - [ ] Download text document as markdown
 - [ ] Upload text document to IPFS
 - [ ] Add image (IPFS?)
-- [ ] Embedd planner board inside text document
-
-### Messenger:
-- [ ] Create chat room
-- [ ] Post from Machine A
-- [ ] Post from Machine B
-- [ ] Download chat logs as markdown
+- [ ] Embedd existing planner board inside text document
+- [ ] Embedd new planner board inside document
+- [ ] Embedd new task list inside document 
+- [ ] Embedd messenger inside document
 
 ### Bots:
 - [ ] Invite storage bot to party (TODO(Chris): Add longer instructions)
