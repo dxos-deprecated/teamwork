@@ -1,5 +1,5 @@
 ### Instructions:
-* You should be testing using 2 machines with 2 different browsers ( Brave / Chrome / Firefox are initial targets ).
+* You should be testing using 2 machines with 2 different browsers (Brave / Chrome / Firefox are initial targets).
 * If that's no posssible, use two different profiles of Chrome / Brave on a single machine.
 * Reset browser local storage between test runs.
 * Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with questionaire below filled out.
