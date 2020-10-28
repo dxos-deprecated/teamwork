@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('subMbp')]: {
       margin: 'auto'
     },
-    maxWidth: 800
+    maxWidth: 800,
+    width: 800
   },
 
   messengerContainer: {
