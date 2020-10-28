@@ -2,10 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
+const getItemTitle = item => item.model ? item.model.getProperty('title') : item.displayName
+
 const queryFilter = query => items => {
   console.log('queryFilter items', items);
   return items.filter(item => {
-    const label = item.model ? item.model.getProperty('title') : item.displayName;
+    const label = getItemTitle(item);
     return label?.toLowerCase()?.includes(query.toLowerCase());
   });
 };
@@ -33,7 +35,8 @@ export const useSuggestionsMenuHandlers = (topic, pads, items, editor, createIte
       createItemOptions = [{ subheader: 'Create items' }, ...createItemOptions];
     }
 
-    return [...insertOptions, ...createItemOptions];
+    return [...insertOptions];
+    // return [...insertOptions, ...createItemOptions]; // Item creation in suggestions not implemented for the new SDK yet
   }
 
   async function handleSuggestionsOptionSelect (option, { prosemirrorView }) {
@@ -44,7 +47,7 @@ export const useSuggestionsMenuHandlers = (topic, pads, items, editor, createIte
       item = items.find(item => item.id === option.id);
     }
 
-    const title = `@${item.displayName}`;
+    const title = `@${getItemTitle(item)}`;
     const href = `/app/${topic}/${item.id}`;
 
     const { tr } = prosemirrorView.state;
