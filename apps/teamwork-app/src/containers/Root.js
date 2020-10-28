@@ -10,7 +10,6 @@ import { ErrorHandler } from '@dxos/debug';
 import EditorPad from '@dxos/editor-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
-// import TestingPad from '@dxos/testing-pad';
 import {
   SET_LAYOUT,
   AppKitProvider,
@@ -21,7 +20,9 @@ import {
   Theme,
   ClientInitializer
 } from '@dxos/react-appkit';
-import TodoPad from '@dxos/todo-pad';
+import TablePad from '@dxos/table-pad';
+import TasksPad from '@dxos/tasks-pad';
+// import TestingPad from '@dxos/testing-pad';
 
 import App from './App';
 import Home from './Home';
@@ -34,12 +35,13 @@ const initialState = {
 };
 
 const pads = [
-  MessengerPad,
-  EditorPad,
-  PlannerPad,
   // CanvasApp,
+  EditorPad,
+  MessengerPad,
+  PlannerPad,
+  TasksPad,
+  TablePad
   // TestingPad,
-  TodoPad
 ];
 
 const Root = ({ clientConfig }) => {
@@ -85,7 +87,6 @@ const Root = ({ clientConfig }) => {
                     {SystemRoutes(router)}
                     <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
                     <Route exact path={routes.app} component={App} />
-
                     <Route exact path="/home" component={Home} />
                     <Redirect to="/home" />
                   </Switch>

@@ -8,17 +8,18 @@ import { keyToBuffer } from '@dxos/crypto';
 import { useItems, useParty } from '@dxos/react-client';
 
 import Tasks from './Tasks';
-import { addTask, TYPE_TODO_PAD } from './model';
+import { TASKS_TYPE_LIST, createTask } from './model';
 
 export const Main = ({ itemId, topic }) => {
-  const [item] = useItems({ partyKey: keyToBuffer(topic), type: TYPE_TODO_PAD, id: itemId });
+  const [item] = useItems({ partyKey: keyToBuffer(topic), type: TASKS_TYPE_LIST, id: itemId });
   const party = useParty(keyToBuffer(topic));
   const items = useItems({ partyKey: party.key, parent: itemId });
-
-  if (!item) return null;
+  if (!item) {
+    return null;
+  }
 
   const handleAdd = async (props) => {
-    await addTask({ party, itemId }, props);
+    await createTask({ party, itemId }, props);
   };
 
   const handleUpdate = async (item, { completed, deleted }) => {

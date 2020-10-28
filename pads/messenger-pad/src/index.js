@@ -8,20 +8,18 @@ import { MessengerModel } from '@dxos/messenger-model';
 import { ObjectModel } from '@dxos/object-model';
 
 import { Channel, MessengerSettingsDialog } from './containers';
-import { TYPE_MESSENGER_CHANNEL, TYPE_MESSENGER_MESSAGE } from './model';
+import { MESSENGER_PAD, MESSENGER_TYPE_CHANNEL, MESSENGER_TYPE_MESSAGE } from './model';
 
 export * from './model';
 
 export default {
-  // TODO(elmasse): READ THIS FROM PAD.YML
-  name: 'example.com/messenger',
+  name: MESSENGER_PAD,
+  type: MESSENGER_TYPE_CHANNEL,
+  contentType: MESSENGER_TYPE_MESSAGE,
   displayName: 'Messenger',
-
+  description: 'Group messaging',
   icon: Icon,
   main: Channel,
-  type: TYPE_MESSENGER_CHANNEL,
-  contentType: TYPE_MESSENGER_MESSAGE,
-  description: 'Chat with friends',
   settings: MessengerSettingsDialog,
   register: async (client) => {
     await client.registerModel(MessengerModel);
@@ -29,14 +27,16 @@ export default {
   create: async ({ client, party }, { name }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
-      type: TYPE_MESSENGER_CHANNEL,
+      type: MESSENGER_TYPE_CHANNEL,
       props: { title: name || 'untitled' }
     });
+
     await party.database.createItem({
       model: MessengerModel,
-      type: TYPE_MESSENGER_MESSAGE,
+      type: MESSENGER_TYPE_MESSAGE,
       parent: item.id
     });
+
     return item;
   }
 };

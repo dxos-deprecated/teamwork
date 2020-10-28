@@ -14,8 +14,16 @@ import { useItems, useParty } from '@dxos/react-client';
 
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
-import { positionCompare, getLastPosition, CARD_TYPE, LIST_TYPE, BOARD_TYPE } from '../model';
-import { defaultLabelNames, PLANNER_LABELS, labelColorLookup } from '../model/labels';
+import {
+  defaultLabelNames,
+  labelColorLookup,
+  positionCompare,
+  getLastPosition,
+  PLANNER_TYPE_CARD,
+  PLANNER_TYPE_LIST,
+  PLANNER_TYPE_BOARD,
+  PLANNER_LABELS
+} from '../model';
 import DraggableLists from './DraggableLists';
 
 const useStyles = makeStyles(theme => {
@@ -23,7 +31,7 @@ const useStyles = makeStyles(theme => {
     containerRoot: {
       overflowY: 'hidden',
       overflowX: 'scroll',
-      height: '100%'
+      height: '100%' // TODO(burdon): flex?
     },
 
     spinner: {
@@ -36,11 +44,11 @@ const useStyles = makeStyles(theme => {
 });
 
 export const Board = ({ topic, embedded, itemId }) => {
-  const [item] = useItems({ partyKey: keyToBuffer(topic), type: BOARD_TYPE, id: itemId });
   const classes = useStyles();
   const party = useParty(keyToBuffer(topic));
-  const lists = useItems({ partyKey: party.key, parent: itemId, type: LIST_TYPE });
-  const cards = useItems({ partyKey: party.key, parent: itemId, type: CARD_TYPE });
+  const [item] = useItems({ partyKey: party.key, type: PLANNER_TYPE_BOARD, id: itemId });
+  const lists = useItems({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST });
+  const cards = useItems({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD });
 
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
@@ -63,11 +71,12 @@ export const Board = ({ topic, embedded, itemId }) => {
   const handleAddList = async () => {
     await party.database.createItem({
       model: ObjectModel,
-      type: LIST_TYPE,
+      type: PLANNER_TYPE_LIST,
       parent: itemId,
       props: { title: 'New List', position: getLastPosition(lists) }
     });
   };
+
   // const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
   const handleUpdateListOrCard = (listId) => async (prop, value) => {
     const listOrCard = lists.find(l => l.id === listId) || cards.find(l => l.id === listId);
@@ -78,7 +87,7 @@ export const Board = ({ topic, embedded, itemId }) => {
     const cardsInList = getCardsForList(listId);
     await party.database.createItem({
       model: ObjectModel,
-      type: CARD_TYPE,
+      type: PLANNER_TYPE_CARD,
       parent: itemId,
       props: { title, position: getLastPosition(cardsInList), listId }
     });
@@ -103,7 +112,9 @@ export const Board = ({ topic, embedded, itemId }) => {
     setIsDragDisabled(false);
   };
 
-  if (!item) return null;
+  if (!item) {
+    return null;
+  }
 
   return (
     <labelsContext.Provider

@@ -7,25 +7,23 @@ import Icon from '@material-ui/icons/CheckBoxOutlined';
 import { ObjectModel } from '@dxos/object-model';
 
 import { Main } from './Main';
-import { TYPE_TODO_PAD, TYPE_TODO_ITEM } from './model';
+import { TASKS_PAD, TASKS_TYPE_LIST, TASKS_TYPE_TASK } from './model';
 
 export * from './model';
 
 export default {
-  name: 'example.com/todo',
-  displayName: 'Todo',
-
+  name: TASKS_PAD,
+  type: TASKS_TYPE_LIST,
+  contentType: TASKS_TYPE_TASK,
+  displayName: 'Tasks',
+  description: 'Task list',
   icon: Icon,
   main: Main,
-  type: TYPE_TODO_PAD,
-  contentType: TYPE_TODO_ITEM,
-  description: 'DXOS simple todo list',
   create: async ({ party }, { name }) => {
-    const item = await party.database.createItem({
+    return await party.database.createItem({
       model: ObjectModel,
-      type: TYPE_TODO_PAD,
+      type: TASKS_TYPE_LIST,
       props: { title: name || 'untitled' }
     });
-    return item;
   }
 };

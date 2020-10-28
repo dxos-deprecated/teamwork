@@ -9,8 +9,9 @@ import { MessengerModel } from '@dxos/messenger-model';
 import { useMembers } from '@dxos/react-appkit';
 import { useItems, useProfile, useClient, useParty } from '@dxos/react-client';
 
-export const TYPE_MESSENGER_CHANNEL = 'wrn_dxos_org_teamwork_messenger_channel';
-export const TYPE_MESSENGER_MESSAGE = 'wrn_dxos_org_teamwork_messenger_message';
+export const MESSENGER_PAD = 'dxos.org/pad/messenger';
+export const MESSENGER_TYPE_CHANNEL = 'dxos.org/type/messenger/channel';
+export const MESSENGER_TYPE_MESSAGE = 'dxos.org/type/messenger/message';
 
 /**
  * Provides channel messages and appender.
@@ -32,9 +33,12 @@ export const useChannelMessages = (topic, channelId) => {
   const member = members.find(member => keyToString(member.publicKey) === profile.publicKey);
   const sender = member?.displayName ?? humanize(profile.publicKey);
 
-  const [messenger] = useItems({ partyKey, parent: channelId, type: TYPE_MESSENGER_MESSAGE });
+  const [messenger] = useItems({ partyKey, parent: channelId, type: MESSENGER_TYPE_MESSAGE });
 
-  if (!messenger) return [[], () => {}];
+  if (!messenger) {
+    return [[], () => {}];
+  }
+
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
       id: createId(),
