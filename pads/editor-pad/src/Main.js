@@ -8,12 +8,11 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import { keyToBuffer } from '@dxos/crypto';
-import { usePads } from '@dxos/react-appkit';
-import { useParty, useItems } from '@dxos/react-client';
-
-import TasksPad from '@dxos/tasks-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
+import { usePads } from '@dxos/react-appkit';
+import { useParty, useItems } from '@dxos/react-client';
+import TasksPad from '@dxos/tasks-pad';
 
 import { Editor } from './components/Editor';
 

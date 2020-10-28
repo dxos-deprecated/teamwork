@@ -13,10 +13,7 @@ import { ObjectModel } from '@dxos/object-model';
 import { useItems, useParty } from '@dxos/react-client';
 
 import { CardDetailsDialog, LabelsDialog } from '../components';
-import DraggableLists from './DraggableLists';
-
 import { labelsContext } from '../hooks';
-
 import {
   defaultLabelNames,
   labelColorLookup,
@@ -27,13 +24,14 @@ import {
   PLANNER_TYPE_BOARD,
   PLANNER_LABELS
 } from '../model';
+import DraggableLists from './DraggableLists';
 
 const useStyles = makeStyles(theme => {
   return {
     containerRoot: {
       overflowY: 'hidden',
       overflowX: 'scroll',
-      height: '100%'            // TODO(burdon): flex?
+      height: '100%' // TODO(burdon): flex?
     },
 
     spinner: {
