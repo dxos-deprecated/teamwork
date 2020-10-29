@@ -58,7 +58,7 @@
 - [ ] Leave video chat on Machine B
 - [ ] Reference existing task list in messenger
 - [ ] Reference existing text document in messenger
-- [ ] Reference existing 
+- [ ] Reference existing planner board in messenger
 
 ### Text editor:
 - [ ] Create text document
