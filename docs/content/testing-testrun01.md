@@ -42,6 +42,8 @@
 - [ ] Archive item 1
 - [ ] Unarchive item 1
 - [ ] Add red tag to item 2
+- [ ] Change red tag name
+- [ ] Verify if name has changed in both: labels and filter list
 - [ ] Remove red tag from item 2
 
 ### Messenger:
