@@ -81,7 +81,7 @@
 
 ### Bots:
 - [ ] Invite storage bot to party
-- [ ] Verify that storgage bot works
+- [ ] Verify that storage bot works
 
 ### Parties operations:
 - [ ] Rename party
