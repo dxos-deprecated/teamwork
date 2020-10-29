@@ -42,6 +42,8 @@
 - [ ] Archive item 1
 - [ ] Unarchive item 1
 - [ ] Add red tag to item 2
+- [ ] Change red tag name
+- [ ] Verify if name has changed in both: labels and filter list
 - [ ] Remove red tag from item 2
 
 ### Messenger:
@@ -56,7 +58,7 @@
 - [ ] Leave video chat on Machine B
 - [ ] Reference existing task list in messenger
 - [ ] Reference existing text document in messenger
-- [ ] Reference existing board in messenger
+- [ ] Reference existing planner board in messenger
 
 ### Text editor:
 - [ ] Create text document

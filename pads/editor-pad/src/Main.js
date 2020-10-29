@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    margin: 'auto'
   },
 
   container: {
@@ -29,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('subMbp')]: {
       margin: 'auto'
     },
-    maxWidth: 800
+    maxWidth: 800,
+    width: 800
   },
 
   messengerContainer: {
