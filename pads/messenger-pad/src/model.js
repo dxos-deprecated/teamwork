@@ -25,8 +25,6 @@ export const useChannelMessages = (topic, channelId) => {
   const profile = useProfile();
   const client = useClient();
 
-  client.registerModel(MessengerModel);
-
   const [messenger] = useItems({ partyKey, parent: channelId, type: MESSENGER_TYPE_MESSAGE });
 
   if (!messenger) {
