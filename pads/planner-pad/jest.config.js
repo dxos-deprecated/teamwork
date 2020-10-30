@@ -4,6 +4,9 @@
 
 module.exports = {
   coverageDirectory: 'coverage',
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx}'
+  ],
   transformIgnorePatterns: [
     'node_modules/(?!(@dxos)/)'
   ]
