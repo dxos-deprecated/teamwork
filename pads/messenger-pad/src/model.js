@@ -5,8 +5,7 @@
 import assert from 'assert';
 
 import { createId, humanize, keyToBuffer } from '@dxos/crypto';
-import { MessengerModel } from '@dxos/messenger-model';
-import { useItems, useProfile, useClient } from '@dxos/react-client';
+import { useItems, useProfile } from '@dxos/react-client';
 
 export const MESSENGER_PAD = 'dxos.org/pad/messenger';
 export const MESSENGER_TYPE_CHANNEL = 'dxos.org/type/messenger/channel';
@@ -23,7 +22,6 @@ export const useChannelMessages = (topic, channelId) => {
   assert(channelId);
   const partyKey = keyToBuffer(topic);
   const profile = useProfile();
-  const client = useClient();
 
   const [messenger] = useItems({ partyKey, parent: channelId, type: MESSENGER_TYPE_MESSAGE });
 
