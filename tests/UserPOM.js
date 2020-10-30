@@ -180,7 +180,7 @@ export class UserPOM extends BrowserPOM {
         await this.page.waitForSelector(moreButtonSelector);
         await this.page.click(moreButtonSelector);
 
-        const redeemPartySelector = '//li[text()=\'Redeem party\']';
+        const redeemPartySelector = '//li[text()=\'Redeem invitation\']';
         await this.page.waitForSelector(redeemPartySelector);
         await this.page.click(redeemPartySelector);
         await this.page.waitForSelector('textarea');
