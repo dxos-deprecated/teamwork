@@ -125,7 +125,7 @@ export class UserPOM extends BrowserPOM {
     async fillPasscode (passcode) {
         await this.page.waitForSelector('input');
         await this.page.fill('input', passcode);
-        const sendButtonSelector = textButtonSelector('Send');
+        const sendButtonSelector = textButtonSelector('Submit');
         await this.page.waitForSelector(sendButtonSelector);
         await this.page.click(sendButtonSelector);
     }
@@ -186,7 +186,7 @@ export class UserPOM extends BrowserPOM {
         await this.page.waitForSelector('textarea');
         await this.page.fill('textarea', sharelink);
 
-        const sendButtonSelector = textButtonSelector('Send');
+        const sendButtonSelector = textButtonSelector('Submit');
         await this.page.waitForSelector(sendButtonSelector);
         await this.page.click(sendButtonSelector);
     }
