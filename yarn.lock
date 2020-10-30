@@ -1389,7 +1389,7 @@
     through2 "^3.0.1"
     wrtc "^0.4.3"
 
-"@dxos/codec-protobuf@^0.2.0":
+"@dxos/codec-protobuf@^0.2.0", "@dxos/codec-protobuf@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-0.2.2.tgz#364a24e83cb70497dbcec0defe42016348fcabd6"
   integrity sha512-DkFkkciaSLbn6jnD8wwfpzyEOhwMHRQHHNJziN+NmfEWbhmvgyUAWsB4cVmvaGfaYWEhOrmloBtBZMMn6XDilw==
@@ -2205,13 +2205,16 @@
     lodash.isplainobject "^4.0.6"
     uuid "^3.3.3"
 
-"@dxos/text-model@1.0.0-beta.28":
-  version "1.0.0-beta.28"
-  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-1.0.0-beta.28.tgz#f56fa9789fef996b48f3634560d02375035b9e97"
-  integrity sha512-wb3j+0d+rBS7FPZesT1/6cukkRTO2nWZ8P8v9DgohiKD/fOSkiwHBPWS1QgMqxSGLl48K+ZQoU8ulC+UOlOAzA==
+"@dxos/text-model@^2.5.1-alpha.0":
+  version "2.5.1-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-2.5.1-alpha.0.tgz#be9278f2c1a8f3c7c162827b122785e40cde47bc"
+  integrity sha512-LqaciF/cRwCBA05ccczTpRXn7XU0EaeJdP5DFo5hWEAjP0gyhlMBNbYnTIHMdHX60AHkyunL8yX4NYde3gIGvA==
   dependencies:
-    "@dxos/model-factory" "^1.0.0-beta.28"
-    yjs "^13.2.0"
+    "@dxos/codec-protobuf" "^0.2.2"
+    "@dxos/echo-db" "^2.5.1-alpha.0"
+    "@dxos/model-factory" "^2.5.1-alpha.0"
+    "@types/node" "^14.0.9"
+    yjs "^13.4.1"
 
 "@dxos/util@^2.1.0", "@dxos/util@^2.1.1":
   version "2.1.1"
@@ -23550,7 +23553,7 @@ yjs@13.3.2:
   dependencies:
     lib0 "^0.2.32"
 
-yjs@^13.2.0, yjs@^13.3.2:
+yjs@^13.3.2, yjs@^13.4.1:
   version "13.4.1"
   resolved "https://registry.yarnpkg.com/yjs/-/yjs-13.4.1.tgz#5ef869eb2e64f028eb013952a5f28412a084dc90"
   integrity sha512-kIh0sprCTzIm2qyr1VsovkvjKzD2GR4WcU/McJpLAEvImCJHA78Q3S6uSLnhZX0i7FQdrLPCRT8DtTPEH73jnw==

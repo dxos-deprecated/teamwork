@@ -32,7 +32,6 @@
     "@dxos/react-appkit": "^2.7.1-alpha.0",
     "@dxos/react-router": "^2.7.1-alpha.0",
     "@dxos/react-ux": "^2.7.1-alpha.0",
-    "@dxos/view-model": "^1.0.0-beta.28",
     "@material-ui/lab": "^4.0.0-alpha.42",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.0",
