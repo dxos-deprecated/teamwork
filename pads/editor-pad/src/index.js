@@ -12,7 +12,6 @@ import { TextModel } from '@dxos/text-model';
 import Main from './Main';
 import { EDITOR_PAD, EDITOR_TYPE_DOCUMENT, EDITOR_TYPE_CONTENT } from './model';
 
-
 export default {
   name: EDITOR_PAD,
   type: EDITOR_TYPE_DOCUMENT,
