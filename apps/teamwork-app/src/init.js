@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 
 import Root from './containers/Root';
 
-export default async function initApp (cfg) {
+export async function initApp (cfg) {
   debug.enable(cfg.get('debug.logging'));
 
   ReactDOM.render(
@@ -17,4 +17,4 @@ export default async function initApp (cfg) {
     />,
     document.getElementById(cfg.get('app.rootElement'))
   );
-};
+}

@@ -14,7 +14,7 @@ import { loadConfig } from './config';
   }
 
   // We have this two-stage init process so that sentry can report errors that happen during module imports.
-  const initApp = require('./init');
+  const { initApp } = require('./init');
   // @ts-ignore
-  initApp();
+  initApp(cfg);
 })();
