@@ -237,7 +237,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     return (
       <div className={classes.padContainer}>
         <Divider className={classes.padDivider} />
-        <Pad title={props.title} icon={icon}>
+        <Pad title={props.title} icon={icon} type={props.type}>
           <PadComponent {...props} embedded={true} />
         </Pad>
         <Divider className={classes.padDivider} />
