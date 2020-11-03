@@ -14,7 +14,8 @@
     "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
     "dist": "rollup -c",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "test:coverage": "jest --rootDir . --coverage --passWithNoTests"
   },
   "peerDependencies": {
     "@dxos/crypto": "^1.0.0-beta.1",
@@ -60,6 +61,9 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@rollup/plugin-commonjs": "^13.0.0",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.0",
+    "@types/jest": "^26.0.15",
     "@types/react": "^16.9.35",
     "@types/react-beautiful-dnd": "^13.0.0",
     "@types/react-dom": "^16.9.8",
@@ -70,6 +74,7 @@
     "babel-plugin-styled-components": "^1.10.7",
     "dotenv-webpack": "^1.7.0",
     "html-webpack-plugin": "^4.3.0",
+    "jest": "^26.6.1",
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
