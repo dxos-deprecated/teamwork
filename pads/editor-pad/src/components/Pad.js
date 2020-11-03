@@ -6,7 +6,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(() => ({
   padContainer: {
     padding: 4,
     borderRadius: 4,
@@ -25,7 +25,7 @@ export const useStyles = makeStyles({
   padInfoIcon: {
     marginRight: 4
   }
-});
+}));
 
 export const Pad = ({ title, icon, reverseScroll, children }) => {
   const classes = useStyles({ reverseScroll });
