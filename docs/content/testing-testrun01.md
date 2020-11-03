@@ -78,10 +78,13 @@
 - [ ] Upload text document to IPFS
 - [ ] Add image (IPFS?)
 - [ ] Embed existing planner board inside text document
+- [ ] Verify that planner board works and isn't too tall
 - [ ] Embed new planner board inside document
 - [ ] Embed existing task list inside document
+- [ ] Verify that task list works and isn't too tall
 - [ ] Embed new task list inside document 
 - [ ] Embed existing messenger inside document
+- [ ] Verify that messenger works and isn't too tall
 - [ ] Embed new messenger inside document
 - [ ] Switch between this text document and the previously created one using sidebar documents list, confirm that switching works
 
