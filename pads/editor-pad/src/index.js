@@ -6,25 +6,22 @@ import Icon from '@material-ui/icons/Description';
 
 import { MessengerModel } from '@dxos/messenger-model';
 import { MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-pad';
-import { createModelAdapter } from '@dxos/model-adapter';
 import { ObjectModel } from '@dxos/object-model';
 import { TextModel } from '@dxos/text-model';
 
 import Main from './Main';
-import { EDITOR_PAD, EDITOR_TYPE_DOCUMENT, EDITOR_TYPE_UPDATE } from './model';
-
-const TextModelAdapter = createModelAdapter(EDITOR_TYPE_UPDATE, TextModel);
+import { EDITOR_PAD, EDITOR_TYPE_DOCUMENT, EDITOR_TYPE_CONTENT } from './model';
 
 export default {
   name: EDITOR_PAD,
   type: EDITOR_TYPE_DOCUMENT,
-  contentType: EDITOR_TYPE_UPDATE,
+  contentType: EDITOR_TYPE_CONTENT,
   displayName: 'Documents',
   description: 'Text documents',
   icon: Icon,
   main: Main,
   register: async (client) => {
-    await client.registerModel(TextModelAdapter);
+    await client.registerModel(TextModel);
   },
   create: async ({ client, party }, { name }) => {
     const item = await party.database.createItem({
@@ -35,8 +32,8 @@ export default {
 
     // Adapter for text-model containing document updates.
     await party.database.createItem({
-      model: TextModelAdapter,
-      type: EDITOR_TYPE_UPDATE,
+      model: TextModel,
+      type: EDITOR_TYPE_CONTENT,
       parent: item.id
     });
 

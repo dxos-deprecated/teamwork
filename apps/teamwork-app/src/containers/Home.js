@@ -65,7 +65,7 @@ const Home = () => {
     setInProgress(true);
 
     try {
-      await client.partyManager.createParty();
+      await client.echo.createParty();
     } catch (err) {
       console.error(err);
       throw new Error('Unable to create a party');
@@ -90,7 +90,7 @@ const Home = () => {
   const handleImport = async (data) => {
     const parsed = JSON.parse(data);
     assert(Array.isArray(parsed));
-    const newParty = await client.partyManager.createParty();
+    const newParty = await client.echo.createParty();
     const newPartyTopic = keyToString(newParty.key);
     const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
     parsed.forEach(msg => newPartyModel.appendMessage(msg));

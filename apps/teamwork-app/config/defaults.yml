@@ -7,6 +7,7 @@ app:
   rootElement: 'root'
 
 devtools: true
+snapshots: true
 
 storagePath: dxos/teamwork-v1
 storageType: persistent
@@ -26,3 +27,6 @@ ipfs:
 
 debug:
     mode: 'development'
+
+sentry:
+  dsn: http://c4520c11e2c14d799a2802f59495ac49@134.122.22.117:9000/2

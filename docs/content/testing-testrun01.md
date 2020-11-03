@@ -1,8 +1,9 @@
 ### Instructions:
 * You should be testing using 2 machines with 2 different browsers (Brave / Chrome / Firefox are initial targets).
-* If that's no posssible, use two different profiles of Chrome / Brave on a single machine.
+* If that's no possible, use two different profiles of Chrome / Brave on a single machine.
 * Reset browser local storage between test runs.
-* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with questionaire below filled out.
+* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with the form below filled out. This issue should
+* Each person on the QA duty should attach at least one screen recording per week.
 
 ### Details:
 - [ ] Date: _____
@@ -27,9 +28,13 @@
 - [ ] Create new party on Machine A
 - [ ] Invite Machine B from Machine A
 - [ ] Join the party from Machine B
+- [ ] Create kanban
+- [ ] Create text document
+- [ ] Create chat room
+- [ ] Create task list
 
 ### Planner:
-- [ ] Create planner board from Machine A
+- [ ] Open planner board from Machine A
 - [ ] Verify that board is showing up on Machine B
 - [ ] Create new column in planner board on Machine B
 - [ ] Rename newly created column on Machine B
@@ -61,10 +66,10 @@
 - [ ] Reference existing planner board in messenger
 
 ### Text editor:
-- [ ] Create text document
+- [ ] Create another text document
 - [ ] Edit text document from Machine A
 - [ ] Edit text document from Machine B
-- [ ] Verify that presence indicators are moving acurately, without delay
+- [ ] Verify that presence indicators are moving accurately, without delay
 - [ ] Verify that presence indicators are showing correct usernames 
 - [ ] Verify that presence indicators are showing 
 - [ ] Use text chat inside text document from Machine A
@@ -72,12 +77,13 @@
 - [ ] Download text document as markdown
 - [ ] Upload text document to IPFS
 - [ ] Add image (IPFS?)
-- [ ] Embedd existing planner board inside text document
-- [ ] Embedd new planner board inside document
-- [ ] Embedd existing task list inside document
-- [ ] Embedd new task list inside document 
-- [ ] Embedd existing messenger inside document
-- [ ] Embedd new messenger inside document
+- [ ] Embed existing planner board inside text document
+- [ ] Embed new planner board inside document
+- [ ] Embed existing task list inside document
+- [ ] Embed new task list inside document 
+- [ ] Embed existing messenger inside document
+- [ ] Embed new messenger inside document
+- [ ] Switch between this text document and the previously created one using sidebar documents list, confirm that switching works
 
 ### Bots:
 - [ ] Invite storage bot to party

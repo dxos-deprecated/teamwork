@@ -65,9 +65,13 @@ const Root = ({ clientConfig }) => {
     }
   };
 
+  const preInit = (client) => {
+    pads.forEach(pad => pad.register?.(client));
+  };
+
   return (
     <Theme base={themeBase}>
-      <ClientInitializer config={clientConfig}>
+      <ClientInitializer config={clientConfig} preInitialize={preInit}>
         <AppKitProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
