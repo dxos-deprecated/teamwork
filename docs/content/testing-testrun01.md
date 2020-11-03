@@ -30,7 +30,7 @@
 - [ ] Join the party from Machine B
 - [ ] Create kanban
 - [ ] Create text document
-- [ ] Create chat
+- [ ] Create chat room
 - [ ] Create task list
 
 ### Planner:
@@ -66,7 +66,7 @@
 - [ ] Reference existing planner board in messenger
 
 ### Text editor:
-- [ ] Create text document
+- [ ] Create another text document
 - [ ] Edit text document from Machine A
 - [ ] Edit text document from Machine B
 - [ ] Verify that presence indicators are moving accurately, without delay
@@ -83,6 +83,7 @@
 - [ ] Embed new task list inside document 
 - [ ] Embed existing messenger inside document
 - [ ] Embed new messenger inside document
+- [ ] Switch between this text document and the previously created one using sidebar documents list, confirm that switching works
 
 ### Bots:
 - [ ] Invite storage bot to party
