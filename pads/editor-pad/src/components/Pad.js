@@ -6,8 +6,6 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import MessengerPad from '@dxos/messenger-pad';
-
 export const useStyles = makeStyles({
   padContainer: {
     padding: 4,
@@ -15,7 +13,7 @@ export const useStyles = makeStyles({
     maxHeight: '400px',
     overflowY: 'scroll',
     display: 'flex',
-    flexDirection: props => props.type === MessengerPad.type ? 'column-reverse' : 'column'
+    flexDirection: props => props.reverseScroll ? 'column-reverse' : 'column'
   },
   padContent: {
     backgroundColor: 'inherit'
@@ -29,8 +27,8 @@ export const useStyles = makeStyles({
   }
 });
 
-export const Pad = ({ title, icon, type, children }) => {
-  const classes = useStyles({ type });
+export const Pad = ({ title, icon, reverseScroll, children }) => {
+  const classes = useStyles({ reverseScroll });
   return (
     <div className={classes.padContainer}>
       <div className={classes.padContent}>{children}</div>

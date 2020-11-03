@@ -237,7 +237,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     return (
       <div className={classes.padContainer}>
         <Divider className={classes.padDivider} />
-        <Pad title={props.title} icon={icon} type={props.type}>
+        <Pad title={props.title} icon={icon} reverseScroll={props.type === MessengerPad.type}>
           <PadComponent {...props} embedded={true} />
         </Pad>
         <Divider className={classes.padDivider} />
