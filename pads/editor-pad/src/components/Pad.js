@@ -9,7 +9,11 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(() => ({
   padContainer: {
     padding: 4,
-    borderRadius: 4
+    borderRadius: 4,
+    maxHeight: '400px',
+    overflowY: 'scroll',
+    display: 'flex',
+    flexDirection: props => props.reverseScroll ? 'column-reverse' : 'column'
   },
   padContent: {
     backgroundColor: 'inherit'
@@ -23,9 +27,8 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Pad = ({ title, icon, children }) => {
-  const classes = useStyles();
-
+export const Pad = ({ title, icon, reverseScroll, children }) => {
+  const classes = useStyles({ reverseScroll });
   return (
     <div className={classes.padContainer}>
       <div className={classes.padContent}>{children}</div>
