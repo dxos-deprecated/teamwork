@@ -190,6 +190,21 @@ export class UserPOM extends BrowserPOM {
         await this.page.waitForSelector(sendButtonSelector);
         await this.page.click(sendButtonSelector);
     }
+
+    async addItemToParty (partyName, itemType, itemName) {
+        const partyIndex = (await this.getPartyNames()).indexOf(partyName);
+        const addItemButtonSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//button[contains(@aria-label, 'add item')]`;
+        await this.page.waitForSelector(addItemButtonSelector);
+        await this.page.click(addItemButtonSelector);
+
+        const listItemSelector = `//*[contains(@class,'MuiPopover-paper')]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemType}']`;
+        await this.page.waitForSelector(listItemSelector);
+        await this.page.click(listItemSelector);
+
+        await this.page.waitForSelector('input');
+        await this.page.fill('input', itemName);
+        await this.page.click(textButtonSelector('Done'));
+    }
 }
 
 const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;

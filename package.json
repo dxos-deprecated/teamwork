@@ -35,7 +35,7 @@
     "coverage": "istanbul-combine -d coverage -p summary -r lcov pads/**/coverage/coverage-final.json",
     "test:coverage": "lerna run test:coverage",
     "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream",
-    "playwright": "mocha --require @babel/register ./tests/test-share-party.test.js"
+    "playwright": "mocha --require @babel/register ./tests/*.test.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

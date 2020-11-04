@@ -5,12 +5,12 @@
 import chai from 'chai';
 import mocha from 'mocha';
 
-import { launchUsers } from './launch-users.js';
+import { launchUsers } from './utils/launch-users.js';
 
 const { expect } = chai;
 const { beforeEach, afterEach, describe, it } = mocha;
 
-describe('Share party', function () {
+describe.skip('Share party', function () {
     this.timeout(1e6);
 
     let userA, userB, partyName;
