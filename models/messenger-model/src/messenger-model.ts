@@ -17,7 +17,7 @@ export class MessengerModel extends Model<Message> {
   private readonly _messages: Message[] = [];
 
   get messages() {
-    return this._messages;
+    return this._messages.sort((msgA, msgB) => parseInt(msgA.timestamp) - parseInt(msgB.timestamp));
   }
 
   async _processMessage (meta: MutationMeta, message: Message) {
