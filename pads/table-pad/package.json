@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@date-io/moment": "^1.3.11",
-    "@dxos/async": "^1.0.0-beta.1",
+    "@dxos/async": "^1.0.0-beta.10",
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "^2.6.1-alpha.0",
     "@dxos/gem-spore": "^1.0.0-beta.25",

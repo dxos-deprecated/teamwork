@@ -19,7 +19,7 @@
   "dependencies": {
     "@babel/runtime": "7.11.2",
     "@date-io/moment": "^1.3.11",
-    "@dxos/async": "^1.0.0-beta.1",
+    "@dxos/async": "^1.0.0-beta.10",
     "@dxos/botkit-client": "^2.2.0-beta.0",
     "@dxos/canvas-pad": "^1.0.1-beta.11",
     "@dxos/config": "^1.0.0-beta.73",
