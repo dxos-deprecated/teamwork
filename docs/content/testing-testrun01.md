@@ -57,6 +57,7 @@
 - [ ] Post from Machine B
 - [ ] Download chat logs as markdown
 - [ ] Join video chat from Machine A
+- [ ] Verify that audio/video selection works 
 - [ ] Join video chat from Machine B
 - [ ] Verify that both video and audio work well on both machines
 - [ ] Leave video chat on Machine A
