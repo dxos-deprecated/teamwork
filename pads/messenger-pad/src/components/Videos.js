@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import SourcesDialog from './SourcesDialog';
 import Video from './Video';
 import VideoControls from './VideoControls';
 import VideoHandler from './VideoHandler';
@@ -87,6 +88,12 @@ const Videos = ({ connections, streamsWithMetaData }) => {
   const [cameraEnabled, setCameraEnabled] = useState(true);
   const [screenShareEnabled, setScreenShareEnabled] = useState(false);
   const [galleryViewEnabled, setGalleryViewEnabled] = useState(false);
+  const [showMediaSource, setShowMediaSource] = useState(false);
+
+  const [mediaSourceAnchorEl, setMediaSourceAnchorEl] = useState(null);
+  const [mediaSources, setMediaSources] = useState([]);
+  const [audioSource, setAudioSource] = useState(null);
+  const [videoSource, setVideoSource] = useState(null);
 
   useEffect(() => {
     setImmediate(async () => {
@@ -102,6 +109,23 @@ const Videos = ({ connections, streamsWithMetaData }) => {
   useEffect(() => {
     videoHandler.setConnections(connections);
   }, [videoHandler, connections]);
+
+  useEffect(() => {
+    if (!audioSource && !videoSource) {
+      return;
+    }
+    videoHandler.stop();
+    setImmediate(async () => {
+      const video = videoSource ? { deviceId: videoSource } : true;
+      const audio = audioSource ? { deviceId: audioSource } : true;
+      const stream = await navigator.mediaDevices.getUserMedia({ video: video, audio: audio });
+      console.log({ video }, { audio }, { stream });
+      const videoTracks = await stream.getVideoTracks();
+      await Promise.all(videoTracks.map(videoTrack => videoTrack.applyConstraints(videoConstraints)));
+      videoHandler.setStream(stream);
+      setStream(stream);
+    });
+  }, [audioSource, videoSource]);
 
   useEffect(() => {
     if (screenShareEnabled) {
@@ -142,6 +166,20 @@ const Videos = ({ connections, streamsWithMetaData }) => {
     });
   }, [stream, cameraEnabled, audioEnabled]);
 
+  useEffect(() => {
+    if (!showMediaSource) {
+      return;
+    }
+    (async () => {
+      setMediaSources(await navigator.mediaDevices.enumerateDevices());
+    })();
+  }, [showMediaSource]);
+
+  const toggleShowMediaSource = (anchorEl) => {
+    setShowMediaSource(showMediaSource => !showMediaSource);
+    setMediaSourceAnchorEl(anchorEl);
+  };
+
   const videoControls = (
     <VideoControls
       audioEnabled={audioEnabled}
@@ -152,6 +190,7 @@ const Videos = ({ connections, streamsWithMetaData }) => {
       onScreenShareEnabledChange={setScreenShareEnabled}
       galleryViewEnabled={galleryViewEnabled}
       onGalleryViewEnabledChange={setGalleryViewEnabled}
+      showMediaSourceDialog={toggleShowMediaSource}
     />
   );
 
@@ -172,6 +211,17 @@ const Videos = ({ connections, streamsWithMetaData }) => {
             />
           ))}
         </div>
+        <SourcesDialog
+          open={showMediaSource}
+          onClose={() => setShowMediaSource(false)}
+          mediaSources={mediaSources}
+          setAudioSource={setAudioSource}
+          setVideoSource={setVideoSource}
+          audioSource={audioSource}
+          videoSource={videoSource}
+          mediaSourceAnchorEl={mediaSourceAnchorEl}
+          horizontalOrigin='center'>
+        </SourcesDialog>
 
         {/* TODO(burdon): Comment? */}
         <div className={classes.bottomOverlay}>{videoControls}</div>
@@ -197,6 +247,20 @@ const Videos = ({ connections, streamsWithMetaData }) => {
           />
         ))}
       </div>
+      <SourcesDialog
+        open={showMediaSource}
+        onClose={() => {
+          setShowMediaSource(false);
+          setMediaSourceAnchorEl(null);
+        }}
+        mediaSources={mediaSources}
+        setAudioSource={setAudioSource}
+        setVideoSource={setVideoSource}
+        audioSource={audioSource}
+        videoSource={videoSource}
+        mediaSourceAnchorEl={mediaSourceAnchorEl}
+        horizontalOrigin='right'>
+      </SourcesDialog>
       {videoControls}
     </div>
   );
