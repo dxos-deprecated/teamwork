@@ -202,8 +202,27 @@ export class UserPOM extends BrowserPOM {
         await this.page.click(listItemSelector);
 
         await this.page.waitForSelector('input');
+        await this.page.click('input');
         await this.page.fill('input', itemName);
         await this.page.click(textButtonSelector('Done'));
+    }
+
+    async enterItemInParty (partyName, itemName) {
+        const partyIndex = (await this.getPartyNames()).indexOf(partyName);
+        const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
+        await this.page.waitForSelector(listItemSelector);
+        await this.page.click(listItemSelector);
+    }
+
+    async sendMessage (message) {
+        await this.page.fill(`[contenteditable='true']`, message);
+        await this.page.keyboard.press('Enter');
+    }
+
+    async isMessageExisting (message) {
+        const messageSelector = `.MuiTableRow-root >> text=${message}`;
+        await this.page.waitForSelector(messageSelector, { timeout: 2 * 1e3 });
+        return (await this.page.$(messageSelector)) !== null;
     }
 }
 

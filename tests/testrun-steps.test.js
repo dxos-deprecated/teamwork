@@ -27,7 +27,13 @@ describe('Testrun steps', function () {
     //   userB && await userB.closeBrowser();
     // });
 
-    it('User A creates new Messenger and both users can get in', async () => {
-      await userA.addItemToParty(partyName, 'Messenger', 'New Chat');
+    it('User A creates new Messenger and both users can get in', async function () {
+      const messengerName = 'New Chat';
+      await userA.addItemToParty(partyName, 'Messenger', messengerName);
+      await userB.enterItemInParty(partyName, messengerName);
+
+      const message = 'This is very secret message';
+      await userA.sendMessage(message);
+      expect(await userB.isMessageExisting(message)).to.be.true;
     });
 });
