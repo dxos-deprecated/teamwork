@@ -93,7 +93,7 @@ const Video = ({ srcObject, metaData, self }) => {
       element.current.srcObject = srcObject;
     }
     element.current.play().catch(console.error);
-  }, [element.current]);
+  }, [element.current, srcObject]);
 
   const onClick = () => {
     if (element?.current?.paused) {
