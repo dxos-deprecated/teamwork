@@ -1430,9 +1430,9 @@
     webpack "^4.10.0"
 
 "@dxos/credentials@^2.0.0":
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/@dxos/credentials/-/credentials-2.1.8.tgz#a03870ea0d11653921633dcf72f4de9a3e0203a2"
-  integrity sha512-X5vMWSWCVPpJs/Rm19hAdqOyuM67x3llWHlpMTFvgbn5oO9VDUn92Ts313CwFrzwYmL2TJRqTVQoG7cD3UBvAQ==
+  version "2.1.10"
+  resolved "https://registry.yarnpkg.com/@dxos/credentials/-/credentials-2.1.10.tgz#8966e12e5e0c73484e29d2a2ec429027a51999c0"
+  integrity sha512-p0z4IbT7FJ9hge34M/xlXEpAU63+SBa6Y97/eGXkFFT2oBIOO4VimOzcnt7nYmqVfANNbdIALkPAF8OnFTS1yw==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.0"
