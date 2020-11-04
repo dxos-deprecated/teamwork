@@ -92,17 +92,35 @@ const Videos = ({ connections, streamsWithMetaData }) => {
 
   const [mediaSourceAnchorEl, setMediaSourceAnchorEl] = useState(null);
   const [mediaSources, setMediaSources] = useState([]);
-  const [audioSource, setAudioSource] = useState(null);
-  const [videoSource, setVideoSource] = useState(null);
+  const [mediaSource, setMediaSource] = useState({ video: null, audio: null });
+
+  const changeAudioSource = (newSource) => {
+    setMediaSource(old => {
+      return { video: old.video, audio: newSource };
+    });
+  };
+
+  const changeVideoSource = (newSource) => {
+    setMediaSource(old => {
+      return { video: newSource, audio: old.audio };
+    });
+  };
 
   useEffect(() => {
-    setImmediate(async () => {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      const videoTracks = await stream.getVideoTracks();
-      await Promise.all(videoTracks.map(videoTrack => videoTrack.applyConstraints(videoConstraints)));
-      videoHandler.setStream(stream);
-      setStream(stream);
-    });
+    (async () => {
+      const audioInputs = (await navigator.mediaDevices.enumerateDevices())
+        .filter(device => device.kind === 'audioinput');
+      const defaultAudio = audioInputs ? audioInputs[0].deviceId : true;
+
+      const videoInputs = (await navigator.mediaDevices.enumerateDevices())
+        .filter(device => device.kind === 'videoinput');
+      const defaultVideo = videoInputs ? videoInputs[0].deviceId : true;
+
+      setMediaSource({ audio: defaultAudio, video: defaultVideo });
+    })();
+  }, []);
+
+  useEffect(() => {
     return () => videoHandler.stop();
   }, [videoHandler]);
 
@@ -111,21 +129,22 @@ const Videos = ({ connections, streamsWithMetaData }) => {
   }, [videoHandler, connections]);
 
   useEffect(() => {
-    if (!audioSource && !videoSource) {
+    const { audio, video } = mediaSource;
+    if (!audio && !video) {
       return;
     }
     videoHandler.stop();
     setImmediate(async () => {
-      const video = videoSource ? { deviceId: videoSource } : true;
-      const audio = audioSource ? { deviceId: audioSource } : true;
-      const stream = await navigator.mediaDevices.getUserMedia({ video: video, audio: audio });
-      console.log({ video }, { audio }, { stream });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { deviceId: video },
+        audio: { deviceId: audio }
+      });
       const videoTracks = await stream.getVideoTracks();
       await Promise.all(videoTracks.map(videoTrack => videoTrack.applyConstraints(videoConstraints)));
       videoHandler.setStream(stream);
       setStream(stream);
     });
-  }, [audioSource, videoSource]);
+  }, [mediaSource]);
 
   useEffect(() => {
     if (screenShareEnabled) {
@@ -215,10 +234,10 @@ const Videos = ({ connections, streamsWithMetaData }) => {
           open={showMediaSource}
           onClose={() => setShowMediaSource(false)}
           mediaSources={mediaSources}
-          setAudioSource={setAudioSource}
-          setVideoSource={setVideoSource}
-          audioSource={audioSource}
-          videoSource={videoSource}
+          setAudioSource={changeAudioSource}
+          setVideoSource={changeVideoSource}
+          audioSource={mediaSource.audio}
+          videoSource={mediaSource.video}
           mediaSourceAnchorEl={mediaSourceAnchorEl}
           horizontalOrigin='center'>
         </SourcesDialog>
@@ -254,10 +273,10 @@ const Videos = ({ connections, streamsWithMetaData }) => {
           setMediaSourceAnchorEl(null);
         }}
         mediaSources={mediaSources}
-        setAudioSource={setAudioSource}
-        setVideoSource={setVideoSource}
-        audioSource={audioSource}
-        videoSource={videoSource}
+        setAudioSource={changeAudioSource}
+        setVideoSource={changeVideoSource}
+        audioSource={mediaSource.audio}
+        videoSource={mediaSource.video}
         mediaSourceAnchorEl={mediaSourceAnchorEl}
         horizontalOrigin='right'>
       </SourcesDialog>

@@ -42,7 +42,8 @@ const SourcesDialog = ({
                 <ListItem
                   key={device.deviceId + device.label}
                   selected={audioSource === device.deviceId}
-                  button={true} onClick={() => setAudioSource(device.deviceId)}>
+                  button={true}
+                  onClick={() => setAudioSource(device.deviceId)}>
                   <ListItemText primary={device.label}></ListItemText>
                 </ListItem>
               ))
@@ -58,7 +59,8 @@ const SourcesDialog = ({
                 <ListItem
                   key={device.deviceId + device.label}
                   selected={videoSource === device.deviceId}
-                  button={true} onClick={() => setVideoSource(device.deviceId)}>
+                  button={true}
+                  onClick={() => setVideoSource(device.deviceId)}>
                   <ListItemText primary={device.label}></ListItemText>
                 </ListItem>
               ))
