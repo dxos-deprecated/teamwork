@@ -23,7 +23,6 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-around',
     padding: 10,
     '& > *': {
-      // margin: '0 20px',
       boxShadow: 'none !important'
     }
   }
