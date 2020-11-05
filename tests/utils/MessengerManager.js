@@ -14,9 +14,9 @@ export class MessengerManager {
     await this.page.keyboard.press('Enter');
   }
 
-  async isMessageExisting (message) {
-      const messageSelector = `.MuiTableRow-root >> text=${message}`;
-      await this.page.waitForSelector(messageSelector, { timeout: 2 * 1e3 });
-      return (await this.page.$(messageSelector)) !== null;
+  async isMessageExisting (messageToFind) {
+    const messageSelector = `.MuiTableRow-root >> text=${messageToFind}`;
+    await this.page.waitForSelector(messageSelector, { timeout: 2 * 1e3 });
+    return !!(await this.page.$(messageSelector));
   }
 }

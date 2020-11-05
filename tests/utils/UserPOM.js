@@ -5,6 +5,7 @@
 import { BrowserPOM } from './BrowserPOM.js';
 import { MessengerManager } from './MessengerManager';
 import { PartyManager } from './PartyManager';
+import { TasksManager } from './TasksManager';
 import { textButtonSelector } from './shared';
 
 export class UserPOM extends BrowserPOM {
@@ -21,6 +22,7 @@ export class UserPOM extends BrowserPOM {
         await this.launchBrowser(_browser, _startUrl);
         this.messengerManager = new MessengerManager(this.page);
         this.partyManager = new PartyManager(this.page);
+        this.tasksManager = new TasksManager(this.page);
     }
 
     async createWallet () {

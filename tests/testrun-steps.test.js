@@ -22,12 +22,12 @@ describe('Perform testrun steps', function () {
         partyName = setup.partyName;
     });
 
-    // after(async function () {
-    //   userA && await userA.closeBrowser();
-    //   userB && await userB.closeBrowser();
-    // });
+    after(async function () {
+      userA && await userA.closeBrowser();
+      userB && await userB.closeBrowser();
+    });
 
-    it('User A creates new Messenger and both users can get in', async function () {
+    it('User A sends message to UserB and UserB can see it', async function () {
       const messengerName = 'New Chat';
       await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
       await userB.partyManager.enterItemInParty(partyName, messengerName);
@@ -38,8 +38,19 @@ describe('Perform testrun steps', function () {
       expect(await userB.messengerManager.isMessageExisting(message)).to.be.true;
     });
 
-    it('Both users go to Home page', async function () {
+    it('Users go to Home page', async function () {
       await userA.goToHomePage();
       await userB.goToHomePage();
+    });
+
+    it('User A adds new task to TaskList and UserB can see it', async function () {
+      const taskListName = 'A Couple of Tasks';
+      await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
+      await userB.partyManager.enterItemInParty(partyName, taskListName);
+
+      const taskName = 'Do the laundry';
+      await userA.tasksManager.addTask(taskName);
+      // eslint-disable-next-line no-unused-expressions
+      expect(await userB.tasksManager.isTaskExisting(taskName)).to.be.true;
     });
 });
