@@ -1,6 +1,6 @@
 {
   "name": "@dxos/tasks-pad",
-  "version": "1.0.1-beta.12",
+  "version": "1.0.1-beta.13",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
