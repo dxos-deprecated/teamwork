@@ -17,17 +17,32 @@ export class TasksManager {
 
   async isTaskExisting (taskToFind) {
     const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
-    await this.page.waitForSelector(tasksSelector, { timeout: 2 * 1e3 });
-    return !!(await this.page.$(tasksSelector));
+    try {
+      await this.page.waitForSelector(tasksSelector, { timeout: 2 * 1e3 });
+      return !!(await this.page.$(tasksSelector));
+    } catch {
+      return false;
+    }
   }
 
   async checkTask (taskName) {
-    const checkboxSelector = `*css=.MuiListItem-root >> text="${taskName}" + .MuiListItemSecondaryAction-root >> input[type="checkbox"]`;
+    const checkboxSelector = `//li[.//*[text()="${taskName}"]]//input[@type="checkbox"]`;
     await this.page.check(checkboxSelector);
   }
 
-  async isTaskChecked (taskName) {
+  async uncheckTask (taskName) {
+    const checkboxSelector = `//li[.//*[text()="${taskName}"]]//input[@type="checkbox"]`;
+    await this.page.uncheck(checkboxSelector);
+  }
 
+  async isTaskChecked (taskName) {
+    const checkedCheckboxSelector = `//li[.//*[text()="${taskName}"]]//span[contains(@class,"Mui-checked")]`;
+    try {
+      await this.page.waitForSelector(checkedCheckboxSelector, { timeout: 2 * 1e3 });
+      return !!(await this.page.$(checkedCheckboxSelector));
+    } catch {
+      return false;
+    }
   }
 
   async deleteTask (taskName) {
