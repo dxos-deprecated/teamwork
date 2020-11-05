@@ -108,8 +108,8 @@ const Videos = ({ connections, streamsWithMetaData }) => {
 
   useEffect(() => {
     (async () => {
-      await navigator.mediaDevices.getUserMedia({ audio: true, video: true }); 
-     
+      await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+
       const audioInputs = (await navigator.mediaDevices.enumerateDevices())
         .filter(device => device.kind === 'audioinput');
       const defaultAudio = audioInputs ? audioInputs[0].deviceId : true;
