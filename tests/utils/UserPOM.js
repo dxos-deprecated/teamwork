@@ -19,26 +19,27 @@ export class UserPOM extends BrowserPOM {
 
     async launch (_browser, _startUrl) {
         await this.launchBrowser(_browser, _startUrl);
-        console.log("Page: ", this.page);
         this.messengerManager = new MessengerManager(this.page);
         this.partyManager = new PartyManager(this.page);
     }
 
     async createWallet () {
         const walletButtonSelector = textButtonSelector('Create Wallet');
-        await this.page.waitForSelector(walletButtonSelector);
         await this.page.click(walletButtonSelector);
 
-        await this.page.waitForSelector('input');
         await this.page.fill('input', this.username);
 
         const nextButtonSelector = textButtonSelector('Next');
         await this.page.click(nextButtonSelector);
-        await this.page.waitForSelector(nextButtonSelector);
         await this.page.click(nextButtonSelector);
 
         const finishButtonSelector = textButtonSelector('Finish');
-        await this.page.waitForSelector(finishButtonSelector);
         await this.page.click(finishButtonSelector);
+    }
+
+    async goToHomePage () {
+        const homeButtonSelector = 'header >> button[aria-label="home"]';
+        await this.page.click(homeButtonSelector);
+        await this.page.waitForSelector(homeButtonSelector, { state: 'detached' });
     }
 }

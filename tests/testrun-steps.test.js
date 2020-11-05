@@ -10,7 +10,7 @@ import { launchUsers } from './utils/launch-users.js';
 const { expect } = chai;
 const { before, after, describe, it } = mocha;
 
-describe('Testrun steps', function () {
+describe('Perform testrun steps', function () {
   this.timeout(1e6);
 
   let userA, userB, partyName;
@@ -34,6 +34,12 @@ describe('Testrun steps', function () {
 
       const message = 'This is very secret message';
       await userA.messengerManager.sendMessage(message);
+      // eslint-disable-next-line no-unused-expressions
       expect(await userB.messengerManager.isMessageExisting(message)).to.be.true;
+    });
+
+    it('Both users go to Home page', async function () {
+      await userA.goToHomePage();
+      await userB.goToHomePage();
     });
 });

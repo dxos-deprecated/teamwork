@@ -15,7 +15,6 @@ export class BrowserPOM {
         this.context = await this.browser.newContext();
         this.page = await this.context.newPage();
         await this.page.goto(_startUrl, { waitUntil: 'load' });
-        console.log('Browser launched');
     }
 
     async closeBrowser () {

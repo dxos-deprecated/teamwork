@@ -10,7 +10,7 @@ export class MessengerManager {
   }
 
   async sendMessage (message) {
-    await this.page.fill(`[contenteditable='true']`, message);
+    await this.page.fill('[contenteditable=\'true\']', message);
     await this.page.keyboard.press('Enter');
   }
 
