@@ -22,7 +22,8 @@ export class TasksManager {
   }
 
   async checkTask (taskName) {
-
+    const checkboxSelector = `*css=.MuiListItem-root >> text="${taskName}" + .MuiListItemSecondaryAction-root >> input[type="checkbox"]`;
+    await this.page.check(checkboxSelector);
   }
 
   async isTaskChecked (taskName) {
