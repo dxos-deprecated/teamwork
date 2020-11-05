@@ -16,18 +16,18 @@ export const launchUsers = async () => {
     const userA = new UserPOM('UserA');
     const userB = new UserPOM('UserB');
 
-    await userA.launchBrowser(browser, startUrl);
+    await userA.launch(browser, startUrl);
     await userA.createWallet();
-    const partyName = await userA.createParty();
-    const shareLink = await userA.inviteUnknownUserToParty(1);
+    const partyName = await userA.partyManager.createParty();
+    const shareLink = await userA.partyManager.inviteUnknownUserToParty(1);
 
-    await userB.launchBrowser(browser, startUrl);
+    await userB.launch(browser, startUrl);
     await userB.createWallet();
-    await userB.redeemParty(shareLink);
-    await userB.fillPasscode(await userA.getPasscode());
+    await userB.partyManager.redeemParty(shareLink);
+    await userB.partyManager.fillPasscode(await userA.partyManager.getPasscode());
 
-    await userB.isUserInParty(partyName, userA.username);
-    await userA.closeSharePartyDialog();
+    await userB.partyManager.isUserInParty(partyName, userA.username);
+    await userA.partyManager.closeSharePartyDialog();
 
     return { userA, userB, partyName };
 };

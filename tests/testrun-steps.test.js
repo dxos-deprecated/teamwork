@@ -29,11 +29,11 @@ describe('Testrun steps', function () {
 
     it('User A creates new Messenger and both users can get in', async function () {
       const messengerName = 'New Chat';
-      await userA.addItemToParty(partyName, 'Messenger', messengerName);
-      await userB.enterItemInParty(partyName, messengerName);
+      await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
+      await userB.partyManager.enterItemInParty(partyName, messengerName);
 
       const message = 'This is very secret message';
-      await userA.sendMessage(message);
-      expect(await userB.isMessageExisting(message)).to.be.true;
+      await userA.messengerManager.sendMessage(message);
+      expect(await userB.messengerManager.isMessageExisting(message)).to.be.true;
     });
 });
