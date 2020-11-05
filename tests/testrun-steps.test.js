@@ -34,7 +34,7 @@ describe('Perform testrun steps', function () {
   //   userB && await userB.closeBrowser();
   // });
 
-  describe.skip('Test Messenger', async function () {
+  describe.skip('Test Messenger', function () {
     it('Test MessengerManager', async function () {
       const { messengerName } = store;
       await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
@@ -58,7 +58,6 @@ describe('Perform testrun steps', function () {
 
       const { taskName } = store;
       await userA.tasksManager.addTask(taskName);
-      // eslint-disable-next-line no-unused-expressions
       expect(await userB.tasksManager.isTaskExisting(taskName)).to.be.equal(true, 'UserB does not see task created by UserA');
 
       await userB.tasksManager.checkTask(taskName);
@@ -67,7 +66,8 @@ describe('Perform testrun steps', function () {
       await userA.tasksManager.uncheckTask(taskName);
       expect(await userB.tasksManager.isTaskChecked(taskName)).to.be.equal(false, 'UserA unchecked box UserB does not see box unchecked');
 
-      // await userB.tasksManager.deleteTask(taskName);
+      await userB.tasksManager.deleteTask(taskName);
+      expect(await userA.tasksManager.isTaskExisting(taskName)).to.be.equal(false, 'UserA still sees task deleted by UserB');
     });
   });
 });
