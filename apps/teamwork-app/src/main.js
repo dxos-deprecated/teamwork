@@ -4,11 +4,12 @@
 
 import { loadConfig } from './config';
 
+const Sentry = require('@sentry/react');
+
 (async () => {
   const cfg = await loadConfig();
 
   if (cfg.get('sentry.dsn')) {
-    const Sentry = require('@sentry/react');
     const sentryDns = cfg.get('sentry.dsn');
     Sentry.init({ dsn: sentryDns, environment: cfg.get('sentry.environment') || process.env.NODE_ENV });
   }
