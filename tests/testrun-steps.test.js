@@ -67,7 +67,7 @@ describe('Perform testrun steps', function () {
       expect(await userB.tasksManager.isTaskChecked(taskName)).to.be.equal(false, 'UserA unchecked box UserB does not see box unchecked');
 
       await userB.tasksManager.deleteTask(taskName);
-      expect(await userA.tasksManager.isTaskExisting(taskName)).to.be.equal(false, 'UserA still sees task deleted by UserB');
+      expect(await userA.tasksManager.isTaskDeleted(taskName)).to.be.equal(true, 'UserA still sees task deleted by UserB');
     });
   });
 });

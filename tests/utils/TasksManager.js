@@ -2,6 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
+import { isSelectorExisting, isSelectorDeleted } from "./shared";
+
 export class TasksManager {
   page = null;
 
@@ -11,18 +13,18 @@ export class TasksManager {
 
   async addTask (taskName) {
     const addTaskButtonSelector = '.MuiListItemText-root + div >> button';
-    this.page.fill('input', taskName);
-    this.page.click(addTaskButtonSelector);
+    await this.page.fill('input', taskName);
+    await this.page.click(addTaskButtonSelector);
   }
 
   async isTaskExisting (taskToFind) {
     const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
-    try {
-      await this.page.waitForSelector(tasksSelector, { timeout: 2 * 1e3 });
-      return !!(await this.page.$(tasksSelector));
-    } catch {
-      return false;
-    }
+    return await isSelectorExisting(this.page, tasksSelector);
+  }
+
+  async isTaskDeleted (taskToFind) {
+    const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
+    return await isSelectorDeleted(this.page, tasksSelector);
   }
 
   async checkTask (taskName) {
@@ -37,12 +39,7 @@ export class TasksManager {
 
   async isTaskChecked (taskName) {
     const checkedCheckboxSelector = `//li[.//*[text()="${taskName}"]]//span[contains(@class,"Mui-checked")]`;
-    try {
-      await this.page.waitForSelector(checkedCheckboxSelector, { timeout: 2 * 1e3 });
-      return !!(await this.page.$(checkedCheckboxSelector));
-    } catch {
-      return false;
-    }
+    return await isSelectorExisting(this.page, checkedCheckboxSelector);
   }
 
   async deleteTask (taskName) {
