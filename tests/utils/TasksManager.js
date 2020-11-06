@@ -17,16 +17,6 @@ export class TasksManager {
     await this.page.click(addTaskButtonSelector);
   }
 
-  async isTaskExisting (taskToFind) {
-    const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
-    return await isSelectorExisting(this.page, tasksSelector);
-  }
-
-  async isTaskDeleted (taskToFind) {
-    const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
-    return await isSelectorDeleted(this.page, tasksSelector);
-  }
-
   async checkTask (taskName) {
     const checkboxSelector = `//li[.//*[text()="${taskName}"]]//input[@type="checkbox"]`;
     await this.page.check(checkboxSelector);
@@ -37,13 +27,28 @@ export class TasksManager {
     await this.page.uncheck(checkboxSelector);
   }
 
+  async deleteTask (taskName) {
+    const deleteButtonSelector = `//li[.//*[text()="${taskName}"]]//button`;
+    await this.page.click(deleteButtonSelector);
+  }
+
+  async isTaskExisting (taskToFind) {
+    const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
+    return await isSelectorExisting(this.page, tasksSelector);
+  }
+
+  async isTaskDeleted (taskToFind) {
+    const tasksSelector = `.MuiListItemText-root >> text=${taskToFind}`;
+    return await isSelectorDeleted(this.page, tasksSelector);
+  }
+
   async isTaskChecked (taskName) {
     const checkedCheckboxSelector = `//li[.//*[text()="${taskName}"]]//span[contains(@class,"Mui-checked")]`;
     return await isSelectorExisting(this.page, checkedCheckboxSelector);
   }
 
-  async deleteTask (taskName) {
-    const deleteButtonSelector = `//li[.//*[text()="${taskName}"]]//button`;
-    await this.page.click(deleteButtonSelector);
+  async isTaskUnchecked (taskName) {
+    const checkedCheckboxSelector = `//li[.//*[text()="${taskName}"]]//span[contains(@class,"Mui-checked")]`;
+    return await isSelectorDeleted(this.page, checkedCheckboxSelector);
   }
 }

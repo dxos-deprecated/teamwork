@@ -2,7 +2,14 @@
 // Copyright 2020 DXOS.org
 //
 
-import { textButtonSelector, waitUntil } from './shared';
+import { isSelectorExisting, isSelectorDeleted, selectors, waitUntil } from './shared';
+
+const {
+    textButtonSelector,
+    partyCardSelector,
+    listItemSelector,
+    moreButtonSelector
+} = selectors;
 
 export class PartyManager {
   page = null;
@@ -128,13 +135,15 @@ export class PartyManager {
     }
     const avatarGroupSelector = '//div[contains(@class,\'MuiAvatarGroup-root\')]';
     const userAvatarSelector = `${avatarGroupSelector}/*[@title='${username}']`;
-    try {
-        await this.page.waitForSelector(userAvatarSelector, { timeout: 1e5 });
-    } catch (error) {
-        console.log('User: ' + username + ' does not exist in party: ' + partyName);
-        return false;
-    }
-    return await this.page.$eval(userAvatarSelector, avatar => !!avatar);
+
+    return isSelectorExisting(userAvatarSelector);
+    // try {
+    //     await this.page.waitForSelector(userAvatarSelector, { timeout: 1e5 });
+    // } catch (error) {
+    //     console.log('User: ' + username + ' does not exist in party: ' + partyName);
+    //     return false;
+    // }
+    // return await this.page.$eval(userAvatarSelector, avatar => !!avatar);
   }
 
   async getPartyNames () {
@@ -161,8 +170,8 @@ export class PartyManager {
   }
 
   async redeemParty (sharelink) {
-    const moreButtonSelector = '//button[contains(@aria-label,\'More\')]';
-    await this.page.click(moreButtonSelector);
+    const headerMoreButtonSelector = '//header//button[contains(@aria-label,\'More\')]';
+    await this.page.click(headerMoreButtonSelector);
 
     const redeemPartySelector = '//li[text()=\'Redeem invitation\']';
     await this.page.click(redeemPartySelector);
@@ -200,6 +209,12 @@ export class PartyManager {
   async isItemExisting (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
     const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
+    return await isSelectorDeleted(listItemSelector);
+  }
 
+  async showArchivedItems (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const more = partyCardSelector(partyIndex) + moreButtonSelector;
+    await this.page.click(more);
   }
 }

@@ -26,4 +26,13 @@ export const isSelectorDeleted = async (page, selector) => {
   }
 };
 
+export const selectors = {
+  textButtonSelector: (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`,
+  moreButtonSelector: '//button[contains(@aria-label,\'More\')]',
+  listItemSelector: (itemName) => `//li[.//*[text()="${itemName}"]]`,
+  partyCardSelector: (partyIndex) => `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]`,
+  checkboxSelector: '//span[contains(@class,"Mui-checked")]',
+  dialogSelector: '//div[@role="dialog"]'
+};
+
 export const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;
