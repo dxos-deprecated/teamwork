@@ -8,7 +8,9 @@ const {
     textButtonSelector,
     partyCardSelector,
     listItemSelector,
-    moreButtonSelector
+    moreButtonSelector,
+    dialogSelector,
+    settingsButtonSelector
 } = selectors;
 
 export class PartyManager {
@@ -106,7 +108,7 @@ export class PartyManager {
 
   async getPasscode () {
     const passcodeSelector = '//span[contains(@class,\'passcode\')]';
-    await this.page.waitForSelector(passcodeSelector);
+    await this.page.waitForSelector(passcodeSelector, { timeout: 60 * 1e3 });
     return await this.page.$eval(passcodeSelector, passcode => passcode.innerHTML);
   }
 
@@ -209,18 +211,21 @@ export class PartyManager {
   async isItemDeleted (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
     const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
-    return await isSelectorDeleted(listItemSelector);
+    return await isSelectorDeleted(this.page, listItemSelector);
   }
 
   async isItemExisting (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
     const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
-    return await isSelectorExisting(listItemSelector);
+    return await isSelectorExisting(this.page, listItemSelector);
   }
 
   async showArchivedItems (partyName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const more = partyCardSelector(partyIndex) + moreButtonSelector;
-    await this.page.click(more);
+    const moreOptionsButtonSelector = partyCardSelector(partyIndex) + settingsButtonSelector;
+    await this.page.click(moreOptionsButtonSelector);
+    const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
+    await this.page.click(showDeletedItemsLabelSelector);
+    await this.page.click(textButtonSelector('Done'));
   }
 }

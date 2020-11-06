@@ -12,7 +12,7 @@ export const isSelectorExisting = async (page, selector) => {
   try {
     await page.waitForSelector(selector, { timeout: 2 * 1e3 });
     return !!(await page.$(selector));
-  } catch {
+  } catch (error) {
     return false;
   }
 };
@@ -21,7 +21,7 @@ export const isSelectorDeleted = async (page, selector) => {
   try {
     await page.waitForSelector(selector, { timeout: 2 * 1e3, state: 'detached' });
     return !(await page.$(selector));
-  } catch {
+  } catch (error) {
     return false;
   }
 };
@@ -29,6 +29,7 @@ export const isSelectorDeleted = async (page, selector) => {
 export const selectors = {
   textButtonSelector: (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`,
   moreButtonSelector: '//button[contains(@aria-label,\'More\')]',
+  settingsButtonSelector: '//button[contains(@aria-label,\'settings\')]',
   listItemSelector: (itemName) => `//li[.//*[text()="${itemName}"]]`,
   partyCardSelector: (partyIndex) => `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]`,
   checkboxSelector: '//span[contains(@class,"Mui-checked")]',

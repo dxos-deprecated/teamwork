@@ -68,7 +68,7 @@ describe('Perform testrun steps', function () {
     });
   });
 
-  describe('Test Messenger', function () {
+  describe.skip('Test Messenger', function () {
     const { messengerName, message } = store;
 
     before(async function () {
@@ -92,12 +92,18 @@ describe('Perform testrun steps', function () {
   // })
 
   describe('Test Party actions', function () {
-    const { partyName, taskListName } = store;
+    const { taskListName } = store;
 
-    it('Test Party actions', async function () {
+    it('Archive item', async function () {
       await userA.partyManager.archiveItemInParty(partyName, taskListName);
-      console.log('Item archived');
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB still sees item deleted by UserA');
     });
+    it('Show archived items', async function () {
+      await userA.partyManager.showArchivedItems(partyName);
+      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserA does not see archived item');
+    });
+    // it('Restore archived items', async function () {
+      
+    // });
   });
 });
