@@ -35,46 +35,69 @@ describe('Perform testrun steps', function () {
   // });
 
   describe('Test TaskList', function () {
-    it('Test TaskList', async function () {
-      const { taskListName, taskName } = store;
-      await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
-      await userB.partyManager.enterItemInParty(partyName, taskListName);
+    const { taskListName, taskName } = store;
 
-      await userA.tasksManager.addTask(taskName);
-      expect(await userB.tasksManager.isTaskExisting(taskName)).to.be.equal(true, 'UserB does not see task created by UserA');
+    before(async function () {
+        await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
+        await userB.partyManager.enterItemInParty(partyName, taskListName);
+    });
 
-      await userB.tasksManager.checkTask(taskName);
-      expect(await userA.tasksManager.isTaskChecked(taskName)).to.be.equal(true, 'UserB checked box and UserA does not see box checked');
-
-      await userA.tasksManager.uncheckTask(taskName);
-      expect(await userB.tasksManager.isTaskChecked(taskName)).to.be.equal(false, 'UserA unchecked box UserB does not see box unchecked');
-
-      await userB.tasksManager.deleteTask(taskName);
-      expect(await userA.tasksManager.isTaskDeleted(taskName)).to.be.equal(true, 'UserA still sees task deleted by UserB');
-
+    after(async function () {
       await userA.goToHomePage();
       await userB.goToHomePage();
+    });
+
+    it('Add task', async function () {
+      await userA.tasksManager.addTask(taskName);
+      expect(await userB.tasksManager.isTaskExisting(taskName)).to.be.equal(true, 'UserB does not see task created by UserA');
+    });
+
+    it('Check task', async function () {
+      await userB.tasksManager.checkTask(taskName);
+      expect(await userA.tasksManager.isTaskChecked(taskName)).to.be.equal(true, 'UserB checked box and UserA does not see box checked');
+    });
+
+    it('Uncheck task', async function () {
+      await userA.tasksManager.uncheckTask(taskName);
+      expect(await userB.tasksManager.isTaskChecked(taskName)).to.be.equal(false, 'UserA unchecked box UserB does not see box unchecked');
+    });
+
+    it('Delete task', async function () {
+      await userB.tasksManager.deleteTask(taskName);
+      expect(await userA.tasksManager.isTaskDeleted(taskName)).to.be.equal(true, 'UserA still sees task deleted by UserB');
     });
   });
 
   describe('Test Messenger', function () {
-    it('Test Messenger', async function () {
-      const { messengerName, message, itemName } = store;
+    const { messengerName, message } = store;
+
+    before(async function () {
       await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
       await userB.partyManager.enterItemInParty(partyName, messengerName);
+    });
 
+    after(async function () {
+      await userA.goToHomePage();
+      await userB.goToHomePage();
+    });
+
+    it('Send message', async function () {
       await userA.messengerManager.sendMessage(message);
-      // eslint-disable-next-line no-unused-expressions
       expect(await userB.messengerManager.isMessageExisting(message)).to.be.equal(true, 'UserB does not see message sent by UserA');
-
-      await userA.messengerManager.referenceItem(itemName);
-
-      // await userA.goToHomePage();
-      // await userB.goToHomePage();
     });
   });
 
   // describe('Test Planner Board', function () {
 
   // })
+
+  describe('Test Party actions', function () {
+    const { partyName, taskListName } = store;
+
+    it('Test Party actions', async function () {
+      await userA.partyManager.archiveItemInParty(partyName, taskListName);
+      console.log('Item archived');
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB still sees item deleted by UserA');
+    });
+  });
 });

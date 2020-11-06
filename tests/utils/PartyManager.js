@@ -206,10 +206,16 @@ export class PartyManager {
     await this.page.click(deleteItemButtonSelector);
   }
 
-  async isItemExisting (partyName, itemName) {
+  async isItemDeleted (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
     const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
     return await isSelectorDeleted(listItemSelector);
+  }
+
+  async isItemExisting (partyName, itemName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
+    return await isSelectorExisting(listItemSelector);
   }
 
   async showArchivedItems (partyName) {
