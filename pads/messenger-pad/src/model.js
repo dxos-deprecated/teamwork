@@ -30,10 +30,8 @@ export const useChannelMessages = (topic, channelId) => {
   }
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
-      id: createId(),
       text,
-      sender: profile.username || humanize(profile.publicKey),
-      timestamp: Date.now().toString()
+      sender: profile.username || humanize(profile.publicKey)
     });
   }];
 };
