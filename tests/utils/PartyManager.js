@@ -2,15 +2,17 @@
 // Copyright 2020 DXOS.org
 //
 
-import { isSelectorExisting, isSelectorDeleted, selectors, waitUntil } from './shared';
+import { isSelectorExisting, isSelectorDeleted, selectors, genericSelectors, waitUntil } from './shared';
 
 const {
+    cardsSelector,
     textButtonSelector,
     partyCardSelector,
     dialogSelector,
-    settingsButtonSelector,
     listItemSelector
 } = selectors;
+
+const { attributeSelector, classSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;
@@ -20,8 +22,7 @@ export class PartyManager {
   }
 
   async createParty () {
-    const cardsSelector = '//div[contains(@class,\'MuiGrid-item\')]';
-    const cardTitlesSelector = '//div[contains(@class,\'MuiGrid-item\')]//h2';
+    const cardsSelector = classSelector('div', 'MuiGrid-item');
     await this.page.waitForSelector(cardsSelector);
     const initialPartyNames = await this.getPartyNames();
 
@@ -29,6 +30,7 @@ export class PartyManager {
     await this.page.waitForSelector(newPartyButtonSelector);
     await this.page.click(newPartyButtonSelector);
 
+    const cardTitlesSelector = cardsSelector + '//h2';
     while (initialPartyNames.length === (await this.page.$$(cardTitlesSelector)).length) {
         await this.page.waitForTimeout(50);
     }
@@ -40,7 +42,7 @@ export class PartyManager {
   }
 
   async clickSharePartyButton (partyIdx) {
-    const shareButtonSelector = `(//div[@name='share'])[${partyIdx}]`;
+    const shareButtonSelector = `(${attributeSelector('div', '@name', 'share')})[${partyIdx}]`;
     await this.page.waitForSelector(shareButtonSelector);
     await this.page.click(shareButtonSelector);
   }
@@ -61,7 +63,7 @@ export class PartyManager {
     await this.subscribeForLink(shareLink);
     await this.page.click(inviteUserButtonSelector);
 
-    const copyButtonSelector = '//button[contains(@title,\'Copy to clipboard\')]';
+    const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
     await this.page.waitForSelector(copyButtonSelector);
     await this.page.click(copyButtonSelector);
 
@@ -72,7 +74,7 @@ export class PartyManager {
 
   async inviteKnownUserToParty (partyName, userName) {
     await this.shareParty(partyName);
-    const addUserButtonSelector = `//*[contains(@class,'MuiDialog-container')]//td[text()='${userName}']/following::*[contains(@class,'MuiIconButton-label')]`;
+    const addUserButtonSelector = classSelector('div', 'MuiDialog-container') + attributeSelector('td', 'text()', userName) + '/following::*[contains(@class,"MuiIconButton-label")]';
     await this.page.waitForSelector(addUserButtonSelector);
 
     const shareLink = { url: null };
@@ -84,8 +86,8 @@ export class PartyManager {
   }
 
   async shareParty (partyName) {
-    const cardsSelector = '//div[contains(@class,\'MuiGrid-item\')]';
-    const cardTitlesSelector = '//div[contains(@class,\'MuiGrid-item\')]//h2';
+    const cardsSelector = classSelector('div', 'MuiGrid-item');
+    const cardTitlesSelector = cardsSelector + '//h2';
     await this.page.waitForSelector(cardsSelector);
     const initialCardNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
 
@@ -106,7 +108,7 @@ export class PartyManager {
   }
 
   async getPasscode () {
-    const passcodeSelector = '//span[contains(@class,\'passcode\')]';
+    const passcodeSelector = classSelector('span', 'passcode');
     await this.page.waitForSelector(passcodeSelector, { timeout: 60 * 1e3 });
     return await this.page.$eval(passcodeSelector, passcode => passcode.innerHTML);
   }
@@ -120,7 +122,7 @@ export class PartyManager {
   }
 
   async isPartyExisting (partyName) {
-    const partyNameSelector = `//*[contains(text(),'${partyName}')]`;
+    const partyNameSelector = attributeSelector('h2', 'text()', partyName);
     try {
         await this.page.waitForSelector(partyNameSelector, { timeout: 1e5 });
     } catch (error) {
@@ -134,21 +136,14 @@ export class PartyManager {
     if (!(await this.isPartyExisting(partyName))) {
         return false;
     }
-    const avatarGroupSelector = '//div[contains(@class,\'MuiAvatarGroup-root\')]';
+    const avatarGroupSelector = classSelector('div', 'MuiAvatarGroup-root');
     const userAvatarSelector = `${avatarGroupSelector}/*[@title='${username}']`;
 
     return isSelectorExisting(userAvatarSelector);
-    // try {
-    //     await this.page.waitForSelector(userAvatarSelector, { timeout: 1e5 });
-    // } catch (error) {
-    //     console.log('User: ' + username + ' does not exist in party: ' + partyName);
-    //     return false;
-    // }
-    // return await this.page.$eval(userAvatarSelector, avatar => !!avatar);
   }
 
   async getPartyNames () {
-    const partyNamesSelector = '//div[contains(@class,\'MuiGrid-item\')]//*[contains(@class,\'MuiCardHeader-content\')]/*';
+    const partyNamesSelector = cardsSelector + classSelector('div', 'MuiCardHeader-content') + '/h2';
     try {
         await this.page.waitForSelector(partyNamesSelector, { timeout: 2 * 1e3 });
     } catch (error) {
@@ -171,10 +166,10 @@ export class PartyManager {
   }
 
   async redeemParty (sharelink) {
-    const headerMoreButtonSelector = '//header//button[contains(@aria-label,\'More\')]';
+    const headerMoreButtonSelector = '//header' + attributeSelector('button', '@aria-label', 'More');
     await this.page.click(headerMoreButtonSelector);
 
-    const redeemPartySelector = '//li[text()=\'Redeem invitation\']';
+    const redeemPartySelector = attributeSelector('li', 'text()', 'Redeem invitation');
     await this.page.click(redeemPartySelector);
     await this.page.fill('textarea', sharelink);
 
@@ -184,11 +179,11 @@ export class PartyManager {
 
   async addItemToParty (partyName, itemType, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const addItemButtonSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//button[contains(@aria-label, 'add item')]`;
+    const addItemButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'add item');
     await this.page.click(addItemButtonSelector);
 
-    const listItemSelector = `//*[contains(@class,'MuiPopover-paper')]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemType}']`;
-    await this.page.click(listItemSelector);
+    const itemSelector = classSelector('div', 'MuiPopover-paper') + listItemSelector(itemType);
+    await this.page.click(itemSelector);
 
     await this.page.click('input');
     await this.page.fill('input', itemName);
@@ -225,8 +220,8 @@ export class PartyManager {
 
   async showArchivedItems (partyName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const moreOptionsButtonSelector = partyCardSelector(partyIndex) + settingsButtonSelector;
-    await this.page.click(moreOptionsButtonSelector);
+    const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    await this.page.click(settingsButtonSelector);
     const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
     await this.page.click(showDeletedItemsLabelSelector);
     await this.page.click(textButtonSelector('Done'));
