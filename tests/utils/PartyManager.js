@@ -7,10 +7,9 @@ import { isSelectorExisting, isSelectorDeleted, selectors, waitUntil } from './s
 const {
     textButtonSelector,
     partyCardSelector,
-    listItemSelector,
-    moreButtonSelector,
     dialogSelector,
-    settingsButtonSelector
+    settingsButtonSelector,
+    listItemSelector
 } = selectors;
 
 export class PartyManager {
@@ -198,26 +197,30 @@ export class PartyManager {
 
   async enterItemInParty (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
-    await this.page.click(listItemSelector);
+    const itemSelector = partyCardSelector(partyIndex) + listItemSelector(itemName);
+    await this.page.click(itemSelector);
   }
 
   async archiveItemInParty (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const deleteItemButtonSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//li[.//*[text()="${itemName}"]]//button`;
+    const deleteItemButtonSelector = partyCardSelector(partyIndex) + listItemSelector(itemName) + '//button';
     await this.page.click(deleteItemButtonSelector);
+  }
+
+  async restoreItemInParty (partyName, itemName) {
+    this.archiveItemInParty(partyName, itemName);
   }
 
   async isItemDeleted (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
-    return await isSelectorDeleted(this.page, listItemSelector);
+    const itemSelector = partyCardSelector(partyIndex) + listItemSelector(itemName);
+    return await isSelectorDeleted(this.page, itemSelector);
   }
 
   async isItemExisting (partyName, itemName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const listItemSelector = `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]//*[contains(@class, 'MuiListItem-button')]//*[text()='${itemName}']`;
-    return await isSelectorExisting(this.page, listItemSelector);
+    const itemSelector = partyCardSelector(partyIndex) + listItemSelector(itemName);
+    return await isSelectorExisting(this.page, itemSelector);
   }
 
   async showArchivedItems (partyName) {

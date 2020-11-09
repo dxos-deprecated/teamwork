@@ -100,10 +100,11 @@ describe('Perform testrun steps', function () {
     });
     it('Show archived items', async function () {
       await userA.partyManager.showArchivedItems(partyName);
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB sees deleted item');
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserA does not see archived item');
     });
     // it('Restore archived items', async function () {
-      
+    //   await userA.partyManager.res
     // });
   });
 });

@@ -26,14 +26,19 @@ export const isSelectorDeleted = async (page, selector) => {
   }
 };
 
+export const genericSelectors = {
+  elementByClassSelector: (element, className) => `//${element}[contains(@class,"${className}")]`,
+  elementByAttributeSelector: (element, attributeName, attributeValue) => `//${element}[${attributeName}="${attributeValue}"]`
+};
+
 export const selectors = {
   textButtonSelector: (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`,
-  moreButtonSelector: '//button[contains(@aria-label,\'More\')]',
-  settingsButtonSelector: '//button[contains(@aria-label,\'settings\')]',
+  moreButtonSelector: genericSelectors.elementByAttributeSelector('button', '@aria-label', 'More'),
+  settingsButtonSelector: genericSelectors.elementByAttributeSelector('button', '@aria-label', 'settings'),
   listItemSelector: (itemName) => `//li[.//*[text()="${itemName}"]]`,
   partyCardSelector: (partyIndex) => `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]`,
-  checkboxSelector: '//span[contains(@class,"Mui-checked")]',
-  dialogSelector: '//div[@role="dialog"]'
+  checkboxSelector: genericSelectors.elementByClassSelector('span', 'Mui-checked'),
+  dialogSelector: genericSelectors.elementByAttributeSelector('div', '@role', 'dialog')
 };
 
 export const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;
