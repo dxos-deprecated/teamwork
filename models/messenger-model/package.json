@@ -3,6 +3,11 @@
   "version": "1.0.1-beta.15",
   "main": "dist/src/index.js",
   "license": "MIT",
+  "files": [
+    "src",
+    "dist",
+    "src/proto/gen"
+  ],
   "scripts": {
     "build": "yarn build:protobuf && tsc --build",
     "build:protobuf": "mkdir -p src/proto/gen && build-protobuf src/proto/defs/messenger.proto -o src/proto/gen"
