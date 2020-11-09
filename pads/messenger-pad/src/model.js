@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { createId, humanize, keyToBuffer } from '@dxos/crypto';
+import { humanize, keyToBuffer } from '@dxos/crypto';
 import { useItems, useProfile } from '@dxos/react-client';
 
 export const MESSENGER_PAD = 'dxos.org/pad/messenger';
