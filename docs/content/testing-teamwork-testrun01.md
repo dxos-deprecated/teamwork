@@ -26,6 +26,7 @@
 - [ ] Create new identity on Machine A
 - [ ] Download seed phrase on Machine A
 - [ ] Create new party on Machine A
+- [ ] Create new identity on Machine B
 - [ ] Invite Machine B from Machine A
 - [ ] Join the party from Machine B
 - [ ] Create another party from Machine A and verify Machine B is stated as 'connected'
