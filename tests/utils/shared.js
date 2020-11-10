@@ -28,7 +28,9 @@ export const isSelectorDeleted = async (page, selector) => {
 
 export const genericSelectors = {
   classSelector: (element, className) => `//${element}[contains(@class,"${className}")]`,
-  attributeSelector: (element, attributeName, attributeValue) => `//${element}[${attributeName}="${attributeValue}"]`
+  parentClassSelector: (element, className) => `parent::${element}[contains(@class,"${className}")]`,
+  attributeSelector: (element, attributeName, attributeValue) => `//${element}[${attributeName}="${attributeValue}"]`,
+  containingSelector: (element, content) => `//${element}[.${content}]`
 };
 
 export const selectors = {

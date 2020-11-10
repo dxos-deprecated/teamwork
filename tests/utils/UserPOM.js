@@ -6,12 +6,14 @@ import { BrowserPOM } from './BrowserPOM.js';
 import { MessengerManager } from './MessengerManager';
 import { PartyManager } from './PartyManager';
 import { TasksManager } from './TasksManager';
-import { textButtonSelector } from './shared';
+import { BoardManager } from './BoardManager';
+import { textButtonSelector, waitUntil } from './shared';
 
 export class UserPOM extends BrowserPOM {
     username = '';
     messengerManager = null;
     partyManager = null;
+    boardManager = null;
 
     constructor (_username) {
         super();
@@ -23,6 +25,7 @@ export class UserPOM extends BrowserPOM {
         this.messengerManager = new MessengerManager(this.page);
         this.partyManager = new PartyManager(this.page);
         this.tasksManager = new TasksManager(this.page);
+        this.boardManager = new BoardManager(this.page);
     }
 
     async createWallet () {
@@ -43,5 +46,9 @@ export class UserPOM extends BrowserPOM {
         const homeButtonSelector = 'header >> button[aria-label="home"]';
         await this.page.click(homeButtonSelector);
         await this.page.waitForSelector(homeButtonSelector, { state: 'detached' });
+    }
+
+    async waitUntil (predicate) {
+        await waitUntil(this.page, predicate);
     }
 }

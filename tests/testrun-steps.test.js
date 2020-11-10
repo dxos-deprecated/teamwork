@@ -16,10 +16,21 @@ describe('Perform testrun steps', function () {
   let userA, userB, partyName;
 
   const store = {
-    messengerName: 'New Chat',
-    message: 'This is very secret message',
-    taskListName: 'A Couple of Tasks',
-    taskName: 'Do the laundry'
+    messenger: {
+      messengerName: 'New Chat',
+      message: 'This is very secret message',
+    },
+    taskList: {
+      taskListName: 'A Couple of Tasks',
+      taskName: 'Do the laundry'
+    },
+    board: {
+      boardName: 'Planner',
+      newColumnName: 'Immediate',
+      cardA: 'Content of card A',
+      cardB: 'Content of card B',
+      cardC: 'Content of card C'
+    }
   };
 
   before(async function () {
@@ -29,13 +40,13 @@ describe('Perform testrun steps', function () {
       partyName = setup.partyName;
   });
 
-  // after(async function () {
-  //   userA && await userA.closeBrowser();
-  //   userB && await userB.closeBrowser();
-  // });
+  after(async function () {
+    userA && await userA.closeBrowser();
+    userB && await userB.closeBrowser();
+  });
 
   describe('Test TaskList', function () {
-    const { taskListName, taskName } = store;
+    const { taskListName, taskName } = store.taskList;
 
     before(async function () {
         await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
@@ -68,8 +79,8 @@ describe('Perform testrun steps', function () {
     });
   });
 
-  describe.skip('Test Messenger', function () {
-    const { messengerName, message } = store;
+  describe('Test Messenger', function () {
+    const { messengerName, message } = store.messenger;
 
     before(async function () {
       await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
@@ -87,24 +98,53 @@ describe('Perform testrun steps', function () {
     });
   });
 
-  // describe('Test Planner Board', function () {
+  describe('Test Planner Board', function () {
+    const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
 
-  // })
+    before(async function () {
+      await userA.partyManager.addItemToParty(partyName, 'Board', boardName);
+      await userB.partyManager.enterItemInParty(partyName, boardName);
+    });
+
+    after(async function () {
+      await userA.goToHomePage();
+      await userB.goToHomePage();
+    });
+
+    it('Add new column', async function () {
+      const initialColumnsNumber = (await userB.boardManager.getColumnsNames()).length;
+      await userA.boardManager.addNewColumn();
+      await userB.waitUntil(async () => {
+        const columnNumber = (await userB.boardManager.getColumnsNames()).length;
+        return columnNumber > initialColumnsNumber;
+      });
+      expect((await userB.boardManager.getColumnsNames()).length).to.be.equal(initialColumnsNumber + 1);
+    });
+
+    it('Rename column', async function () {
+      await userA.boardManager.renameColumn('New List', newColumnName);
+      expect(await userB.boardManager.isColumnExisting(newColumnName)).to.be.equal(true);
+    });
+  });
 
   describe('Test Party actions', function () {
-    const { taskListName } = store;
+    const { taskListName } = store.taskList;
 
     it('Archive item', async function () {
       await userA.partyManager.archiveItemInParty(partyName, taskListName);
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB still sees item deleted by UserA');
     });
+
     it('Show archived items', async function () {
       await userA.partyManager.showArchivedItems(partyName);
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB sees deleted item');
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserA does not see archived item');
     });
-    // it('Restore archived items', async function () {
-    //   await userA.partyManager.res
-    // });
+
+    it('Restore archived items', async function () {
+      await userA.partyManager.restoreItemInParty(partyName, taskListName);
+      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserA does not see restored item');
+      expect(await userB.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserB does not see restored item');
+    });
   });
 });

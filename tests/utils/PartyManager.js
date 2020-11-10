@@ -122,14 +122,8 @@ export class PartyManager {
   }
 
   async isPartyExisting (partyName) {
-    const partyNameSelector = attributeSelector('h2', 'text()', partyName);
-    try {
-        await this.page.waitForSelector(partyNameSelector, { timeout: 1e5 });
-    } catch (error) {
-        console.log('Party: ' + partyName + ' does not exist');
-        return false;
-    }
-    return true;
+    const partyNameSelector = cardsSelector + classSelector('div', 'MuiCardHeader-content') + attributeSelector('h2', 'text()', partyName);
+    return await isSelectorExisting(partyNameSelector);
   }
 
   async isUserInParty (partyName, username) {
@@ -144,20 +138,16 @@ export class PartyManager {
 
   async getPartyNames () {
     const partyNamesSelector = cardsSelector + classSelector('div', 'MuiCardHeader-content') + '/h2';
-    try {
-        await this.page.waitForSelector(partyNamesSelector, { timeout: 2 * 1e3 });
-    } catch (error) {
-        console.log(`${this.username} did not select any party name tag`);
-        return [];
+    if (!isSelectorExisting(partyNamesSelector)) {
+      return [];
     }
     try {
-        const partyNames = await this.page.$$eval(partyNamesSelector, partyNamesTags => {
+        return await this.page.$$eval(partyNamesSelector, partyNamesTags => {
             return partyNamesTags.map(tag => tag.innerHTML);
         });
-        return partyNames;
     } catch (error) {
         console.log(`${this.username} did not select any party name`);
-        return null;
+        return [];
     }
   }
 
