@@ -15,7 +15,7 @@ export const useDataChannel = (channelId) => {
   const [data, setData] = useState();
   const client = useClient();
 
-  const { signal, ice } = client._swarmConfig;
+  const { signal, ice } = client.config.swarm;
 
   useEffect(() => {
     const swarm = discoverySwarmWebRTC({
