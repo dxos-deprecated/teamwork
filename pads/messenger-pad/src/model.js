@@ -5,11 +5,8 @@
 import assert from 'assert';
 
 import { humanize, keyToBuffer } from '@dxos/crypto';
+import { MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-model';
 import { useItems, useProfile } from '@dxos/react-client';
-
-export const MESSENGER_PAD = 'dxos.org/pad/messenger';
-export const MESSENGER_TYPE_CHANNEL = 'dxos.org/type/messenger/channel';
-export const MESSENGER_TYPE_MESSAGE = 'dxos.org/type/messenger/message';
 
 /**
  * Provides channel messages and appender.
