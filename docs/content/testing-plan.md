@@ -1,11 +1,11 @@
 ### Instructions:
-* You should be testing using 2 machines with 2 different browsers (Brave / Chrome / Firefox are initial targets).
+* Test using 2 machines with 2 different browsers (Brave / Chrome / Firefox are initial targets).
 * If that's no possible, use two different profiles of Chrome / Brave on a single machine.
 * Reset browser local storage between test runs.
-* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with the form below filled out. This issue should
+* Each daily run should be a comment in the testing tracking issue with the form below filled out.
 * Each person on the QA duty should attach at least one screen recording per week.
 
-### Details:
+### Status:
 - [ ] Date: _____
 - [ ] Teamwork version: _____
 - [ ] KUBE: _____
@@ -18,9 +18,9 @@
 - [ ] Reset both browsers storage
 
 ### Kube/Console:
-- [ ] Open Your browser and go to https://apollo1.kube.moon.dxos.network/ on both machines 
+- [ ] Open https://apollo1.kube.moon.dxos.network on both machines 
 - [ ] Click on Apps on both machines
-- [ ] Click on Teamwork@Alpha on both machines
+- [ ] Click on `teamwork@alpha` on both machines
 
 ### Basic functionality:
 - [ ] Create new identity on Machine A
