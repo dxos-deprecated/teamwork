@@ -40,12 +40,12 @@ describe('Perform testrun steps', function () {
       partyName = setup.partyName;
   });
 
-  after(async function () {
-    userA && await userA.closeBrowser();
-    userB && await userB.closeBrowser();
-  });
+  // after(async function () {
+  //   userA && await userA.closeBrowser();
+  //   userB && await userB.closeBrowser();
+  // });
 
-  describe('Test TaskList', function () {
+  describe.skip('Test TaskList', function () {
     const { taskListName, taskName } = store.taskList;
 
     before(async function () {
@@ -79,7 +79,7 @@ describe('Perform testrun steps', function () {
     });
   });
 
-  describe('Test Messenger', function () {
+  describe.skip('Test Messenger', function () {
     const { messengerName, message } = store.messenger;
 
     before(async function () {
@@ -106,10 +106,10 @@ describe('Perform testrun steps', function () {
       await userB.partyManager.enterItemInParty(partyName, boardName);
     });
 
-    after(async function () {
-      await userA.goToHomePage();
-      await userB.goToHomePage();
-    });
+    // after(async function () {
+    //   await userA.goToHomePage();
+    //   await userB.goToHomePage();
+    // });
 
     it('Add new column', async function () {
       const initialColumnsNumber = (await userB.boardManager.getColumnsNames()).length;
@@ -125,9 +125,47 @@ describe('Perform testrun steps', function () {
       await userA.boardManager.renameColumn('New List', newColumnName);
       expect(await userB.boardManager.isColumnExisting(newColumnName)).to.be.equal(true);
     });
+
+    it('Add items in column', async function () {
+      const firstColumnName = (await userA.boardManager.getColumnsNames())[0];
+      await userA.boardManager.addItemInColumn(cardA, firstColumnName);
+      await userA.boardManager.addItemInColumn(cardB, firstColumnName);
+      await userA.boardManager.addItemInColumn(cardC, firstColumnName);
+      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isCardExisting(cardB, firstColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isCardExisting(cardC, firstColumnName)).to.be.equal(true);
+    });
+
+    it('Drag item between columns', async function () {
+
+    });
+
+    it('Archive item in column', async function () {
+
+    });
+
+    it('Show archived item in column', async function () {
+
+    });
+
+    it('Restore archived item in column', async function () {
+
+    });
+
+    it('Add label to item in column', async function () {
+
+    });
+
+    it('Change label name', async function () {
+
+    });
+
+    it('Remove item\'s label in column', async function () {
+
+    });
   });
 
-  describe('Test Party actions', function () {
+  describe.skip('Test Party actions', function () {
     const { taskListName } = store.taskList;
 
     it('Archive item', async function () {

@@ -14,6 +14,10 @@ export class BoardManager {
     this.page = _page;
   }
 
+  async _isSelectorExisting (selector) {
+    return await isSelectorExisting(this.page, selector);
+  }
+
   async addNewColumn () {
     const newColumnButtonSelector = '//div[./h5[text()="New List"]]/button';
     await this.page.click(newColumnButtonSelector);
@@ -52,5 +56,28 @@ export class BoardManager {
 
   async getColumnIndex (columnName) {
     return (await this.getColumnsNames()).indexOf(columnName);
+  }
+
+  async addItemInColumn (itemName, columnName) {
+    const columnIndex = await this.getColumnIndex(columnName);
+    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const addItemButtonSelector =
+      columnSelector +
+      containingSelector('button', attributeSelector('span', 'text()', 'Add another card'));
+    await this.page.click(addItemButtonSelector);
+    const newItemSelector = columnSelector + classSelector('div', 'MuiPaper-root');
+    await this.page.fill(newItemSelector + '//input', itemName);
+    const submitButtonSelector =
+      newItemSelector +
+      containingSelector('button', attributeSelector('span', 'text()', 'Add'));
+    await this.page.click(submitButtonSelector);
+  }
+
+  async isCardExisting (cardName, columnName) {
+    const columnIndex = await this.getColumnIndex(columnName);
+    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const cardNameSelector = columnSelector + classSelector('div', 'MuiPaper-root') + attributeSelector('p', 'text()', cardName);
+    console.log({ cardNameSelector });
+    return await this._isSelectorExisting(cardNameSelector);
   }
 }
