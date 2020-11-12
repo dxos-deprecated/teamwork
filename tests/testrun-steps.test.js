@@ -18,7 +18,7 @@ describe('Perform testrun steps', function () {
   const store = {
     messenger: {
       messengerName: 'New Chat',
-      message: 'This is very secret message',
+      message: 'This is very secret message'
     },
     taskList: {
       taskListName: 'A Couple of Tasks',
@@ -29,7 +29,9 @@ describe('Perform testrun steps', function () {
       newColumnName: 'Immediate',
       cardA: 'Content of card A',
       cardB: 'Content of card B',
-      cardC: 'Content of card C'
+      cardC: 'Content of card C',
+      labelName: 'red',
+      firstColumnName: undefined
     }
   };
 
@@ -100,6 +102,7 @@ describe('Perform testrun steps', function () {
 
   describe('Test Planner Board', function () {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
+    let { firstColumnName } = store.board;
 
     before(async function () {
       await userA.partyManager.addItemToParty(partyName, 'Board', boardName);
@@ -127,10 +130,10 @@ describe('Perform testrun steps', function () {
     });
 
     it('Add items in column', async function () {
-      const firstColumnName = (await userA.boardManager.getColumnsNames())[0];
-      await userA.boardManager.addItemInColumn(cardA, firstColumnName);
-      await userA.boardManager.addItemInColumn(cardB, firstColumnName);
-      await userA.boardManager.addItemInColumn(cardC, firstColumnName);
+      firstColumnName = (await userA.boardManager.getColumnsNames())[0];
+      await userA.boardManager.addCardInColumn(cardA, firstColumnName);
+      await userA.boardManager.addCardInColumn(cardB, firstColumnName);
+      await userA.boardManager.addCardInColumn(cardC, firstColumnName);
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
       expect(await userB.boardManager.isCardExisting(cardB, firstColumnName)).to.be.equal(true);
       expect(await userB.boardManager.isCardExisting(cardC, firstColumnName)).to.be.equal(true);
@@ -141,15 +144,20 @@ describe('Perform testrun steps', function () {
     });
 
     it('Archive item in column', async function () {
-
+      await userA.boardManager.archiveCard(cardA, firstColumnName);
+      expect(await userA.boardManager.isCardDeleted(cardA, firstColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isCardDeleted(cardA, firstColumnName)).to.be.equal(true);
     });
 
     it('Show archived item in column', async function () {
-
+      await userB.boardManager.showArchivedCards(firstColumnName);
+      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
     });
 
     it('Restore archived item in column', async function () {
-
+      await userB.boardManager.restoreCard(cardA, firstColumnName);
+      expect(await userA.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
     });
 
     it('Add label to item in column', async function () {

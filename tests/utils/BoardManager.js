@@ -2,9 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
-import { genericSelectors, isSelectorExisting } from './shared';
+import { genericSelectors, isSelectorDeleted, isSelectorExisting, selectors } from './shared';
 
 const { classSelector, attributeSelector, containingSelector, parentClassSelector } = genericSelectors;
+const { dialogSelector, textButtonSelector, listItemSelector } = selectors;
 
 export class BoardManager {
   page = null;
@@ -16,6 +17,10 @@ export class BoardManager {
 
   async _isSelectorExisting (selector) {
     return await isSelectorExisting(this.page, selector);
+  }
+
+  async _isSelectorDeleted (selector) {
+    return await isSelectorDeleted(this.page, selector);
   }
 
   async addNewColumn () {
@@ -58,26 +63,76 @@ export class BoardManager {
     return (await this.getColumnsNames()).indexOf(columnName);
   }
 
-  async addItemInColumn (itemName, columnName) {
+  async addCardInColumn (itemName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
     const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
-    const addItemButtonSelector =
+    const addCardButtonSelector =
       columnSelector +
       containingSelector('button', attributeSelector('span', 'text()', 'Add another card'));
-    await this.page.click(addItemButtonSelector);
-    const newItemSelector = columnSelector + classSelector('div', 'MuiPaper-root');
-    await this.page.fill(newItemSelector + '//input', itemName);
+    await this.page.click(addCardButtonSelector);
+    const newCardSelector = columnSelector + classSelector('div', 'MuiPaper-root');
+    await this.page.fill(newCardSelector + '//input', itemName);
     const submitButtonSelector =
-      newItemSelector +
+      newCardSelector +
       containingSelector('button', attributeSelector('span', 'text()', 'Add'));
     await this.page.click(submitButtonSelector);
+  }
+
+  async archiveCard (cardName, columnName) {
+    const columnIndex = await this.getColumnIndex(columnName);
+    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
+    await this.page.click(cardSelector);
+    const archiveButtonSelector = dialogSelector + textButtonSelector('Archive');
+    await this.page.click(archiveButtonSelector);
+  }
+
+  async restoreCard (cardName, columnName) {
+    const columnIndex = await this.getColumnIndex(columnName);
+    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
+    await this.page.click(cardSelector);
+    const restoreButtonSelector = dialogSelector + textButtonSelector('Restore');
+    await this.page.click(restoreButtonSelector);
+  }
+
+  async showArchivedCards (columnName) {
+    const columnIndex = await this.getColumnIndex(columnName);
+    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const settingsButtonSelector = columnSelector + attributeSelector('button', '@aria-label', 'settings');
+    await this.page.click(settingsButtonSelector);
+    const itemSelector = classSelector('div', 'MuiPopover-paper') + listItemSelector('Show archived');
+    await this.page.click(itemSelector);
   }
 
   async isCardExisting (cardName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
     const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
     const cardNameSelector = columnSelector + classSelector('div', 'MuiPaper-root') + attributeSelector('p', 'text()', cardName);
-    console.log({ cardNameSelector });
     return await this._isSelectorExisting(cardNameSelector);
   }
+
+  async isCardDeleted (cardName, columnName) {
+    const columnIndex = await this.getColumnIndex(columnName);
+    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const cardNameSelector = columnSelector + classSelector('div', 'MuiPaper-root') + attributeSelector('p', 'text()', cardName);
+    return await this._isSelectorDeleted(cardNameSelector);
+  }
+
+  // async addLabelToCard (labelName, cardName, columnName) {
+  //   const columnIndex = await this.getColumnIndex(columnName);
+  //   const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+  //   const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
+  //   await this.page.click(cardSelector);
+  //   const labelButtonSelector = dialogSelector + `//button[contains(.//span, "${labelName}")]`;
+  //   await this.page.click(labelButtonSelector);
+  // }
+
+  // async isCardHavingLabel (labelName, cardName, columnName) {
+  //   const columnIndex = await this.getColumnIndex(columnName);
+  //   const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+  //   const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
+  //   await this.page.click(cardSelector);
+
+  // }
 }
