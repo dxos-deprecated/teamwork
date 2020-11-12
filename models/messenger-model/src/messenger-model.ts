@@ -21,12 +21,17 @@ export class MessengerModel extends Model<Message> {
   }
 
   async _processMessage (meta: MutationMeta, message: Message) {
-    this._messages.push(message)
+    this._messages.push(message);
+    this._messages.sort((msgA, msgB) => parseInt(msgA.timestamp) - parseInt(msgB.timestamp));
     return true;
   }
 
-  async sendMessage(message: Message) {
-    const receipt = await this.write(message);
+  async sendMessage(message: Pick<Message, 'text' | 'sender'>) {
+    const receipt = await this.write({
+      text: message.text,
+      timestamp: Date.now().toString(),
+      sender: message.sender
+    });
     await receipt.waitToBeProcessed();
   }
 }

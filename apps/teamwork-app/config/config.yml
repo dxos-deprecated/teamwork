@@ -10,3 +10,6 @@ storageType: persistent
 wns:
   server: "https://wns1.kube.moon.dxos.network/api"
   chainId: "devnet-2"
+sentry:
+  dsn: https://296be949e8ea4f69800a4031847f205b@sentry.kube.dxos.network/2
+  environment: development

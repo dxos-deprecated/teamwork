@@ -11,6 +11,7 @@ import FullscreenExitIcon from '@material-ui/icons/FullscreenExit';
 import MicIcon from '@material-ui/icons/Mic';
 import MicOffIcon from '@material-ui/icons/MicOff';
 import ScreenShareIcon from '@material-ui/icons/ScreenShare';
+import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponent';
 import StopScreenShareIcon from '@material-ui/icons/StopScreenShare';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
@@ -19,10 +20,9 @@ const useStyles = makeStyles(() => ({
   controls: {
     backgroundColor: '#fff',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     padding: 10,
     '& > *': {
-      margin: '0 20px',
       boxShadow: 'none !important'
     }
   }
@@ -36,7 +36,8 @@ const VideoControls = ({
   screenShareEnabled,
   onScreenShareEnabledChange,
   galleryViewEnabled,
-  onGalleryViewEnabledChange
+  onGalleryViewEnabledChange,
+  showMediaSourceDialog
 }) => {
   const classes = useStyles();
 
@@ -65,6 +66,12 @@ const VideoControls = ({
         onClick={() => onGalleryViewEnabledChange(!galleryViewEnabled)}
       >
         {galleryViewEnabled ? <FullscreenExitIcon /> : <FullscreenIcon />}
+      </Fab>
+      <Fab
+        color='default'
+        onClick={(event) => showMediaSourceDialog(event.target)}
+      >
+        <SettingsInputComponentIcon />
       </Fab>
     </div>
   );

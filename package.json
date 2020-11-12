@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/dxos/teamwork.git"
   },
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "author": "DXOS.org",
   "workspaces": {
     "packages": [
@@ -32,6 +32,8 @@
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn npm codeload.github.com --validate-https",
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
+    "coverage": "istanbul-combine -d coverage -p summary -r lcov pads/**/coverage/coverage-final.json",
+    "test:coverage": "lerna run test:coverage",
     "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream",
     "playwright": "mocha --require @babel/register ./tests/test-share-party.test.js"
   },
@@ -58,6 +60,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "istanbul-combine": "^0.3.0",
     "lerna": "^3.19.0",
     "lockfile-lint": "^4.3.7",
     "mocha": "^8.1.3",
