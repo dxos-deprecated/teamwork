@@ -1,6 +1,6 @@
 {
   "name": "@dxos/table-pad",
-  "version": "1.0.1-beta.18",
+  "version": "1.0.1-beta.19",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
