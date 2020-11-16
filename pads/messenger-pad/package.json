@@ -1,6 +1,6 @@
 {
   "name": "@dxos/messenger-pad",
-  "version": "1.2.0-beta.2",
+  "version": "1.2.0-alpha.4",
   "main": "dist/index.js",
   "private": false,
   "scripts": {
@@ -15,7 +15,7 @@
     "@dxos/debug": "^1.0.0-beta.73",
     "@dxos/echo-db": "^2.6.3-alpha.0",
     "@dxos/editor": "^1.0.0-beta.33",
-    "@dxos/messenger-model": "^1.2.0-beta.2",
+    "@dxos/messenger-model": "^1.2.0-alpha.4",
     "@dxos/model-adapter": "^2.6.3-alpha.0",
     "@dxos/react-appkit": "^2.7.5-alpha.0",
     "@dxos/react-router": "^2.7.5-alpha.0",
