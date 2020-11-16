@@ -1,5 +1,11 @@
-name: Teamwork
-version: 0.0.3
+name: teamwork
 build: yarn dist
+version: 1.0.1-beta.18
+author: DXOS.org
+license: GPL-3.0
+description: DXOS Teamwork
+keywords: []
+repository: 'https://github.com/dxos/teamwork'
 package:
-  /: QmVTZaYs3AHBsqH9uWEBnPE6U98Edsi753AQZ8i6Noi2uG
+  /: QmdK6UxTPz3r11j4ADWzAPfgQZzCvFs9SUVM7mwxmpiDp9
+repositoryVersion: v1.0.1-beta.18-5-gf9c69a1ac3c92232ae6b1830ea2a94bfbac5f99a-dirty

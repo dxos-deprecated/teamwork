@@ -1,6 +1,6 @@
-name: Build and test
+name: CI
 
-on: [pull_request]
+on: [push]
 
 jobs:
   build_test:
@@ -16,16 +16,10 @@ jobs:
           yarn install --frozen-lockfile
           yarn build
           yarn lint
-          yarn test
-          yarn dist --scope '@dxos/teamwork'
-      - name: Test coverage
-        run: |
+          yarn lint:lockfile
+          yarn lint:version
           yarn test:coverage
-          yarn coverage
-      - uses: romeovs/lcov-reporter-action@v0.2.16
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: ./coverage/lcov.info
+          yarn dist --scope '@dxos/teamwork'
       - name: Playwright tests
         run: |
           yarn start & 

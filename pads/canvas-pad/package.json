@@ -20,8 +20,7 @@
     "dist": "rollup -c",
     "clean": "rm -rf ./dist",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "test:coverage": "jest --rootDir . --coverage --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests"
   },
   "dependencies": {
     "@dxos/async": "^1.0.0-beta.10",
@@ -32,7 +31,7 @@
     "@dxos/react-appkit": "^2.7.5-alpha.0",
     "@dxos/react-ux": "^2.7.5-alpha.0",
     "clsx": "^1.1.0",
-    "debug": "^4.1.1",
+    "debug": "^4.2.0",
     "react": "^16.13.1",
     "react-hotkeys": "^2.0.0"
   },
@@ -44,18 +43,18 @@
     "react": "*"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-export-default-from": "^7.10.1",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.10.1",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
+    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@dxos/app-cli": "^1.0.0-beta.50",
     "@rollup/plugin-babel": "^5.0.3",
-    "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/react": "^5.3.18",
+    "@storybook/addon-knobs": "^6.0.21",
+    "@storybook/react": "^6.0.21",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/jest": "^26.0.15",
