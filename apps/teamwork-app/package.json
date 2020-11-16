@@ -2,6 +2,7 @@
   "name": "@dxos/teamwork",
   "version": "1.0.1-beta.18",
   "description": "DXOS Teamwork",
+  "repository": "https://github.com/dxos/teamwork",
   "keywords": [],
   "license": "GPL-3.0",
   "author": "DXOS.org",
