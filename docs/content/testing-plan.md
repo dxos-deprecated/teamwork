@@ -1,11 +1,17 @@
 ### Instructions:
-* You should be testing using 2 machines with 2 different browsers (Brave / Chrome / Firefox are initial targets).
-* If that's no possible, use two different profiles of Chrome / Brave on a single machine.
+* Open a new issue and use the format of 'Manual test run' + app + version in the title.
+* Use the label of 'QA' for the new issue.
+* Update https://github.com/dxos/gravity/blob/main/docs/content/qa/index.md with a link to the new issue.
+* If any bugs are found, open new issues if they don't already exist. Add links into the test issue. Add a comment on the issue of the format "Feature: Name of feature : BROKEN"
+* Update https://github.com/dxos/gravity/blob/main/docs/content/qa/index.md with a list of broken features with links to the issues.
+* When a manual test is added to automation via playwright, remove it from the template.
+* Test using 2 machines with 2 different browsers (Brave / Chrome / Firefox are initial targets).
+* If that's not possible, use two different profiles of Chrome / Brave on a single machine.
 * Reset browser local storage between test runs.
-* Each daily run should be a separate issue in Github https://github.com/dxos/teamwork/issues with the form below filled out. This issue should
+* Each daily run should be a comment in the testing tracking issue with the form below filled out.
 * Each person on the QA duty should attach at least one screen recording per week.
 
-### Details:
+### Status:
 - [ ] Date: _____
 - [ ] Teamwork version: _____
 - [ ] KUBE: _____
@@ -18,16 +24,19 @@
 - [ ] Reset both browsers storage
 
 ### Kube/Console:
-- [ ] Open Your browser and go to https://apollo1.kube.moon.dxos.network/ on both machines 
+- [ ] Open https://apollo1.kube.moon.dxos.network on both machines 
 - [ ] Click on Apps on both machines
-- [ ] Click on Teamwork@Alpha on both machines
+- [ ] Click on `teamwork@alpha` on both machines
 
 ### Basic functionality:
 - [ ] Create new identity on Machine A
 - [ ] Download seed phrase on Machine A
 - [ ] Create new party on Machine A
+- [ ] Create new identity on Machine B
 - [ ] Invite Machine B from Machine A
 - [ ] Join the party from Machine B
+- [ ] Create another party from Machine A and verify Machine B is stated as 'connected'
+- [ ] Redeem invitation from Machine B checking Offline
 - [ ] Create kanban
 - [ ] Create text document
 - [ ] Create chat room
@@ -57,6 +66,7 @@
 - [ ] Post from Machine B
 - [ ] Download chat logs as markdown
 - [ ] Join video chat from Machine A
+- [ ] Verify that audio/video selection works 
 - [ ] Join video chat from Machine B
 - [ ] Verify that both video and audio work well on both machines
 - [ ] Leave video chat on Machine A

@@ -4,11 +4,10 @@
 
 import Icon from '@material-ui/icons/Chat';
 
-import { MessengerModel } from '@dxos/messenger-model';
+import { MessengerModel, MESSENGER_PAD, MESSENGER_TYPE_CHANNEL, MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-model';
 import { ObjectModel } from '@dxos/object-model';
 
 import { Channel, MessengerSettingsDialog } from './containers';
-import { MESSENGER_PAD, MESSENGER_TYPE_CHANNEL, MESSENGER_TYPE_MESSAGE } from './model';
 
 export * from './model';
 

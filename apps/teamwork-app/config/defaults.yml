@@ -26,7 +26,9 @@ ipfs:
   gateway: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/"
 
 debug:
-    mode: 'development'
+  mode: 'development'
+  logging: '*:warn,*:error'
 
 sentry:
-  dsn: http://c4520c11e2c14d799a2802f59495ac49@134.122.22.117:9000/2
+  dsn: https://296be949e8ea4f69800a4031847f205b@sentry.kube.dxos.network/2
+  environment: production

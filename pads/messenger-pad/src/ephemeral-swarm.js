@@ -26,7 +26,7 @@ export const useEphemeralSwarm = (channelId) => {
   const channelDiscoveryKey = discoveryKey(keyToBuffer(`${channelId}-video`));
 
   useEffect(() => {
-    const { signal, ice } = client._swarmConfig;
+    const { signal, ice } = client.config.swarm;
     const swarm = discoverySwarmWebRTC({
       bootstrap: [signal],
       simplePeer: {

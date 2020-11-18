@@ -18,7 +18,7 @@ module.exports = {
 
   entry: './src/main.js',
 
-  devtool: 'eval-source-map',
+  devtool: isDevelopment ? 'eval-source-map' : false,
 
   mode: isDevelopment ? 'development' : 'production',
 
@@ -46,6 +46,7 @@ module.exports = {
 
   optimization: {
     runtimeChunk: 'single',
+    minimize: false,
     splitChunks: {
       chunks: 'all',
       maxInitialRequests: Infinity,

@@ -1,0 +1,9 @@
+{
+  "reporter": [
+    "text",
+    "text-summary"
+  ],
+  "lines": 30,
+  "branches": "20",
+  "statements": "30"
+}

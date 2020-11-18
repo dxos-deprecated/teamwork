@@ -26,8 +26,12 @@ export class MessengerModel extends Model<Message> {
     return true;
   }
 
-  async sendMessage(message: Message) {
-    const receipt = await this.write(message);
+  async sendMessage(message: Pick<Message, 'text' | 'sender'>) {
+    const receipt = await this.write({
+      text: message.text,
+      timestamp: Date.now().toString(),
+      sender: message.sender
+    });
     await receipt.waitToBeProcessed();
   }
 }

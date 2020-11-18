@@ -4,12 +4,9 @@
 
 import assert from 'assert';
 
-import { createId, humanize, keyToBuffer } from '@dxos/crypto';
+import { humanize, keyToBuffer } from '@dxos/crypto';
+import { MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-model';
 import { useItems, useProfile } from '@dxos/react-client';
-
-export const MESSENGER_PAD = 'dxos.org/pad/messenger';
-export const MESSENGER_TYPE_CHANNEL = 'dxos.org/type/messenger/channel';
-export const MESSENGER_TYPE_MESSAGE = 'dxos.org/type/messenger/message';
 
 /**
  * Provides channel messages and appender.
@@ -30,10 +27,8 @@ export const useChannelMessages = (topic, channelId) => {
   }
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
-      id: createId(),
       text,
-      sender: profile.username || humanize(profile.publicKey),
-      timestamp: Date.now().toString()
+      sender: profile.username || humanize(profile.publicKey)
     });
   }];
 };
