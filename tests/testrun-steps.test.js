@@ -42,10 +42,10 @@ describe('Perform testrun steps', function () {
       partyName = setup.partyName;
   });
 
-  // after(async function () {
-  //   userA && await userA.closeBrowser();
-  //   userB && await userB.closeBrowser();
-  // });
+  after(async function () {
+    userA && await userA.closeBrowser();
+    userB && await userB.closeBrowser();
+  });
 
   describe('Test TaskList', function () {
     const { taskListName, taskName } = store.taskList;
