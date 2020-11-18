@@ -2,10 +2,10 @@
 // Copyright 2019 DXOS.org
 //
 
-const path = require('path');
-const VersionFile = require('webpack-version-file-plugin');
-const webpack = require('webpack');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const VersionFile = require('webpack-version-file-plugin');
 
 const { ConfigPlugin } = require('@dxos/config/ConfigPlugin');
 
