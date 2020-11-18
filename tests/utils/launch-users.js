@@ -10,7 +10,7 @@ const browser = firefox;
 const startUrl = 'localhost:8080';
 
 /**
- * Launch browser and create wallet for 2 users. One of them creates a party and  generates a sharelink, the other one uses it to join the party.
+ * Launch browser and create wallet for 2 users. One of them creates a party and generates a sharelink, the other one uses it to join the party.
  */
 export const launchUsers = async () => {
     const userA = new User('UserA');
