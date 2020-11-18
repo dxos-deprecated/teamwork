@@ -1,4 +1,4 @@
-yarn start & 
+yarn start --quiet & 
 set +e
 i=0
 until curl "http://localhost:8080" | grep -q "Teamwork"
