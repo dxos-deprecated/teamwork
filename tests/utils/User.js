@@ -11,7 +11,7 @@ import { selectors, waitUntil } from './util';
 const { textButtonSelector } = selectors;
 
 const headless = !!process.env.CI;
-const slowMo = process.env.CI ? 0 : 200;
+const slowMo = 200;
 
 export class User {
     browser = null
