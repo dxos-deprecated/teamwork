@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { isSelectorExisting, isSelectorDeleted } from "./util";
+import { isSelectorExisting, isSelectorDeleted } from './util';
 
 export class TasksManager {
   page = null;
