@@ -35,7 +35,8 @@
     "test": "lerna run test --stream",
     "test:coverage": "c8 --check-coverage yarn test",
     "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream",
-    "playwright": "mocha --bail --require @babel/register ./tests/*.test.js"
+    "test:playwright": "mocha --bail --require @babel/register ./tests/*.test.js",
+    "playwright": "./scripts/start-and-wait.sh && yarn test:playwright"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",

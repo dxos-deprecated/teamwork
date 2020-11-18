@@ -3,6 +3,10 @@ name: CI
 on: [push]
 
 jobs:
+  strategy:
+    matrix:
+      a: [1, 2, 3, 4, 5]
+      b: [1, 2, 3, 4, 5]
   build_test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -22,17 +26,4 @@ jobs:
           yarn dist --scope '@dxos/teamwork'
       - name: Playwright tests
         run: |
-          yarn start & 
-          set +e
-          i=0
-          until curl "http://localhost:8080" | grep -q "Teamwork"
-          do
-            ((i++))
-            if [ "$i" -gt 30 ]
-            then
-              exit -1
-            fi
-            echo "Sleeping..."
-            sleep 3
-          done
           yarn playwright
