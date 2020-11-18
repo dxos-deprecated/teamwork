@@ -2,14 +2,14 @@
 // Copyright 2020 DXOS.org
 //
 
-import { genericSelectors, isSelectorDeleted, isSelectorExisting, selectors } from './shared';
+import { genericSelectors, isSelectorDeleted, isSelectorExisting, selectors } from './util';
 
 const { classSelector, attributeSelector, containingSelector, parentClassSelector } = genericSelectors;
 const { dialogSelector, textButtonSelector, listItemSelector } = selectors;
+const columnsSelector = `//div[@data-rbd-draggable-context-id and ${parentClassSelector('div', 'root')}]`;
 
 export class BoardManager {
   page = null;
-  columnsSelector = `//div[@data-rbd-draggable-context-id and ${parentClassSelector('div', 'root')}]`;
 
   constructor (_page) {
     this.page = _page;
@@ -30,7 +30,7 @@ export class BoardManager {
 
   async renameColumn (currentName, newName) {
     const columnIndex = await this.getColumnIndex(currentName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const inputSelector = columnSelector + '//input';
     await this.page.click(inputSelector);
     await this.page.fill(inputSelector, '');
@@ -39,7 +39,7 @@ export class BoardManager {
   }
 
   async getColumnsNames () {
-    const inputsSelector = this.columnsSelector + '//input';
+    const inputsSelector = columnsSelector + '//input';
     if (!isSelectorExisting(inputsSelector)) {
       return [];
     }
@@ -54,7 +54,7 @@ export class BoardManager {
   }
 
   async isColumnExisting (columnName) {
-    const columnNameSelector = this.columnsSelector + attributeSelector('input', '@value', columnName);
+    const columnNameSelector = columnsSelector + attributeSelector('input', '@value', columnName);
     const isExisting = await isSelectorExisting(this.page, columnNameSelector);
     return isExisting;
   }
@@ -65,7 +65,7 @@ export class BoardManager {
 
   async addCardInColumn (itemName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const addCardButtonSelector =
       columnSelector +
       containingSelector('button', attributeSelector('span', 'text()', 'Add another card'));
@@ -80,7 +80,7 @@ export class BoardManager {
 
   async archiveCard (cardName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
     await this.page.click(cardSelector);
     const archiveButtonSelector = dialogSelector + textButtonSelector('Archive');
@@ -89,7 +89,7 @@ export class BoardManager {
 
   async restoreCard (cardName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
     await this.page.click(cardSelector);
     const restoreButtonSelector = dialogSelector + textButtonSelector('Restore');
@@ -98,7 +98,7 @@ export class BoardManager {
 
   async showArchivedCards (columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const settingsButtonSelector = columnSelector + attributeSelector('button', '@aria-label', 'settings');
     await this.page.click(settingsButtonSelector);
     const itemSelector = classSelector('div', 'MuiPopover-paper') + listItemSelector('Show archived');
@@ -107,32 +107,15 @@ export class BoardManager {
 
   async isCardExisting (cardName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const cardNameSelector = columnSelector + classSelector('div', 'MuiPaper-root') + attributeSelector('p', 'text()', cardName);
     return await this._isSelectorExisting(cardNameSelector);
   }
 
   async isCardDeleted (cardName, columnName) {
     const columnIndex = await this.getColumnIndex(columnName);
-    const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
+    const columnSelector = `${columnsSelector}[${columnIndex + 1}]`;
     const cardNameSelector = columnSelector + classSelector('div', 'MuiPaper-root') + attributeSelector('p', 'text()', cardName);
     return await this._isSelectorDeleted(cardNameSelector);
   }
-
-  // async addLabelToCard (labelName, cardName, columnName) {
-  //   const columnIndex = await this.getColumnIndex(columnName);
-  //   const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
-  //   const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
-  //   await this.page.click(cardSelector);
-  //   const labelButtonSelector = dialogSelector + `//button[contains(.//span, "${labelName}")]`;
-  //   await this.page.click(labelButtonSelector);
-  // }
-
-  // async isCardHavingLabel (labelName, cardName, columnName) {
-  //   const columnIndex = await this.getColumnIndex(columnName);
-  //   const columnSelector = `${this.columnsSelector}[${columnIndex + 1}]`;
-  //   const cardSelector = columnSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
-  //   await this.page.click(cardSelector);
-
-  // }
 }

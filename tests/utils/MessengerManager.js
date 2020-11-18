@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { isSelectorExisting } from './shared';
+import { isSelectorExisting } from './util';
 
 export class MessengerManager {
   page = null;

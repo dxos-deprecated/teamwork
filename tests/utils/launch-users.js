@@ -4,7 +4,7 @@
 
 import { firefox } from 'playwright';
 
-import { UserPOM } from './UserPOM.js';
+import { User } from './User.js';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
@@ -13,8 +13,8 @@ const startUrl = 'localhost:8080';
  * Launch browser and create wallet for 2 users. One of them creates a party and  generates a sharelink, the other one uses it to join the party.
  */
 export const launchUsers = async () => {
-    const userA = new UserPOM('UserA');
-    const userB = new UserPOM('UserB');
+    const userA = new User('UserA');
+    const userB = new User('UserB');
 
     await userA.launch(browser, startUrl);
     await userA.createWallet();

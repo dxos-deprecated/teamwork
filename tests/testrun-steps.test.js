@@ -17,16 +17,16 @@ describe('Perform testrun steps', function () {
 
   const store = {
     messenger: {
-      messengerName: 'New Chat',
-      message: 'This is very secret message'
+      messengerName: 'Testing Chat',
+      message: 'Testing message'
     },
     taskList: {
-      taskListName: 'A Couple of Tasks',
-      taskName: 'Do the laundry'
+      taskListName: 'Testing Task List',
+      taskName: 'New test task name'
     },
     board: {
-      boardName: 'Planner',
-      newColumnName: 'Immediate',
+      boardName: 'Testing Planner',
+      newColumnName: 'New Column',
       cardA: 'Content of card A',
       cardB: 'Content of card B',
       cardC: 'Content of card C',
@@ -47,7 +47,7 @@ describe('Perform testrun steps', function () {
   //   userB && await userB.closeBrowser();
   // });
 
-  describe.skip('Test TaskList', function () {
+  describe('Test TaskList', function () {
     const { taskListName, taskName } = store.taskList;
 
     before(async function () {
@@ -81,7 +81,7 @@ describe('Perform testrun steps', function () {
     });
   });
 
-  describe.skip('Test Messenger', function () {
+  describe('Test Messenger', function () {
     const { messengerName, message } = store.messenger;
 
     before(async function () {
@@ -109,10 +109,10 @@ describe('Perform testrun steps', function () {
       await userB.partyManager.enterItemInParty(partyName, boardName);
     });
 
-    // after(async function () {
-    //   await userA.goToHomePage();
-    //   await userB.goToHomePage();
-    // });
+    after(async function () {
+      await userA.goToHomePage();
+      await userB.goToHomePage();
+    });
 
     it('Add new column', async function () {
       const initialColumnsNumber = (await userB.boardManager.getColumnsNames()).length;
@@ -139,9 +139,7 @@ describe('Perform testrun steps', function () {
       expect(await userB.boardManager.isCardExisting(cardC, firstColumnName)).to.be.equal(true);
     });
 
-    it('Drag item between columns', async function () {
-
-    });
+    it.skip('Drag item between columns', async function () {});
 
     it('Archive item in column', async function () {
       await userA.boardManager.archiveCard(cardA, firstColumnName);
@@ -160,20 +158,14 @@ describe('Perform testrun steps', function () {
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
     });
 
-    it('Add label to item in column', async function () {
+    it.skip('Add label to item in column', async function () {});
 
-    });
+    it.skip('Change label name', async function () {});
 
-    it('Change label name', async function () {
-
-    });
-
-    it('Remove item\'s label in column', async function () {
-
-    });
+    it.skip('Remove item\'s label in column', async function () {});
   });
 
-  describe.skip('Test Party actions', function () {
+  describe('Test Party actions', function () {
     const { taskListName } = store.taskList;
 
     it('Archive item', async function () {

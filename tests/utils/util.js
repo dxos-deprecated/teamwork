@@ -41,5 +41,3 @@ export const selectors = {
   checkboxSelector: genericSelectors.classSelector('span', 'Mui-checked'),
   dialogSelector: genericSelectors.attributeSelector('div', '@role', 'dialog')
 };
-
-export const textButtonSelector = (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`;

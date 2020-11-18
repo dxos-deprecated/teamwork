@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { isSelectorExisting, isSelectorDeleted, selectors, genericSelectors, waitUntil } from './shared';
+import { isSelectorExisting, isSelectorDeleted, selectors, genericSelectors, waitUntil } from './util';
 
 const {
     cardsSelector,
