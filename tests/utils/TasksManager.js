@@ -19,12 +19,16 @@ export class TasksManager {
 
   async checkTask (taskName) {
     const checkboxSelector = `//li[.//*[text()="${taskName}"]]//input[@type="checkbox"]`;
-    await this.page.check(checkboxSelector);
+    if (this.isTaskUnchecked(taskName)) {
+      await this.page.click(checkboxSelector);
+    }
   }
 
   async uncheckTask (taskName) {
     const checkboxSelector = `//li[.//*[text()="${taskName}"]]//input[@type="checkbox"]`;
-    await this.page.uncheck(checkboxSelector);
+    if (this.isTaskChecked(taskName)) {
+      await this.page.click(checkboxSelector);
+    }
   }
 
   async deleteTask (taskName) {
