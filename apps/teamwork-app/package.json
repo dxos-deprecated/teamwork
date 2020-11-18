@@ -16,6 +16,7 @@
     "playwright": "./scripts/start-and-wait.sh && yarn test:playwright",
     "start": "VERBOSE=true NODE_ENV=development webpack-dev-server",
     "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
+    "start:silent": "VERBOSE=true NODE_ENV=development webpack-dev-server",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "test:playwright": "mocha --bail --require @babel/register ./tests/*.test.js"
   },
