@@ -31,7 +31,7 @@
     "lint:fix": "lerna run lint -- --fix && yarn run lint:lockfile",
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn npm codeload.github.com --validate-https",
     "lint:version": "lint-version",
-    "playwright": "lerna run playwright",
+    "playwright": "cd apps/teamwork-app && yarn playwright && cd ../..",
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
     "test:coverage": "c8 --check-coverage yarn test",
