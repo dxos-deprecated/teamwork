@@ -72,7 +72,7 @@ describe('Perform testrun steps', function () {
 
     it('Uncheck task', async function () {
       await userA.tasksManager.uncheckTask(taskName);
-      expect(await userB.tasksManager.isTaskChecked(taskName)).to.be.equal(false, 'UserA unchecked box UserB does not see box unchecked');
+      expect(await userB.tasksManager.isTaskUnchecked(taskName)).to.be.equal(true, 'UserA unchecked box and UserB does not see box unchecked');
     });
 
     it('Delete task', async function () {
