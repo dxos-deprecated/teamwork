@@ -16,7 +16,6 @@
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "playwright": "./scripts/start-and-wait.sh && yarn test:playwright",
     "start": "VERBOSE=true NODE_ENV=development webpack-dev-server",
-    "start:minimal": "VERBOSE=true NODE_ENV=development webpack-dev-server --display minimal",
     "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "test:playwright": "mocha --bail --require @babel/register ./tests/*.test.js"
