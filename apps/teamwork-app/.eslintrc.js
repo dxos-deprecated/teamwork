@@ -6,7 +6,8 @@ const baseConfig = require('../../.eslintrc.react.js');
 
 module.exports = {
   ...baseConfig,
-  env: {
-    'jest/globals': true
-  }
+  extends: [
+    ...baseConfig.extends,
+    'plugin:jest/recommended'
+  ]
 };
