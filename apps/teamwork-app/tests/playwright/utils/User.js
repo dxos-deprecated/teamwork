@@ -29,7 +29,9 @@ export class User {
 
     async launchBrowser (_browser, _startUrl) {
       this.browser = await _browser.launch({ headless, slowMo });
-      this.context = await this.browser.newContext();
+      this.context = await this.browser.newContext({
+        recordVideo: { dir: `tests/playwright/videos/${this.username}` }
+      });
       this.page = await this.context.newPage();
       await this.page.goto(_startUrl, { waitUntil: 'load' });
     }
