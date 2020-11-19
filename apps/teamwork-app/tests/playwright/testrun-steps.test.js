@@ -44,8 +44,8 @@ describe('Perform testrun steps', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
-        await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
-        await userB.partyManager.enterItemInParty(partyName, taskListName);
+      await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
+      await userB.partyManager.enterItemInParty(partyName, taskListName);
     });
 
     afterAll(async () => {

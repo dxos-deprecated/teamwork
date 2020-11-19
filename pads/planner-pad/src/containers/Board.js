@@ -81,7 +81,7 @@ export const Board = ({ topic, embedded, itemId }) => {
   const handleUpdateListOrCard = (listId) => async (prop, value) => {
     const listOrCard = lists.find(l => l.id === listId) || cards.find(l => l.id === listId);
     await listOrCard.model.setProperty(prop, value);
-   };
+  };
 
   const handleAddCard = async (title, listId) => {
     const cardsInList = getCardsForList(listId);

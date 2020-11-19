@@ -251,7 +251,9 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   }
 
   function handleSnackbarClose (event, reason) {
-    if (reason === 'clickaway') return;
+    if (reason === 'clickaway') {
+      return;
+    }
     setSnackbarOpen(false);
   }
 
@@ -303,7 +305,9 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     }
   }, [statusData]);
 
-  if (!documentUpdateModel) return null;
+  if (!documentUpdateModel) {
+    return null;
+  }
 
   return (
     <>

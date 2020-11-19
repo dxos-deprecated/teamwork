@@ -39,6 +39,7 @@
     "@babel/preset-typescript": "^7.10.1",
     "@dxos/cli": "^1.0.1-beta.12",
     "@dxos/cli-app": "^1.0.1-beta.12",
+    "@dxos/eslint-plugin": "^1.0.8",
     "@wirelineio/cli-wns": "^1.0.1-beta.12",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.1.0",
@@ -61,5 +62,12 @@
     "webpack-dev-server": "^3.11.0",
     "webpack-version-file-plugin": "^0.4.0",
     "yaml-loader": "^0.6.0"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "react/prop-types": "off",
+      "react/display-name": "off"
+    }
   }
 }

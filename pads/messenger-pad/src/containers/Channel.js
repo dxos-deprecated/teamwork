@@ -130,7 +130,9 @@ export const Channel = ({ topic, itemId, narrow, embedded }) => {
   }
 
   function handleSubmit () {
-    if (!editor || !editor.current) return;
+    if (!editor || !editor.current) {
+      return;
+    }
     const value = editor
       .current
       .getContentHtml()

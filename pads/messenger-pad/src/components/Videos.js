@@ -175,7 +175,9 @@ const Videos = ({ connections, streamsWithMetaData }) => {
   }, [screenShareEnabled]);
 
   useEffect(() => {
-    if (!stream) return;
+    if (!stream) {
+      return;
+    }
     setImmediate(async () => {
       (await stream.getVideoTracks()).forEach(track => {
         track.enabled = cameraEnabled;

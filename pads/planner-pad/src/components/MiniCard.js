@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const MiniCard = ({
-  style,
   onOpenCard,
   card,
   listDeleted,
@@ -62,7 +61,7 @@ export const MiniCard = ({
                 />
               </Tooltip>
             )
-          )}
+            )}
         </div>
       )}
       <Typography variant="body1">{card.model.getProperty('title')}</Typography>

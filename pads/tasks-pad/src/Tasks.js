@@ -77,7 +77,7 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
             autoComplete="false"
             autoFocus
             onKeyDown={handleKeyDown}
-            />
+          />
         </ListItemText>
         <ListItemIcon>
           <IconButton disabled={!newTask} onClick={handleAdd}>

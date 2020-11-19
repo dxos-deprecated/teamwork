@@ -27,7 +27,7 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Pad = ({ title, icon, reverseScroll, children }) => {
+export const Pad = ({ reverseScroll, children }) => {
   const classes = useStyles({ reverseScroll });
   return (
     <div className={classes.padContainer}>

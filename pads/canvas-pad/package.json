@@ -52,6 +52,7 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@dxos/app-cli": "^1.0.0-beta.50",
+    "@dxos/eslint-plugin": "^1.0.8",
     "@rollup/plugin-babel": "^5.0.3",
     "@storybook/addon-knobs": "^6.0.21",
     "@storybook/react": "^6.0.21",
@@ -77,6 +78,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "react/prop-types": "off",
+      "react/display-name": "off"
+    }
   },
   "gitHead": "f29a1e902d31583c95240e2bb8afc9286eff1a76"
 }
