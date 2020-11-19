@@ -107,6 +107,7 @@ const List = ({
             size='small'
             onClick={() => setListSettingsOpen(true)}
             ref={newListSettingsAnchor}
+            aria-label='settings'
           >
             <SettingsIcon />
           </IconButton>
@@ -138,6 +139,7 @@ const List = ({
           size='small'
           onClick={() => setListSettingsOpen(true)}
           ref={listSettingsAnchor}
+          aria-label='settings'
         >
           <SettingsIcon />
         </IconButton>

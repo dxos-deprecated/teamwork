@@ -9,13 +9,17 @@
   "private": true,
   "scripts": {
     "analyzer": "webpack --config webpack-analyzer.config.js",
+    "build": "webpack -p",
     "debug": "DOT_ENV=.env.debug webpack-dev-server --mode development",
     "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
     "dist": "rm -rf dist && NODE_ENV=production webpack",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "playwright": "./scripts/start-and-wait.sh && yarn test:playwright",
     "start": "VERBOSE=true NODE_ENV=development webpack-dev-server",
+    "start:minimal": "VERBOSE=true NODE_ENV=development webpack-dev-server --display minimal",
     "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "test:playwright": "mocha --bail --require @babel/register ./tests/*.test.js"
   },
   "dependencies": {
     "@babel/runtime": "7.11.2",
@@ -82,11 +86,14 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-styled-components": "^1.10.7",
+    "chai": "^4.2.0",
     "dotenv-webpack": "^1.7.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
     "html-webpack-plugin": "^4.3.0",
+    "mocha": "^8.2.1",
+    "playwright": "^1.6.2",
     "react-refresh": "^0.8.3",
     "webpack": "^4.41.2",
     "webpack-bundle-analyzer": "^3.6.0",
