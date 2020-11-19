@@ -2,17 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import chai from 'chai';
-import mocha from 'mocha';
-
 import { launchUsers } from './utils/launch-users.js';
 
-const { expect } = chai;
-const { before, after, describe, it } = mocha;
-
-describe('Perform testrun steps', function () {
-  this.timeout(1e6);
-
+describe('Perform testrun steps', () => {
   let userA, userB, partyName;
 
   const store = {
@@ -35,14 +27,15 @@ describe('Perform testrun steps', function () {
     }
   };
 
-  before(async function () {
-      const setup = await launchUsers();
-      userA = setup.userA;
-      userB = setup.userB;
-      partyName = setup.partyName;
+  beforeAll(async function () {
+    jest.setTimeout(1e6);
+    const setup = await launchUsers();
+    userA = setup.userA;
+    userB = setup.userB;
+    partyName = setup.partyName;
   });
 
-  after(async function () {
+  afterAll(async function () {
     userA && await userA.closeBrowser();
     userB && await userB.closeBrowser();
   });
@@ -50,53 +43,53 @@ describe('Perform testrun steps', function () {
   describe('Test TaskList', function () {
     const { taskListName, taskName } = store.taskList;
 
-    before(async function () {
+    beforeAll(async function () {
         await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
         await userB.partyManager.enterItemInParty(partyName, taskListName);
     });
 
-    after(async function () {
+    afterAll(async function () {
       await userA.goToHomePage();
       await userB.goToHomePage();
     });
 
     it('Add task', async function () {
       await userA.tasksManager.addTask(taskName);
-      expect(await userB.tasksManager.isTaskExisting(taskName)).to.be.equal(true, 'UserB does not see task created by UserA');
+      expect(await userB.tasksManager.isTaskExisting(taskName)).toBeTruthy();
     });
 
     it('Check task', async function () {
       await userB.tasksManager.checkTask(taskName);
-      expect(await userA.tasksManager.isTaskChecked(taskName)).to.be.equal(true, 'UserB checked box and UserA does not see box checked');
+      expect(await userA.tasksManager.isTaskChecked(taskName)).toBeTruthy();
     });
 
     it('Uncheck task', async function () {
       await userA.tasksManager.uncheckTask(taskName);
-      expect(await userB.tasksManager.isTaskUnchecked(taskName)).to.be.equal(true, 'UserA unchecked box and UserB does not see box unchecked');
+      expect(await userB.tasksManager.isTaskUnchecked(taskName)).toBeTruthy();
     });
 
     it('Delete task', async function () {
       await userB.tasksManager.deleteTask(taskName);
-      expect(await userA.tasksManager.isTaskDeleted(taskName)).to.be.equal(true, 'UserA still sees task deleted by UserB');
+      expect(await userA.tasksManager.isTaskDeleted(taskName)).toBeTruthy();
     });
   });
 
   describe('Test Messenger', function () {
     const { messengerName, message } = store.messenger;
 
-    before(async function () {
+    beforeAll(async function () {
       await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
       await userB.partyManager.enterItemInParty(partyName, messengerName);
     });
 
-    after(async function () {
+    afterAll(async function () {
       await userA.goToHomePage();
       await userB.goToHomePage();
     });
 
     it('Send message', async function () {
       await userA.messengerManager.sendMessage(message);
-      expect(await userB.messengerManager.isMessageExisting(message)).to.be.equal(true, 'UserB does not see message sent by UserA');
+      expect(await userB.messengerManager.isMessageExisting(message)).toBeTruthy();
     });
   });
 
@@ -104,12 +97,12 @@ describe('Perform testrun steps', function () {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
-    before(async function () {
+    beforeAll(async function () {
       await userA.partyManager.addItemToParty(partyName, 'Board', boardName);
       await userB.partyManager.enterItemInParty(partyName, boardName);
     });
 
-    after(async function () {
+    afterAll(async function () {
       await userA.goToHomePage();
       await userB.goToHomePage();
     });
@@ -124,12 +117,12 @@ describe('Perform testrun steps', function () {
         const columnNumber = (await userB.boardManager.getColumnsNames()).length;
         return columnNumber > initialColumnsNumber;
       });
-      expect((await userB.boardManager.getColumnsNames()).length).to.be.equal(initialColumnsNumber + 1);
+      expect((await userB.boardManager.getColumnsNames()).length).toEqual(initialColumnsNumber + 1);
     });
 
     it('Rename column', async function () {
       await userA.boardManager.renameColumn('New List', newColumnName);
-      expect(await userB.boardManager.isColumnExisting(newColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isColumnExisting(newColumnName)).toBeTruthy();
     });
 
     it('Add items in column', async function () {
@@ -137,28 +130,28 @@ describe('Perform testrun steps', function () {
       await userA.boardManager.addCardInColumn(cardA, firstColumnName);
       await userA.boardManager.addCardInColumn(cardB, firstColumnName);
       await userA.boardManager.addCardInColumn(cardC, firstColumnName);
-      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
-      expect(await userB.boardManager.isCardExisting(cardB, firstColumnName)).to.be.equal(true);
-      expect(await userB.boardManager.isCardExisting(cardC, firstColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
+      expect(await userB.boardManager.isCardExisting(cardB, firstColumnName)).toBeTruthy();
+      expect(await userB.boardManager.isCardExisting(cardC, firstColumnName)).toBeTruthy();
     });
 
     it.skip('Drag item between columns', async function () {});
 
     it('Archive item in column', async function () {
       await userA.boardManager.archiveCard(cardA, firstColumnName);
-      expect(await userA.boardManager.isCardDeleted(cardA, firstColumnName)).to.be.equal(true);
-      expect(await userB.boardManager.isCardDeleted(cardA, firstColumnName)).to.be.equal(true);
+      expect(await userA.boardManager.isCardDeleted(cardA, firstColumnName)).toBeTruthy();
+      expect(await userB.boardManager.isCardDeleted(cardA, firstColumnName)).toBeTruthy();
     });
 
     it('Show archived item in column', async function () {
       await userB.boardManager.showArchivedCards(firstColumnName);
-      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
+      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
     });
 
     it('Restore archived item in column', async function () {
       await userB.boardManager.restoreCard(cardA, firstColumnName);
-      expect(await userA.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
-      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).to.be.equal(true);
+      expect(await userA.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
+      expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
     });
 
     it.skip('Add label to item in column', async function () {});
@@ -173,19 +166,19 @@ describe('Perform testrun steps', function () {
 
     it('Archive item', async function () {
       await userA.partyManager.archiveItemInParty(partyName, taskListName);
-      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB still sees item deleted by UserA');
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
     });
 
     it('Show archived items', async function () {
       await userA.partyManager.showArchivedItems(partyName);
-      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).to.be.equal(true, 'UserB sees deleted item');
-      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserA does not see archived item');
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
+      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
 
     it('Restore archived items', async function () {
       await userA.partyManager.restoreItemInParty(partyName, taskListName);
-      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserA does not see restored item');
-      expect(await userB.partyManager.isItemExisting(partyName, taskListName)).to.be.equal(true, 'UserB does not see restored item');
+      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+      expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
   });
 });
