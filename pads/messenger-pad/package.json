@@ -49,6 +49,7 @@
     "@rollup/plugin-json": "^4.0.3",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
+    "@testing-library/react-hooks": "^3.4.2",
     "@types/color-hash": "^1.0.0",
     "@types/jest": "^26.0.15",
     "babel-loader": "^8.1.0",
