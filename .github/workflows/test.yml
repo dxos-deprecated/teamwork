@@ -30,3 +30,7 @@ jobs:
       - name: Playwright tests
         run: |
           yarn playwright
+      - uses: actions/upload-artifact@v2
+        with:
+          name: playwright-video
+          path: apps/teamwork-app/tests/playwright/videos
