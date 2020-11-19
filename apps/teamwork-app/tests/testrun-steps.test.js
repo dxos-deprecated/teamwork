@@ -115,7 +115,10 @@ describe('Perform testrun steps', function () {
     });
 
     it('Add new column', async function () {
-      const initialColumnsNumber = (await userB.boardManager.getColumnsNames()).length;
+      const initialColumnsNumber = 3;
+      userB.waitUntil(async () => {
+        return (await userB.boardManager.getColumnsNames()).length === initialColumnsNumber;
+      });
       await userA.boardManager.addNewColumn();
       await userB.waitUntil(async () => {
         const columnNumber = (await userB.boardManager.getColumnsNames()).length;

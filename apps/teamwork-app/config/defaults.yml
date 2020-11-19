@@ -13,7 +13,7 @@ storagePath: dxos/teamwork-v1
 storageType: persistent
 
 swarm:
-  signal: "wss://apollo1.kube.moon.dxos.network/dxos/signal"
+  signal: "wss://apollo2.kube.moon.dxos.network/dxos/signal"
   ice:
     - urls: "turn:stun.wireline.ninja:3478"
       username: "wireline"
@@ -22,8 +22,8 @@ wns:
   server: "https://wns1.kube.moon.dxos.network/api"
   chainId: "devnet-2"
 ipfs:
-  server: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/api"
-  gateway: "https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/"
+  server: "https://apollo2.kube.moon.dxos.network/dxos/ipfs/api"
+  gateway: "https://apollo2.kube.moon.dxos.network/dxos/ipfs/gateway/"
 
 debug:
   mode: 'development'

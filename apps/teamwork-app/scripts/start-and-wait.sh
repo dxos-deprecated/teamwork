@@ -1,4 +1,4 @@
-serve dist -l 8080 & 
+yarn start:minimal & 
 set +e
 i=0
 until curl "http://localhost:8080" | grep -q "Teamwork"

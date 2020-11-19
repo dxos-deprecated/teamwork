@@ -109,7 +109,7 @@ export class PartyManager {
 
   async getPasscode () {
     const passcodeSelector = classSelector('span', 'passcode');
-    await this.page.waitForSelector(passcodeSelector, { timeout: 60 * 1e3 });
+    await this.page.waitForSelector(passcodeSelector, { timeout: 60000 });
     return await this.page.$eval(passcodeSelector, passcode => passcode.innerHTML);
   }
 
