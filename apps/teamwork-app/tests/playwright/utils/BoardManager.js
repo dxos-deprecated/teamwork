@@ -45,7 +45,7 @@ export class BoardManager {
     }
     try {
       return await this.page.$$eval(inputsSelector, inputs => {
-          return inputs.map(input => input.getAttribute('value'));
+        return inputs.map(input => input.getAttribute('value'));
       });
     } catch (error) {
       console.log(`${this.username} did not select any column name`);

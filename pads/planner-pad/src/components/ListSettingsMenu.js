@@ -60,23 +60,23 @@ export const ListSettingsMenu = ({
         <ListItemText primary={showArchived ? 'Hide archived' : 'Show archived'} />
       </MenuItem>
       {!labelFilteringDisabled && ([
-          <MenuItem key='label-settings' button onClick={handleLabelSettings}>
-            <ListItemText primary='Label Settings' />
-          </MenuItem>,
-          <Divider key='divider' />,
-          <MenuItem key='filters' disabled={true}>Filters:</MenuItem>,
-          ...labels.map(label => (
-            <MenuItem
-              key={label}
-              button
-              onClick={() => onFilterByLabel(filterByLabel === label ? undefined : label)}
-              selected={filterByLabel === label}
-            >
-              <ListItemIcon><SearchIcon htmlColor={colorLookup[label]} /></ListItemIcon>
-              <Typography variant="inherit" noWrap>{names[label]}</Typography>
-            </MenuItem>
-          ))
-        ]
+        <MenuItem key='label-settings' button onClick={handleLabelSettings}>
+          <ListItemText primary='Label Settings' />
+        </MenuItem>,
+        <Divider key='divider' />,
+        <MenuItem key='filters' disabled={true}>Filters:</MenuItem>,
+        ...labels.map(label => (
+          <MenuItem
+            key={label}
+            button
+            onClick={() => onFilterByLabel(filterByLabel === label ? undefined : label)}
+            selected={filterByLabel === label}
+          >
+            <ListItemIcon><SearchIcon htmlColor={colorLookup[label]} /></ListItemIcon>
+            <Typography variant="inherit" noWrap>{names[label]}</Typography>
+          </MenuItem>
+        ))
+      ]
       )}
     </Menu>
   );
