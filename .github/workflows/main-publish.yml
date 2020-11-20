@@ -22,9 +22,11 @@ jobs:
           git config --global user.email "npm@dxos.org"
           git config --global user.name "DXOS"
           
+          # TODO(telackey): Make separate action steps.
           yarn install
           yarn build
           yarn test
+          yarn playwright
           yarn lint
 
           # Uncomment for NPM publishing.
