@@ -4,13 +4,13 @@
 
 export const waitUntil = async (page, predicate) => {
   while (!(await predicate())) {
-      await page.waitForTimeout(50);
+    await page.waitForTimeout(50);
   }
 };
 
 export const isSelectorExisting = async (page, selector) => {
   try {
-    await page.waitForSelector(selector, { timeout: 2 * 1e3 });
+    await page.waitForSelector(selector, { timeout: 2000 });
     return !!(await page.$(selector));
   } catch (error) {
     return false;
@@ -19,7 +19,7 @@ export const isSelectorExisting = async (page, selector) => {
 
 export const isSelectorDeleted = async (page, selector) => {
   try {
-    await page.waitForSelector(selector, { timeout: 2 * 1e3, state: 'detached' });
+    await page.waitForSelector(selector, { timeout: 2000, state: 'detached' });
     return !(await page.$(selector));
   } catch (error) {
     return false;
