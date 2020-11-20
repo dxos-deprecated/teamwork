@@ -3,11 +3,9 @@
 //
 
 module.exports = {
-  coverageDirectory: 'coverage',
-  collectCoverageFrom: [
-    'src/**/*.{js,jsx}'
-  ],
+  testEnvironment: 'jsdom',
   transformIgnorePatterns: [
-    'node_modules/(?!(@dxos)/)'
-  ]
+    'node_modules/(?!(@dxos|lib0|y-protocols))'
+  ],
+  testTimeout: 20000
 };

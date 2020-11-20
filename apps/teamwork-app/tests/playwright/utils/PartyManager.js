@@ -5,11 +5,11 @@
 import { isSelectorExisting, isSelectorDeleted, selectors, genericSelectors, waitUntil } from './util';
 
 const {
-    cardsSelector,
-    textButtonSelector,
-    partyCardSelector,
-    dialogSelector,
-    listItemSelector
+  cardsSelector,
+  textButtonSelector,
+  partyCardSelector,
+  dialogSelector,
+  listItemSelector
 } = selectors;
 
 const { attributeSelector, classSelector } = genericSelectors;
@@ -32,7 +32,7 @@ export class PartyManager {
 
     const cardTitlesSelector = cardsSelector + '//h2';
     while (initialPartyNames.length === (await this.page.$$(cardTitlesSelector)).length) {
-        await this.page.waitForTimeout(50);
+      await this.page.waitForTimeout(50);
     }
 
     const currentPartyNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
@@ -99,11 +99,11 @@ export class PartyManager {
     const linkRegex = /==$/g;
 
     this.page.waitForEvent('console', message => {
-        if (message.text().match(linkRegex)) {
-            shareLink.url = message.text();
-            return true;
-        }
-        return false;
+      if (message.text().match(linkRegex)) {
+        shareLink.url = message.text();
+        return true;
+      }
+      return false;
     });
   }
 
@@ -128,7 +128,7 @@ export class PartyManager {
 
   async isUserInParty (partyName, username) {
     if (!(await this.isPartyExisting(partyName))) {
-        return false;
+      return false;
     }
     const avatarGroupSelector = classSelector('div', 'MuiAvatarGroup-root');
     const userAvatarSelector = `${avatarGroupSelector}/*[@title='${username}']`;
@@ -142,12 +142,12 @@ export class PartyManager {
       return [];
     }
     try {
-        return await this.page.$$eval(partyNamesSelector, partyNamesTags => {
-            return partyNamesTags.map(tag => tag.innerHTML);
-        });
+      return await this.page.$$eval(partyNamesSelector, partyNamesTags => {
+        return partyNamesTags.map(tag => tag.innerHTML);
+      });
     } catch (error) {
-        console.log(`${this.username} did not select any party name`);
-        return [];
+      console.log(`${this.username} did not select any party name`);
+      return [];
     }
   }
 

@@ -4,7 +4,7 @@
 
 export const waitUntil = async (page, predicate) => {
   while (!(await predicate())) {
-      await page.waitForTimeout(50);
+    await page.waitForTimeout(50);
   }
 };
 
