@@ -135,8 +135,6 @@ describe('Perform testrun steps', () => {
       expect(await userB.boardManager.isCardExisting(cardC, firstColumnName)).toBeTruthy();
     });
 
-    it.skip('Drag item between columns', async () => {});
-
     it('Archive item in column', async () => {
       await userA.boardManager.archiveCard(cardA, firstColumnName);
       expect(await userA.boardManager.isCardDeleted(cardA, firstColumnName)).toBeTruthy();
@@ -152,6 +150,11 @@ describe('Perform testrun steps', () => {
       await userB.boardManager.restoreCard(cardA, firstColumnName);
       expect(await userA.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
+    });
+
+    it('Drag item between columns', async () => {
+      await userA.boardManager.dragCard(cardA, firstColumnName, newColumnName);
+      expect(await userB.boardManager.isCardExisting(cardA, newColumnName)).toBeTruthy();
     });
 
     it.skip('Add label to item in column', async () => {});

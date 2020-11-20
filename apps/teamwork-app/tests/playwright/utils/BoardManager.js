@@ -118,4 +118,27 @@ export class BoardManager {
     const cardNameSelector = columnSelector + classSelector('div', 'MuiPaper-root') + attributeSelector('p', 'text()', cardName);
     return await this._isSelectorDeleted(cardNameSelector);
   }
+
+  async dragCard (cardName, columnStart, columnEnd) {
+    const columnStartIndex = await this.getColumnIndex(columnStart);
+    const columnStartSelector = `${columnsSelector}[${columnStartIndex + 1}]`;
+    const cardSelector = columnStartSelector + `//div[contains(@class, MuiPaper-root) and contains(.//p, "${cardName}") and @data-rbd-draggable-context-id]`;
+    await this.page.waitForSelector(cardSelector);
+    const { startX, startY } = await this.page.$eval(cardSelector, card => {
+      return { startX: card.offsetLeft + 20, startY: card.offsetTop + 20 };
+    });
+
+    const columnEndIndex = await this.getColumnIndex(columnEnd);
+    const columnEndSelector = `${columnsSelector}[${columnEndIndex + 1}]`;
+    await this.page.waitForSelector(columnEndSelector);
+    const { endX, endY } = await this.page.$eval(columnEndSelector, column => {
+      return { endX: column.offsetLeft + 25, endY: column.offsetTop + 25 };
+    });
+
+    await this.page.mouse.move(startX, startY, { steps: 5 });
+    await this.page.mouse.down();
+    await this.page.mouse.move(endX, endY, { steps: 20 });
+    await this.page.waitForTimeout(100);
+    await this.page.mouse.up();
+  }
 }
