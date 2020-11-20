@@ -5,32 +5,21 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { Client } from '@dxos/client';
-import { createKeyPair, keyToString } from '@dxos/crypto';
 import { ClientProvider } from '@dxos/react-client';
 
-import MESSENGER_PAD from '../src/index';
 import { useChannelMessages } from '../src/model';
-import { waitUntil } from './util';
+import { waitUntil, setupClient } from './util';
 
-describe.only('Test useChannelMessages()', () => {
+describe('Test useChannelMessages()', () => {
   let client;
   let topic;
   let channelId;
 
   beforeAll(async () => {
-    client = new Client();
-    await client.initialize();
-    await client.createProfile({ username: 'userA', ...createKeyPair() });
-    const party = await client.echo.createParty();
-    await MESSENGER_PAD.register(client);
-    const item = await MESSENGER_PAD.create({ party }, { name: 'mymessenger' });
-    channelId = item.id;
-    topic = keyToString(party.key);
-  });
-
-  afterAll(async () => {
-    await client.destroy();
+    const setup = await setupClient();
+    client = setup.client;
+    topic = setup.topic;
+    channelId = setup.channelId;
   });
 
   it('Send message', async () => {
@@ -48,7 +37,6 @@ describe.only('Test useChannelMessages()', () => {
     });
 
     await waitUntil(() => result.current[0].length > 0);
-
     expect(result.current[0].length).toEqual(1);
     expect(result.current[0][0].text).toEqual(messageText);
   });
