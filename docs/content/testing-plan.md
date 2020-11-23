@@ -61,7 +61,7 @@
 - [ ] Remove red tag from item 2
 
 ### Messenger:
-- [ ] Create chat room
+- [ ] Open existing chat room from Machine A
 - [ ] Post from Machine A
 - [ ] Post from Machine B
 - [ ] Download chat logs as markdown
@@ -90,6 +90,7 @@
 - [ ] Embed existing planner board inside text document
 - [ ] Verify that planner board works and isn't too tall
 - [ ] Embed new planner board inside document
+- [ ] Verify that You can scroll planner board in both directions and that it isn't too tall
 - [ ] Embed existing task list inside document
 - [ ] Verify that task list works and isn't too tall
 - [ ] Embed new task list inside document 
