@@ -9,11 +9,12 @@ app:
 devtools: true
 snapshots: true
 
-storagePath: dxos/teamwork-v1
-storageType: persistent
+storage:
+  persistent: true
+  path: dxos/teamwork-v2
 
 swarm:
-  signal: "wss://apollo2.kube.moon.dxos.network/dxos/signal"
+  signal: "wss://apollo3.kube.moon.dxos.network/dxos/signal"
   ice:
     - urls: "turn:stun.wireline.ninja:3478"
       username: "wireline"
