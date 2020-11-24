@@ -60,17 +60,4 @@ describe('Test useSuggestionsMenuHandler', () => {
     expect(suggestions.length).toEqual(1);
     expect(suggestions[0].label).toEqual(itemName);
   });
-
-  it.skip('Select option', async () => {
-    const wrapper = ({ children }) => (
-      <ClientProvider client={client}>
-        {children}
-      </ClientProvider>
-    );
-
-    const render = () => useSuggestionsMenuHandlers(topic, pads, [item], editor, () => null, channelId);
-    const { result } = renderHook(render, { wrapper });
-
-    expect(result.error).toBeUndefined();
-  });
 });
