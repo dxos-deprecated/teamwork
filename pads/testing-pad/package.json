@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel src -d dist",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand",
     "dist": "rollup -c"
   },
   "dependencies": {

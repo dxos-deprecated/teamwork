@@ -11,7 +11,7 @@
     "dist": "rollup -c",
     "dist:watch": "SERVE_PORT=5010 npm run dist -- -w",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
   },
   "keywords": [],
   "author": "",
