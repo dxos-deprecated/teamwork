@@ -20,7 +20,7 @@
     "@dxos/editor": "^1.0.0-beta.33",
     "@dxos/editor-core": "^1.0.0-beta.33",
     "@dxos/messenger-pad": "^1.2.0-alpha.12",
-    "@dxos/text-model": "^2.6.3-alpha.0",
+    "@dxos/text-model": "2.6.5-alpha.0",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
     "rehype-parse": "^7.0.1",
@@ -33,7 +33,7 @@
     "yjs": "13.3.2"
   },
   "peerDependencies": {
-    "@dxos/crypto": "^1.0.0-beta.1",
+    "@dxos/crypto": "1.0.5",
     "@dxos/react-client": "^2.7.16-alpha.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
