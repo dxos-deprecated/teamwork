@@ -11,11 +11,11 @@ import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
 import { ClientProvider } from '@dxos/react-client';
 import TasksPad from '@dxos/tasks-pad';
-import { TextModel } from '@dxos/text-model';
 
 import EDITOR_PAD from '../../editor-pad/src/index';
 import { useSuggestionsMenuHandlers } from '../src/hooks/suggestions';
-import { waitUntil, setupClient } from './util';
+import MESSENGER_PAD from '../src/index';
+import { setupClient, createItem } from './util';
 
 describe('Test useSuggestionsMenuHandler', () => {
   let client;
@@ -23,7 +23,7 @@ describe('Test useSuggestionsMenuHandler', () => {
   let topic;
   let channelId;
   let item;
-  let itemName;
+  const itemName = 'testing-editor';
 
   const pads = [
     EditorPad,
@@ -38,11 +38,10 @@ describe('Test useSuggestionsMenuHandler', () => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
-    channelId = setup.channelId;
     topic = keyToString(party.key);
-    await EDITOR_PAD.register(client);
-    itemName = 'testing-editor';
-    item = await EDITOR_PAD.create({ party }, { name: itemName });
+
+    channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
+    item = await createItem(party, EDITOR_PAD, client, itemName);
   });
 
   it('Get options', async () => {

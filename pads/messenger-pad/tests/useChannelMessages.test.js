@@ -8,8 +8,9 @@ import React from 'react';
 import { keyToString } from '@dxos/crypto';
 import { ClientProvider } from '@dxos/react-client';
 
+import MESSENGER_PAD from '../src/index';
 import { useChannelMessages } from '../src/model';
-import { waitUntil, setupClient } from './util';
+import { waitUntil, setupClient, createItem } from './util';
 
 describe('Test useChannelMessages()', () => {
   let client;
@@ -21,8 +22,8 @@ describe('Test useChannelMessages()', () => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
-    channelId = setup.channelId;
     topic = keyToString(party.key);
+    channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
   });
 
   it('Send message', async () => {
