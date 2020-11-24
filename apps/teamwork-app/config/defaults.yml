@@ -14,7 +14,7 @@ storage:
   path: dxos/teamwork-v2
 
 swarm:
-  signal: "wss://apollo3.kube.moon.dxos.network/dxos/signal"
+  signal: "wss://apollo2.kube.moon.dxos.network/dxos/signal"
   ice:
     - urls: "turn:stun.wireline.ninja:3478"
       username: "wireline"
