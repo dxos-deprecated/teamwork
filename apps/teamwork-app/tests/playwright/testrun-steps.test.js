@@ -24,6 +24,9 @@ describe('Perform testrun steps', () => {
       cardC: 'Content of card C',
       labelName: 'red',
       firstColumnName: undefined
+    },
+    editor: {
+      editorName: 'Testing Editor'
     }
   };
 
@@ -40,7 +43,7 @@ describe('Perform testrun steps', () => {
     userB && await userB.closeBrowser();
   });
 
-  describe.skip('Test TaskList', () => {
+  describe('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -74,7 +77,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Messenger', () => {
+  describe('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -93,7 +96,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Planner Board', () => {
+  describe('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -158,7 +161,27 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Party actions', () => {
+  describe('Test Editor', () => {
+    const { editorName } = store.editor;
+
+    beforeAll(async () => {
+      await userA.partyManager.addItemToParty(partyName, 'Documents', editorName);
+      await userB.partyManager.enterItemInParty(partyName, editorName);
+    });
+
+    afterAll(async () => {
+      await userA.goToHomePage();
+      await userB.goToHomePage();
+    });
+
+    it('Write in editor', async () => {
+      const text = 'Testing document content';
+      await userA.editorManager.write(text);
+      expect(await userB.editorManager.isTextExisting(text)).toBeTruthy();
+    });
+  });
+
+  describe('Test Party actions', () => {
     const { taskListName } = store.taskList;
 
     it('Archive item', async () => {
@@ -183,7 +206,16 @@ describe('Perform testrun steps', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
+      const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
+
       await userB.partyManager.redeemPartyOffline(invitation);
+      await userB.waitUntil(async () => {
+        return (await userB.partyManager.getPartyNames()).length > initialPartyNumber;
+      });
+
+      const partyNames = await userB.partyManager.getPartyNames();
+      expect(partyNames.length).toEqual(initialPartyNumber + 1);
+      expect(partyNames.includes(newPartyName)).toBeTruthy();
     });
   });
 });

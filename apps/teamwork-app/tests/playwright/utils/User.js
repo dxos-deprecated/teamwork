@@ -6,6 +6,7 @@ import { BoardManager } from './BoardManager';
 import { MessengerManager } from './MessengerManager';
 import { PartyManager } from './PartyManager';
 import { TasksManager } from './TasksManager';
+import { EditorManager } from './EditorManager';
 import { selectors, waitUntil } from './util';
 
 const { textButtonSelector } = selectors;
@@ -50,6 +51,7 @@ export class User {
       this.partyManager = new PartyManager(this.page);
       this.tasksManager = new TasksManager(this.page);
       this.boardManager = new BoardManager(this.page);
+      this.editorManager = new EditorManager(this.page);
     }
 
     async createWallet () {
