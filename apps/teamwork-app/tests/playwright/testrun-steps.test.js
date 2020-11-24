@@ -40,7 +40,7 @@ describe('Perform testrun steps', () => {
     userB && await userB.closeBrowser();
   });
 
-  describe('Test TaskList', () => {
+  describe.skip('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -74,7 +74,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Messenger', () => {
+  describe.skip('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -93,7 +93,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Planner Board', () => {
+  describe.skip('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -156,15 +156,9 @@ describe('Perform testrun steps', () => {
       await userA.boardManager.dragCard(cardA, firstColumnName, newColumnName);
       expect(await userB.boardManager.isCardExisting(cardA, newColumnName)).toBeTruthy();
     });
-
-    it.skip('Add label to item in column', async () => {});
-
-    it.skip('Change label name', async () => {});
-
-    it.skip('Remove item\'s label in column', async () => {});
   });
 
-  describe('Test Party actions', () => {
+  describe.skip('Test Party actions', () => {
     const { taskListName } = store.taskList;
 
     it('Archive item', async () => {
@@ -182,6 +176,14 @@ describe('Perform testrun steps', () => {
       await userA.partyManager.restoreItemInParty(partyName, taskListName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+    });
+  });
+
+  describe('Test offline invitation flow', () => {
+    it('Invite known member', async () => {
+      const newPartyName = await userA.partyManager.createParty();
+      const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
+      await userB.partyManager.redeemPartyOffline(invitation);
     });
   });
 });
