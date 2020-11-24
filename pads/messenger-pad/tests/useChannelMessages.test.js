@@ -33,15 +33,20 @@ describe('Test useChannelMessages()', () => {
     const { result } = renderHook(render, { wrapper });
 
     expect(result.error).toBeUndefined();
-    expect(result.current[0].length).toEqual(0);
+
+    const hookResult = {
+      messages: result.current[0],
+      sendMessage: result.current[1]
+    };
+    expect(hookResult.messages.length).toEqual(0);
 
     const messageText = 'Message text';
     act(() => {
-      result.current[1](messageText);
+      hookResult.sendMessage(messageText);
     });
 
-    await waitUntil(() => result.current[0].length > 0);
-    expect(result.current[0].length).toEqual(1);
-    expect(result.current[0][0].text).toEqual(messageText);
+    await waitUntil(() => hookResult.messages.length > 0);
+    expect(hookResult.messages.length).toEqual(1);
+    expect(hookResult.messages[0].text).toEqual(messageText);
   });
 });
