@@ -52,7 +52,6 @@ describe('Perform testrun steps', () => {
     });
 
     afterAll(async () => {
-      await userA.tasksManager.addTask(taskName);
       await userA.goToHomePage();
       await userB.goToHomePage();
     });
@@ -164,8 +163,13 @@ describe('Perform testrun steps', () => {
 
   describe('Test Editor', () => {
     const { editorName } = store.editor;
+    const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
+      await userA.partyManager.enterItemInParty(partyName, taskListName);
+      await userA.tasksManager.addTask(taskName);
+      await userA.goToHomePage();
+
       await userA.partyManager.addItemToParty(partyName, 'Documents', editorName);
       await userB.partyManager.enterItemInParty(partyName, editorName);
     });
