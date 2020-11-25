@@ -1,6 +1,6 @@
 {
   "name": "@dxos/planner-pad",
-  "version": "1.2.0-alpha.12",
+  "version": "1.2.0-alpha.16",
   "private": true,
   "main": "dist/index.js",
   "description": "Dxos planner pad",
@@ -14,7 +14,7 @@
     "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
     "dist": "rollup -c",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./tests --verbose --passWithNoTests"
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
   },
   "peerDependencies": {
     "@dxos/crypto": "1.0.5",

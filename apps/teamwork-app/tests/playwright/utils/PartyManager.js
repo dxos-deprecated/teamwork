@@ -59,17 +59,17 @@ export class PartyManager {
     const inviteUserButtonSelector = textButtonSelector('Invite User');
     await this.page.waitForSelector(inviteUserButtonSelector);
 
-    const shareLink = { url: null };
-    await this.subscribeForLink(shareLink);
+    const invitation = { key: null };
+    await this.subscribeForLink(invitation);
     await this.page.click(inviteUserButtonSelector);
 
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
     await this.page.waitForSelector(copyButtonSelector);
     await this.page.click(copyButtonSelector);
 
-    await waitUntil(this.page, () => !!shareLink.url);
+    await waitUntil(this.page, () => !!invitation.key);
 
-    return shareLink.url;
+    return invitation.key;
   }
 
   async inviteKnownUserToParty (partyName, userName) {
@@ -77,12 +77,17 @@ export class PartyManager {
     const addUserButtonSelector = classSelector('div', 'MuiDialog-container') + attributeSelector('td', 'text()', userName) + '/following::*[contains(@class,"MuiIconButton-label")]';
     await this.page.waitForSelector(addUserButtonSelector);
 
-    const shareLink = { url: null };
-    await this.subscribeForLink(shareLink);
-    await this.page.click(addUserButtonSelector);
-    await waitUntil(this.page, () => !!shareLink.url);
+    const invitation = { key: null };
+    await this.subscribeForLink(invitation);
 
-    return shareLink.url;
+    await this.page.click(addUserButtonSelector);
+    const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
+    await this.page.waitForSelector(copyButtonSelector);
+    await this.page.click(copyButtonSelector);
+
+    await waitUntil(this.page, () => !!invitation.key);
+
+    return invitation.key;
   }
 
   async shareParty (partyName) {
@@ -95,12 +100,12 @@ export class PartyManager {
     await this.clickSharePartyButton(partyIdx);
   }
 
-  async subscribeForLink (shareLink) {
+  async subscribeForLink (invitation) {
     const linkRegex = /==$/g;
 
     this.page.waitForEvent('console', message => {
       if (message.text().match(linkRegex)) {
-        shareLink.url = message.text();
+        invitation.key = message.text();
         return true;
       }
       return false;
@@ -155,13 +160,28 @@ export class PartyManager {
     return (await this.getPartyNames()).indexOf(partyName);
   }
 
-  async redeemParty (sharelink) {
+  async redeemParty (invitation) {
     const headerMoreButtonSelector = '//header' + attributeSelector('button', '@aria-label', 'More');
     await this.page.click(headerMoreButtonSelector);
 
     const redeemPartySelector = attributeSelector('li', 'text()', 'Redeem invitation');
     await this.page.click(redeemPartySelector);
-    await this.page.fill('textarea', sharelink);
+    await this.page.fill('textarea', invitation);
+
+    const sendButtonSelector = textButtonSelector('Submit');
+    await this.page.click(sendButtonSelector);
+  }
+
+  async redeemPartyOffline (invitation) {
+    const headerMoreButtonSelector = '//header' + attributeSelector('button', '@aria-label', 'More');
+    await this.page.click(headerMoreButtonSelector);
+
+    const redeemPartySelector = attributeSelector('li', 'text()', 'Redeem invitation');
+    await this.page.click(redeemPartySelector);
+
+    const offlineCheckboxSelector = dialogSelector + '//input[@type="checkbox"]';
+    await this.page.click(offlineCheckboxSelector);
+    await this.page.fill('textarea', invitation);
 
     const sendButtonSelector = textButtonSelector('Submit');
     await this.page.click(sendButtonSelector);

@@ -138,7 +138,7 @@ export class BoardManager {
     await this.page.mouse.move(startX, startY, { steps: 5 });
     await this.page.mouse.down();
     await this.page.mouse.move(endX, endY, { steps: 20 });
-    await this.page.waitForTimeout(100);
+    await this.page.waitForTimeout(500);
     await this.page.mouse.up();
   }
 }

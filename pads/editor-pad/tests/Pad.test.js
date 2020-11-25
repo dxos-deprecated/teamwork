@@ -7,7 +7,7 @@ import React from 'react';
 
 import Pad from '../src/components/Pad';
 
-describe('dummy test', () => {
+describe('Test Pad', () => {
   it('Render Pad', () => {
     render(<Pad><span>TestPad</span></Pad>);
     expect(() => screen.getByText('TestPad')).not.toThrow();

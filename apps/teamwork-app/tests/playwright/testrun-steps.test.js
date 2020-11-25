@@ -24,6 +24,9 @@ describe('Perform testrun steps', () => {
       cardC: 'Content of card C',
       labelName: 'red',
       firstColumnName: undefined
+    },
+    editor: {
+      editorName: 'Testing Editor'
     }
   };
 
@@ -152,16 +155,53 @@ describe('Perform testrun steps', () => {
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
     });
 
-    it('Drag item between columns', async () => {
+    it.skip('Drag item between columns', async () => {
       await userA.boardManager.dragCard(cardA, firstColumnName, newColumnName);
       expect(await userB.boardManager.isCardExisting(cardA, newColumnName)).toBeTruthy();
     });
+  });
 
-    it.skip('Add label to item in column', async () => {});
+  describe('Test Editor', () => {
+    const { editorName } = store.editor;
+    const { taskListName, taskName } = store.taskList;
 
-    it.skip('Change label name', async () => {});
+    beforeAll(async () => {
+      await userA.partyManager.enterItemInParty(partyName, taskListName);
+      await userA.tasksManager.addTask(taskName);
+      await userA.goToHomePage();
 
-    it.skip('Remove item\'s label in column', async () => {});
+      await userA.partyManager.addItemToParty(partyName, 'Documents', editorName);
+      await userB.partyManager.enterItemInParty(partyName, editorName);
+    });
+
+    afterAll(async () => {
+      await userA.goToHomePage();
+      await userB.goToHomePage();
+    });
+
+    it('Write in editor', async () => {
+      const text = 'Testing document content';
+      await userA.editorManager.write(text);
+      expect(await userB.editorManager.isTextExisting(text)).toBeTruthy();
+    });
+
+    it('Embed existing Task List', async () => {
+      const { taskListName, taskName } = store.taskList;
+      await userA.editorManager.embedExistingItem(taskListName);
+      expect(await userB.editorManager.isTaskListWithTaskExisting(taskName)).toBeTruthy();
+    });
+
+    it('Embed existing Messenger', async () => {
+      const { messengerName, message } = store.messenger;
+      await userA.editorManager.embedExistingItem(messengerName);
+      expect(await userB.editorManager.isMessengerWithMessageExisting(message)).toBeTruthy();
+    });
+
+    it('Embed existing Board', async () => {
+      const { boardName, cardA } = store.board;
+      await userA.editorManager.embedExistingItem(boardName);
+      expect(await userB.editorManager.isBoardWithCardExisting(cardA)).toBeTruthy();
+    });
   });
 
   describe('Test Party actions', () => {
@@ -182,6 +222,23 @@ describe('Perform testrun steps', () => {
       await userA.partyManager.restoreItemInParty(partyName, taskListName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+    });
+  });
+
+  describe('Test offline invitation flow', () => {
+    it('Invite known member', async () => {
+      const newPartyName = await userA.partyManager.createParty();
+      const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
+      const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
+
+      await userB.partyManager.redeemPartyOffline(invitation);
+      await userB.waitUntil(async () => {
+        return (await userB.partyManager.getPartyNames()).length > initialPartyNumber;
+      });
+
+      const partyNames = await userB.partyManager.getPartyNames();
+      expect(partyNames.length).toEqual(initialPartyNumber + 1);
+      expect(partyNames.includes(newPartyName)).toBeTruthy();
     });
   });
 });
