@@ -200,7 +200,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Party actions', () => {
+  describe('Test Party actions', () => {
     const { taskListName } = store.taskList;
 
     it('Archive item', async () => {
