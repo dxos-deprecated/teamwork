@@ -6,6 +6,10 @@ jobs:
   build_test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    strategy:
+      matrix:
+        a: [1, 2, 3, 4, 5]
+        b: [1, 2]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
