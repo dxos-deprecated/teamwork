@@ -20,7 +20,7 @@
     "dist": "rollup -c",
     "clean": "rm -rf ./dist",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests"
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
   },
   "dependencies": {
     "@dxos/async": "^1.0.0-beta.10",
