@@ -52,6 +52,7 @@ describe('Perform testrun steps', () => {
     });
 
     afterAll(async () => {
+      await userA.tasksManager.addTask(taskName);
       await userA.goToHomePage();
       await userB.goToHomePage();
     });
@@ -179,9 +180,27 @@ describe('Perform testrun steps', () => {
       await userA.editorManager.write(text);
       expect(await userB.editorManager.isTextExisting(text)).toBeTruthy();
     });
+
+    it('Embed existing Task List', async () => {
+      const { taskListName, taskName } = store.taskList;
+      await userA.editorManager.embedExistingItem(taskListName);
+      expect(await userB.editorManager.isTaskListWithTaskExisting(taskName)).toBeTruthy();
+    });
+
+    it('Embed existing Messenger', async () => {
+      const { messengerName, message } = store.messenger;
+      await userA.editorManager.embedExistingItem(messengerName);
+      expect(await userB.editorManager.isMessengerWithMessageExisting(message)).toBeTruthy();
+    });
+
+    it('Embed existing Board', async () => {
+      const { boardName, cardA } = store.board;
+      await userA.editorManager.embedExistingItem(boardName);
+      expect(await userB.editorManager.isBoardWithCardExisting(cardA)).toBeTruthy();
+    });
   });
 
-  describe('Test Party actions', () => {
+  describe.skip('Test Party actions', () => {
     const { taskListName } = store.taskList;
 
     it('Archive item', async () => {
