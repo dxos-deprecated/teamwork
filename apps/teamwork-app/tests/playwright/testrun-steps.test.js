@@ -152,16 +152,10 @@ describe('Perform testrun steps', () => {
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
     });
 
-    it('Drag item between columns', async () => {
+    it.skip('Drag item between columns', async () => {
       await userA.boardManager.dragCard(cardA, firstColumnName, newColumnName);
       expect(await userB.boardManager.isCardExisting(cardA, newColumnName)).toBeTruthy();
     });
-
-    it.skip('Add label to item in column', async () => {});
-
-    it.skip('Change label name', async () => {});
-
-    it.skip('Remove item\'s label in column', async () => {});
   });
 
   describe('Test Party actions', () => {

@@ -4,7 +4,7 @@
 
 import { firefox } from 'playwright';
 
-import { User } from './User.js';
+import { User } from './User';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
