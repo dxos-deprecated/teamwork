@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import { keyToBuffer } from '@dxos/crypto';
+import { keyToBuffer, PublicKey } from '@dxos/crypto';
 import { ObjectModel } from '@dxos/object-model';
 import { useProfile, useParty, useItems } from '@dxos/react-client';
 import { JsonTreeView } from '@dxos/react-ux';
@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Main = ({ item, topic }) => {
-  const party = useParty(keyToBuffer(topic));
+  const party = useParty(PublicKey.from(topic));
   const classes = useStyles();
 
   const createItem = async (properties) => {

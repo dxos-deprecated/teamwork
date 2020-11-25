@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 
-import { humanize, keyToBuffer } from '@dxos/crypto';
+import { humanize, PublicKey } from '@dxos/crypto';
 import { MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-model';
 import { useItems, useProfile } from '@dxos/react-client';
 
@@ -17,10 +17,9 @@ import { useItems, useProfile } from '@dxos/react-client';
 export const useChannelMessages = (topic, channelId) => {
   assert(topic);
   assert(channelId);
-  const partyKey = keyToBuffer(topic);
   const profile = useProfile();
 
-  const [messenger] = useItems({ partyKey, parent: channelId, type: MESSENGER_TYPE_MESSAGE });
+  const [messenger] = useItems({ partyKey: PublicKey.from(topic), parent: channelId, type: MESSENGER_TYPE_MESSAGE });
 
   if (!messenger) {
     return [[], () => {}];
@@ -28,7 +27,7 @@ export const useChannelMessages = (topic, channelId) => {
   return [messenger.model.messages, text => {
     messenger.model.sendMessage({
       text,
-      sender: profile.username || humanize(profile.publicKey)
+      sender: profile.username || humanize(profile.publicKey.toString())
     });
   }];
 };
