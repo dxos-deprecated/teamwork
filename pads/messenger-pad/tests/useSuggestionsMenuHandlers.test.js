@@ -2,10 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { keyToString } from '@dxos/crypto';
 import EditorPad from '@dxos/editor-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
