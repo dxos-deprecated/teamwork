@@ -201,6 +201,7 @@ export class PartyManager {
   }
 
   async enterItemInParty (partyName, itemName) {
+    await waitUntil(this.page, async () => (await this.getPartyIndex(partyName) !== -1))
     const partyIndex = await this.getPartyIndex(partyName);
     const itemSelector = partyCardSelector(partyIndex) + listItemSelector(itemName);
     await this.page.click(itemSelector);
