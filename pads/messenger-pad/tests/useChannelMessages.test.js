@@ -5,7 +5,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { keyToString } from '@dxos/crypto';
 import { ClientProvider } from '@dxos/react-client';
 
 import MESSENGER_PAD from '../src/index';
@@ -16,18 +15,16 @@ describe('Test useChannelMessages()', () => {
   let client;
   let party;
   let channelId;
-  let topic;
 
   beforeAll(async () => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
-    topic = keyToString(party.key);
     channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
   });
 
-  it('Send message', async () => {
-    const render = () => useChannelMessages(topic, channelId);
+  it('Sends message', async () => {
+    const render = () => useChannelMessages(party.key.toHex(), channelId);
 
     const wrapper = ({ children }) => <ClientProvider client={client}>{children}</ClientProvider>;
     const { result } = renderHook(render, { wrapper });

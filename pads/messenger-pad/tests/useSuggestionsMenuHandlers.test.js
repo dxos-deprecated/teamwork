@@ -20,7 +20,6 @@ import { setupClient, createItem } from './util';
 describe('Test useSuggestionsMenuHandler', () => {
   let client;
   let party;
-  let topic;
   let channelId;
   let item;
   const itemName = 'testing-editor';
@@ -38,7 +37,6 @@ describe('Test useSuggestionsMenuHandler', () => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
-    topic = keyToString(party.key);
 
     channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
     item = await createItem(party, EDITOR_PAD, client, itemName);
@@ -51,7 +49,7 @@ describe('Test useSuggestionsMenuHandler', () => {
       </ClientProvider>
     );
 
-    const render = () => useSuggestionsMenuHandlers(topic, pads, [item], editor, () => null, channelId);
+    const render = () => useSuggestionsMenuHandlers(party.key.toHex(), pads, [item], editor, () => null, channelId);
     const { result } = renderHook(render, { wrapper });
 
     expect(result.error).toBeUndefined();
