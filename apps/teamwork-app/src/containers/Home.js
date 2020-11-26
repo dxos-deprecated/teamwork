@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
-import { keyToString } from '@dxos/crypto';
 import {
   AppContainer,
   PartyCard,
@@ -91,7 +90,7 @@ const Home = () => {
     const parsed = JSON.parse(data);
     assert(Array.isArray(parsed));
     const newParty = await client.echo.createParty();
-    const newPartyTopic = keyToString(newParty.key);
+    const newPartyTopic = newParty.key.toHex();
     const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
     parsed.forEach(msg => newPartyModel.appendMessage(msg));
   };

@@ -2,10 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { keyToString } from '@dxos/crypto';
 import EditorPad from '@dxos/editor-pad';
 import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
@@ -20,7 +19,6 @@ import { setupClient, createItem } from './util';
 describe('Test useSuggestionsMenuHandler', () => {
   let client;
   let party;
-  let topic;
   let channelId;
   let item;
   const itemName = 'testing-editor';
@@ -38,7 +36,6 @@ describe('Test useSuggestionsMenuHandler', () => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
-    topic = keyToString(party.key);
 
     channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
     item = await createItem(party, EDITOR_PAD, client, itemName);
@@ -51,7 +48,7 @@ describe('Test useSuggestionsMenuHandler', () => {
       </ClientProvider>
     );
 
-    const render = () => useSuggestionsMenuHandlers(topic, pads, [item], editor, () => null, channelId);
+    const render = () => useSuggestionsMenuHandlers(party.key.toHex(), pads, [item], editor, () => null, channelId);
     const { result } = renderHook(render, { wrapper });
 
     expect(result.error).toBeUndefined();
