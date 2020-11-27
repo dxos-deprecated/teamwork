@@ -42,6 +42,7 @@
 - [ ] Create chat room
 - [ ] Create task list
 - [ ] Check that device invitation works
+- [ ] Rename party
 
 ### Planner:
 - [ ] Open planner board from Machine A
