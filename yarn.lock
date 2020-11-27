@@ -1185,10 +1185,10 @@
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
-"@dxos/botkit-client@^2.7.19-alpha.0":
-  version "2.7.19-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-2.7.19-alpha.0.tgz#36528c53d684a6c22930364dda941f8d8a7a0293"
-  integrity sha512-WGKh5lhcUa3x/fzdfN/1NkIauDReYAGv5P1gE0Qp3basBBgR0mFGqOxZOyV+j0cH2qfpczH6s7ZjYoSqOwHnsQ==
+"@dxos/botkit-client@^2.7.20-alpha.0":
+  version "2.7.20-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-2.7.20-alpha.0.tgz#66a6485a5c069d6356cfe3d708a106032a1851dd"
+  integrity sha512-FHnWVXOuKy4RCwL82TfsGPmB5bWGPmvx3PzKqRF37We/b7fo3ZlDUh34kdoNPEuaFuBdk3jYVtuggpux4n+hfA==
   dependencies:
     "@dxos/async" "1.0.0-beta.10"
     "@dxos/crypto" "1.0.5"
@@ -1355,10 +1355,10 @@
     semver "^7.1.1"
     yargs "^11.0.0"
 
-"@dxos/client@^2.7.19-alpha.0":
-  version "2.7.19-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.7.19-alpha.0.tgz#c5f7edc31bd41df6ca67b968b19a939715336810"
-  integrity sha512-Iej5urIsv37Z9VW3NX8a7vT5D2hJpfz4+JHX1ypGctRqhsi05BCzwEKRg69TixEcPjJBwkb4G8CyhTMETQk5PA==
+"@dxos/client@^2.7.20-alpha.0":
+  version "2.7.20-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.7.20-alpha.0.tgz#cfb8c81d58004677aa3eb52c9d6bfbffd287235a"
+  integrity sha512-deLAyQAS46043WOUV+wpb+HNNfhl21i87CF5HUkexwbIwqtJSLEJR7b0Atmx2wc1M7aonFgtFfb+/n1vWdlE3g==
   dependencies:
     "@dxos/async" "1.0.0-beta.10"
     "@dxos/credentials" "2.1.12-alpha.0"
@@ -2147,20 +2147,20 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
-"@dxos/react-appkit@2.7.19-alpha.0":
-  version "2.7.19-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-appkit/-/react-appkit-2.7.19-alpha.0.tgz#f7998ace1c4251b01ec9c1091dd00d5570060d3f"
-  integrity sha512-nFFp++tLbnxNnEQuzAaZ4C2wf4/h+nVsmInUBteq6edCYNNiHIdQGUvyHid3L8bb5YHVy9LMpWk8PRBVDapwZw==
+"@dxos/react-appkit@2.7.20-alpha.0":
+  version "2.7.20-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-appkit/-/react-appkit-2.7.20-alpha.0.tgz#95ec6bcb3a2fceb587a096111457002e5d614f42"
+  integrity sha512-cK03SOTVXuXbGI+NtJphhYkOKzyA+RczTtZk0U0h86IQkb3Denp/ajb9TbcyK5DIZ6L3jsPihlbW+X7d9/Qfmw==
   dependencies:
-    "@dxos/botkit-client" "^2.7.19-alpha.0"
+    "@dxos/botkit-client" "^2.7.20-alpha.0"
     "@dxos/credentials" "2.1.12-alpha.0"
     "@dxos/crypto" "1.0.5"
     "@dxos/debug" "^1.0.0-beta.73"
     "@dxos/metrics" "^1.0.0-beta.6"
-    "@dxos/react-client" "^2.7.19-alpha.0"
+    "@dxos/react-client" "^2.7.20-alpha.0"
     "@dxos/react-json-tree" "^0.11.3"
-    "@dxos/react-router" "^2.7.19-alpha.0"
-    "@dxos/react-ux" "^2.7.19-alpha.0"
+    "@dxos/react-router" "^2.7.20-alpha.0"
+    "@dxos/react-ux" "^2.7.20-alpha.0"
     "@material-ui/core" "^4.9.0"
     "@material-ui/data-grid" "^4.0.0-alpha.8"
     "@material-ui/icons" "^4.5.1"
@@ -2181,13 +2181,13 @@
     string-hash "^1.1.3"
     url-join "^4.0.1"
 
-"@dxos/react-client@2.7.19-alpha.0", "@dxos/react-client@^2.7.19-alpha.0":
-  version "2.7.19-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.7.19-alpha.0.tgz#e0ded989e37ad876b7c2a58a5a17595e37e91d97"
-  integrity sha512-sjcdvwDHnwpjqOY5HTOOfYATNwhanI4kmXzDgSbGnFrP59sNNVwe9lK3zqnQ/T1Sn/5Xj4NM7wBrVdsM8xrD4Q==
+"@dxos/react-client@2.7.20-alpha.0", "@dxos/react-client@^2.7.20-alpha.0":
+  version "2.7.20-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.7.20-alpha.0.tgz#796b46e6f471e11e9311d0fd030c6e1a85631bd1"
+  integrity sha512-C8bFUQqvL2P9mGcQKYv+TzniweRJcLcDoHWM2SmYywkDz7+BSnthq9WBTvTFzqAfa6smljb0139aXNmep9FPkw==
   dependencies:
     "@dxos/async" "1.0.0-beta.10"
-    "@dxos/client" "^2.7.19-alpha.0"
+    "@dxos/client" "^2.7.20-alpha.0"
     "@dxos/credentials" "2.1.12-alpha.0"
     "@dxos/crypto" "1.0.5"
     "@dxos/debug" "^1.0.0-beta.73"
@@ -2209,10 +2209,10 @@
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-router@2.7.19-alpha.0", "@dxos/react-router@^2.7.19-alpha.0":
-  version "2.7.19-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-router/-/react-router-2.7.19-alpha.0.tgz#57a10d13d1f9d6166f705ed2601d5b23aab14241"
-  integrity sha512-QiEWGH6URyKuZbLS5qwDxsx8ocj9olKjJn4o+SWlZbZVEXfSPgw6pLaLuzcEXZ0WqP/0aJ1D0aYaoXKQw9IeCw==
+"@dxos/react-router@2.7.20-alpha.0", "@dxos/react-router@^2.7.20-alpha.0":
+  version "2.7.20-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-router/-/react-router-2.7.20-alpha.0.tgz#115a3554a8e6dc92e27fc5d9dea65a7cf0b346f0"
+  integrity sha512-w/KB9OFAxgiHO9WsM8bJ4NZJqrnPHTRv4mdZUo6lCirYg5BtKP5BybKFJWObex9d/hm/mT+3sV4j/kL8MHEcJg==
   dependencies:
     "@material-ui/core" "^4.9.0"
     "@material-ui/icons" "^4.5.1"
@@ -2222,10 +2222,10 @@
     react-router-dom "^5.1.2"
     uuid "^3.3.3"
 
-"@dxos/react-ux@2.7.19-alpha.0", "@dxos/react-ux@^2.7.19-alpha.0":
-  version "2.7.19-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.7.19-alpha.0.tgz#ae4cc9ee857a62185d69cd82fc6a7abe338ffc95"
-  integrity sha512-sBZE6P+GoDcGNCFmfuWHJoHzRkg5O4Q1XiXwg96zhn4ZE+GwQqCrieYkcmtrKK5FZnz9fj0/snbsTd6j/omWag==
+"@dxos/react-ux@2.7.20-alpha.0", "@dxos/react-ux@^2.7.20-alpha.0":
+  version "2.7.20-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.7.20-alpha.0.tgz#818118594ee69882b6d6508d3d1cd22f362b8741"
+  integrity sha512-wUcdYutdof0pSZpRHubnwtIG1BCYGFLrdHiiLfvWdeU/g4KMl2da/5HoY+1FkRgaUFUDud9gJTaJ5hiWVNliSQ==
   dependencies:
     "@dxos/crypto" "1.0.5"
     "@dxos/debug" "^1.0.0-beta.73"
