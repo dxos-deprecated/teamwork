@@ -250,4 +250,22 @@ export class PartyManager {
     const itemsSelector = partyCardSelector(partyIndex) + '//li' + classSelector('span', 'MuiTypography');
     return await this.page.$$eval(itemsSelector, items => items.map(item => item.innerHTML));
   }
+
+  async authorizeDevice () {
+    const headerMoreButtonSelector = '//header' + attributeSelector('button', '@aria-label', 'More');
+    await this.page.click(headerMoreButtonSelector);
+
+    const authorizeDeviceSelector = attributeSelector('li', 'text()', 'Authorize device');
+    await this.page.click(authorizeDeviceSelector);
+
+    const link = { key: null };
+    await this.subscribeForLink(link);
+
+    const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
+    await this.page.click(copyButtonSelector);
+
+    await waitUntil(this.page, () => !!link.key);
+
+    return link.key;
+  }
 }

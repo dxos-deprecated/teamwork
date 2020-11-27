@@ -256,7 +256,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test offline invitation flow', () => {
+  describe('Test general actions', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
@@ -271,5 +271,9 @@ describe('Perform testrun steps', () => {
       expect(partyNames.length).toEqual(initialPartyNumber + 1);
       expect(partyNames.includes(newPartyName)).toBeTruthy();
     });
+
+    it('Authorize device', async () => {
+      
+    })
   });
 });
