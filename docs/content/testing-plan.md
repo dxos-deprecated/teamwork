@@ -41,6 +41,7 @@
 - [ ] Create text document
 - [ ] Create chat room
 - [ ] Create task list
+- [ ] Check that device invitation works
 
 ### Planner:
 - [ ] Open planner board from Machine A
