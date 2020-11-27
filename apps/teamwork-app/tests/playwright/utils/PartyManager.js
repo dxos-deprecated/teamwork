@@ -22,12 +22,10 @@ export class PartyManager {
   }
 
   async createParty () {
-    const cardsSelector = classSelector('div', 'MuiGrid-item');
     await this.page.waitForSelector(cardsSelector);
     const initialPartyNames = await this.getPartyNames();
 
     const newPartyButtonSelector = '(//button[@name=\'new-party\'])[1]';
-    await this.page.waitForSelector(newPartyButtonSelector);
     await this.page.click(newPartyButtonSelector);
 
     const cardTitlesSelector = cardsSelector + '//h2';
@@ -54,13 +52,11 @@ export class PartyManager {
 
   async clickSharePartyButton (partyIdx) {
     const shareButtonSelector = `(${attributeSelector('div', '@name', 'share')})[${partyIdx}]`;
-    await this.page.waitForSelector(shareButtonSelector);
     await this.page.click(shareButtonSelector);
   }
 
   async closeSharePartyDialog () {
     const doneButtonSelector = textButtonSelector('Done');
-    await this.page.waitForSelector(doneButtonSelector);
     await this.page.click(doneButtonSelector);
   }
 
@@ -75,7 +71,6 @@ export class PartyManager {
     await this.page.click(inviteUserButtonSelector);
 
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
-    await this.page.waitForSelector(copyButtonSelector);
     await this.page.click(copyButtonSelector);
 
     await waitUntil(this.page, () => !!invitation.key);
@@ -93,7 +88,6 @@ export class PartyManager {
 
     await this.page.click(addUserButtonSelector);
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
-    await this.page.waitForSelector(copyButtonSelector);
     await this.page.click(copyButtonSelector);
 
     await waitUntil(this.page, () => !!invitation.key);
@@ -130,16 +124,18 @@ export class PartyManager {
   }
 
   async fillPasscode (passcode) {
-    await this.page.waitForSelector('input');
     await this.page.fill('input', passcode);
     const sendButtonSelector = textButtonSelector('Submit');
-    await this.page.waitForSelector(sendButtonSelector);
     await this.page.click(sendButtonSelector);
   }
 
+  async isDialogClosed () {
+    return await isSelectorDeleted(this.page, dialogSelector);
+  }
+
   async isPartyExisting (partyName) {
-    const partyNameSelector = cardsSelector + classSelector('div', 'MuiCardHeader-content') + attributeSelector('h2', 'text()', partyName);
-    return await isSelectorExisting(partyNameSelector);
+    const partyNameSelector = cardsSelector + attributeSelector('h2', 'text()', partyName);
+    return await isSelectorExisting(this.page, partyNameSelector);
   }
 
   async isUserInParty (partyName, username) {

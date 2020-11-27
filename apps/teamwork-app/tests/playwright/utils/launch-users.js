@@ -27,8 +27,10 @@ export const launchUsers = async () => {
   const passcode = await userA.partyManager.getPasscode();
   await userB.partyManager.fillPasscode(passcode);
 
-  await userB.partyManager.isUserInParty('Untitled', userA.username);
+  const defaultPartyName = 'Untitled';
+  await userB.partyManager.isUserInParty(defaultPartyName, userA.username);
   await userA.partyManager.closeSharePartyDialog();
 
-  return { userA, userB };
+  await userB.waitUntil(async () => await userB.partyManager.isDialogClosed());
+  return { userA, userB, defaultPartyName };
 };

@@ -39,6 +39,7 @@ describe('Perform testrun steps', () => {
     const setup = await launchUsers();
     userA = setup.userA;
     userB = setup.userB;
+    partyName = setup.defaultPartyName;
   });
 
   afterAll(async () => {
@@ -48,9 +49,13 @@ describe('Perform testrun steps', () => {
 
   describe('Test Party actions', () => {
     const { taskList, board, editor, messenger } = store;
+    const { taskListName } = taskList;
 
     it('Rename party', async () => {
-      
+      const newName = 'Testing Party';
+      await userA.partyManager.renameParty(partyName, newName);
+      partyName = newName;
+      expect(await userB.partyManager.isPartyExisting(newName)).toBeTruthy();
     });
 
     it('Add items', async () => {
@@ -94,7 +99,7 @@ describe('Perform testrun steps', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
-      // await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
+      await userA.partyManager.enterItemInParty(partyName, taskListName);
       await userB.partyManager.enterItemInParty(partyName, taskListName);
     });
 
@@ -128,7 +133,7 @@ describe('Perform testrun steps', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
-      await userA.partyManager.addItemToParty(partyName, 'Messenger', messengerName);
+      await userA.partyManager.enterItemInParty(partyName, messengerName);
       await userB.partyManager.enterItemInParty(partyName, messengerName);
     });
 
@@ -148,7 +153,7 @@ describe('Perform testrun steps', () => {
     let { firstColumnName } = store.board;
 
     beforeAll(async () => {
-      await userA.partyManager.addItemToParty(partyName, 'Board', boardName);
+      await userA.partyManager.enterItemInParty(partyName, boardName);
       await userB.partyManager.enterItemInParty(partyName, boardName);
     });
 
@@ -217,7 +222,7 @@ describe('Perform testrun steps', () => {
       await userA.tasksManager.addTask(taskName);
       await userA.goToHomePage();
 
-      await userA.partyManager.addItemToParty(partyName, 'Documents', editorName);
+      await userA.partyManager.enterItemInParty(partyName, editorName);
       await userB.partyManager.enterItemInParty(partyName, editorName);
     });
 
@@ -251,29 +256,8 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Party actions', () => {
-    const { taskListName } = store.taskList;
-
-    it('Archive item', async () => {
-      await userA.partyManager.archiveItemInParty(partyName, taskListName);
-      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
-    });
-
-    it('Show archived items', async () => {
-      await userA.partyManager.showArchivedItems(partyName);
-      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
-      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
-    });
-
-    it('Restore archived items', async () => {
-      await userA.partyManager.restoreItemInParty(partyName, taskListName);
-      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
-      expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
-    });
-  });
-
   // TODO(rzadp): Reimplement - component changed in SDK
-  describe('Test offline invitation flow', () => {
+  describe.skip('Test offline invitation flow', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
