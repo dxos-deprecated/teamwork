@@ -42,10 +42,10 @@ describe('Perform testrun steps', () => {
     partyName = setup.defaultPartyName;
   });
 
-  afterAll(async () => {
-    userA && await userA.closeBrowser();
-    userB && await userB.closeBrowser();
-  });
+  // afterAll(async () => {
+  //   userA && await userA.closeBrowser();
+  //   userB && await userB.closeBrowser();
+  // });
 
   describe('Test Party actions', () => {
     const { taskList, board, editor, messenger } = store;
@@ -256,8 +256,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  // TODO(rzadp): Reimplement - component changed in SDK
-  describe.skip('Test offline invitation flow', () => {
+  describe('Test offline invitation flow', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
