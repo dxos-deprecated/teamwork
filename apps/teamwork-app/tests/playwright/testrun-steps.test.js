@@ -10,14 +10,17 @@ describe('Perform testrun steps', () => {
   const store = {
     messenger: {
       messengerName: 'Testing Chat',
-      message: 'Testing message'
+      message: 'Testing message',
+      itemType: 'Messenger'
     },
     taskList: {
       taskListName: 'Testing Task List',
-      taskName: 'New test task name'
+      taskName: 'New test task name',
+      itemType: 'Tasks'
     },
     board: {
       boardName: 'Testing Planner',
+      itemType: 'Board',
       newColumnName: 'New Column',
       cardA: 'Content of card A',
       cardB: 'Content of card B',
@@ -26,7 +29,8 @@ describe('Perform testrun steps', () => {
       firstColumnName: undefined
     },
     editor: {
-      editorName: 'Testing Editor'
+      editorName: 'Testing Editor',
+      itemType: 'Documents'
     }
   };
 
@@ -35,7 +39,6 @@ describe('Perform testrun steps', () => {
     const setup = await launchUsers();
     userA = setup.userA;
     userB = setup.userB;
-    partyName = setup.partyName;
   });
 
   afterAll(async () => {
@@ -43,11 +46,55 @@ describe('Perform testrun steps', () => {
     userB && await userB.closeBrowser();
   });
 
-  describe('Test TaskList', () => {
+  describe('Test Party actions', () => {
+    const { taskList, board, editor, messenger } = store;
+
+    it('Rename party', async () => {
+      
+    });
+
+    it('Add items', async () => {
+      await userA.partyManager.addItemToParty(partyName, taskList.itemType, taskList.taskListName);
+      await userA.goToHomePage();
+
+      await userA.partyManager.addItemToParty(partyName, board.itemType, board.boardName);
+      await userA.goToHomePage();
+
+      await userA.partyManager.addItemToParty(partyName, editor.itemType, editor.editorName);
+      await userA.goToHomePage();
+
+      await userA.partyManager.addItemToParty(partyName, messenger.itemType, messenger.messengerName);
+      await userA.goToHomePage();
+
+      expect(await userB.partyManager.isItemExisting(partyName, taskList.taskListName)).toBeTruthy();
+      expect(await userB.partyManager.isItemExisting(partyName, board.boardName)).toBeTruthy();
+      expect(await userB.partyManager.isItemExisting(partyName, editor.editorName)).toBeTruthy();
+      expect(await userB.partyManager.isItemExisting(partyName, messenger.messengerName)).toBeTruthy();
+    });
+
+    it('Archive item', async () => {
+      await userA.partyManager.archiveItemInParty(partyName, taskListName);
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
+    });
+
+    it('Show archived items', async () => {
+      await userA.partyManager.showArchivedItems(partyName);
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
+      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+    });
+
+    it('Restore archived items', async () => {
+      await userA.partyManager.restoreItemInParty(partyName, taskListName);
+      expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+      expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+    });
+  });
+
+  describe.skip('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
-      await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
+      // await userA.partyManager.addItemToParty(partyName, 'Tasks', taskListName);
       await userB.partyManager.enterItemInParty(partyName, taskListName);
     });
 
@@ -77,7 +124,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Messenger', () => {
+  describe.skip('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -96,7 +143,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Planner Board', () => {
+  describe.skip('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -161,7 +208,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Editor', () => {
+  describe.skip('Test Editor', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
@@ -204,7 +251,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Party actions', () => {
+  describe.skip('Test Party actions', () => {
     const { taskListName } = store.taskList;
 
     it('Archive item', async () => {
@@ -226,7 +273,7 @@ describe('Perform testrun steps', () => {
   });
 
   // TODO(rzadp): Reimplement - component changed in SDK
-  describe.skip('Test offline invitation flow', () => {
+  describe('Test offline invitation flow', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);

@@ -41,6 +41,17 @@ export class PartyManager {
     return newCardName;
   }
 
+  async renameParty (currentName, newName) {
+    const partyIndex = await this.getPartyIndex(currentName);
+    const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    await this.page.click(settingsButtonSelector);
+
+    const inputSelector = dialogSelector + attributeSelector('input', '@type', 'text');
+    await this.page.click(inputSelector, { clickCount: 2 });
+    await this.page.fill(inputSelector, newName);
+    await this.page.click(textButtonSelector('Done'));
+  }
+
   async clickSharePartyButton (partyIdx) {
     const shareButtonSelector = `(${attributeSelector('div', '@name', 'share')})[${partyIdx}]`;
     await this.page.waitForSelector(shareButtonSelector);
@@ -201,7 +212,7 @@ export class PartyManager {
   }
 
   async enterItemInParty (partyName, itemName) {
-    await waitUntil(this.page, async () => (await this.getPartyIndex(partyName) !== -1))
+    await waitUntil(this.page, async () => (await this.getPartyIndex(partyName) !== -1));
     const partyIndex = await this.getPartyIndex(partyName);
     const itemSelector = partyCardSelector(partyIndex) + listItemSelector(itemName);
     await this.page.click(itemSelector);
@@ -236,5 +247,11 @@ export class PartyManager {
     const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
     await this.page.click(showDeletedItemsLabelSelector);
     await this.page.click(textButtonSelector('Done'));
+  }
+
+  async getItemsNames (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const itemsSelector = partyCardSelector(partyIndex) + '//li' + classSelector('span', 'MuiTypography');
+    return await this.page.$$eval(itemsSelector, items => items.map(item => item.innerHTML));
   }
 }
