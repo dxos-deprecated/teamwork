@@ -4,8 +4,7 @@
 
 import Icon from '@material-ui/icons/Description';
 
-import { MessengerModel } from '@dxos/messenger-model';
-import { MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-pad';
+import { MessengerModel, MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-model';
 import { ObjectModel } from '@dxos/object-model';
 import { TextModel } from '@dxos/text-model';
 
