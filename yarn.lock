@@ -1838,13 +1838,6 @@
     react-hotkeys "^2.0.0"
     react-resize-aware "^3.0.0"
 
-"@dxos/lint-version@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@dxos/lint-version/-/lint-version-0.1.2.tgz#8c4411c3140dca6762508073cb9a048e741c20ff"
-  integrity sha512-K86lpkVxyyu21EsMy3CF5j11FsSJdMTdNJX4jgjao5d6Yey+NKEKz4Yd7gKC0p1H0gFXJwIBFhAByabPWn0w1Q==
-  dependencies:
-    semver "^7.3.2"
-
 "@dxos/metrics@^1.0.0-beta.6":
   version "1.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/@dxos/metrics/-/metrics-1.0.0-beta.9.tgz#1ed14a0c2b9890a71ba4f1091b80d9cac9c6d080"
@@ -2329,6 +2322,17 @@
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
+
+"@dxos/version-check@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@dxos/version-check/-/version-check-0.1.10.tgz#afe5cc21ce9f6c57c8d4ecb2dae8b4858b2cb061"
+  integrity sha512-WYjbAJ6BKJnyC9s0oOFaIt6gyUMEpsPGozDOpdPwKflw0X5659ymUznCnP1gsE4OX6IgUnQcoegR+HzeAY0jvw==
+  dependencies:
+    "@types/yargs" "^15.0.9"
+    chalk "^4.1.0"
+    node-fetch "^2.6.1"
+    semver "^7.3.2"
+    yargs "^16.1.1"
 
 "@emotion/cache@^10.0.27", "@emotion/cache@^10.0.9":
   version "10.0.29"
@@ -5156,6 +5160,13 @@
   version "15.0.9"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.9.tgz#524cd7998fe810cdb02f26101b699cccd156ff19"
   integrity sha512-HmU8SeIRhZCWcnRskCs36Q1Q00KBV6Cqh/ora8WN1+22dY07AZdn6Gel8QZ3t26XYPImtcL8WV/eqjhVmMEw4g==
+  dependencies:
+    "@types/yargs-parser" "*"
+
+"@types/yargs@^15.0.9":
+  version "15.0.10"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.10.tgz#0fe3c8173a0d5c3e780b389050140c3f5ea6ea74"
+  integrity sha512-z8PNtlhrj7eJNLmrAivM7rjBESG6JwC5xP3RVk12i/8HVP7Xnx/sEmERnRImyEuUaJfO942X0qMOYsoupaJbZQ==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -14646,7 +14657,7 @@ json5@^2.1.1, json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-"jsondown@github:dxos/jsondown":
+jsondown@dxos/jsondown:
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
@@ -23161,7 +23172,7 @@ y18n@^3.2.1:
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
   integrity sha512-r9S/ZyXu/Xu9q1tYlpsLIsa3EeLXXk0VwlxqTcFRfg9EhMW+17kbt9G0NrgCmhGb5vT2hyhJZLfDGx+7+5Uj/w==
 
-y18n@^5.0.2:
+y18n@^5.0.2, y18n@^5.0.5:
   version "5.0.5"
   resolved "https://registry.yarnpkg.com/y18n/-/y18n-5.0.5.tgz#8769ec08d03b1ea2df2500acef561743bbb9ab18"
   integrity sha512-hsRUr4FFrvhhRH12wOdfs38Gy7k2FFzB9qgN9v3aLykRq0dRcdcpz5C9FxdS2NuhOrI/628b/KSTJ3rwHysYSg==
@@ -23346,6 +23357,19 @@ yargs@^16.0.0:
     require-directory "^2.1.1"
     string-width "^4.2.0"
     y18n "^5.0.2"
+    yargs-parser "^20.2.2"
+
+yargs@^16.1.1:
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-16.1.1.tgz#5a4a095bd1ca806b0a50d0c03611d38034d219a1"
+  integrity sha512-hAD1RcFP/wfgfxgMVswPE+z3tlPFtxG8/yWUrG2i17sTWGCGqWnxKcLTF4cUKDUK8fzokwsmO9H0TDkRbMHy8w==
+  dependencies:
+    cliui "^7.0.2"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.0"
+    y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
 yauzl@^2.10.0, yauzl@^2.4.2:
