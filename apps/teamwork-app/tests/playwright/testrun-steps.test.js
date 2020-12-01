@@ -41,7 +41,7 @@ describe('Perform testrun steps', () => {
   };
 
   beforeAll(async () => {
-    jest.setTimeout(60 * 1000);
+    jest.setTimeout(100 * 1000);
     const setup = await launchUsers(browser, startUrl);
     userA = setup.userA;
     userB = setup.userB;
