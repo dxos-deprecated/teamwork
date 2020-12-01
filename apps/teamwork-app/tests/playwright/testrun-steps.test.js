@@ -46,11 +46,12 @@ describe('Perform testrun steps', () => {
     userA = setup.userA;
     userB = setup.userB;
     partyName = setup.defaultPartyName;
+    console.log('Users launched');
   });
 
   afterAll(async () => {
-    userA && await userA.closeBrowser();
-    userB && await userB.closeBrowser();
+    userA && await userA.page.waitForTimeout(1000) && await userA.closeBrowser();
+    userB && await userA.page.waitForTimeout(1000) && await userB.closeBrowser();
   });
 
   describe('Test Party actions', () => {
