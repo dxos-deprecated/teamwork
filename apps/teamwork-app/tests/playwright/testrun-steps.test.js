@@ -219,7 +219,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
     });
 
-    //it sometimes fails randomly
+    // it sometimes fails randomly
     it.skip('Drag item between columns', async () => {
       await userA.boardManager.dragCard(cardA, firstColumnName, newColumnName);
       expect(await userB.boardManager.isCardExisting(cardA, newColumnName)).toBeTruthy();
