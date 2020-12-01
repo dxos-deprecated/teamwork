@@ -40,6 +40,9 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
   const handleNewTaskChange = (event) => setNewTask(event.target.value);
 
   const handleAdd = async () => {
+    if (!newTask) {
+      return;
+    }
     await onAdd({ text: newTask });
     setNewTask('');
   };
