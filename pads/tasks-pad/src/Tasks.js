@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 760,
     margin: '0 auto',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
   },
