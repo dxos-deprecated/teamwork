@@ -49,8 +49,14 @@ describe('Perform testrun steps', () => {
   });
 
   afterAll(async () => {
-    userA && await userA.page.waitForTimeout(1000) && await userA.closeBrowser();
-    userB && await userA.page.waitForTimeout(1000) && await userB.closeBrowser();
+    if (userA) {
+      await userA.page.waitForTimeout(1000);
+      await userA.closeBrowser();
+    }
+    if (userB) {
+      await userB.page.waitForTimeout(1000);
+      await userB.closeBrowser();
+    }
   });
 
   describe('Test Party actions', () => {
