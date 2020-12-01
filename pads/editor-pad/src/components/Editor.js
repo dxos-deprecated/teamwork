@@ -51,6 +51,9 @@ const useEditorClasses = makeStyles(theme => ({
       display: 'inline-block'
     }
   },
+  editorContainer: {
+    padding: '8px 8px 128px 8px'
+  },
   snackButton: {
     '&:last-child': {
       marginLeft: theme.spacing()
