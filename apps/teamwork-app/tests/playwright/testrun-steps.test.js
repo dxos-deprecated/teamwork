@@ -2,7 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
+import { firefox } from 'playwright';
+
+import { User } from './utils/User';
 import { launchUsers } from './utils/launch-users.js';
+
+const browser = firefox;
+const startUrl = 'localhost:8080';
 
 describe('Perform testrun steps', () => {
   let userA, userB, partyName;
@@ -35,17 +41,17 @@ describe('Perform testrun steps', () => {
   };
 
   beforeAll(async () => {
-    jest.setTimeout(1e6);
-    const setup = await launchUsers();
+    jest.setTimeout(60 * 1000);
+    const setup = await launchUsers(browser, startUrl);
     userA = setup.userA;
     userB = setup.userB;
     partyName = setup.defaultPartyName;
   });
 
-  // afterAll(async () => {
-  //   userA && await userA.closeBrowser();
-  //   userB && await userB.closeBrowser();
-  // });
+  afterAll(async () => {
+    userA && await userA.closeBrowser();
+    userB && await userB.closeBrowser();
+  });
 
   describe('Test Party actions', () => {
     const { taskList, board, editor, messenger } = store;
@@ -95,7 +101,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test TaskList', () => {
+  describe('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -129,7 +135,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Messenger', () => {
+  describe('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -148,7 +154,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Planner Board', () => {
+  describe('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -207,13 +213,13 @@ describe('Perform testrun steps', () => {
       expect(await userB.boardManager.isCardExisting(cardA, firstColumnName)).toBeTruthy();
     });
 
-    it.skip('Drag item between columns', async () => {
+    it('Drag item between columns', async () => {
       await userA.boardManager.dragCard(cardA, firstColumnName, newColumnName);
       expect(await userB.boardManager.isCardExisting(cardA, newColumnName)).toBeTruthy();
     });
   });
 
-  describe.skip('Test Editor', () => {
+  describe('Test Editor', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
@@ -267,13 +273,43 @@ describe('Perform testrun steps', () => {
         return (await userB.partyManager.getPartyNames()).length > initialPartyNumber;
       });
 
+      await userA.partyManager.closeSharePartyDialog();
+
       const partyNames = await userB.partyManager.getPartyNames();
       expect(partyNames.length).toEqual(initialPartyNumber + 1);
       expect(partyNames.includes(newPartyName)).toBeTruthy();
     });
 
     it('Authorize device', async () => {
-      
-    })
+      const url = await userA.partyManager.authorizeDevice();
+      const newDeviceUser = new User('New Device');
+      await newDeviceUser.launch(browser, url);
+
+      const passcode = await userA.partyManager.getAuthorizeDevicePasscode();
+      await newDeviceUser.partyManager.fillPasscode(passcode);
+
+      await newDeviceUser.waitUntil(async () =>
+        (await newDeviceUser.partyManager.getPartyNames()).length > 0
+      );
+
+      await newDeviceUser.waitUntil(async () =>
+        !(await newDeviceUser.partyManager.getPartyNames()).includes('Loading...')
+      );
+
+      const partyNames = await newDeviceUser.partyManager.getPartyNames();
+      expect(partyNames.includes(partyName)).toBeTruthy();
+
+      await newDeviceUser.closeBrowser();
+    });
+
+    it('Recover seed phrase', async () => {
+      const recoveredUser = new User('Recovered User');
+      await recoveredUser.launchBrowser(browser, startUrl);
+
+      expect(async () => await recoveredUser.recoverWallet(userA.seedPhrasePath)).not.toThrow();
+      expect(await recoveredUser.getAccountName()).toEqual(userA.username);
+
+      await recoveredUser.closeBrowser();
+    });
   });
 });

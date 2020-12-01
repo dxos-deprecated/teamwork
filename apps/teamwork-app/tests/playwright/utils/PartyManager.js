@@ -56,7 +56,7 @@ export class PartyManager {
   }
 
   async closeSharePartyDialog () {
-    const doneButtonSelector = textButtonSelector('Done');
+    const doneButtonSelector = dialogSelector + textButtonSelector('Done');
     await this.page.click(doneButtonSelector);
   }
 
@@ -67,7 +67,7 @@ export class PartyManager {
     await this.page.waitForSelector(inviteUserButtonSelector);
 
     const invitation = { key: null };
-    await this.subscribeForLink(invitation);
+    await this.subscribeForInvitation(invitation);
     await this.page.click(inviteUserButtonSelector);
 
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
@@ -84,7 +84,7 @@ export class PartyManager {
     await this.page.waitForSelector(addUserButtonSelector);
 
     const invitation = { key: null };
-    await this.subscribeForLink(invitation);
+    await this.subscribeForInvitation(invitation);
 
     await this.page.click(addUserButtonSelector);
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
@@ -105,12 +105,24 @@ export class PartyManager {
     await this.clickSharePartyButton(partyIdx);
   }
 
-  async subscribeForLink (invitation) {
-    const linkRegex = /==$/g;
+  async subscribeForInvitation (invitation) {
+    const invitationRegex = /==$/g;
+
+    this.page.waitForEvent('console', message => {
+      if (message.text().match(invitationRegex)) {
+        invitation.key = message.text();
+        return true;
+      }
+      return false;
+    });
+  }
+
+  async subscribeForLink (link) {
+    const linkRegex = /^http/g;
 
     this.page.waitForEvent('console', message => {
       if (message.text().match(linkRegex)) {
-        invitation.key = message.text();
+        link.url = message.text();
         return true;
       }
       return false;
@@ -124,7 +136,9 @@ export class PartyManager {
   }
 
   async fillPasscode (passcode) {
-    await this.page.fill('input', passcode);
+    const inputSelector = dialogSelector + '//input';
+    await this.page.click(inputSelector);
+    await this.page.fill(inputSelector, passcode);
     const sendButtonSelector = textButtonSelector('Submit');
     await this.page.click(sendButtonSelector);
   }
@@ -258,14 +272,26 @@ export class PartyManager {
     const authorizeDeviceSelector = attributeSelector('li', 'text()', 'Authorize device');
     await this.page.click(authorizeDeviceSelector);
 
-    const link = { key: null };
+    const link = { url: null };
     await this.subscribeForLink(link);
 
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
     await this.page.click(copyButtonSelector);
 
-    await waitUntil(this.page, () => !!link.key);
+    await waitUntil(this.page, () => !!link.url);
 
-    return link.key;
+    return link.url;
+  }
+
+  async getAuthorizeDevicePasscode () {
+    const digitsSelector = dialogSelector + classSelector('div', 'secret') + classSelector('div', 'char');
+    let passcode;
+    await waitUntil(this.page, async () => {
+      passcode = (await this.page.$$eval(digitsSelector, digits =>
+        digits.map(digit => digit.innerHTML)
+      )).join('');
+      return /[0-9]{4}/.test(passcode);
+    });
+    return passcode;
   }
 }

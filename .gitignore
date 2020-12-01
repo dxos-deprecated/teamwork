@@ -114,3 +114,6 @@ dist
 
 # Playwright videos
 *.webm
+
+# Playwright downloads
+downloads/
