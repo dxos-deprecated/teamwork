@@ -201,7 +201,7 @@ export class PartyManager {
   }
 
   async enterItemInParty (partyName, itemName) {
-    await waitUntil(this.page, async () => (await this.getPartyIndex(partyName) !== -1))
+    await waitUntil(this.page, async () => (await this.getPartyIndex(partyName) !== -1));
     const partyIndex = await this.getPartyIndex(partyName);
     const itemSelector = partyCardSelector(partyIndex) + listItemSelector(itemName);
     await this.page.click(itemSelector);
@@ -232,8 +232,10 @@ export class PartyManager {
   async showArchivedItems (partyName) {
     const partyIndex = await this.getPartyIndex(partyName);
     const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    console.log({ settingsButtonSelector });
     await this.page.click(settingsButtonSelector);
     const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
+    console.log({ showDeletedItemsLabelSelector });
     await this.page.click(showDeletedItemsLabelSelector);
     await this.page.click(textButtonSelector('Done'));
   }
