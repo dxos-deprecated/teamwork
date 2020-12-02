@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    overflow: 'hidden'
+    overflowX: 'auto'
   },
 
   titleRoot: {
