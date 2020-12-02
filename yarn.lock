@@ -1166,7 +1166,12 @@
     semver "^7.1.1"
     yargs "^11.0.0"
 
-"@dxos/async@1.0.0-beta.10", "@dxos/async@^1.0.0-beta.1", "@dxos/async@^1.0.0-beta.10", "@dxos/async@^1.0.0-beta.8":
+"@dxos/async@1.0.2-alpha.0":
+  version "1.0.2-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/async/-/async-1.0.2-alpha.0.tgz#cb46d597567a178225e8a67b71cf5e3e5e257a68"
+  integrity sha512-d9UgIaLbmuYHP24WASQX8OI1GJbJVy2021VqczIuDF0m3C5tHIqC7yr75L5eC4BAalEQoPGYcpWnzgD6ZpjiBw==
+
+"@dxos/async@^1.0.0-beta.1", "@dxos/async@^1.0.0-beta.10", "@dxos/async@^1.0.0-beta.8":
   version "1.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@dxos/async/-/async-1.0.0-beta.10.tgz#a1247891cbdee3b84614c92d6790a7d7695e9260"
   integrity sha512-U3f1afmdl8KNjK8y89E89G+Cd2l52+Wjww92hZ9IfiU6wOvNsNG9WRruAYCOoRpBMYaEv/QJq+UuLhgD5o8iSQ==
@@ -1185,19 +1190,30 @@
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
 
-"@dxos/botkit-client@^2.7.21-alpha.0":
-  version "2.7.21-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-2.7.21-alpha.0.tgz#9a42aabfaa1adc2f46f046be6471d9f9851328a8"
-  integrity sha512-AJNeB4fHAZjjIkm7mSgQWXX8E8X/gs9C370UEMS5k5LTaqwDB7KkQjwFkkw1DN9ho7auGJUm50fDSa3bcBInZQ==
+"@dxos/botkit-client@^2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/botkit-client/-/botkit-client-2.7.24-alpha.0.tgz#12ccb04680aa574f2029fb880d981cb6667fe177"
+  integrity sha512-FoHFusnLrCIF2/nk9ppL6Qe1WdHw4b3DFxKxHrydt9u4Uq3/zO6N000P7UeeK43VrX58mZWZNlZfVEbSvGIV5A==
   dependencies:
-    "@dxos/async" "1.0.0-beta.10"
+    "@dxos/async" "1.0.2-alpha.0"
     "@dxos/crypto" "1.0.5"
-    "@dxos/debug" "^1.0.0-beta.73"
-    "@dxos/network-manager" "^1.0.0-beta.108"
-    "@dxos/protocol-plugin-bot" "^2.7.17-alpha.0"
+    "@dxos/debug" "1.0.0-beta.73"
+    "@dxos/network-manager" "1.0.0-beta.113"
+    "@dxos/protocol-plugin-bot" "^2.7.24-alpha.0"
     assert "^2.0.0"
     debug "^4.1.1"
     hypercore-crypto "^1.0.0"
+
+"@dxos/broadcast@1.0.0-beta.11":
+  version "1.0.0-beta.11"
+  resolved "https://registry.yarnpkg.com/@dxos/broadcast/-/broadcast-1.0.0-beta.11.tgz#531a1e709332ab64b14b29b859343a8a09a9e0ba"
+  integrity sha512-3EYET2GxFdl2/s3OqNmL27wMPLDoyt9hasdBuwpGCytGNud8XHtfbXI03UJsNSVMZqPkBH1H2HGs4IDO5iig2w==
+  dependencies:
+    "@dxos/codec-protobuf" "1.1.0-beta.11"
+    debug "^4.1.1"
+    nanoresource-promise "^2.0.0"
+    source-map-support "^0.5.12"
+    tiny-lru "^7.0.6"
 
 "@dxos/broadcast@^1.0.0-beta.6":
   version "1.0.0-beta.10"
@@ -1355,24 +1371,24 @@
     semver "^7.1.1"
     yargs "^11.0.0"
 
-"@dxos/client@^2.7.21-alpha.0":
-  version "2.7.21-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.7.21-alpha.0.tgz#555145d80ec05ba675c6fa88a58176daf3c7b16f"
-  integrity sha512-YPj2SSzFH9WFBnRr1CujLNGCUmGB7OOnWP7Y7Gy2MR+2kkhPswMuPzErtyhgF331sIVw8mftRXrTY/Wo2WwI6A==
+"@dxos/client@^2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/client/-/client-2.7.24-alpha.0.tgz#4076069e4790b37a537563b3fb662045992dd9f1"
+  integrity sha512-o1HmYIYjkSR0YwrUD+45CTs7AiSUCgzGlboCZZhwOimB9NICD7eknvbLBRjbajxDE2WQm/xZRvA9jPBJsmQMEQ==
   dependencies:
-    "@dxos/async" "1.0.0-beta.10"
+    "@dxos/async" "1.0.2-alpha.0"
     "@dxos/credentials" "2.1.12-alpha.0"
     "@dxos/crypto" "1.0.5"
-    "@dxos/debug" "^1.0.0-beta.73"
-    "@dxos/echo-db" "2.6.7-alpha.0"
-    "@dxos/feed-store" "^1.2.0-beta.2"
-    "@dxos/metrics" "^1.0.0-beta.6"
-    "@dxos/model-factory" "2.6.7-alpha.0"
-    "@dxos/network-manager" "^1.0.0-beta.108"
-    "@dxos/object-model" "2.6.7-alpha.0"
-    "@dxos/protocol" "^1.1.0-beta.19"
-    "@dxos/protocol-plugin-replicator" "^1.1.0-alpha.4"
-    "@dxos/util" "^2.5.0-alpha.0"
+    "@dxos/debug" "1.0.0-beta.73"
+    "@dxos/echo-db" "2.6.8-alpha.0"
+    "@dxos/feed-store" "1.2.0-beta.30"
+    "@dxos/metrics" "1.0.0-beta.9"
+    "@dxos/model-factory" "2.6.8-alpha.0"
+    "@dxos/network-manager" "1.0.0-beta.113"
+    "@dxos/object-model" "2.6.8-alpha.0"
+    "@dxos/protocol" "1.1.0-beta.21"
+    "@dxos/protocol-plugin-replicator" "1.1.0-beta.21"
+    "@dxos/util" "2.6.8-alpha.0"
     "@geut/discovery-swarm-webrtc" "^3.0.0-beta.3"
     "@wirelineio/registry-client" "^1.1.0-beta.2"
     assert "^2.0.0"
@@ -1401,14 +1417,18 @@
     through2 "^3.0.1"
     wrtc "^0.4.3"
 
-"@dxos/codec-protobuf@^0.2.0", "@dxos/codec-protobuf@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-0.2.2.tgz#364a24e83cb70497dbcec0defe42016348fcabd6"
-  integrity sha512-DkFkkciaSLbn6jnD8wwfpzyEOhwMHRQHHNJziN+NmfEWbhmvgyUAWsB4cVmvaGfaYWEhOrmloBtBZMMn6XDilw==
+"@dxos/codec-protobuf@1.1.0-beta.10":
+  version "1.1.0-beta.10"
+  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-1.1.0-beta.10.tgz#f217e871a4e4a8c4665ae02ac1a9dfba1b264c44"
+  integrity sha512-4EZg4kpvNZQ9s1ufs2TXP/ReYE/riB5t6+yJYI+ZHDtEXRPVtgoreSzZyiSMboPTG3fqanH0pe4lW6nuBzwiiA==
   dependencies:
-    protobufjs "^6.10.1"
+    assert "^2.0.0"
+    buffer "^5.4.3"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
 
-"@dxos/codec-protobuf@^1.1.0-beta.2", "@dxos/codec-protobuf@^1.1.0-beta.7", "@dxos/codec-protobuf@^1.1.0-beta.9":
+"@dxos/codec-protobuf@1.1.0-beta.11", "@dxos/codec-protobuf@^1.1.0-beta.2", "@dxos/codec-protobuf@^1.1.0-beta.7", "@dxos/codec-protobuf@^1.1.0-beta.9":
   version "1.1.0-beta.11"
   resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-1.1.0-beta.11.tgz#2325420040ce97a450390e097ae60f525a62b80c"
   integrity sha512-8TlF1BrGSymjcKnvrbFJA1WS3PwTofhbXSTe38f4ydyghBSqZ52u8fVC7v1vxLrOHtST+irqG+T8zzAFGCuWRg==
@@ -1417,6 +1437,20 @@
     buffer "^5.4.3"
     lodash.merge "^4.6.2"
     protobufjs "^6.9.0"
+
+"@dxos/codec-protobuf@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-1.1.1.tgz#905bba854905e49d30c8ba3426057b3261f35a17"
+  integrity sha512-z2VDf5sqBG/0fNEYC1bYmsaiGBP3gaQ6BKodHvLHkUgFImxszAzbjdBVm7waXqQU19CXKkahKTbfrjtLKLzdZQ==
+  dependencies:
+    protobufjs "^6.10.1"
+
+"@dxos/codec-protobuf@^0.2.0", "@dxos/codec-protobuf@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@dxos/codec-protobuf/-/codec-protobuf-0.2.2.tgz#364a24e83cb70497dbcec0defe42016348fcabd6"
+  integrity sha512-DkFkkciaSLbn6jnD8wwfpzyEOhwMHRQHHNJziN+NmfEWbhmvgyUAWsB4cVmvaGfaYWEhOrmloBtBZMMn6XDilw==
+  dependencies:
+    protobufjs "^6.10.1"
 
 "@dxos/config@^1.0.0-beta.67", "@dxos/config@^1.0.0-beta.68", "@dxos/config@^1.0.0-beta.73":
   version "1.0.0-beta.74"
@@ -1526,7 +1560,7 @@
     humanhash "^1.0.4"
     hypercore-crypto "^1.0.0"
 
-"@dxos/debug@^1.0.0-beta.67", "@dxos/debug@^1.0.0-beta.68", "@dxos/debug@^1.0.0-beta.73":
+"@dxos/debug@1.0.0-beta.73", "@dxos/debug@^1.0.0-beta.67", "@dxos/debug@^1.0.0-beta.68", "@dxos/debug@^1.0.0-beta.73":
   version "1.0.0-beta.73"
   resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.73.tgz#0bbc4d4a5f48bde79394c78d323d62255ec2fb26"
   integrity sha512-wiDCYA+stgNyhXZUNj5xGxWxyKFbJw3pwrzU9PGnmYh0J0DXrJwvJ8dkBITxDXQRLESKFW1SW5ixb/7kmTl77w==
@@ -1569,23 +1603,23 @@
     source-map-support "^0.5.12"
     stream-buffers "^3.0.2"
 
-"@dxos/echo-db@2.6.7-alpha.0":
-  version "2.6.7-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-2.6.7-alpha.0.tgz#61a7f1a7120626043a5a4a0797efc871d7961b6a"
-  integrity sha512-oeAzfZfPCsL7MsL4VjXiK+VxzdP1P+rqURuPG/WZPDhLimWIz6SemD4qgYn+YInYQ/futziLS9YxVcqG8zp1vQ==
+"@dxos/echo-db@2.6.8-alpha.0":
+  version "2.6.8-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-2.6.8-alpha.0.tgz#1c5ec0d0972d43c3553d948c826926e824cf1b5f"
+  integrity sha512-Qz/LDYb7mIq+v79mvNU4j2E2yEdsHeSGRnt65PWnmJ0G8nhSQlMuWM2nB5gJHNu8BBpJpySPU8iEigRGOn5X9g==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
     "@dxos/credentials" "^2.1.12-alpha.0"
     "@dxos/crypto" "^1.0.5"
-    "@dxos/echo-protocol" "^2.6.7-alpha.0"
+    "@dxos/echo-protocol" "^2.6.8-alpha.0"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/model-factory" "^2.6.7-alpha.0"
+    "@dxos/model-factory" "^2.6.8-alpha.0"
     "@dxos/network-manager" "^1.0.0-beta.108"
-    "@dxos/object-model" "^2.6.7-alpha.0"
+    "@dxos/object-model" "^2.6.8-alpha.0"
     "@dxos/protocol-plugin-replicator" "^1.1.0-beta.14"
     "@dxos/random-access-multi-storage" "^1.1.0-beta.7"
-    "@dxos/util" "^2.6.7-alpha.0"
+    "@dxos/util" "^2.6.8-alpha.0"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/json-stable-stringify" "^1.0.32"
@@ -1657,17 +1691,17 @@
     readable-stream "^3.6.0"
     source-map-support "^0.5.12"
 
-"@dxos/echo-protocol@^2.6.7-alpha.0":
-  version "2.6.7-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/echo-protocol/-/echo-protocol-2.6.7-alpha.0.tgz#9f1f5dcf45d339c6fa93b43649496611a5b2149b"
-  integrity sha512-/Cuskw9DHHb0Gt8O+S7YaTiP+CyYa+L6eiTYnbXvog6PvMvNGD481sgbGTPeUSRmIM8iW39SOppQl7JElQoNsw==
+"@dxos/echo-protocol@^2.6.8-alpha.0":
+  version "2.6.8-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-protocol/-/echo-protocol-2.6.8-alpha.0.tgz#565ebea65466fd8ec5999ee9e315d56c60d199a4"
+  integrity sha512-V5En2ceT6x0B7Yix9MmzkZrQ3uwqTyXv5q5bmW9zGWUHeaERuY0YMHeXWolD9dDg1rTHa9zUPjMWqeI8sZHSJA==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
     "@dxos/credentials" "^2.1.12-alpha.0"
     "@dxos/crypto" "^1.0.5"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/util" "^2.6.7-alpha.0"
+    "@dxos/util" "^2.6.8-alpha.0"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -1746,7 +1780,7 @@
     eslint-plugin-promise "^4.2.1"
     eslint-plugin-standard "^4.0.1"
 
-"@dxos/feed-store@^1.2.0-beta.2", "@dxos/feed-store@^1.2.0-beta.23", "@dxos/feed-store@^1.2.0-beta.30":
+"@dxos/feed-store@1.2.0-beta.30", "@dxos/feed-store@^1.2.0-beta.23", "@dxos/feed-store@^1.2.0-beta.30":
   version "1.2.0-beta.30"
   resolved "https://registry.yarnpkg.com/@dxos/feed-store/-/feed-store-1.2.0-beta.30.tgz#6a6f4d233496679e5e24405a6bfaa0bd6c4363cc"
   integrity sha512-o7xH0ddhVT0shzpx37V9jGHr68/aD+8AcDmhNLuiGSvlncVnBpv8r2NDKTcOJv1u0eVZBo6A2jemAfe56TCyiQ==
@@ -1838,7 +1872,7 @@
     react-hotkeys "^2.0.0"
     react-resize-aware "^3.0.0"
 
-"@dxos/metrics@^1.0.0-beta.6":
+"@dxos/metrics@1.0.0-beta.9", "@dxos/metrics@^1.0.0-beta.6":
   version "1.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/@dxos/metrics/-/metrics-1.0.0-beta.9.tgz#1ed14a0c2b9890a71ba4f1091b80d9cac9c6d080"
   integrity sha512-ZVLAYJHPKgjJFh3pn52MC90MhkUGnbADFtFT5bQwondI5c5Dv9TVelfL5PoJ/WN5jPNRzxxXCa/tMdwjI2b5xw==
@@ -1878,17 +1912,17 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/model-factory@2.6.7-alpha.0", "@dxos/model-factory@^2.6.7-alpha.0":
-  version "2.6.7-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-2.6.7-alpha.0.tgz#e4f876a57e5e875b6d3c902c3189360880dc932a"
-  integrity sha512-k0rIStEHMPIUsXmXOhDG36SnwzqmZh9PtV6isF9k01E2QynQhGGdu7TsriVkqmtfRC9r1zeTN32byxcNqn+3EA==
+"@dxos/model-factory@2.6.8-alpha.0", "@dxos/model-factory@^2.6.8-alpha.0":
+  version "2.6.8-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-2.6.8-alpha.0.tgz#f182ad65679e285d571d7e7ef94f35f87c335d24"
+  integrity sha512-/ZLLTk/qnuLC17xOOWVdSzrvBr2wr2x4rX8Q+PIgtLPE/LzG9DZ5wXkH3Y7So3/xISOT8cjjODTzdr4ty1PC+g==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
     "@dxos/crypto" "^1.0.5"
-    "@dxos/echo-protocol" "^2.6.7-alpha.0"
+    "@dxos/echo-protocol" "^2.6.8-alpha.0"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/util" "^2.6.7-alpha.0"
+    "@dxos/util" "^2.6.8-alpha.0"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -1950,7 +1984,7 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/network-manager@^1.0.0-beta.108":
+"@dxos/network-manager@1.0.0-beta.113", "@dxos/network-manager@^1.0.0-beta.108":
   version "1.0.0-beta.113"
   resolved "https://registry.yarnpkg.com/@dxos/network-manager/-/network-manager-1.0.0-beta.113.tgz#0b3e9c670088e82868b69ea5b67dacfc37452865"
   integrity sha512-CLqxPnZZD+BsjRKdzBdKVsRbLkm4OKmNszZ94exXUCreu6DNYP9AGUqMsoWqcTIu1fp/w+8WIjbR5hpPIUfKcg==
@@ -1964,18 +1998,18 @@
     debug "^4.1.1"
     wrtc "^0.4.3"
 
-"@dxos/object-model@2.6.7-alpha.0", "@dxos/object-model@^2.6.7-alpha.0":
-  version "2.6.7-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/object-model/-/object-model-2.6.7-alpha.0.tgz#aace47f25f7fa7de1c157ca3d65caf2d90f2fe60"
-  integrity sha512-J7phGzoVX6HyZUTaV3Smgp0fssR3ivmmzB9xkTz1s1zgcCO+7XQ2d3YQ0oXNXigOeCle0WLl5JMiuAlgAW8aKA==
+"@dxos/object-model@2.6.8-alpha.0", "@dxos/object-model@^2.6.8-alpha.0":
+  version "2.6.8-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/object-model/-/object-model-2.6.8-alpha.0.tgz#fc19d5e2d4bc71530aeb30383e3906aebae63c92"
+  integrity sha512-CRG++exxpg/Qt3uTQGddQwZkGLqrlS/PoC01gUtCRLXHUdiOravhmxqW0dwjb/JLzNxwx/wU9f8NthbIIB3zzg==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
     "@dxos/crypto" "^1.0.5"
-    "@dxos/echo-protocol" "^2.6.7-alpha.0"
+    "@dxos/echo-protocol" "^2.6.8-alpha.0"
     "@dxos/feed-store" "^1.2.0-beta.30"
-    "@dxos/model-factory" "^2.6.7-alpha.0"
-    "@dxos/util" "^2.6.7-alpha.0"
+    "@dxos/model-factory" "^2.6.8-alpha.0"
+    "@dxos/util" "^2.6.8-alpha.0"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -2060,18 +2094,29 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/protocol-plugin-bot@^2.7.17-alpha.0":
-  version "2.7.17-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-bot/-/protocol-plugin-bot-2.7.17-alpha.0.tgz#5da82aef2426cde3fac788504c5e0fe4bec4764b"
-  integrity sha512-bFDjFC8tF1Hzxv/ttiwYrxKbnMvoUJjKnJBw8rq7cpwqPyX1ZbHq6zRN89W7iL8/stSakE9ZL58X///T4cR2UA==
+"@dxos/protocol-plugin-bot@^2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-bot/-/protocol-plugin-bot-2.7.24-alpha.0.tgz#f32270167be26c600953ceada25e5aa85661c2c7"
+  integrity sha512-7ngFMxg1BM5Tr5PdethMUMFpF6JKMZDRPkbxHNJBGUDMMvkU67LuKD2z6sWyIyIMnni7CiUEPeMnYc95eb5diQ==
   dependencies:
-    "@dxos/broadcast" "^1.0.0-beta.6"
-    "@dxos/codec-protobuf" "^0.2.2"
+    "@dxos/broadcast" "1.0.0-beta.11"
+    "@dxos/codec-protobuf" "1.1.1"
     "@dxos/crypto" "1.0.5"
-    "@dxos/protocol" "^1.1.0-beta.19"
+    "@dxos/protocol" "1.1.0-beta.21"
     debug "^4.1.1"
 
-"@dxos/protocol-plugin-replicator@^1.1.0-alpha.4", "@dxos/protocol-plugin-replicator@^1.1.0-beta.14":
+"@dxos/protocol-plugin-replicator@1.1.0-beta.21":
+  version "1.1.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-replicator/-/protocol-plugin-replicator-1.1.0-beta.21.tgz#e0b35f504c8b5e675fe0545789bbb4cc25a027bc"
+  integrity sha512-8r2BZL7+O63v8zM0N4ybZdEBQ6mrIfStnHeV9PAR8xUWRTB5ADBZ0uf1rwkcc4sPDore1O5eXAYigXuWTPrpRA==
+  dependencies:
+    "@dxos/codec-protobuf" "1.1.0-beta.10"
+    "@dxos/protocol" "^1.1.0-beta.21"
+    buffer-json-encoding "^1.0.2"
+    debug "^4.1.1"
+    source-map-support "^0.5.12"
+
+"@dxos/protocol-plugin-replicator@^1.1.0-beta.14":
   version "1.1.0-beta.18"
   resolved "https://registry.yarnpkg.com/@dxos/protocol-plugin-replicator/-/protocol-plugin-replicator-1.1.0-beta.18.tgz#4b1c39bc27b35c0a05d9bf27c265fcdf5668d4da"
   integrity sha512-n1mTE6LLNK83Nl6E8sU9+JEpuxvVlVarEkPIhyE+UC8UjpSuddNFicXE3GyjT5CaK3mSpu90CTISBtyE9ZIfsw==
@@ -2082,12 +2127,12 @@
     debug "^4.1.1"
     source-map-support "^0.5.12"
 
-"@dxos/protocol@^1.1.0-beta.1", "@dxos/protocol@^1.1.0-beta.18":
-  version "1.1.0-beta.18"
-  resolved "https://registry.yarnpkg.com/@dxos/protocol/-/protocol-1.1.0-beta.18.tgz#6b90cf448967996893c0f1858ed7cd474fd7686b"
-  integrity sha512-UvAZOfzaWazjlzckTxKMVG5eLbFfKBBzfzrBgLgEX/LfYSUZSQb+IlkEvuN44dfuKo6MTT/RU6oRugagmY0ong==
+"@dxos/protocol@1.1.0-beta.21", "@dxos/protocol@^1.1.0-beta.21":
+  version "1.1.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol/-/protocol-1.1.0-beta.21.tgz#f408b1dc1b62f22d1e1622ff2cae07bbf903948a"
+  integrity sha512-6Yfem13SddgRtWmgO5TjPPO/gJR7oPeGaGwU9fiFPPugyo+gY/kiOF+nbJ8ATQLy+V9uTZKUq8d4IoAUH/S6xw==
   dependencies:
-    "@dxos/codec-protobuf" "^1.1.0-beta.9"
+    "@dxos/codec-protobuf" "1.1.0-beta.10"
     assert "^2.0.0"
     buffer-json-encoding "^1.0.2"
     debug "^4.1.1"
@@ -2100,10 +2145,10 @@
     signal-promise "^1.0.3"
     source-map-support "^0.5.12"
 
-"@dxos/protocol@^1.1.0-beta.19":
-  version "1.1.0-beta.20"
-  resolved "https://registry.yarnpkg.com/@dxos/protocol/-/protocol-1.1.0-beta.20.tgz#bc3349064ae4dfa3906765217f62d3e212abdf81"
-  integrity sha512-yjnPeti74tOqR3vmC6ISPIoAMlj3kVh6iQ0aG9hCZZSp6q8UA7825CMTM5klyHdF5YpclypewGkzwC8hzGfslQ==
+"@dxos/protocol@^1.1.0-beta.1", "@dxos/protocol@^1.1.0-beta.18":
+  version "1.1.0-beta.18"
+  resolved "https://registry.yarnpkg.com/@dxos/protocol/-/protocol-1.1.0-beta.18.tgz#6b90cf448967996893c0f1858ed7cd474fd7686b"
+  integrity sha512-UvAZOfzaWazjlzckTxKMVG5eLbFfKBBzfzrBgLgEX/LfYSUZSQb+IlkEvuN44dfuKo6MTT/RU6oRugagmY0ong==
   dependencies:
     "@dxos/codec-protobuf" "^1.1.0-beta.9"
     assert "^2.0.0"
@@ -2126,7 +2171,7 @@
     mutexify "^1.3.0"
     random-access-storage "^1.3.0"
 
-"@dxos/random-access-multi-storage@^1.1.0-beta.4", "@dxos/random-access-multi-storage@^1.1.0-beta.7":
+"@dxos/random-access-multi-storage@1.1.0-beta.7", "@dxos/random-access-multi-storage@^1.1.0-beta.4", "@dxos/random-access-multi-storage@^1.1.0-beta.7":
   version "1.1.0-beta.7"
   resolved "https://registry.yarnpkg.com/@dxos/random-access-multi-storage/-/random-access-multi-storage-1.1.0-beta.7.tgz#9940269c6e554b3b3ea9e73264f1cfa4378b332b"
   integrity sha512-m5vFPG4z5UjwmXjyZyhqnxsnS6HwZ6daCXCj79hfxthVRV70cKhw9hsnKiyeeUxgf7MF9ogfIbHD/I66OLpAYQ==
@@ -2139,20 +2184,20 @@
     random-access-memory "^3.1.1"
     random-access-web "^2.0.3"
 
-"@dxos/react-appkit@2.7.21-alpha.0":
-  version "2.7.21-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-appkit/-/react-appkit-2.7.21-alpha.0.tgz#07acbbecf585bc3808c1d213adc56453e1d0eff7"
-  integrity sha512-OqYFnjPVbmxWQT3ur/PbdDFE/h/gU4LYalyTKk7GDi/g9zuxWEMsQ2fWd1iK7nekp7yk/UaokisOl55jb0wlxQ==
+"@dxos/react-appkit@2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-appkit/-/react-appkit-2.7.24-alpha.0.tgz#dc70320e65e68ac35d95e5def642009ddd14f7c2"
+  integrity sha512-WedfQmtLTZXc4LMJfdMM4VQrS/ieijHTkfWZjbL1TBFsYQ2nCR15pWHUvWWuiLGbWJMqo5wuURLujm3vYq9Y3g==
   dependencies:
-    "@dxos/botkit-client" "^2.7.21-alpha.0"
+    "@dxos/botkit-client" "^2.7.24-alpha.0"
     "@dxos/credentials" "2.1.12-alpha.0"
     "@dxos/crypto" "1.0.5"
-    "@dxos/debug" "^1.0.0-beta.73"
-    "@dxos/metrics" "^1.0.0-beta.6"
-    "@dxos/react-client" "^2.7.21-alpha.0"
-    "@dxos/react-json-tree" "^0.11.3"
-    "@dxos/react-router" "^2.7.21-alpha.0"
-    "@dxos/react-ux" "^2.7.21-alpha.0"
+    "@dxos/debug" "1.0.0-beta.73"
+    "@dxos/metrics" "1.0.0-beta.9"
+    "@dxos/react-client" "^2.7.24-alpha.0"
+    "@dxos/react-json-tree" "0.12.0"
+    "@dxos/react-router" "^2.7.24-alpha.0"
+    "@dxos/react-ux" "^2.7.24-alpha.0"
     "@material-ui/core" "^4.9.0"
     "@material-ui/data-grid" "^4.0.0-alpha.8"
     "@material-ui/icons" "^4.5.1"
@@ -2173,19 +2218,19 @@
     string-hash "^1.1.3"
     url-join "^4.0.1"
 
-"@dxos/react-client@2.7.21-alpha.0", "@dxos/react-client@^2.7.21-alpha.0":
-  version "2.7.21-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.7.21-alpha.0.tgz#c4b23be44fd50acec9a78e731b1a767d822a283a"
-  integrity sha512-dldR51JkwhhOhhF+B/tBFW/K4A2LsLKvUDQYgT8VsbkdwtJdI4PvYznVod08eXHduYUtAIy85Eu9XTd6bRfy/g==
+"@dxos/react-client@2.7.24-alpha.0", "@dxos/react-client@^2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-client/-/react-client-2.7.24-alpha.0.tgz#4585b5b355a0c1fc06e93bd1b3f939de1fa20d64"
+  integrity sha512-RX0jVjzx1R6bC6y+Ws+a+FyOndLYAnnGFe89Hefwm1d2ZjAHgimcNEtur+L1q0o6VC8JWCCo/qqG/DSfCoLhlQ==
   dependencies:
-    "@dxos/async" "1.0.0-beta.10"
-    "@dxos/client" "^2.7.21-alpha.0"
+    "@dxos/async" "1.0.2-alpha.0"
+    "@dxos/client" "^2.7.24-alpha.0"
     "@dxos/credentials" "2.1.12-alpha.0"
     "@dxos/crypto" "1.0.5"
-    "@dxos/debug" "^1.0.0-beta.73"
-    "@dxos/echo-db" "2.6.7-alpha.0"
-    "@dxos/metrics" "^1.0.0-beta.6"
-    "@dxos/random-access-multi-storage" "^1.1.0-beta.7"
+    "@dxos/debug" "1.0.0-beta.73"
+    "@dxos/echo-db" "2.6.8-alpha.0"
+    "@dxos/metrics" "1.0.0-beta.9"
+    "@dxos/random-access-multi-storage" "1.1.0-beta.7"
     level-js "^5.0.2"
     memdown "^5.1.0"
     pify "^4.0.1"
@@ -2193,18 +2238,18 @@
     react-router-dom "^5.1.2"
     use-deep-compare-effect "^1.3.0"
 
-"@dxos/react-json-tree@^0.11.3":
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/@dxos/react-json-tree/-/react-json-tree-0.11.3.tgz#a0fc73cdb36e2543f1fd05c6a1809dc980bc825e"
-  integrity sha512-s3AuXu9OjHkIh8zVUvER71netI4oH92pco67gKeFpVy7aB0MzSigNCA+dmIFGxF3qlEeSf8BYzz5GRM2EjuGng==
+"@dxos/react-json-tree@0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-json-tree/-/react-json-tree-0.12.0.tgz#34d1366e562ff1b0e9877c5d9eb9e9dfe5fa84f8"
+  integrity sha512-91SX0KeQlD+AXxoVawKjLFpyVlulVxvo+EniA7FyeyZDQ/zXOVd+64Ncf7T32ADeoPwv49zco2VhPM8Dr1qkyA==
   dependencies:
     prop-types "^15.5.8"
     react-base16-styling "^0.5.1"
 
-"@dxos/react-router@2.7.21-alpha.0", "@dxos/react-router@^2.7.21-alpha.0":
-  version "2.7.21-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-router/-/react-router-2.7.21-alpha.0.tgz#7e88c7eaa8c4b692ef44dbebaf696a7c5af238f5"
-  integrity sha512-xSL2ZZ6KzqdWPtV50y9MKBcSIAg2neUsFqgpw/tLSjSs1S+U3J4xmm1tEH4FhaQWN05IoyRqXcmsBDw/U8n46A==
+"@dxos/react-router@2.7.24-alpha.0", "@dxos/react-router@^2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-router/-/react-router-2.7.24-alpha.0.tgz#984487f6533bfb5ff39bf80581f837241bf36402"
+  integrity sha512-RcyX6PSMNOJxcsuveVPtGMwiryYP4dkW6KG5yctARGH8SZAOAsu+23J6iWpuSxH5mZf8AX/0VHSe10Axn9p/iQ==
   dependencies:
     "@material-ui/core" "^4.9.0"
     "@material-ui/icons" "^4.5.1"
@@ -2214,13 +2259,13 @@
     react-router-dom "^5.1.2"
     uuid "^3.3.3"
 
-"@dxos/react-ux@2.7.21-alpha.0", "@dxos/react-ux@^2.7.21-alpha.0":
-  version "2.7.21-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.7.21-alpha.0.tgz#756036922dd3a2b073ee412cc345e6ac43121a11"
-  integrity sha512-u/XuDt2JtMCZR1H0hQUM/NCg4/Z1OT3nl0tKzFF8uzyy8Bwx+ACV8xqaa5Bk7fOWQEZcymlkKUCTsWBpJ/uXzw==
+"@dxos/react-ux@2.7.24-alpha.0", "@dxos/react-ux@^2.7.24-alpha.0":
+  version "2.7.24-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/react-ux/-/react-ux-2.7.24-alpha.0.tgz#fe1ea40013d3f6e6174bd7538121d4229ce5af8a"
+  integrity sha512-4D3+WBDQA7GiEhPZmwsNcmU9iuPjKxISYjRmHKbdHmQNKGH0G68YSvlsHcdV8AQ2rntisHCg0q70UdIQDWOjGQ==
   dependencies:
     "@dxos/crypto" "1.0.5"
-    "@dxos/debug" "^1.0.0-beta.73"
+    "@dxos/debug" "1.0.0-beta.73"
     "@material-ui/core" "^4.9.0"
     "@material-ui/icons" "^4.5.1"
     "@material-ui/lab" "^4.0.0-alpha.42"
@@ -2238,6 +2283,27 @@
     "@dxos/model-factory" "^2.6.6-alpha.0"
     "@types/node" "^14.0.9"
     yjs "^13.4.1"
+
+"@dxos/util@2.6.8-alpha.0", "@dxos/util@^2.6.8-alpha.0":
+  version "2.6.8-alpha.0"
+  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.6.8-alpha.0.tgz#e144e539cf3f1251416329c515889bdac9764123"
+  integrity sha512-N7uObqLULr28vRrKLFQDsVtxm4QGicae/F73Z/dd85VXUXuilnByYuA6Xdpf1ZflAuG3+4cKY4GwlYOAmJXMGQ==
+  dependencies:
+    "@dxos/async" "^1.0.0-beta.8"
+    "@dxos/codec-protobuf" "^0.2.2"
+    "@dxos/crypto" "^1.0.5"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
 
 "@dxos/util@^2.1.0", "@dxos/util@^2.4.0":
   version "2.4.0"
@@ -2260,52 +2326,10 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/util@^2.5.0-alpha.0":
-  version "2.5.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.5.0-alpha.0.tgz#2ec056f288a36d18ab2c835f6ee284094e13d98d"
-  integrity sha512-tqzc0BDpckelQhF3lbOPBB/jrvfXScBd5x+tA0Kcoh0jsuckyKeexspZkENvOwtLITfxO5QPij7Zj2nhb4m5oA==
-  dependencies:
-    "@dxos/async" "^1.0.0-beta.8"
-    "@dxos/codec-protobuf" "^0.2.0"
-    "@dxos/crypto" "^1.0.0-beta.7"
-    "@types/debug" "^4.1.1"
-    "@types/end-of-stream" "^1.4.0"
-    "@types/lodash" "^4.14.159"
-    "@types/node" "^14.0.9"
-    "@types/stream-buffers" "^3.0.2"
-    "@types/through2" "^2.0.36"
-    debug "^4.1.1"
-    hypercore "^7.7.1"
-    js-data-structs "^1.1.2"
-    lodash.merge "^4.6.2"
-    protobufjs "^6.9.0"
-    source-map-support "^0.5.12"
-
 "@dxos/util@^2.6.6-alpha.0":
   version "2.6.6-alpha.0"
   resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.6.6-alpha.0.tgz#254b96d942c94aeaf236fb0373ec453dea740835"
   integrity sha512-z5Acx1RmJlNe13fosL8ZYNhqDBK30Xj3INNX38XrXyeAsBCtOTBM6XerTGAGUzfMMGwVS0IN44BtJAXPMDVsRA==
-  dependencies:
-    "@dxos/async" "^1.0.0-beta.8"
-    "@dxos/codec-protobuf" "^0.2.2"
-    "@dxos/crypto" "^1.0.5"
-    "@types/debug" "^4.1.1"
-    "@types/end-of-stream" "^1.4.0"
-    "@types/lodash" "^4.14.159"
-    "@types/node" "^14.0.9"
-    "@types/stream-buffers" "^3.0.2"
-    "@types/through2" "^2.0.36"
-    debug "^4.1.1"
-    hypercore "^7.7.1"
-    js-data-structs "^1.1.2"
-    lodash.merge "^4.6.2"
-    protobufjs "^6.9.0"
-    source-map-support "^0.5.12"
-
-"@dxos/util@^2.6.7-alpha.0":
-  version "2.6.7-alpha.0"
-  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.6.7-alpha.0.tgz#b558111b526714433d80afe88ba15cdae0f9f55b"
-  integrity sha512-C0IanUZaoRA8h3iV1xUj/WkYCdMoUWuefYGuhEjPmCOK5mt+kNZSc3QaEMTRJuQ1IErStWWJoQ2BY89wlwMNrg==
   dependencies:
     "@dxos/async" "^1.0.0-beta.8"
     "@dxos/codec-protobuf" "^0.2.2"
@@ -14657,7 +14681,7 @@ json5@^2.1.1, json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
-jsondown@dxos/jsondown:
+"jsondown@github:dxos/jsondown":
   version "1.0.0"
   resolved "https://codeload.github.com/dxos/jsondown/tar.gz/0bec0436f00973e7f2528115c72a5ab96dc45576"
   dependencies:
