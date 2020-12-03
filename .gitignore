@@ -117,3 +117,5 @@ dist
 
 # Playwright downloads
 downloads/
+
+pads/messenger-pad/public/
