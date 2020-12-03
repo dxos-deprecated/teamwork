@@ -6,14 +6,12 @@ import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
 import EditorPad from '@dxos/editor-pad';
-import MessengerPad from '@dxos/messenger-pad';
 import PlannerPad from '@dxos/planner-pad';
 import { ClientProvider } from '@dxos/react-client';
 import TasksPad from '@dxos/tasks-pad';
 
-import EDITOR_PAD from '../../editor-pad/src/index';
+import MessengerPad from '../src';
 import { useSuggestionsMenuHandlers } from '../src/hooks/suggestions';
-import MESSENGER_PAD from '../src/index';
 import { setupClient, createItem } from './util';
 
 describe('Test useSuggestionsMenuHandler', () => {
@@ -37,8 +35,8 @@ describe('Test useSuggestionsMenuHandler', () => {
     client = setup.client;
     party = setup.party;
 
-    channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
-    item = await createItem(party, EDITOR_PAD, client, itemName);
+    channelId = (await createItem(party, MessengerPad, client, 'testing-messenger')).id;
+    item = await createItem(party, EditorPad, client, itemName);
   });
 
   it('Get options', async () => {

@@ -7,7 +7,7 @@ import React from 'react';
 
 import { ClientProvider } from '@dxos/react-client';
 
-import MESSENGER_PAD from '../src/index';
+import MessengerPad from '../src';
 import { useChannelMessages } from '../src/model';
 import { waitUntil, setupClient, createItem } from './util';
 
@@ -20,12 +20,11 @@ describe('Test useChannelMessages()', () => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
-    channelId = (await createItem(party, MESSENGER_PAD, client, 'testing-messenger')).id;
+    channelId = (await createItem(party, MessengerPad, client, 'testing-messenger')).id;
   });
 
   it('Sends message', async () => {
     const render = () => useChannelMessages(party.key.toHex(), channelId);
-
     const wrapper = ({ children }) => <ClientProvider client={client}>{children}</ClientProvider>;
     const { result } = renderHook(render, { wrapper });
 
