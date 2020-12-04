@@ -15,8 +15,7 @@ import {
   PartyCardContainer,
   IpfsHelper,
   PartyFromFileDialog,
-  PartyFromIpfsDialog,
-  usePads
+  PartyFromIpfsDialog
 } from '@dxos/react-appkit';
 import { useClient, useParties, useConfig } from '@dxos/react-client';
 
@@ -51,7 +50,6 @@ const Home = () => {
   const client = useClient();
   const parties = useParties();
   const config = useConfig();
-  const [pads] = usePads();
 
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
@@ -90,20 +88,10 @@ const Home = () => {
   };
 
   const handleImport = async (data) => {
-    console.log('handleimport', data);
-    const bufferData = Buffer.from(data, 'hex')
-    console.log('bufferData', bufferData)
+    const bufferData = Buffer.from(data, 'hex');
     const decodedSnapshot = schema.getCodecForType('dxos.echo.snapshot.DatabaseSnapshot').decode(bufferData);
-    console.log('decodedSnapshot', decodedSnapshot)
 
-    await client.createPartyFromSnapshot(decodedSnapshot)
-
-    // const parsed = JSON.parse(data);
-    // assert(Array.isArray(parsed));
-    // const newParty = await client.echo.createParty();
-    // const newPartyTopic = newParty.key.toHex();
-    // const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
-    // parsed.forEach(msg => newPartyModel.appendMessage(msg));
+    await client.createPartyFromSnapshot(decodedSnapshot);
   };
 
   return (
