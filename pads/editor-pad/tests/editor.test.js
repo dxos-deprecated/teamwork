@@ -37,6 +37,10 @@ describe('Test Editor', () => {
     messengerItem = await createItem(party, MessengerPad, 'testing-messenger');
   });
 
+  afterAll(async () => {
+    await client.destroy();
+  });
+
   it('Render Editor', async () => {
     const title = 'Testing editor';
     expect(() => render(

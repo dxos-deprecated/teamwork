@@ -26,6 +26,10 @@ describe('Test useDocumentUpdateModel()', () => {
     documentId = (await createItem(party, EditorPad, 'testing-editor')).id;
   });
 
+  afterAll(async () => {
+    await client.destroy();
+  });
+
   it('Add content to document', async () => {
     const render = () => useDocumentUpdateModel(party.key.toHex(), documentId);
     const wrapper = ({ children }) => <ClientProvider client={client}>{children}</ClientProvider>;

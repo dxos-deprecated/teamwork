@@ -23,6 +23,10 @@ describe('Test useChannelMessages()', () => {
     channelId = (await createItem(party, MessengerPad, client, 'testing-messenger')).id;
   });
 
+  afterAll(async () => {
+    await client.destroy();
+  });
+
   it('Sends message', async () => {
     const render = () => useChannelMessages(party.key.toHex(), channelId);
     const wrapper = ({ children }) => <ClientProvider client={client}>{children}</ClientProvider>;

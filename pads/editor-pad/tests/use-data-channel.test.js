@@ -26,6 +26,10 @@ describe('Test useDataChannel()', () => {
     documentId = (await createItem(party, EditorPad, 'testing-editor')).id;
   });
 
+  afterAll(async () => {
+    await client.destroy();
+  });
+
   it('Render useDataChannel()', async () => {
     const render = () => useDataChannel(documentId);
     const wrapper = ({ children }) => <ClientProvider client={client}>{children}</ClientProvider>;

@@ -39,6 +39,10 @@ describe('Test useSuggestionsMenuHandler', () => {
     item = await createItem(party, EditorPad, client, itemName);
   });
 
+  afterAll(async () => {
+    await client.destroy();
+  });
+
   it('Get options', async () => {
     const wrapper = ({ children }) => (
       <ClientProvider client={client}>

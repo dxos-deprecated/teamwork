@@ -10,12 +10,17 @@ import tasksPad, { createTask } from '../src/index';
 import { setupClient, createItem } from './util';
 
 describe('Test Tasks', () => {
-  let party;
-  let padId;
+  let party, padId, client;
 
   beforeAll(async () => {
-    party = await setupClient();
+    const setup = await setupClient();
+    party = setup.party;
+    client = setup.client;
     padId = (await createItem(party, tasksPad, 'testing-tasks')).id;
+  });
+
+  afterAll(async () => {
+    await client.destroy();
   });
 
   it('Render Tasks', async () => {
