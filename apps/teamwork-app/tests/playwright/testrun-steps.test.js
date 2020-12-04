@@ -63,7 +63,7 @@ describe('Perform testrun steps', () => {
     const { taskList, board, editor, messenger } = store;
     const { taskListName } = taskList;
 
-    it('Rename party', async () => {
+    it.skip('Rename party', async () => {
       const newName = 'Testing Party';
       await userA.partyManager.renameParty(partyName, newName);
       partyName = newName;
@@ -281,7 +281,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test general actions', () => {
+  describe.skip('Test general actions', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);

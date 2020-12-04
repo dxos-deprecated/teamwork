@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 760,
     margin: '0 auto',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
   },
@@ -40,6 +40,9 @@ export default function Tasks ({ title, items, onAdd, onUpdate }) {
   const handleNewTaskChange = (event) => setNewTask(event.target.value);
 
   const handleAdd = async () => {
+    if (!newTask) {
+      return;
+    }
     await onAdd({ text: newTask });
     setNewTask('');
   };

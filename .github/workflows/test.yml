@@ -21,7 +21,7 @@ jobs:
           yarn build
           yarn lint
           yarn lint:lockfile
-          yarn lint:version
+          yarn version:check
           yarn dist --scope '@dxos/teamwork'
       - run: |
           yarn test:coverage
