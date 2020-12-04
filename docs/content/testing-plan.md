@@ -42,7 +42,6 @@
 - [ ] Create chat room
 - [ ] Create task list
 - [ ] Check that device invitation works
-- [ ] Rename party
 
 ### Planner:
 - [ ] Open planner board from Machine A
@@ -107,10 +106,10 @@
 
 ### Parties operations:
 - [ ] Rename party
-- [ ] Archive party
-- [ ] Verify that You can see archived parties
-- [ ] Unarchive party
-- [ ] Verify that You can see the unarchived party
+- [ ] Deactivate party
+- [ ] Verify that You can see deactivated parties
+- [ ] Activate party
+- [ ] Verify that You can see the activated party
 - [ ] Download party to localhost
 - [ ] Restore party form localhost
 - [ ] Rename documents inside party

@@ -3,10 +3,10 @@
 //
 
 import { BoardManager } from './BoardManager';
+import { EditorManager } from './EditorManager';
 import { MessengerManager } from './MessengerManager';
 import { PartyManager } from './PartyManager';
 import { TasksManager } from './TasksManager';
-import { EditorManager } from './EditorManager';
 import { selectors, waitUntil } from './util';
 
 const { textButtonSelector } = selectors;
