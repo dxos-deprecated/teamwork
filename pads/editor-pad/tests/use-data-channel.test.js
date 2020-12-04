@@ -12,24 +12,13 @@ import EditorPad from '../src';
 import { useDataChannel } from '../src/data-channel';
 import { setupClient, createItem } from './util';
 
-const config = {
-  swarm: {
-    signal: 'wss://apollo2.kube.moon.dxos.network/dxos/signal',
-    ice: {
-      urls: 'turn:stun.wireline.ninja:3478',
-      username: 'wireline',
-      credential: 'wireline'
-    }
-  }
-};
-
 describe('Test useDataChannel()', () => {
   let client;
   let party;
   let documentId;
 
   beforeAll(async () => {
-    const setup = await setupClient(config);
+    const setup = await setupClient();
     client = setup.client;
     party = setup.party;
     await EditorPad.register(client);

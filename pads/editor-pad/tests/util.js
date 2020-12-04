@@ -5,7 +5,22 @@
 import { Client } from '@dxos/client';
 import { createKeyPair } from '@dxos/crypto';
 
-export const setupClient = async (config) => {
+export const config = {
+  swarm: {
+    signal: 'wss://apollo2.kube.moon.dxos.network/dxos/signal',
+    ice: {
+      urls: 'turn:stun.wireline.ninja:3478',
+      username: 'wireline',
+      credential: 'wireline'
+    }
+  },
+  ipfs: {
+    server: 'https://apollo2.kube.moon.dxos.network/dxos/ipfs/api',
+    gateway: 'https://apollo2.kube.moon.dxos.network/dxos/ipfs/gateway/'
+  }
+};
+
+export const setupClient = async () => {
   const client = new Client(config);
   await client.initialize();
   await client.createProfile({ username: 'userA', ...createKeyPair() });
