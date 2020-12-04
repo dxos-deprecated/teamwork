@@ -1,6 +1,6 @@
 {
   "name": "@dxos/canvas-pad",
-  "version": "1.2.0-alpha.22",
+  "version": "1.2.0-alpha.23",
   "description": "Canvas pad.",
   "main": "dist/index.js",
   "private": true,
