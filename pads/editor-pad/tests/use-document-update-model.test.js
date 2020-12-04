@@ -10,7 +10,7 @@ import { ClientProvider } from '@dxos/react-client';
 
 import EditorPad from '../src';
 import { useDocumentUpdateModel } from '../src/model';
-import { setupClient, createItem, sleep } from './util';
+import { setupClient, createItem } from './util';
 
 describe('Test useDocumentUpdateModel()', () => {
   let client;
@@ -34,6 +34,8 @@ describe('Test useDocumentUpdateModel()', () => {
     expect(result.error).toBeUndefined();
 
     const model = result.current;
+
+    expect(model.content.length).toEqual(0);
 
     act(() => {
       model.insert(0, 'Testing text');
