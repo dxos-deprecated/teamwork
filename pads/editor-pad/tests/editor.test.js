@@ -21,7 +21,7 @@ const pads = [
   TasksPad
 ];
 
-describe('Test Editor', () => {
+describe.skip('Test Editor', () => {
   let client;
   let party;
   let documentId;

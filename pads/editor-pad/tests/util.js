@@ -5,8 +5,8 @@
 import { Client } from '@dxos/client';
 import { createKeyPair } from '@dxos/crypto';
 
-export const setupClient = async () => {
-  const client = new Client();
+export const setupClient = async (signal, ice) => {
+  const client = new Client({ swarm: { signal, ice } });
   await client.initialize();
   await client.createProfile({ username: 'userA', ...createKeyPair() });
   const party = await client.echo.createParty();
