@@ -12,7 +12,7 @@ const {
   listItemSelector
 } = selectors;
 
-const { attributeSelector, classSelector } = genericSelectors;
+const { attributeSelector, classSelector, containingSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;
@@ -254,7 +254,8 @@ export class PartyManager {
     const partyIndex = await this.getPartyIndex(partyName);
     const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
     await this.page.click(settingsButtonSelector);
-    const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
+    // const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
+    const showDeletedItemsLabelSelector = dialogSelector + containingSelector('label', attributeSelector('span', 'text()', 'Show deleted items'));
     await this.page.click(showDeletedItemsLabelSelector);
     await this.page.click(textButtonSelector('Done'));
   }
@@ -293,5 +294,32 @@ export class PartyManager {
       return /[0-9]{4}/.test(passcode);
     });
     return passcode;
+  }
+
+  async deactivateParty (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    await this.page.click(settingsButtonSelector);
+
+    const activeLabelSelector = dialogSelector + containingSelector('label', attributeSelector('span', 'text()', 'Active'));
+    await this.page.click(activeLabelSelector);
+  }
+
+  async activateParty (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
+    await this.page.click(activateButtonSelector);
+  }
+
+  async isPartyActive (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
+    return await isSelectorDeleted(this.page, activateButtonSelector);
+  }
+
+  async isPartyInactive (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
+    return await isSelectorExisting(this.page, activateButtonSelector);
   }
 }

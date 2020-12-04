@@ -96,14 +96,26 @@ describe('Perform testrun steps', () => {
 
     it('Show archived items', async () => {
       await userA.partyManager.showArchivedItems(partyName);
-      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+      expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
     });
 
     it('Restore archived items', async () => {
       await userA.partyManager.restoreItemInParty(partyName, taskListName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
+    });
+
+    it('Deactivate party', async () => {
+      await userA.partyManager.deactivateParty(partyName);
+      expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
+      expect(await userB.partyManager.isPartyInactive(partyName)).toBeTruthy();
+    });
+
+    it('Activate party', async () => {
+      await userA.partyManager.activate(partyName);
+      expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
+      expect(await userB.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
   });
 
