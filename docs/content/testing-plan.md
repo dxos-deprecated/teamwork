@@ -43,6 +43,7 @@
 - [ ] Create task list
 - [ ] Check that device invitation works
 - [ ] Rename party
+- [ ] Activate / deactivate party
 
 ### Planner:
 - [ ] Open planner board from Machine A
