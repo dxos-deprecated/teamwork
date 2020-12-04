@@ -305,6 +305,7 @@ export class PartyManager {
 
     const activeLabelSelector = dialogSelector + containingSelector('label', attributeSelector('span', 'text()', 'Active'));
     await this.page.click(activeLabelSelector);
+    await this.page.click(textButtonSelector('Done'));
   }
 
   async activateParty (partyName) {

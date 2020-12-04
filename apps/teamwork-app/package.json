@@ -18,7 +18,7 @@
     "start": "VERBOSE=true NODE_ENV=development webpack-dev-server",
     "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
-    "test:playwright": "jest --rootDir ./tests/playwright --verbose"
+    "test:playwright": "jest --bail --verbose --forceExit --rootDir ./tests/playwright"
   },
   "dependencies": {
     "@babel/runtime": "7.11.2",

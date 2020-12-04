@@ -70,7 +70,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isPartyExisting(newName)).toBeTruthy();
     });
 
-    it('Add items', async () => {
+    it.skip('Add items', async () => {
       await userA.partyManager.addItemToParty(partyName, taskList.itemType, taskList.taskListName);
       await userA.goToHomePage();
 
@@ -83,24 +83,37 @@ describe('Perform testrun steps', () => {
       await userA.partyManager.addItemToParty(partyName, messenger.itemType, messenger.messengerName);
       await userA.goToHomePage();
 
-      expect(await userB.partyManager.isItemExisting(partyName, taskList.taskListName)).toBeTruthy();
-      expect(await userB.partyManager.isItemExisting(partyName, board.boardName)).toBeTruthy();
-      expect(await userB.partyManager.isItemExisting(partyName, editor.editorName)).toBeTruthy();
-      expect(await userB.partyManager.isItemExisting(partyName, messenger.messengerName)).toBeTruthy();
+      await userB.waitUntil(async () => {
+        return (await userB.partyManager.getItemsNames(partyName)).length === 4;
+      });
+
+      const itemsNames = await userB.partyManager.getItemsNames(partyName);
+
+      console.log({itemsNames});
+
+      expect(itemsNames.includes(taskList.taskListName)).toBeTruthy();
+      expect(itemsNames.includes(board.boardName)).toBeTruthy();
+      expect(itemsNames.includes(editor.editorName)).toBeTruthy();
+      expect(itemsNames.includes(messenger.messengerName)).toBeTruthy();
+
+      // expect(await userB.partyManager.isItemExisting(partyName, taskList.taskListName)).toBeTruthy();
+      // expect(await userB.partyManager.isItemExisting(partyName, board.boardName)).toBeTruthy();
+      // expect(await userB.partyManager.isItemExisting(partyName, editor.editorName)).toBeTruthy();
+      // expect(await userB.partyManager.isItemExisting(partyName, messenger.messengerName)).toBeTruthy();
     });
 
-    it('Archive item', async () => {
+    it.skip('Archive item', async () => {
       await userA.partyManager.archiveItemInParty(partyName, taskListName);
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
     });
 
-    it('Show archived items', async () => {
+    it.skip('Show archived items', async () => {
       await userA.partyManager.showArchivedItems(partyName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
     });
 
-    it('Restore archived items', async () => {
+    it.skip('Restore archived items', async () => {
       await userA.partyManager.restoreItemInParty(partyName, taskListName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
@@ -113,13 +126,13 @@ describe('Perform testrun steps', () => {
     });
 
     it('Activate party', async () => {
-      await userA.partyManager.activate(partyName);
+      await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
       expect(await userB.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
   });
 
-  describe('Test TaskList', () => {
+  describe.skip('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -153,7 +166,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Messenger', () => {
+  describe.skip('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -172,7 +185,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Planner Board', () => {
+  describe.skip('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -238,7 +251,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Editor', () => {
+  describe.skip('Test Editor', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
