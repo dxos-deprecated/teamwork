@@ -12,7 +12,16 @@ import EditorPad from '../src';
 import { useDataChannel } from '../src/data-channel';
 import { setupClient, createItem } from './util';
 
-const WIRE_SIGNAL_ENDPOINT = 'wss://apollo2.kube.moon.dxos.network/dxos/signal';
+const config = {
+  swarm: {
+    signal: 'wss://apollo2.kube.moon.dxos.network/dxos/signal',
+    ice: {
+      urls: 'turn:stun.wireline.ninja:3478',
+      username: 'wireline',
+      credential: 'wireline'
+    }
+  }
+};
 
 describe('Test useDataChannel()', () => {
   let client;
@@ -20,7 +29,7 @@ describe('Test useDataChannel()', () => {
   let documentId;
 
   beforeAll(async () => {
-    const setup = await setupClient({ swarm: { signal: WIRE_SIGNAL_ENDPOINT, ice: }});
+    const setup = await setupClient(config);
     client = setup.client;
     party = setup.party;
     await EditorPad.register(client);
@@ -28,12 +37,10 @@ describe('Test useDataChannel()', () => {
     documentId = (await createItem(party, EditorPad, 'testing-editor')).id;
   });
 
-  it('', async () => {
+  it('Render useDataChannel()', async () => {
     const render = () => useDataChannel(documentId);
     const wrapper = ({ children }) => <ClientProvider client={client}>{children}</ClientProvider>;
     const { result } = renderHook(render, { wrapper });
-
-    console.log({ result: result.current });
     expect(result.error).toBeUndefined();
   });
 });
