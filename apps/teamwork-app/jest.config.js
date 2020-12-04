@@ -9,5 +9,8 @@ module.exports = {
   ],
   transform: {
     '^.+\\.jsx?$': 'babel-jest'
+  },
+  moduleNameMapper: {
+    '.+\\.(png|jpg)$': '<rootDir>/image.mock.js'
   }
 };
