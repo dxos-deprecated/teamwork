@@ -118,4 +118,5 @@ dist
 # Playwright downloads
 downloads/
 
+pads/*/public/
 .yalc
