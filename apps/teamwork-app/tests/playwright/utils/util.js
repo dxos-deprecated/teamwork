@@ -10,7 +10,7 @@ export const waitUntil = async (page, predicate) => {
 
 export const isSelectorExisting = async (page, selector) => {
   try {
-    await page.waitForSelector(selector, { timeout: 2000 });
+    await page.waitForSelector(selector, { timeout: 5000 });
     return !!(await page.$(selector));
   } catch (error) {
     return false;
@@ -19,7 +19,7 @@ export const isSelectorExisting = async (page, selector) => {
 
 export const isSelectorDeleted = async (page, selector) => {
   try {
-    await page.waitForSelector(selector, { timeout: 2000, state: 'detached' });
+    await page.waitForSelector(selector, { timeout: 5000, state: 'detached' });
     return !(await page.$(selector));
   } catch (error) {
     return false;

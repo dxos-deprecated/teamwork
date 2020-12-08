@@ -70,7 +70,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isPartyExisting(newName)).toBeTruthy();
     });
 
-    it.skip('Add items', async () => {
+    it('Add items', async () => {
       await userA.partyManager.addItemToParty(partyName, taskList.itemType, taskList.taskListName);
       await userA.goToHomePage();
 
@@ -89,31 +89,24 @@ describe('Perform testrun steps', () => {
 
       const itemsNames = await userB.partyManager.getItemsNames(partyName);
 
-      console.log({itemsNames});
-
       expect(itemsNames.includes(taskList.taskListName)).toBeTruthy();
       expect(itemsNames.includes(board.boardName)).toBeTruthy();
       expect(itemsNames.includes(editor.editorName)).toBeTruthy();
       expect(itemsNames.includes(messenger.messengerName)).toBeTruthy();
-
-      // expect(await userB.partyManager.isItemExisting(partyName, taskList.taskListName)).toBeTruthy();
-      // expect(await userB.partyManager.isItemExisting(partyName, board.boardName)).toBeTruthy();
-      // expect(await userB.partyManager.isItemExisting(partyName, editor.editorName)).toBeTruthy();
-      // expect(await userB.partyManager.isItemExisting(partyName, messenger.messengerName)).toBeTruthy();
     });
 
-    it.skip('Archive item', async () => {
+    it('Archive item', async () => {
       await userA.partyManager.archiveItemInParty(partyName, taskListName);
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
     });
 
-    it.skip('Show archived items', async () => {
+    it('Show archived items', async () => {
       await userA.partyManager.showArchivedItems(partyName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemDeleted(partyName, taskListName)).toBeTruthy();
     });
 
-    it.skip('Restore archived items', async () => {
+    it('Restore archived items', async () => {
       await userA.partyManager.restoreItemInParty(partyName, taskListName);
       expect(await userA.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
@@ -122,17 +115,15 @@ describe('Perform testrun steps', () => {
     it('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
-      expect(await userB.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
     it('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
-      expect(await userB.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
   });
 
-  describe.skip('Test TaskList', () => {
+  describe('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -166,7 +157,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Messenger', () => {
+  describe('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -185,7 +176,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Planner Board', () => {
+  describe('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -251,7 +242,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Editor', () => {
+  describe('Test Editor', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
@@ -294,7 +285,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test general actions', () => {
+  describe('Test general actions', () => {
     it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
@@ -333,6 +324,8 @@ describe('Perform testrun steps', () => {
 
       await newDeviceUser.closeBrowser();
     });
+
+    it.skip('Deactivate party on authorized device', async () => {});
 
     it('Recover seed phrase', async () => {
       const recoveredUser = new User('Recovered User');
