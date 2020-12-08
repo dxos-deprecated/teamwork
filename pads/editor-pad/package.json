@@ -1,6 +1,6 @@
 {
   "name": "@dxos/editor-pad",
-  "version": "1.2.0-alpha.21",
+  "version": "1.2.0-alpha.24",
   "description": "DxOs editor pad",
   "private": true,
   "main": "dist/index.js",
@@ -19,8 +19,8 @@
   "dependencies": {
     "@dxos/editor": "^1.0.0-beta.33",
     "@dxos/editor-core": "^1.0.0-beta.33",
-    "@dxos/messenger-pad": "^1.2.0-alpha.21",
-    "@dxos/text-model": "2.6.6-alpha.0",
+    "@dxos/messenger-pad": "^1.2.0-alpha.24",
+    "@dxos/text-model": "2.6.9-alpha.0",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
     "rehype-parse": "^7.0.1",
@@ -34,7 +34,7 @@
   },
   "peerDependencies": {
     "@dxos/crypto": "1.0.5",
-    "@dxos/react-client": "2.7.25-alpha.0",
+    "@dxos/react-client": "2.7.28-alpha.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "^16.13.1",
