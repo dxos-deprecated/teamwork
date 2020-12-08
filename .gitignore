@@ -119,3 +119,4 @@ dist
 downloads/
 
 pads/*/public/
+.yalc
