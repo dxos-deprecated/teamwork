@@ -11,7 +11,7 @@ const browser = firefox;
 const startUrl = 'localhost:8080';
 
 describe('Perform testrun steps', () => {
-  let userA, userB, partyName;
+  let userA, userB, partyName, newDeviceUser;
 
   const store = {
     messenger: {
@@ -48,15 +48,18 @@ describe('Perform testrun steps', () => {
     partyName = setup.defaultPartyName;
   });
 
+  const closeUser = async (user) => {
+    if (!user) {
+      return;
+    }
+    await user.page.waitForTimeout(1000);
+    await user.closeBrowser();
+  };
+
   afterAll(async () => {
-    if (userA) {
-      await userA.page.waitForTimeout(1000);
-      await userA.closeBrowser();
-    }
-    if (userB) {
-      await userB.page.waitForTimeout(1000);
-      await userB.closeBrowser();
-    }
+    await closeUser(userA);
+    await closeUser(userB);
+    await closeUser(newDeviceUser);
   });
 
   describe('Test Party actions', () => {
@@ -310,7 +313,7 @@ describe('Perform testrun steps', () => {
 
     it('Authorize device', async () => {
       const url = await userA.partyManager.authorizeDevice();
-      const newDeviceUser = new User('New Device');
+      newDeviceUser = new User('New Device');
       await newDeviceUser.launch(browser, url);
 
       const passcode = await userA.partyManager.getAuthorizeDevicePasscode();
@@ -326,11 +329,17 @@ describe('Perform testrun steps', () => {
 
       const partyNames = await newDeviceUser.partyManager.getPartyNames();
       expect(partyNames.includes(partyName)).toBeTruthy();
-
-      await newDeviceUser.closeBrowser();
     });
 
-    it.skip('Deactivate party on authorized device', async () => {});
+    it('Deactivate party on authorized device', async () => {
+      await newDeviceUser.partyManager.deactivateParty(partyName);
+      expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
+    });
+
+    it('Reactivate party on authorized device', async () => {
+      await newDeviceUser.partyManager.activateParty(partyName);
+      expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
+    });
 
     it('Recover seed phrase', async () => {
       const recoveredUser = new User('Recovered User');
@@ -339,6 +348,7 @@ describe('Perform testrun steps', () => {
       expect(async () => await recoveredUser.recoverWallet(userA.seedPhrasePath)).not.toThrow();
       expect(await recoveredUser.getAccountName()).toEqual(userA.username);
 
+      await recoveredUser.page.waitForTimeout(1000);
       await recoveredUser.closeBrowser();
     });
   });
