@@ -253,6 +253,7 @@ export class PartyManager {
   async showArchivedItems (partyName) {
     const partyIndex = await this.getPartyIndex(partyName);
     const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    console.log({ settingsButtonSelector });
     await this.page.click(settingsButtonSelector);
     console.log('Settings clicked');
     // const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';

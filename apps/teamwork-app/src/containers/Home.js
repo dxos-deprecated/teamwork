@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/styles';
 
+import { schema } from '@dxos/echo-protocol';
 import {
   AppContainer,
   PartyCard,
@@ -87,12 +88,10 @@ const Home = () => {
   };
 
   const handleImport = async (data) => {
-    const parsed = JSON.parse(data);
-    assert(Array.isArray(parsed));
-    const newParty = await client.echo.createParty();
-    const newPartyTopic = newParty.key.toHex();
-    const newPartyModel = await client.modelFactory.createModel(undefined, { type: [], topic: newPartyTopic });
-    parsed.forEach(msg => newPartyModel.appendMessage(msg));
+    const bufferData = Buffer.from(data, 'hex');
+    const decodedSnapshot = schema.getCodecForType('dxos.echo.snapshot.DatabaseSnapshot').decode(bufferData);
+
+    await client.createPartyFromSnapshot(decodedSnapshot);
   };
 
   return (
@@ -129,3 +128,25 @@ const Home = () => {
 };
 
 export default Home;
+
+// TODO: use from echo-db
+export function sortItemsTopologically (items) {
+  const snapshots = [];
+  const seenIds = new Set();
+
+  while (snapshots.length !== items.length) {
+    const prevLength = snapshots.length;
+    for (const item of items) {
+      assert(item.itemId);
+      if (!seenIds.has(item.itemId) && (item.parentId == null || seenIds.has(item.parentId))) {
+        snapshots.push(item);
+        seenIds.add(item.itemId);
+      }
+    }
+    if (prevLength === snapshots.length && snapshots.length !== items.length) {
+      throw new Error('Cannot topologically sorts items in snapshot: some parents are missing.');
+    }
+  }
+
+  return snapshots;
+}

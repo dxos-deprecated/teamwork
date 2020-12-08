@@ -117,3 +117,5 @@ dist
 
 # Playwright downloads
 downloads/
+
+.yalc
