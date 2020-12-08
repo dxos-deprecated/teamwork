@@ -8,6 +8,7 @@ module.exports = {
     '@babel/preset-react'
   ],
   plugins: [
+    'file-loader',
     'add-module-exports',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-export-default-from',

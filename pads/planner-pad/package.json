@@ -14,7 +14,7 @@
     "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
     "dist": "rollup -c",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand --forceExit"
   },
   "peerDependencies": {
     "@dxos/crypto": "1.0.5",
