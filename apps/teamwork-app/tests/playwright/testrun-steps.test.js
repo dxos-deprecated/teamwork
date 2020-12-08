@@ -63,10 +63,12 @@ describe('Perform testrun steps', () => {
     const { taskList, board, editor, messenger } = store;
     const { taskListName } = taskList;
 
+    // ISSUE: https://github.com/dxos/teamwork/issues/496
     it.skip('Rename party', async () => {
       const newName = 'Testing Party';
       await userA.partyManager.renameParty(partyName, newName);
       partyName = newName;
+      expect(await userA.partyManager.isPartyExisting(newName)).toBeTruthy();
       expect(await userB.partyManager.isPartyExisting(newName)).toBeTruthy();
     });
 
@@ -112,12 +114,14 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
 
-    it('Deactivate party', async () => {
+    // ISSUE: https://github.com/dxos/teamwork/issues/501
+    it.skip('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    it('Activate party', async () => {
+    // ISSUE: https://github.com/dxos/teamwork/issues/501
+    it.skip('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
@@ -286,7 +290,8 @@ describe('Perform testrun steps', () => {
   });
 
   describe('Test general actions', () => {
-    it('Invite known member', async () => {
+    // uses functionality broken in ISSUE: https://github.com/dxos/teamwork/issues/496
+    it.skip('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
       const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;

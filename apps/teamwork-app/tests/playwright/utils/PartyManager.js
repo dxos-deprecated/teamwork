@@ -45,7 +45,7 @@ export class PartyManager {
     await this.page.click(settingsButtonSelector);
 
     const inputSelector = dialogSelector + attributeSelector('input', '@type', 'text');
-    await this.page.click(inputSelector, { clickCount: 2 });
+    await this.page.click(inputSelector);
     await this.page.fill(inputSelector, newName);
     await this.page.click(textButtonSelector('Done'));
   }
