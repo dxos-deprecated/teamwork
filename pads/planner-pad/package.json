@@ -1,6 +1,6 @@
 {
   "name": "@dxos/planner-pad",
-  "version": "1.2.0-alpha.27",
+  "version": "1.2.0-alpha.28",
   "private": true,
   "main": "dist/index.js",
   "description": "Dxos planner pad",
@@ -18,11 +18,11 @@
   },
   "peerDependencies": {
     "@dxos/crypto": "1.0.5",
+    "@dxos/react-appkit": "*",
     "@dxos/react-client": "2.7.28-alpha.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
-    "react": "*",
-    "@dxos/react-appkit": "*"
+    "react": "*"
   },
   "dependencies": {
     "@babel/runtime": "7.11.2",
