@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dxos/editor": "^1.0.0-beta.33",
-    "@dxos/editor-core": "^1.0.0-beta.33",
-    "@dxos/messenger-pad": "^1.2.0-alpha.27",
+    "@dxos/editor": "1.0.0-beta.33",
+    "@dxos/editor-core": "1.0.0-beta.33",
+    "@dxos/messenger-pad": "1.2.0-alpha.27",
     "@dxos/text-model": "2.6.9-alpha.0",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
