@@ -9,7 +9,7 @@ import Tasks from '../src/Tasks';
 import tasksPad, { createTask } from '../src/index';
 import { setupClient, createItem } from './util';
 
-describe('Test Tasks', () => {
+describe.skip('Test Tasks', () => {
   let party, padId, client;
 
   beforeAll(async () => {
