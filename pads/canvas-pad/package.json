@@ -1,6 +1,6 @@
 {
   "name": "@dxos/canvas-pad",
-  "version": "1.2.0-alpha.28",
+  "version": "1.2.0-alpha.29",
   "description": "Canvas pad.",
   "main": "dist/index.js",
   "private": true,
@@ -51,7 +51,7 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@dxos/app-cli": "1.0.0-beta.68",
-    "@dxos/eslint-plugin": "^1.0.8",
+    "@dxos/eslint-plugin": "1.0.10",
     "@rollup/plugin-babel": "^5.0.3",
     "@storybook/addon-knobs": "^6.0.21",
     "@storybook/react": "^6.0.21",

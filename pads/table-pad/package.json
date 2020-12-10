@@ -1,6 +1,6 @@
 {
   "name": "@dxos/table-pad",
-  "version": "1.2.0-alpha.28",
+  "version": "1.2.0-alpha.29",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
@@ -45,7 +45,7 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@dxos/eslint-plugin": "^1.0.8",
+    "@dxos/eslint-plugin": "1.0.10",
     "@rollup/plugin-json": "^4.0.3",
     "@storybook/addon-knobs": "^6.0.21",
     "@storybook/react": "^6.0.21",
