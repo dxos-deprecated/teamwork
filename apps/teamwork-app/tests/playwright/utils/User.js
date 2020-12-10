@@ -14,6 +14,9 @@ const { textButtonSelector } = selectors;
 const headless = !!process.env.CI;
 const slowMo = process.env.CI ? 0 : 200;
 
+// const headless = true;
+// const slowMo = 0;
+
 export class User {
     browser = null
     context = null
