@@ -115,4 +115,6 @@
 - [ ] Rename documents inside party
 - [ ] Save party to IPFS
 - [ ] Load party from IPFS
+- [ ] Save party to file
+- [ ] Load party from file
 - [ ] Reset storage from home screen

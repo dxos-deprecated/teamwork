@@ -1,6 +1,6 @@
 {
   "name": "@dxos/canvas-pad",
-  "version": "1.2.0-alpha.24",
+  "version": "1.2.0-alpha.28",
   "description": "Canvas pad.",
   "main": "dist/index.js",
   "private": true,
@@ -23,12 +23,11 @@
     "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
   },
   "dependencies": {
-    "@dxos/async": "^1.0.0-beta.10",
-    "@dxos/debug": "^1.0.0-beta.73",
+    "@dxos/async": "1.0.0-beta.10",
+    "@dxos/debug": "1.0.0-beta.73",
     "@dxos/echo-db": "2.6.9-alpha.0",
-    "@dxos/gem-canvas": "^1.0.0-beta.7",
-    "@dxos/react-appkit": "2.7.28-alpha.0",
-    "@dxos/react-ux": "2.7.28-alpha.0",
+    "@dxos/gem-canvas": "1.0.0-beta.25",
+    "@dxos/react-ux": "2.7.31-alpha.0",
     "clsx": "^1.1.0",
     "debug": "^4.2.0",
     "react": "^16.13.1",
@@ -36,6 +35,7 @@
   },
   "peerDependencies": {
     "@dxos/crypto": "1.0.5",
+    "@dxos/react-appkit": "*",
     "@dxos/react-client": "2.7.28-alpha.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
@@ -50,7 +50,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@dxos/app-cli": "^1.0.0-beta.50",
+    "@dxos/app-cli": "1.0.0-beta.68",
     "@dxos/eslint-plugin": "^1.0.8",
     "@rollup/plugin-babel": "^5.0.3",
     "@storybook/addon-knobs": "^6.0.21",
