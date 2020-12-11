@@ -66,7 +66,6 @@ describe('Perform testrun steps', () => {
     const { taskList, board, editor, messenger } = store;
     const { taskListName } = taskList;
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/496
     it('Rename party', async () => {
       const newName = 'Testing Party';
       await userA.partyManager.renameParty(partyName, newName);
@@ -293,8 +292,7 @@ describe('Perform testrun steps', () => {
   });
 
   describe('Test general actions', () => {
-    // uses functionality broken in ISSUE: https://github.com/dxos/teamwork/issues/496
-    it.skip('Invite known member', async () => {
+    it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
       const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
@@ -331,13 +329,13 @@ describe('Perform testrun steps', () => {
       expect(partyNames.includes(partyName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
+    // TODO(Hubert): wait as parties will be loaded with items
     it.skip('Deactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
+    // TODO(Hubert): wait as parties will be loaded with items
     it.skip('Reactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();

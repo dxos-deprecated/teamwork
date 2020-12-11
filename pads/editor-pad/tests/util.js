@@ -9,9 +9,9 @@ export const config = {
   swarm: {
     signal: 'wss://apollo2.kube.moon.dxos.network/dxos/signal',
     ice: {
-      urls: 'turn:stun.wireline.ninja:3478',
-      username: 'wireline',
-      credential: 'wireline'
+      urls: 'turn:apollo2.kube.moon.dxos.network:3478',
+      username: 'dxos',
+      credential: 'dxos'
     }
   },
   ipfs: {
