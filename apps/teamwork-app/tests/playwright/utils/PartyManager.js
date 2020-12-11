@@ -51,7 +51,7 @@ export class PartyManager {
   }
 
   async clickSharePartyButton (partyIdx) {
-    const shareButtonSelector = `(${attributeSelector('div', '@name', 'share')})[${partyIdx}]`;
+    const shareButtonSelector = `(${attributeSelector('div', '@title', 'Share')})[${partyIdx}]`;
     await this.page.click(shareButtonSelector);
   }
 
