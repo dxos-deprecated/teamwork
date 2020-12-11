@@ -35,7 +35,7 @@ export const genericSelectors = {
 
 export const selectors = {
   textButtonSelector: (text) => `//span[contains(@class,'MuiButton-label') and contains(text(),'${text}')]`,
-  listItemSelector: (itemName) => `//li[.//*[text()="${itemName}"]]`,
+  listItemSelector: (itemName) => `//li[.//span[text()="${itemName}"]]`,
   partyCardSelector: (partyIndex) => `//div[contains(@class,'MuiGrid-item')][${partyIndex + 1}]`,
   cardsSelector: genericSelectors.classSelector('div', 'MuiGrid-item'),
   checkboxSelector: genericSelectors.classSelector('span', 'Mui-checked'),

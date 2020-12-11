@@ -2,14 +2,18 @@
 // Copyright 2020 DXOS.org
 //
 
+import fs from 'fs';
+import path from 'path';
+
 import { BoardManager } from './BoardManager';
 import { EditorManager } from './EditorManager';
 import { MessengerManager } from './MessengerManager';
 import { PartyManager } from './PartyManager';
 import { TasksManager } from './TasksManager';
-import { selectors, waitUntil } from './util';
+import { genericSelectors, isSelectorDeleted, selectors, waitUntil } from './util';
 
-const { textButtonSelector } = selectors;
+const { textButtonSelector, dialogSelector } = selectors;
+const { attributeSelector } = genericSelectors;
 
 const headless = !!process.env.CI;
 const slowMo = process.env.CI ? 0 : 200;
@@ -20,9 +24,7 @@ export class User {
     page = null
 
     username = '';
-    messengerManager = null;
-    partyManager = null;
-    boardManager = null;
+    seedPhrasePath = '';
 
     constructor (_username) {
       this.username = _username;
@@ -31,7 +33,8 @@ export class User {
     async launchBrowser (_browser, _startUrl) {
       this.browser = await _browser.launch({ headless, slowMo });
       this.context = await this.browser.newContext({
-        recordVideo: { dir: `tests/playwright/videos/${this.username}` }
+        recordVideo: { dir: `tests/playwright/videos/${this.username}` },
+        acceptDownloads: true
       });
       this.page = await this.context.newPage();
       await this.page.goto(_startUrl, { waitUntil: 'load' });
@@ -55,23 +58,45 @@ export class User {
     }
 
     async createWallet () {
-      const walletButtonSelector = textButtonSelector('Create Wallet');
-      await this.page.click(walletButtonSelector);
+      await this.page.click(textButtonSelector('Create Wallet'));
 
       await this.page.fill('input', this.username);
 
       const nextButtonSelector = textButtonSelector('Next');
       await this.page.click(nextButtonSelector);
+
+      const [download] = await Promise.all([
+        this.page.waitForEvent('download'),
+        this.page.click(textButtonSelector('Download'))
+      ]);
+      this.seedPhrasePath = path.join(__dirname, '../downloads', this.username + download.suggestedFilename());
+      await download.saveAs(this.seedPhrasePath);
       await this.page.click(nextButtonSelector);
 
-      const finishButtonSelector = textButtonSelector('Finish');
-      await this.page.click(finishButtonSelector);
+      await this.page.click(textButtonSelector('Finish'));
+    }
+
+    async recoverWallet (_seedPhrasePath) {
+      await this.page.click(textButtonSelector('Recover Wallet'));
+
+      const seedPhrase = fs.readFileSync(_seedPhrasePath, 'utf8');
+      await this.page.fill('input', seedPhrase);
+      await this.page.click(textButtonSelector('Restore'));
+
+      const recoveringHeadingSelector = dialogSelector + attributeSelector('*', 'text()', 'Recovering...');
+      await this.waitUntil(async () => await isSelectorDeleted(this.page, recoveringHeadingSelector));
     }
 
     async goToHomePage () {
       const homeButtonSelector = 'header >> button[aria-label="home"]';
       await this.page.click(homeButtonSelector);
       await this.page.waitForSelector(homeButtonSelector, { state: 'detached' });
+    }
+
+    async getAccountName () {
+      const accountIconSelector = '//header//button[@title]';
+      await this.page.waitForSelector(accountIconSelector);
+      return await this.page.$eval(accountIconSelector, accountIcon => accountIcon.getAttribute('title'));
     }
 
     async waitUntil (predicate) {
