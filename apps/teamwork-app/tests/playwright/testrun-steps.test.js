@@ -331,12 +331,14 @@ describe('Perform testrun steps', () => {
       expect(partyNames.includes(partyName)).toBeTruthy();
     });
 
-    it('Deactivate party on authorized device', async () => {
+    // ISSUE: https://github.com/dxos/teamwork/issues/501
+    it.skip('Deactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    it('Reactivate party on authorized device', async () => {
+    // ISSUE: https://github.com/dxos/teamwork/issues/501
+    it.skip('Reactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
