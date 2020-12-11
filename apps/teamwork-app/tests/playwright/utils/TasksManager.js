@@ -33,6 +33,7 @@ export class TasksManager {
 
   async deleteTask (taskName) {
     const deleteButtonSelector = `//li[.//*[text()="${taskName}"]]//button`;
+    await this.isTaskExisting(taskName);
     await this.page.click(deleteButtonSelector);
   }
 
