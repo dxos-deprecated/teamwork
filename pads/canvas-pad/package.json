@@ -1,6 +1,6 @@
 {
   "name": "@dxos/canvas-pad",
-  "version": "1.2.0-alpha.29",
+  "version": "1.2.0-alpha.31",
   "description": "Canvas pad.",
   "main": "dist/index.js",
   "private": true,
@@ -25,9 +25,9 @@
   "dependencies": {
     "@dxos/async": "1.0.0-beta.10",
     "@dxos/debug": "1.0.0-beta.73",
-    "@dxos/echo-db": "2.6.10-alpha.0",
+    "@dxos/echo-db": "2.6.11-alpha.0",
     "@dxos/gem-canvas": "1.0.0-beta.25",
-    "@dxos/react-ux": "2.7.37-alpha.0",
+    "@dxos/react-ux": "2.7.38-alpha.0",
     "clsx": "^1.1.0",
     "debug": "^4.2.0",
     "react": "^16.13.1",

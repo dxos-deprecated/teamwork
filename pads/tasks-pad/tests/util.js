@@ -10,7 +10,7 @@ export const setupClient = async () => {
   await client.initialize();
   await client.createProfile({ username: 'userA', ...createKeyPair() });
   const party = await client.echo.createParty();
-  return { client, party };
+  return { party, client };
 };
 
 export const createItem = async (party, pad, itemName) => {
