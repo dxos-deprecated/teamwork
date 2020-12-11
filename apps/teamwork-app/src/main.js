@@ -10,6 +10,7 @@ import { loadConfig } from './config';
 (async () => {
   const cfg = await loadConfig();
 
+  let sentry;
   if (cfg.get('sentry.dsn')) {
     const sentryDns = cfg.get('sentry.dsn');
     Sentry.init({
@@ -21,6 +22,7 @@ import { loadConfig } from './config';
         })
       ]
     });
+    sentry = Sentry;
   }
 
   // We have this two-stage init process so that sentry can report errors that happen during module imports.
@@ -29,5 +31,5 @@ import { loadConfig } from './config';
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  initApp(cfg);
+  initApp(cfg, sentry);
 })();

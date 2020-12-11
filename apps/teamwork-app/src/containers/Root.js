@@ -44,7 +44,7 @@ const pads = [
   // TestingPad,
 ];
 
-const Root = ({ clientConfig }) => {
+const Root = ({ clientConfig, sentry }) => {
   const publicUrl = window.location.pathname;
 
   const router = { ...DefaultRouter, publicUrl };
@@ -78,6 +78,8 @@ const Root = ({ clientConfig }) => {
           router={router}
           pads={pads}
           issuesLink='https://github.com/dxos/teamwork/issues/new'
+          keywords={['teamwork']}
+          sentry={sentry}
         >
           <HashRouter>
             <Switch>
