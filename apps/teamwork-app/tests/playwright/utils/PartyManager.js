@@ -12,7 +12,7 @@ const {
   listItemSelector
 } = selectors;
 
-const { attributeSelector, classSelector } = genericSelectors;
+const { attributeSelector, classSelector, containingSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;
@@ -22,12 +22,10 @@ export class PartyManager {
   }
 
   async createParty () {
-    const cardsSelector = classSelector('div', 'MuiGrid-item');
     await this.page.waitForSelector(cardsSelector);
     const initialPartyNames = await this.getPartyNames();
 
     const newPartyButtonSelector = '(//button[@name=\'new-party\'])[1]';
-    await this.page.waitForSelector(newPartyButtonSelector);
     await this.page.click(newPartyButtonSelector);
 
     const cardTitlesSelector = cardsSelector + '//h2';
@@ -41,15 +39,24 @@ export class PartyManager {
     return newCardName;
   }
 
+  async renameParty (currentName, newName) {
+    const partyIndex = await this.getPartyIndex(currentName);
+    const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    await this.page.click(settingsButtonSelector);
+
+    const inputSelector = dialogSelector + attributeSelector('input', '@type', 'text');
+    await this.page.click(inputSelector);
+    await this.page.fill(inputSelector, newName);
+    await this.page.click(textButtonSelector('Done'));
+  }
+
   async clickSharePartyButton (partyIdx) {
     const shareButtonSelector = `(${attributeSelector('div', '@title', 'Share')})[${partyIdx}]`;
-    await this.page.waitForSelector(shareButtonSelector);
     await this.page.click(shareButtonSelector);
   }
 
   async closeSharePartyDialog () {
-    const doneButtonSelector = textButtonSelector('Done');
-    await this.page.waitForSelector(doneButtonSelector);
+    const doneButtonSelector = dialogSelector + textButtonSelector('Done');
     await this.page.click(doneButtonSelector);
   }
 
@@ -60,11 +67,10 @@ export class PartyManager {
     await this.page.waitForSelector(inviteUserButtonSelector);
 
     const invitation = { key: null };
-    await this.subscribeForLink(invitation);
+    await this.subscribeForInvitation(invitation);
     await this.page.click(inviteUserButtonSelector);
 
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
-    await this.page.waitForSelector(copyButtonSelector);
     await this.page.click(copyButtonSelector);
 
     await waitUntil(this.page, () => !!invitation.key);
@@ -78,11 +84,10 @@ export class PartyManager {
     await this.page.waitForSelector(addUserButtonSelector);
 
     const invitation = { key: null };
-    await this.subscribeForLink(invitation);
+    await this.subscribeForInvitation(invitation);
 
     await this.page.click(addUserButtonSelector);
     const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
-    await this.page.waitForSelector(copyButtonSelector);
     await this.page.click(copyButtonSelector);
 
     await waitUntil(this.page, () => !!invitation.key);
@@ -100,12 +105,24 @@ export class PartyManager {
     await this.clickSharePartyButton(partyIdx);
   }
 
-  async subscribeForLink (invitation) {
-    const linkRegex = /==$/g;
+  async subscribeForInvitation (invitation) {
+    const invitationRegex = /==$/g;
+
+    this.page.waitForEvent('console', message => {
+      if (message.text().match(invitationRegex)) {
+        invitation.key = message.text();
+        return true;
+      }
+      return false;
+    });
+  }
+
+  async subscribeForLink (link) {
+    const linkRegex = /^http/g;
 
     this.page.waitForEvent('console', message => {
       if (message.text().match(linkRegex)) {
-        invitation.key = message.text();
+        link.url = message.text();
         return true;
       }
       return false;
@@ -119,16 +136,20 @@ export class PartyManager {
   }
 
   async fillPasscode (passcode) {
-    await this.page.waitForSelector('input');
-    await this.page.fill('input', passcode);
+    const inputSelector = dialogSelector + '//input';
+    await this.page.click(inputSelector);
+    await this.page.fill(inputSelector, passcode);
     const sendButtonSelector = textButtonSelector('Submit');
-    await this.page.waitForSelector(sendButtonSelector);
     await this.page.click(sendButtonSelector);
   }
 
+  async isDialogClosed () {
+    return await isSelectorDeleted(this.page, dialogSelector);
+  }
+
   async isPartyExisting (partyName) {
-    const partyNameSelector = cardsSelector + classSelector('div', 'MuiCardHeader-content') + attributeSelector('h2', 'text()', partyName);
-    return await isSelectorExisting(partyNameSelector);
+    const partyNameSelector = cardsSelector + attributeSelector('h2', 'text()', partyName);
+    return await isSelectorExisting(this.page, partyNameSelector);
   }
 
   async isUserInParty (partyName, username) {
@@ -233,8 +254,72 @@ export class PartyManager {
     const partyIndex = await this.getPartyIndex(partyName);
     const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
     await this.page.click(settingsButtonSelector);
-    const showDeletedItemsLabelSelector = dialogSelector + '//label[.//span[text()="Show deleted items"]]';
+    const showDeletedItemsLabelSelector = dialogSelector + containingSelector('label', attributeSelector('span', 'text()', 'Show deleted items'));
     await this.page.click(showDeletedItemsLabelSelector);
     await this.page.click(textButtonSelector('Done'));
+  }
+
+  async getItemsNames (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const itemsSelector = partyCardSelector(partyIndex) + '//li' + classSelector('span', 'MuiTypography');
+    return await this.page.$$eval(itemsSelector, items => items.map(item => item.innerHTML));
+  }
+
+  async authorizeDevice () {
+    const headerMoreButtonSelector = '//header' + attributeSelector('button', '@aria-label', 'More');
+    await this.page.click(headerMoreButtonSelector);
+
+    const authorizeDeviceSelector = attributeSelector('li', 'text()', 'Authorize device');
+    await this.page.click(authorizeDeviceSelector);
+
+    const link = { url: null };
+    await this.subscribeForLink(link);
+
+    const copyButtonSelector = attributeSelector('button', '@title', 'Copy to clipboard');
+    await this.page.click(copyButtonSelector);
+
+    await waitUntil(this.page, () => !!link.url);
+
+    return link.url;
+  }
+
+  async getAuthorizeDevicePasscode () {
+    const digitsSelector = dialogSelector + classSelector('div', 'secret') + classSelector('div', 'char');
+    let passcode;
+    await waitUntil(this.page, async () => {
+      passcode = (await this.page.$$eval(digitsSelector, digits =>
+        digits.map(digit => digit.innerHTML)
+      )).join('');
+      return /[0-9]{4}/.test(passcode);
+    });
+    return passcode;
+  }
+
+  async deactivateParty (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const settingsButtonSelector = partyCardSelector(partyIndex) + attributeSelector('button', '@aria-label', 'settings');
+    await this.page.click(settingsButtonSelector);
+
+    const activeLabelSelector = dialogSelector + containingSelector('label', attributeSelector('span', 'text()', 'Active'));
+    await this.page.click(activeLabelSelector);
+    await this.page.click(textButtonSelector('Done'));
+  }
+
+  async activateParty (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
+    await this.page.click(activateButtonSelector);
+  }
+
+  async isPartyActive (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
+    return await isSelectorDeleted(this.page, activateButtonSelector);
+  }
+
+  async isPartyInactive (partyName) {
+    const partyIndex = await this.getPartyIndex(partyName);
+    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
+    return await isSelectorExisting(this.page, activateButtonSelector);
   }
 }
