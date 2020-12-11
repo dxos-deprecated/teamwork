@@ -42,6 +42,7 @@
 - [ ] Create chat room
 - [ ] Create task list
 - [ ] Check that device invitation works
+- [ ] Check that restore wallet works
 
 ### Planner:
 - [ ] Open planner board from Machine A
@@ -115,4 +116,6 @@
 - [ ] Rename documents inside party
 - [ ] Save party to IPFS
 - [ ] Load party from IPFS
+- [ ] Save party to file
+- [ ] Load party from file
 - [ ] Reset storage from home screen
