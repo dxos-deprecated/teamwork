@@ -71,7 +71,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.tasksManager.isTaskUnchecked(taskName)).toBeTruthy();
     });
 
-    it('Delete task', async () => {
+    it.skip('Delete task', async () => {
       await userB.tasksManager.deleteTask(taskName);
       expect(await userA.tasksManager.isTaskDeleted(taskName)).toBeTruthy();
     });
