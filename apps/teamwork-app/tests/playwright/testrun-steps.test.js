@@ -67,7 +67,7 @@ describe('Perform testrun steps', () => {
     const { taskListName } = taskList;
 
     // ISSUE: https://github.com/dxos/teamwork/issues/496
-    it.skip('Rename party', async () => {
+    it('Rename party', async () => {
       const newName = 'Testing Party';
       await userA.partyManager.renameParty(partyName, newName);
       partyName = newName;
@@ -158,7 +158,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.tasksManager.isTaskUnchecked(taskName)).toBeTruthy();
     });
 
-    it('Delete task', async () => {
+    it.skip('Delete task', async () => {
       await userB.tasksManager.deleteTask(taskName);
       expect(await userA.tasksManager.isTaskDeleted(taskName)).toBeTruthy();
     });
