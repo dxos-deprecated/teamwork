@@ -1,6 +1,6 @@
 {
   "name": "@dxos/editor-pad",
-  "version": "1.2.0-alpha.34",
+  "version": "1.2.0-alpha.35",
   "description": "DxOs editor pad",
   "private": true,
   "main": "dist/index.js",
@@ -19,7 +19,7 @@
   "dependencies": {
     "@dxos/editor": "1.0.0-beta.33",
     "@dxos/editor-core": "1.0.0-beta.33",
-    "@dxos/messenger-pad": "^1.2.0-alpha.34",
+    "@dxos/messenger-pad": "^1.2.0-alpha.35",
     "@dxos/text-model": "2.6.11-alpha.0",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
