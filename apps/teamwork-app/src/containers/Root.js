@@ -44,7 +44,7 @@ const pads = [
   // TestingPad,
 ];
 
-const Root = ({ clientConfig }) => {
+const Root = ({ clientConfig, sentry }) => {
   const publicUrl = window.location.pathname;
 
   const router = { ...DefaultRouter, publicUrl };
@@ -69,6 +69,10 @@ const Root = ({ clientConfig }) => {
     pads.forEach(pad => pad.register?.(client));
   };
 
+  if (sentry) {
+    sentry.captureMessage('Application loaded.');
+  }
+
   return (
     <Theme base={themeBase}>
       <ClientInitializer config={clientConfig} preInitialize={preInit}>
@@ -78,25 +82,27 @@ const Root = ({ clientConfig }) => {
           router={router}
           pads={pads}
           issuesLink='https://github.com/dxos/teamwork/issues/new'
+          keywords={['teamwork']}
+          sentry={sentry}
         >
-            <HashRouter>
-              <Switch>
-                <Route exact path={routes.register} component={Registration} />
-                <RequireWallet
-                  redirect={routes.register}
-                  // Allow access to the AUTH route if it is for joining an Identity, otherwise require a Wallet.
-                  isRequired={(path = '', query = {}) => !path.startsWith(routes.auth) || !query.identityKey}
-                >
-                  <Switch>
-                    {SystemRoutes(router)}
-                    <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
-                    <Route exact path={routes.app} component={App} />
-                    <Route exact path="/home" component={Home} />
-                    <Redirect to="/home" />
-                  </Switch>
-                </RequireWallet>
-              </Switch>
-            </HashRouter>
+          <HashRouter>
+            <Switch>
+              <Route exact path={routes.register} component={Registration} />
+              <RequireWallet
+                redirect={routes.register}
+                // Allow access to the AUTH route if it is for joining an Identity, otherwise require a Wallet.
+                isRequired={(path = '', query = {}) => !path.startsWith(routes.auth) || !query.identityKey}
+              >
+                <Switch>
+                  {SystemRoutes(router)}
+                  <Route exact path="/app/:topic?"><Redirect to="/home" /></Route>
+                  <Route exact path={routes.app} component={App} />
+                  <Route exact path="/home" component={Home} />
+                  <Redirect to="/home" />
+                </Switch>
+              </RequireWallet>
+            </Switch>
+          </HashRouter>
         </AppKitProvider>
       </ClientInitializer>
     </Theme>

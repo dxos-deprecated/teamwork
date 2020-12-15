@@ -4,8 +4,7 @@
 
 import Icon from '@material-ui/icons/Description';
 
-import { MessengerModel } from '@dxos/messenger-model';
-import { MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-pad';
+import { MessengerModel, MESSENGER_TYPE_MESSAGE } from '@dxos/messenger-model';
 import { ObjectModel } from '@dxos/object-model';
 import { TextModel } from '@dxos/text-model';
 
@@ -23,7 +22,7 @@ export default {
   register: async (client) => {
     await client.registerModel(TextModel);
   },
-  create: async ({ client, party }, { name }) => {
+  create: async ({ party }, { name }) => {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: EDITOR_TYPE_DOCUMENT,

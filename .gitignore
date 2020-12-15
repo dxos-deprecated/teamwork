@@ -111,3 +111,12 @@ dist
 .out/
 
 .vscode/settings.json
+
+# Playwright videos
+*.webm
+
+# Playwright downloads
+downloads/
+
+pads/*/public/
+.yalc

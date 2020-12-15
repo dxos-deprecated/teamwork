@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => {
       '&:not(:last-child)': {
         marginRight: 10
       },
-      overflowY: 'scroll'
+      overflowY: 'auto'
     },
 
     initializeButton: {

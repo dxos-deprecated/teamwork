@@ -45,8 +45,8 @@ const Messages = ({ messages }) => {
   return (
     <Table size="small">
       <TableBody>
-        {messages.map(({ id, timestamp, sender, text }) => (
-          <TableRow key={id}>
+        {messages.map(({ timestamp, sender, text }) => (
+          <TableRow key={`${timestamp}${text}`}>
             <TableCell className={classes.timestamp}>
               <Typography
                 component="span"

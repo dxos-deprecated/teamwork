@@ -1,9 +1,35 @@
 {
+  "check-coverage": true,
+  "all": true,
   "reporter": [
     "text",
-    "text-summary"
+    "text-summary",
+    "html"
   ],
-  "lines": 30,
-  "branches": "20",
-  "statements": "30"
+  "lines": 0,
+  "branches": 0,
+  "statements": 0,
+  "exclude": [
+    "coverage/**",
+    "packages/*/test{,s}/**",
+    "**/*.d.ts",
+    "test{,s}/**",
+    "**/__tests__/**",
+    "**/{ava,babel,nyc}.config.{js,cjs,mjs}",
+    "**/jest.config.{js,cjs,mjs,ts}",
+    "**/{karma,rollup,webpack}.config.js",
+    "**/.{eslint,mocha}rc.{js,cjs}",
+    "**/dist",
+    "**/proto/gen",
+    "**/storybook-static",
+    "**/.storybook",
+    "**/stories",
+    "**/playwright",
+    "**/docs",
+    "**/proto",
+    "**/tests",
+    "**/utils",
+    ".eslintrc*",
+    "eslint*"
+  ]
 }

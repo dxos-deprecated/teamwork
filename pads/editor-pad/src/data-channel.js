@@ -37,7 +37,9 @@ export const useDataChannel = (channelId) => {
         try {
           const { type, update } = JSON.parse(data);
 
-          if (type !== CHANNEL_EDITOR_STATUS) return;
+          if (type !== CHANNEL_EDITOR_STATUS) {
+            return;
+          }
 
           setData(Object.values(update));
         } catch (error) {

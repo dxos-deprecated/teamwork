@@ -11,7 +11,7 @@ export const useStyles = makeStyles(() => ({
     padding: 4,
     borderRadius: 4,
     maxHeight: '400px',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     display: 'flex',
     flexDirection: props => props.reverseScroll ? 'column-reverse' : 'column'
   },
@@ -27,7 +27,7 @@ export const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Pad = ({ title, icon, reverseScroll, children }) => {
+export const Pad = ({ reverseScroll, children }) => {
   const classes = useStyles({ reverseScroll });
   return (
     <div className={classes.padContainer}>

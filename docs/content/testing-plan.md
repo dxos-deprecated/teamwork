@@ -35,12 +35,14 @@
 - [ ] Create new identity on Machine B
 - [ ] Invite Machine B from Machine A
 - [ ] Join the party from Machine B
-- [ ] Create another party from Machine A and verify Machine B is stated as 'connected'
+- [ ] Create another party from Machine A and verify Machine B is stated as 'contact'
 - [ ] Redeem invitation from Machine B checking Offline
 - [ ] Create kanban
 - [ ] Create text document
 - [ ] Create chat room
 - [ ] Create task list
+- [ ] Check that device invitation works
+- [ ] Check that restore wallet works
 
 ### Planner:
 - [ ] Open planner board from Machine A
@@ -61,7 +63,7 @@
 - [ ] Remove red tag from item 2
 
 ### Messenger:
-- [ ] Create chat room
+- [ ] Open existing chat room from Machine A
 - [ ] Post from Machine A
 - [ ] Post from Machine B
 - [ ] Download chat logs as markdown
@@ -90,6 +92,7 @@
 - [ ] Embed existing planner board inside text document
 - [ ] Verify that planner board works and isn't too tall
 - [ ] Embed new planner board inside document
+- [ ] Verify that You can scroll planner board in both directions and that it isn't too tall
 - [ ] Embed existing task list inside document
 - [ ] Verify that task list works and isn't too tall
 - [ ] Embed new task list inside document 
@@ -104,13 +107,15 @@
 
 ### Parties operations:
 - [ ] Rename party
-- [ ] Archive party
-- [ ] Verify that You can see archived parties
-- [ ] Unarchive party
-- [ ] Verify that You can see the unarchived party
+- [ ] Deactivate party
+- [ ] Verify that You can see deactivated parties
+- [ ] Activate party
+- [ ] Verify that You can see the activated party
 - [ ] Download party to localhost
 - [ ] Restore party form localhost
 - [ ] Rename documents inside party
 - [ ] Save party to IPFS
 - [ ] Load party from IPFS
+- [ ] Save party to file
+- [ ] Load party from file
 - [ ] Reset storage from home screen

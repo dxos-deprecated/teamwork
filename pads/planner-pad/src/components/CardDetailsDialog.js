@@ -48,7 +48,9 @@ export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCard
   const classes = useStyles();
   const { names, labels, colorLookup } = useLabels();
 
-  if (!card) return null;
+  if (!card) {
+    return null;
+  }
 
   const handleToggleLabel = async (toggledLabel) => {
     await onCardUpdate('labels', toggleLabel(card.model.getProperty('labels'), toggledLabel));

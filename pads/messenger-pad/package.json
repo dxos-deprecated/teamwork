@@ -1,25 +1,24 @@
 {
   "name": "@dxos/messenger-pad",
-  "version": "1.2.0-beta.4",
+  "version": "1.2.0-alpha.36",
   "main": "dist/index.js",
   "private": false,
   "scripts": {
     "build": "babel src -d dist",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./src --verbose --passWithNoTests",
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand --forceExit",
     "dist": "rollup -c"
   },
   "dependencies": {
     "@date-io/moment": "^1.3.11",
-    "@dxos/async": "^1.0.0-beta.10",
-    "@dxos/debug": "^1.0.0-beta.73",
-    "@dxos/echo-db": "^2.6.3-alpha.0",
-    "@dxos/editor": "^1.0.0-beta.33",
-    "@dxos/messenger-model": "^1.2.0-beta.4",
-    "@dxos/model-adapter": "^2.6.3-alpha.0",
-    "@dxos/react-appkit": "^2.7.5-alpha.0",
-    "@dxos/react-router": "^2.7.5-alpha.0",
-    "@dxos/react-ux": "^2.7.5-alpha.0",
+    "@dxos/async": "1.0.0-beta.10",
+    "@dxos/debug": "1.0.0-beta.73",
+    "@dxos/echo-db": "2.6.11-alpha.0",
+    "@dxos/editor": "1.0.0-beta.33",
+    "@dxos/messenger-model": "^1.2.0-alpha.36",
+    "@dxos/model-adapter": "2.6.11-alpha.0",
+    "@dxos/react-router": "2.7.39-alpha.0",
+    "@dxos/react-ux": "2.7.39-alpha.0",
     "@geut/discovery-swarm-webrtc": "^4.0.2",
     "@material-ui/lab": "^4.0.0-alpha.42",
     "@material-ui/pickers": "^3.2.10",
@@ -31,8 +30,9 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "@dxos/crypto": "^1.0.0-beta.1",
-    "@dxos/react-client": "^2.7.5-alpha.0",
+    "@dxos/crypto": "1.0.5",
+    "@dxos/react-appkit": "*",
+    "@dxos/react-client": "2.7.28-alpha.0",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "*"
@@ -45,15 +45,20 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
+    "@dxos/eslint-plugin": "1.0.10",
     "@rollup/plugin-json": "^4.0.3",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
+    "@testing-library/react-hooks": "^3.4.2",
     "@types/color-hash": "^1.0.0",
     "@types/jest": "^26.0.15",
     "babel-loader": "^8.1.0",
     "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-plugin-file-loader": "^2.0.0",
     "babel-plugin-inline-import": "^3.0.0",
+    "babel-preset-es2015": "^6.24.1",
     "jest": "^26.6.1",
+    "react-test-renderer": "^17.0.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-external-globals": "^0.5.0",
@@ -65,5 +70,12 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "react/prop-types": "off",
+      "react/display-name": "off"
+    }
   }
 }

@@ -98,7 +98,9 @@ const List = ({
 
   // TODO(dboreham): Better way to reference object properties vs someObject.properties.someProperty everywhere?
   if (onNewList) {
-    if (embedded) return null;
+    if (embedded) {
+      return null;
+    }
     return (
       <div className={clsx(classes.root, className, classes.newList)}>
         {showMenuOnNewCard && (
@@ -107,6 +109,7 @@ const List = ({
             size='small'
             onClick={() => setListSettingsOpen(true)}
             ref={newListSettingsAnchor}
+            aria-label='settings'
           >
             <SettingsIcon />
           </IconButton>
@@ -138,6 +141,7 @@ const List = ({
           size='small'
           onClick={() => setListSettingsOpen(true)}
           ref={listSettingsAnchor}
+          aria-label='settings'
         >
           <SettingsIcon />
         </IconButton>

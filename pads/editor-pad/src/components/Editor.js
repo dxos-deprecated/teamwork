@@ -51,12 +51,18 @@ const useEditorClasses = makeStyles(theme => ({
       display: 'inline-block'
     }
   },
+  editorContainer: {
+    padding: '8px 8px 128px 8px'
+  },
   snackButton: {
-    '&:first-child': {
-      marginLeft: theme.spacing(8)
+    '&:last-child': {
+      marginLeft: theme.spacing()
     },
-
-    marginLeft: theme.spacing()
+    marginTop: theme.spacing()
+  },
+  snackButtons: {
+    display: 'flex',
+    justifyContent: 'center'
   },
   snackAlertMessage: {
     padding: '3px 0 0'
@@ -183,25 +189,29 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
         setSnackbarMessage(
           <>
             Document uploaded to IPFS!
-            <Button
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              variant="outlined"
-              color="inherit"
-              size="small"
-              className={classes.snackButton}
-            >
-              Open
-            </Button>
-            <CopyToClipboard text={url}>
+            <div className={classes.snackButtons}>
               <Button
+                href={url}
+                target="_blank"
+                rel="noreferrer"
                 variant="outlined"
                 color="inherit"
                 size="small"
                 className={classes.snackButton}
-              >COPY</Button>
-            </CopyToClipboard>
+              >
+                Open
+              </Button>
+              <CopyToClipboard text={url}>
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  size="small"
+                  className={classes.snackButton}
+                >
+                  Copy
+                </Button>
+              </CopyToClipboard>
+            </div>
           </>
         );
 
@@ -251,7 +261,9 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   }
 
   function handleSnackbarClose (event, reason) {
-    if (reason === 'clickaway') return;
+    if (reason === 'clickaway') {
+      return;
+    }
     setSnackbarOpen(false);
   }
 
@@ -303,7 +315,9 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
     }
   }, [statusData]);
 
-  if (!documentUpdateModel) return null;
+  if (!documentUpdateModel) {
+    return null;
+  }
 
   return (
     <>
