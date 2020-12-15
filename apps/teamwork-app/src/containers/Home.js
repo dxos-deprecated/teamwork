@@ -108,11 +108,14 @@ const Home = () => {
       onPartiesSettingsOpen={() => setPartiesSettingsOpen(true)}
     >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
-        {parties.sort(sortBySubscribedAndName).map((party) => (
-          <Grid key={party.key.toString()} item zeroMinWidth>
-            <PartyCardContainer party={party} ipfs={ipfs} />
-          </Grid>
-        ))}
+        {parties
+          .filter(party => showInactiveParties || party.isActive())
+          .sort(sortBySubscribedAndName)
+          .map((party) => (
+            <Grid key={party.key.toString()} item zeroMinWidth>
+              <PartyCardContainer party={party} ipfs={ipfs} />
+            </Grid>
+          ))}
         <Grid item zeroMinWidth>
           <PartyCard
             onNewParty={createParty}
