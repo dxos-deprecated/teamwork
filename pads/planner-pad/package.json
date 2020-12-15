@@ -1,6 +1,6 @@
 {
   "name": "@dxos/planner-pad",
-  "version": "1.2.0-alpha.36",
+  "version": "1.2.0-alpha.37",
   "private": true,
   "main": "dist/index.js",
   "description": "Dxos planner pad",
