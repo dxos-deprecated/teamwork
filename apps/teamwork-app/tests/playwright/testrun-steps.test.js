@@ -117,13 +117,13 @@ describe('Perform testrun steps', () => {
     });
 
     // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Deactivate party', async () => {
+    it('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
     // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Activate party', async () => {
+    it('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
