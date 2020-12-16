@@ -303,6 +303,10 @@ describe('Perform testrun steps', () => {
         return (await userB.partyManager.getPartyNames()).length > initialPartyNumber;
       });
 
+      await userB.waitUntil(async () =>
+        !(await userB.partyManager.getPartyNames()).includes('Untitled')
+      );
+
       await userA.partyManager.closeSharePartyDialog();
 
       const partyNames = await userB.partyManager.getPartyNames();
