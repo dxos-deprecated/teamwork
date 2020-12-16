@@ -116,13 +116,11 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
     it('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
     it('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
