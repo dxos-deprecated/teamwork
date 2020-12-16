@@ -18,6 +18,7 @@ import {
   PartyFromIpfsDialog
 } from '@dxos/react-appkit';
 import { useClient, useParties, useConfig } from '@dxos/react-client';
+
 import NewPartyDialog from '../components/NewPartyDialog';
 
 const useStyles = makeStyles(theme => ({
