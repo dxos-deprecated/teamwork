@@ -29,43 +29,43 @@
 - [ ] Click on `teamwork@alpha` on both machines
 
 ### Basic functionality:
-- [ ] Create new identity on Machine A
-- [ ] Download seed phrase on Machine A
-- [ ] Create new party on Machine A
-- [ ] Create new identity on Machine B
-- [ ] Invite Machine B from Machine A
-- [ ] Join the party from Machine B
-- [ ] Create another party from Machine A and verify Machine B is stated as 'contact'
-- [ ] Redeem invitation from Machine B checking Offline
-- [ ] Create kanban
-- [ ] Create text document
-- [ ] Create chat room
-- [ ] Create task list
-- [ ] Check that device invitation works
-- [ ] Check that restore wallet works
+- [PLAYWRIGHT] Create new identity on Machine A
+- [PLAYWRIGHT] Download seed phrase on Machine A
+- [PLAYWRIGHT] Create new party on Machine A
+- [PLAYWRIGHT] Create new identity on Machine B
+- [PLAYWRIGHT] Invite Machine B from Machine A
+- [PLAYWRIGHT] Join the party from Machine B
+- [PLAYWRIGHT] Create another party from Machine A and verify Machine B is stated as 'contact'
+- [PLAYWRIGHT] Redeem invitation from Machine B checking Offline
+- [PLAYWRIGHT] Create kanban
+- [PLAYWRIGHT] Create text document
+- [PLAYWRIGHT] Create chat room
+- [PLAYWRIGHT] Create task list
+- [PLAYWRIGHT] Check that device invitation works
+- [PLAYWRIGHT] Check that restore wallet works
 
 ### Planner:
-- [ ] Open planner board from Machine A
-- [ ] Verify that board is showing up on Machine B
-- [ ] Create new column in planner board on Machine B
-- [ ] Rename newly created column on Machine B
-- [ ] Verify that two above changes are visible on Machine A
-- [ ] Create 3 new items on Machine A
+- [PLAYWRIGHT] Open planner board from Machine A
+- [PLAYWRIGHT] Verify that board is showing up on Machine B
+- [PLAYWRIGHT] Create new column in planner board on Machine B
+- [PLAYWRIGHT] Rename newly created column on Machine B
+- [PLAYWRIGHT] Verify that two above changes are visible on Machine A
+- [PLAYWRIGHT] Create 3 new items on Machine A
 - [ ] Move item 1 to Doing on Machine A
 - [ ] Move item 1 to Done on Machine A
 - [ ] Verify that 3 above changes are visible on Machine B
 - [ ] Move item 2 to Done on Machine B
-- [ ] Archive item 1
-- [ ] Unarchive item 1
+- [PLAYWRIGHT] Archive item 1
+- [PLAYWRIGHT] Unarchive item 1
 - [ ] Add red tag to item 2
 - [ ] Change red tag name
 - [ ] Verify if name has changed in both: labels and filter list
 - [ ] Remove red tag from item 2
 
 ### Messenger:
-- [ ] Open existing chat room from Machine A
-- [ ] Post from Machine A
-- [ ] Post from Machine B
+- [PLAYWRIGHT] Open existing chat room from Machine A
+- [PLAYWRIGHT] Post from Machine A
+- [PLAYWRIGHT] Post from Machine B
 - [ ] Download chat logs as markdown
 - [ ] Join video chat from Machine A
 - [ ] Verify that audio/video selection works 
@@ -78,9 +78,9 @@
 - [ ] Reference existing planner board in messenger
 
 ### Text editor:
-- [ ] Create another text document
-- [ ] Edit text document from Machine A
-- [ ] Edit text document from Machine B
+- [PLAYWRIGHT] Create another text document
+- [PLAYWRIGHT] Edit text document from Machine A
+- [PLAYWRIGHT] Edit text document from Machine B
 - [ ] Verify that presence indicators are moving accurately, without delay
 - [ ] Verify that presence indicators are showing correct usernames 
 - [ ] Verify that presence indicators are showing 
@@ -89,14 +89,14 @@
 - [ ] Download text document as markdown
 - [ ] Upload text document to IPFS
 - [ ] Add image (IPFS?)
-- [ ] Embed existing planner board inside text document
+- [PLAYWRIGHT] Embed existing planner board inside text document
 - [ ] Verify that planner board works and isn't too tall
 - [ ] Embed new planner board inside document
 - [ ] Verify that You can scroll planner board in both directions and that it isn't too tall
-- [ ] Embed existing task list inside document
+- [PLAYWRIGHT] Embed existing task list inside document
 - [ ] Verify that task list works and isn't too tall
 - [ ] Embed new task list inside document 
-- [ ] Embed existing messenger inside document
+- [PLAYWRIGHT] Embed existing messenger inside document
 - [ ] Verify that messenger works and isn't too tall
 - [ ] Embed new messenger inside document
 - [ ] Switch between this text document and the previously created one using sidebar documents list, confirm that switching works
@@ -106,11 +106,11 @@
 - [ ] Verify that storage bot works
 
 ### Parties operations:
-- [ ] Rename party
-- [ ] Deactivate party
-- [ ] Verify that You can see deactivated parties
-- [ ] Activate party
-- [ ] Verify that You can see the activated party
+- [PLAYWRIGHT] Rename party
+- [PLAYWRIGHT] Deactivate party
+- [PLAYWRIGHT] Verify that You can see deactivated parties
+- [PLAYWRIGHT] Activate party
+- [PLAYWRIGHT] Verify that You can see the activated party
 - [ ] Download party to localhost
 - [ ] Restore party form localhost
 - [ ] Rename documents inside party

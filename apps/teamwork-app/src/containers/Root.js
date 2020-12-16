@@ -44,7 +44,7 @@ const pads = [
   // TestingPad,
 ];
 
-const Root = ({ clientConfig }) => {
+const Root = ({ clientConfig, sentry }) => {
   const publicUrl = window.location.pathname;
 
   const router = { ...DefaultRouter, publicUrl };
@@ -69,6 +69,10 @@ const Root = ({ clientConfig }) => {
     pads.forEach(pad => pad.register?.(client));
   };
 
+  if (sentry) {
+    sentry.captureMessage('Application loaded.');
+  }
+
   return (
     <Theme base={themeBase}>
       <ClientInitializer config={clientConfig} preInitialize={preInit}>
@@ -78,6 +82,8 @@ const Root = ({ clientConfig }) => {
           router={router}
           pads={pads}
           issuesLink='https://github.com/dxos/teamwork/issues/new'
+          keywords={['teamwork']}
+          sentry={sentry}
         >
           <HashRouter>
             <Switch>
