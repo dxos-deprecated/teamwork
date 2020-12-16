@@ -43,8 +43,10 @@ const NewPartyDialog = ({ onClose, onCreate }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button color='primary' onClick={onClose}>Cancel</Button>
         <Button
+          color='primary'
+          variant='contained'
           disabled={partyName.length === 0 || isProcessing}
           onClick={handleCreate}
         >
