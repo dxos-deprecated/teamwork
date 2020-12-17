@@ -2,9 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { selectors, genericSelectors, isSelectorExisting } from './util';
+import { selectors, genericSelectors, isSelectorExisting, waitUntil } from './util';
 
-const { attributeSelector, classSelector } = genericSelectors;
+const { attributeSelector, classSelector, lastSelector } = genericSelectors;
 const { listItemSelector } = selectors;
 
 export class EditorManager {
@@ -57,5 +57,27 @@ export class EditorManager {
       classSelector('div', 'MuiCard') +
       `//*[contains(text(), "${cardTitle}")]`;
     return await this._isSelectorExisting(cardTitleSelector);
+  }
+
+  async toggleMessenger () {
+    const initialContentEditables = (await this.page.$$(attributeSelector('div', '@contenteditable', 'true'))).length;
+    const messengerButtonSelector = classSelector('div', 'MuiToolbar') + attributeSelector('span', '@title', 'Messenger');
+    await this.page.click(messengerButtonSelector);
+    await waitUntil(this.page, async () => (
+      (await this.page.$$(attributeSelector('div', '@contenteditable', 'true'))).length > initialContentEditables
+    ));
+  }
+
+  async writeInMessenger (message) {
+    const messengerInputSelector = lastSelector(attributeSelector('div', '@contenteditable', 'true'));
+    await this.page.click(messengerInputSelector);
+    await this.page.fill(messengerInputSelector, message);
+    await this.page.keyboard.press('Enter');
+  }
+
+  async isMessageExistingInMessenger (message) {
+    const messagesContainerSelector = lastSelector(classSelector('div', 'MuiTableContainer'));
+    const messageSelector = messagesContainerSelector + attributeSelector('span', 'text()', message);
+    return await isSelectorExisting(this.page, messageSelector);
   }
 }
