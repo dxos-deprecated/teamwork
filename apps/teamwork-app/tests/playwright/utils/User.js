@@ -15,11 +15,8 @@ import { genericSelectors, isSelectorDeleted, selectors, waitUntil } from './uti
 const { textButtonSelector, dialogSelector } = selectors;
 const { attributeSelector } = genericSelectors;
 
-// const headless = !!process.env.CI;
-// const slowMo = process.env.CI ? 0 : 200;
-
-const headless = true;
-const slowMo = 0;
+const headless = !!process.env.CI;
+const slowMo = process.env.CI ? 0 : 200;
 
 export class User {
     browser = null
