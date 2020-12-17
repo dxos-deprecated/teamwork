@@ -12,7 +12,7 @@ const {
   listItemSelector
 } = selectors;
 
-const { attributeSelector, classSelector, containingSelector } = genericSelectors;
+const { attributeSelector, classSelector, containingSelector, followingClassSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;
@@ -312,8 +312,8 @@ export class PartyManager {
 
   async isPartyActive (partyName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
-    return await isSelectorDeleted(this.page, activateButtonSelector);
+    const partyActionsSelector = partyCardSelector(partyIndex) + classSelector('div', 'MuiCardActions');
+    return await isSelectorExisting(this.page, partyActionsSelector);
   }
 
   async isPartyInactive (partyName) {

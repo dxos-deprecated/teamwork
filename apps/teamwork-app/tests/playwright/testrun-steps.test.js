@@ -155,6 +155,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.tasksManager.isTaskUnchecked(taskName)).toBeTruthy();
     });
 
+    // fails randomly
     it.skip('Delete task', async () => {
       await userB.tasksManager.deleteTask(taskName);
       expect(await userA.tasksManager.isTaskDeleted(taskName)).toBeTruthy();
@@ -287,6 +288,16 @@ describe('Perform testrun steps', () => {
       await userA.editorManager.embedExistingItem(boardName);
       expect(await userB.editorManager.isBoardWithCardExisting(cardA)).toBeTruthy();
     });
+
+    it('Write in Editor Messenger', async () => {
+      const message = 'Message to write in Editor built in Messenger';
+
+      await userA.editorManager.toggleMessenger();
+      await userA.editorManager.writeInMessenger(message);
+
+      await userB.editorManager.toggleMessenger();
+      expect(await userB.editorManager.isMessageExistingInMessenger(message)).toBeTruthy();
+    });
   });
 
   describe('Test general actions', () => {
@@ -332,14 +343,12 @@ describe('Perform testrun steps', () => {
       expect(partyNames.includes(partyName)).toBeTruthy();
     });
 
-    // TODO(Hubert): wait as parties will be loaded with items
-    it.skip('Deactivate party on authorized device', async () => {
+    it('Deactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // TODO(Hubert): wait as parties will be loaded with items
-    it.skip('Reactivate party on authorized device', async () => {
+    it('Reactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });

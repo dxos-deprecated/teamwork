@@ -2,6 +2,10 @@
 // Copyright 2020 DXOS.org
 //
 
+export const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
 export const waitUntil = async (page, predicate) => {
   while (!(await predicate())) {
     await page.waitForTimeout(50);
@@ -30,7 +34,8 @@ export const genericSelectors = {
   classSelector: (element, className) => `//${element}[contains(@class,"${className}")]`,
   parentClassSelector: (element, className) => `parent::${element}[contains(@class,"${className}")]`,
   attributeSelector: (element, attributeName, attributeValue) => `//${element}[${attributeName}="${attributeValue}"]`,
-  containingSelector: (element, content) => `//${element}[.${content}]`
+  containingSelector: (element, content) => `//${element}[.${content}]`,
+  lastSelector: (elementsSelector) => `(${elementsSelector})[last()]`
 };
 
 export const selectors = {
