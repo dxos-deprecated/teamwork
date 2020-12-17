@@ -15,7 +15,8 @@ import {
   PartyCardContainer,
   IpfsHelper,
   PartyFromFileDialog,
-  PartyFromIpfsDialog
+  PartyFromIpfsDialog,
+  PartiesSettingsDialog
 } from '@dxos/react-appkit';
 import { useClient, useParties, useConfig } from '@dxos/react-client';
 
@@ -54,6 +55,8 @@ const Home = () => {
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
   const [partyFromIpfsOpen, setPartyFromIpfsOpen] = useState(false);
+  const [partiesSettingsOpen, setPartiesSettingsOpen] = useState(false);
+  const [showInactiveParties, setShowInactiveParties] = useState(true);
 
   const ipfs = new IpfsHelper(config.ipfs.gateway);
 
@@ -94,17 +97,25 @@ const Home = () => {
     await client.createPartyFromSnapshot(decodedSnapshot);
   };
 
+  const handleInactivePartiesVisibility = () => {
+    setShowInactiveParties(currentVisibility => !currentVisibility);
+  };
+
   return (
     <AppContainer
       onPartyFromFile={() => setPartyFromFileOpen(true)}
       onPartyFromIpfs={() => setPartyFromIpfsOpen(true)}
+      onPartiesSettingsOpen={() => setPartiesSettingsOpen(true)}
     >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
-        {parties.sort(sortBySubscribedAndName).map((party) => (
-          <Grid key={party.key.toString()} item zeroMinWidth>
-            <PartyCardContainer party={party} ipfs={ipfs} />
-          </Grid>
-        ))}
+        {parties
+          .filter(party => showInactiveParties || party.isActive())
+          .sort(sortBySubscribedAndName)
+          .map((party) => (
+            <Grid key={party.key.toString()} item zeroMinWidth>
+              <PartyCardContainer party={party} ipfs={ipfs} />
+            </Grid>
+          ))}
         <Grid item zeroMinWidth>
           <PartyCard
             onNewParty={createParty}
@@ -122,6 +133,12 @@ const Home = () => {
         onClose={() => setPartyFromIpfsOpen(false)}
         onImport={handleImport}
         ipfs={ipfs}
+      />
+      <PartiesSettingsDialog
+        open={partiesSettingsOpen}
+        showInactiveParties={showInactiveParties}
+        onClose={() => setPartiesSettingsOpen(false)}
+        onToggleInactiveParties={handleInactivePartiesVisibility}
       />
     </AppContainer>
   );
