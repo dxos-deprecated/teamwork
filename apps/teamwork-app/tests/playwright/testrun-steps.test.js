@@ -6,6 +6,7 @@ import { firefox } from 'playwright';
 
 import { User } from './utils/User';
 import { launchUsers } from './utils/launch-users.js';
+import { waitUntil } from './utils/util';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
@@ -343,12 +344,12 @@ describe('Perform testrun steps', () => {
       expect(partyNames.includes(partyName)).toBeTruthy();
     });
 
-    it('Deactivate party on authorized device', async () => {
+    it.skip('Deactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    it('Reactivate party on authorized device', async () => {
+    it.skip('Reactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
