@@ -80,10 +80,7 @@ export class PartyManager {
 
   async inviteKnownUserToParty (partyName, userName) {
     await this.shareParty(partyName);
-    const addUserButtonSelector =
-      classSelector('div', 'MuiDialog-container') +
-      attributeSelector('td', 'text()', userName) +
-      followingClassSelector('*', 'MuiIconButton-label');
+    const addUserButtonSelector = classSelector('div', 'MuiDialog-container') + attributeSelector('td', 'text()', userName) + '/following::*[contains(@class,"MuiIconButton-label")]';
     await this.page.waitForSelector(addUserButtonSelector);
 
     const invitation = { key: null };

@@ -6,7 +6,6 @@ import { firefox } from 'playwright';
 
 import { User } from './utils/User';
 import { launchUsers } from './utils/launch-users.js';
-import { sleep } from './utils/util';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
