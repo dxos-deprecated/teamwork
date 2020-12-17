@@ -7,7 +7,7 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import Icon from '@material-ui/icons/AssignmentTurnedIn';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import { ItemSettings, download } from '@dxos/react-appkit';
 
@@ -43,7 +43,7 @@ export const MessengerSettingsDialog = ({ topic, open, onClose, onCancel, item }
       onCancel={onCancel}
       item={item}
       closingDisabled={false}
-      icon={<Icon />}
+      icon={<SettingsIcon />}
     >
       {item && (
         <Button

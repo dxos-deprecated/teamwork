@@ -10,10 +10,11 @@ import { User } from './User';
 export const launchUsers = async (browser, startUrl) => {
   const userA = new User('UserA');
   const userB = new User('UserB');
+  const initialPartyName = 'Initial Party';
 
   await userA.launch(browser, startUrl);
   await userA.createWallet();
-  const defaultPartyName = await userA.partyManager.createParty();
+  await userA.partyManager.createParty(initialPartyName);
   const shareLink = await userA.partyManager.inviteUnknownUserToParty(1);
 
   await userB.launch(browser, startUrl);
@@ -22,9 +23,9 @@ export const launchUsers = async (browser, startUrl) => {
   const passcode = await userA.partyManager.getPasscode();
   await userB.partyManager.fillPasscode(passcode);
 
-  await userB.partyManager.isUserInParty(defaultPartyName, userA.username);
+  await userB.partyManager.isUserInParty(initialPartyName, userA.username);
   await userA.partyManager.closeSharePartyDialog();
 
   await userB.waitUntil(async () => await userB.partyManager.isDialogClosed());
-  return { userA, userB, defaultPartyName };
+  return { userA, userB, initialPartyName };
 };

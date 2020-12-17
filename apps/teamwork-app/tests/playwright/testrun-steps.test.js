@@ -45,7 +45,7 @@ describe('Perform testrun steps', () => {
     const setup = await launchUsers(browser, startUrl);
     userA = setup.userA;
     userB = setup.userB;
-    partyName = setup.defaultPartyName;
+    partyName = setup.initialPartyName;
   });
 
   const closeUser = async (user) => {
@@ -116,14 +116,12 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Deactivate party', async () => {
+    it('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Activate party', async () => {
+    it('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
@@ -293,7 +291,8 @@ describe('Perform testrun steps', () => {
 
   describe('Test general actions', () => {
     it('Invite known member', async () => {
-      const newPartyName = await userA.partyManager.createParty();
+      const newPartyName = 'New Testing Party';
+      await userA.partyManager.createParty(newPartyName);
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
       const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
 
@@ -301,6 +300,10 @@ describe('Perform testrun steps', () => {
       await userB.waitUntil(async () => {
         return (await userB.partyManager.getPartyNames()).length > initialPartyNumber;
       });
+
+      await userB.waitUntil(async () =>
+        !(await userB.partyManager.getPartyNames()).includes('Untitled')
+      );
 
       await userA.partyManager.closeSharePartyDialog();
 
@@ -318,7 +321,7 @@ describe('Perform testrun steps', () => {
       await newDeviceUser.partyManager.fillPasscode(passcode);
 
       await newDeviceUser.waitUntil(async () =>
-        (await newDeviceUser.partyManager.getPartyNames()).length > 0
+        (await newDeviceUser.partyManager.getPartyNames()).length === (await userA.partyManager.getPartyNames()).length
       );
 
       await newDeviceUser.waitUntil(async () =>
