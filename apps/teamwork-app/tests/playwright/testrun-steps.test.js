@@ -62,7 +62,7 @@ describe('Perform testrun steps', () => {
     await closeUser(newDeviceUser);
   });
 
-  describe('Test Party actions', () => {
+  describe.skip('Test Party actions', () => {
     const { taskList, board, editor, messenger } = store;
     const { taskListName } = taskList;
 
@@ -116,20 +116,18 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Deactivate party', async () => {
+    it('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Activate party', async () => {
+    it('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
   });
 
-  describe('Test TaskList', () => {
+  describe.skip('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -163,7 +161,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Messenger', () => {
+  describe.skip('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -182,7 +180,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Planner Board', () => {
+  describe.skip('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -248,7 +246,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe('Test Editor', () => {
+  describe.skip('Test Editor', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
@@ -292,7 +290,7 @@ describe('Perform testrun steps', () => {
   });
 
   describe('Test general actions', () => {
-    it('Invite known member', async () => {
+    it.skip('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
       const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
@@ -329,19 +327,17 @@ describe('Perform testrun steps', () => {
       expect(partyNames.includes(partyName)).toBeTruthy();
     });
 
-    // TODO(Hubert): wait as parties will be loaded with items
-    it.skip('Deactivate party on authorized device', async () => {
+    it('Deactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // TODO(Hubert): wait as parties will be loaded with items
-    it.skip('Reactivate party on authorized device', async () => {
+    it('Reactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
 
-    it('Recover seed phrase', async () => {
+    it.skip('Recover seed phrase', async () => {
       const recoveredUser = new User('Recovered User');
       await recoveredUser.launchBrowser(browser, startUrl);
 
