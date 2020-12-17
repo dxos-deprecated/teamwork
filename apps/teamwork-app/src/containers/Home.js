@@ -20,6 +20,8 @@ import {
 } from '@dxos/react-appkit';
 import { useClient, useParties, useConfig } from '@dxos/react-client';
 
+import NewPartyDialog from '../components/NewPartyDialog';
+
 const useStyles = makeStyles(theme => ({
   fab: {
     margin: 0,
@@ -55,12 +57,13 @@ const Home = () => {
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
   const [partyFromIpfsOpen, setPartyFromIpfsOpen] = useState(false);
+  const [newPartyOpen, setNewPartyOpen] = useState(false);
   const [partiesSettingsOpen, setPartiesSettingsOpen] = useState(false);
   const [showInactiveParties, setShowInactiveParties] = useState(true);
 
   const ipfs = new IpfsHelper(config.ipfs.gateway);
 
-  const createParty = async () => {
+  const createParty = async (partyName) => {
     if (inProgress) {
       return;
     }
@@ -68,7 +71,8 @@ const Home = () => {
     setInProgress(true);
 
     try {
-      await client.echo.createParty();
+      const party = await client.echo.createParty();
+      await party.setTitle(partyName);
     } catch (err) {
       console.error(err);
       throw new Error('Unable to create a party');
@@ -118,7 +122,7 @@ const Home = () => {
           ))}
         <Grid item zeroMinWidth>
           <PartyCard
-            onNewParty={createParty}
+            onNewParty={() => setNewPartyOpen(true)}
             client={client}
           />
         </Grid>
@@ -134,6 +138,12 @@ const Home = () => {
         onImport={handleImport}
         ipfs={ipfs}
       />
+      { newPartyOpen &&
+        <NewPartyDialog
+          onClose={() => setNewPartyOpen(false)}
+          onCreate={(partyName) => createParty(partyName)}
+        />
+      }
       <PartiesSettingsDialog
         open={partiesSettingsOpen}
         showInactiveParties={showInactiveParties}

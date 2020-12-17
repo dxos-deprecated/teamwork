@@ -120,3 +120,4 @@ downloads/
 
 pads/*/public/
 .yalc
+yalc.lock
