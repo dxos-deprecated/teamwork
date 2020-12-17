@@ -40,6 +40,7 @@ const NewPartyDialog = ({ onClose, onCreate }) => {
           autoFocus={true}
           disabled={isProcessing}
           onChange={(name) => setPartyName(name)}
+          onEnterKey={handleCreate}
         />
       </DialogContent>
       <DialogActions>
