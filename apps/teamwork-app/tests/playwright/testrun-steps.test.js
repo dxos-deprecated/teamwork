@@ -6,6 +6,7 @@ import { firefox } from 'playwright';
 
 import { User } from './utils/User';
 import { launchUsers } from './utils/launch-users.js';
+import { sleep } from './utils/util';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
@@ -62,7 +63,7 @@ describe('Perform testrun steps', () => {
     await closeUser(newDeviceUser);
   });
 
-  describe.skip('Test Party actions', () => {
+  describe('Test Party actions', () => {
     const { taskList, board, editor, messenger } = store;
     const { taskListName } = taskList;
 
@@ -127,7 +128,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test TaskList', () => {
+  describe('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
     beforeAll(async () => {
@@ -155,13 +156,14 @@ describe('Perform testrun steps', () => {
       expect(await userB.tasksManager.isTaskUnchecked(taskName)).toBeTruthy();
     });
 
+    // fails randomly
     it.skip('Delete task', async () => {
       await userB.tasksManager.deleteTask(taskName);
       expect(await userA.tasksManager.isTaskDeleted(taskName)).toBeTruthy();
     });
   });
 
-  describe.skip('Test Messenger', () => {
+  describe('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
     beforeAll(async () => {
@@ -180,7 +182,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Planner Board', () => {
+  describe('Test Planner Board', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
@@ -246,7 +248,7 @@ describe('Perform testrun steps', () => {
     });
   });
 
-  describe.skip('Test Editor', () => {
+  describe('Test Editor', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
@@ -287,10 +289,20 @@ describe('Perform testrun steps', () => {
       await userA.editorManager.embedExistingItem(boardName);
       expect(await userB.editorManager.isBoardWithCardExisting(cardA)).toBeTruthy();
     });
+
+    it('Write in Editor Messenger', async () => {
+      const message = 'Message to write in Editor built in Messenger';
+
+      await userA.editorManager.toggleMessenger();
+      await userA.editorManager.writeInMessenger(message);
+
+      await userB.editorManager.toggleMessenger();
+      expect(await userB.editorManager.isMessageExistingInMessenger(message)).toBeTruthy();
+    });
   });
 
   describe('Test general actions', () => {
-    it.skip('Invite known member', async () => {
+    it('Invite known member', async () => {
       const newPartyName = await userA.partyManager.createParty();
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
       const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
@@ -337,7 +349,7 @@ describe('Perform testrun steps', () => {
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
 
-    it.skip('Recover seed phrase', async () => {
+    it('Recover seed phrase', async () => {
       const recoveredUser = new User('Recovered User');
       await recoveredUser.launchBrowser(browser, startUrl);
 

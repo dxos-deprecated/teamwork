@@ -12,7 +12,7 @@ const {
   listItemSelector
 } = selectors;
 
-const { attributeSelector, classSelector, containingSelector } = genericSelectors;
+const { attributeSelector, classSelector, containingSelector, followingClassSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;
@@ -80,7 +80,10 @@ export class PartyManager {
 
   async inviteKnownUserToParty (partyName, userName) {
     await this.shareParty(partyName);
-    const addUserButtonSelector = classSelector('div', 'MuiDialog-container') + attributeSelector('td', 'text()', userName) + '/following::*[contains(@class,"MuiIconButton-label")]';
+    const addUserButtonSelector =
+      classSelector('div', 'MuiDialog-container') +
+      attributeSelector('td', 'text()', userName) +
+      followingClassSelector('*', 'MuiIconButton-label');
     await this.page.waitForSelector(addUserButtonSelector);
 
     const invitation = { key: null };
