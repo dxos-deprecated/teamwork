@@ -1539,6 +1539,13 @@
   dependencies:
     debug "^4.1.1"
 
+"@dxos/debug@~1.0.0-beta.74":
+  version "1.0.0-beta.74"
+  resolved "https://registry.yarnpkg.com/@dxos/debug/-/debug-1.0.0-beta.74.tgz#fbc8d8daa7778adcae4850daa3c677b301ca3f23"
+  integrity sha512-QdCFp241wBlMwG2U3kaVTMhlSOyGdHME4pd95V3+8sYr4RiSVyvwTyOY6RpiPpy0oQIIDwUAnlbiluV4g+XjxA==
+  dependencies:
+    debug "^4.1.1"
+
 "@dxos/echo-db@^2.6.17", "@dxos/echo-db@~2.6.15-alpha.0", "@dxos/echo-db@~2.6.17":
   version "2.6.17"
   resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-2.6.17.tgz#48411cc2b1ac0e113fb60cd0581bc5046048b660"

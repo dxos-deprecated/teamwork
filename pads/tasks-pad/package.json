@@ -12,7 +12,7 @@
   "dependencies": {
     "@date-io/moment": "^1.3.11",
     "@dxos/async": "~1.0.0-beta.10",
-    "@dxos/debug": "~1.0.0-beta.73",
+    "@dxos/debug": "~1.0.0-beta.74",
     "@dxos/echo-db": "~2.6.15-alpha.0",
     "@dxos/object-model": "~2.6.17",
     "@dxos/react-router": "~2.7.43-alpha.0",
