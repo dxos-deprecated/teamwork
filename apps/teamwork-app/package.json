@@ -32,7 +32,7 @@
     "@dxos/debug": "~1.0.0-beta.75",
     "@dxos/echo-db": "~2.6.15-alpha.0",
     "@dxos/editor-pad": "^1.2.0-alpha.48",
-    "@dxos/messenger-pad": "~1.2.0-alpha.47",
+    "@dxos/messenger-pad": "~1.2.0-alpha.48",
     "@dxos/planner-pad": "^1.2.0-alpha.48",
     "@dxos/random-access-multi-storage": "~1.1.0-beta.8",
     "@dxos/react-appkit": "~2.7.43-alpha.0",
