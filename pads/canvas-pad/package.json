@@ -27,7 +27,7 @@
     "@dxos/debug": "~1.0.0-beta.75",
     "@dxos/echo-db": "~2.6.19",
     "@dxos/gem-canvas": "~1.0.0-beta.25",
-    "@dxos/react-ux": "~2.7.45",
+    "@dxos/react-ux": "~2.7.46",
     "clsx": "^1.1.0",
     "debug": "^4.2.0",
     "react": "^16.13.1",
