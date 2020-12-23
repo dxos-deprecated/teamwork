@@ -19,7 +19,7 @@
     "@dxos/object-model": "~2.6.19",
     "@dxos/react-router": "~2.7.46",
     "@dxos/react-ux": "~2.7.46",
-    "@material-ui/lab": "^4.0.0-alpha.42",
+    "@material-ui/lab": "^4.0.0-alpha.55",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.0",
     "assert": "^2.0.0",
