@@ -4,7 +4,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-import { IconButton, Toolbar, TextField, makeStyles } from '@material-ui/core';
+import { IconButton, Toolbar, TextField, makeStyles, Typography, Divider } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import AddColumnIcon from '@material-ui/icons/PlaylistAdd';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
@@ -28,23 +28,43 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     flex: 1,
     minHeight: 500
+  },
+  initializeContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  initializeButton: {
+    height: 'fit-content'
   }
 }));
 
-export default function Table ({ items, onAdd, onUpdate }) {
+export default function Table ({ rows, onAdd, onUpdate, title }) {
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
   const columns = useColumns({ active }, () => setActive(undefined));
-  const [rows] = useState(initialData);
+  // const [rows] = useState([]);
+
+  console.log('rows', rows);
 
   const handleAddRow = async () => null;
 
   const handleAddColumn = async () => null;
 
-  console.log(rows)
+  console.log(rows);
+
+  const handleInitialize = async () => {
+    for (let i = 0; i < initialData.length; i++) {
+      const initialRow = initialData[i];
+      await onAdd(initialRow);
+    }
+  };
 
   return (
     <div className={classes.root}>
+      <Typography>{title}</Typography>
+      <Divider/>
+
       <Toolbar variant='dense' disableGutters>
         <IconButton size='small' onClick={handleAddRow}>
           <AddIcon />
@@ -55,15 +75,22 @@ export default function Table ({ items, onAdd, onUpdate }) {
       </Toolbar>
 
       <div className={classes.gridContainer}>
-        <XGrid
-          rows={rows}
-          columns={columns}
-          // hideFooter
-          rowHeight={36}
-          // onCellClick={({ data, field }) => {
-          //   setActive({ id: data.id, field });
-          // }}
-        />
+        {(rows && rows.length > 0) ? (
+          <XGrid
+            rows={rows}
+            columns={columns}
+            // hideFooter
+            rowHeight={36}
+            onCellClick={({ data, field }) => {
+              setActive({ id: data.id, field });
+            }}
+          />
+        ) : (
+          <div className={classes.initializeContainer}>
+            <p>It is empty here. Create your first row, or:&nbsp;</p>
+            <button className={classes.initializeButton} onClick={handleInitialize}>Initialize</button>
+          </div>
+        )}
       </div>
     </div>
   );
