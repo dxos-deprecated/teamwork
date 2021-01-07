@@ -3342,6 +3342,16 @@
     react-is "^16.8.0"
     react-transition-group "^4.4.0"
 
+"@material-ui/data-grid@4.0.0-alpha.14":
+  version "4.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@material-ui/data-grid/-/data-grid-4.0.0-alpha.14.tgz#7e82ae1f73a339fb0ca3627f77bcf72735d13084"
+  integrity sha512-Ig4gMgJae6oEXWbFdZIzOWbFuzsiZOxszPgx94YJJdsfAqHEAye3IFvOiOSiZj1rUAr40R0zLDJ4ZUB9ulX5+Q==
+  dependencies:
+    "@material-ui/utils" "^5.0.0-alpha.14"
+    prop-types "^15.7.2"
+    reselect "^4.0.0"
+    tslib "^2.0.0"
+
 "@material-ui/data-grid@^4.0.0-alpha.8":
   version "4.0.0-alpha.10"
   resolved "https://registry.yarnpkg.com/@material-ui/data-grid/-/data-grid-4.0.0-alpha.10.tgz#054281b3d3567af6387bff50712510859c621896"
@@ -3480,6 +3490,17 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
+"@material-ui/x-grid@4.0.0-alpha.14":
+  version "4.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@material-ui/x-grid/-/x-grid-4.0.0-alpha.14.tgz#19ff4858a81b0bd6bd16f9e4751d25809ce41014"
+  integrity sha512-50bQBzKmXa96LzT1C9L78hyR+50JrojXSqlGx7HH9ZqFmJ6meHRb+NgRcffWPz3+ubWEVKi/elWd4YdFrkOPdQ==
+  dependencies:
+    "@material-ui/utils" "^5.0.0-alpha.14"
+    "@material-ui/x-license" "^4.0.0-alpha.14"
+    prop-types "^15.7.2"
+    reselect "^4.0.0"
+    tslib "^2.0.0"
+
 "@material-ui/x-grid@^4.0.0-alpha.8":
   version "4.0.0-alpha.10"
   resolved "https://registry.yarnpkg.com/@material-ui/x-grid/-/x-grid-4.0.0-alpha.10.tgz#a61279b108d32211e1c620955efde24891528e4f"
@@ -3495,6 +3516,14 @@
   version "4.0.0-alpha.10"
   resolved "https://registry.yarnpkg.com/@material-ui/x-license/-/x-license-4.0.0-alpha.10.tgz#b13831abd0f4c3251b844359abeb15be79318c8b"
   integrity sha512-edxjFKh9F7Z4h0P41qaL/MrUURYm5+5mq2KiWFND3pWcM+z3nrlTmtBIO9hwUesEKDO5LV+LvJ8jR6uS9o4tWg==
+  dependencies:
+    commander "^6.1.0"
+    esm "^3.2.25"
+
+"@material-ui/x-license@^4.0.0-alpha.14":
+  version "4.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@material-ui/x-license/-/x-license-4.0.0-alpha.14.tgz#3bd6b05ed99430207c0dff70c37d1892e7cb6908"
+  integrity sha512-QkVlw8xbNYMiyXIketJtxK95PPwMdv1tPKVcawbRHl/htLs/fPiADYgn6u6JKQsaVwt5oVvexQfl0fMqLewPEw==
   dependencies:
     commander "^6.1.0"
     esm "^3.2.25"
