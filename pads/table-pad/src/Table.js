@@ -47,7 +47,13 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
     await onUpdate(active.id, active.field, active.value);
     setActive(undefined);
   };
-  const columns = useColumns({ active }, () => setActive(undefined), (value) => setActive(old => ({ ...old, value })), handleFinish);
+
+  const columns = useColumns({
+    active,
+    onCancel: () => setActive(undefined),
+    onChange: (value) => setActive(old => ({ ...old, value })),
+    onFinish: handleFinish
+  });
 
   const handleAddRow = async () => onAdd({ age: null, firstName: 'Anonymous' });
 

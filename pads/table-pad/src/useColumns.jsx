@@ -34,7 +34,7 @@ const textRenderer = (active, field, onCancel, onChange, onFinish) => ({ value, 
   }
 };
 
-const useColumns = ({ active = {} } = {}, handleCancel, handleChange, handleFinish) => {
+const useColumns = ({ active = {}, onCancel, onChange, onFinish } = {}) => {
   return [
     {
       field: 'id',
@@ -45,7 +45,7 @@ const useColumns = ({ active = {} } = {}, handleCancel, handleChange, handleFini
       field: 'firstName',
       headerName: 'First name',
       width: 130,
-      renderCell: textRenderer(active, 'firstName', handleCancel, handleChange, handleFinish)
+      renderCell: textRenderer(active, 'firstName', onCancel, onChange, onFinish)
       // TODO(burdon): Menu button.
       // renderHeader: ({ colDef: { headerName } }) => {
       //   return (
@@ -57,7 +57,7 @@ const useColumns = ({ active = {} } = {}, handleCancel, handleChange, handleFini
       field: 'lastName',
       headerName: 'Last name',
       width: 130,
-      renderCell: textRenderer(active, 'lastName', handleCancel, handleChange, handleFinish)
+      renderCell: textRenderer(active, 'lastName', onCancel, onChange, onFinish)
     },
     {
       field: 'age',
