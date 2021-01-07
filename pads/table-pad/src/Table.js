@@ -9,8 +9,8 @@ import AddIcon from '@material-ui/icons/Add';
 import AddColumnIcon from '@material-ui/icons/PlaylistAdd';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
-import { initialData } from './constants';
-import useColumns from './useColumns';
+import { exampleColumns, exampleRows } from './constants';
+import useEditableColumns from './useEditableColumns';
 
 LicenseInfo.setLicenseKey(
   '8e409f224dbe0bc80df0fa59e719666fT1JERVI6MTg0NDIsRVhQSVJZPTE2MzU4NjkyOTYwMDAsS0VZVkVSU0lPTj0x'
@@ -39,32 +39,29 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export default function Table ({ rows, onAdd, onUpdate, title }) {
+export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title, onInitialize }) {
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
+  const [newColumn, setNewColumn] = useState('');
 
   const handleFinish = async () => {
-    await onUpdate(active.id, active.field, active.value);
+    await onUpdateRow(active.id, active.field, active.value);
     setActive(undefined);
   };
 
-  const columns = useColumns({
+  const editableColumns = useEditableColumns(columns, {
     active,
     onCancel: () => setActive(undefined),
     onChange: (value) => setActive(old => ({ ...old, value })),
     onFinish: handleFinish
   });
 
-  const handleAddRow = async () => onAdd({ age: null, firstName: 'Anonymous' });
+  const handleAddRow = async () => onAddRow({ age: null, firstName: 'Anonymous' });
 
-  const handleInitialize = async () => {
-    for (let i = 0; i < initialData.length; i++) {
-      const initialRow = initialData[i];
-      await onAdd(initialRow);
-    }
+  const handleAddColumn = () => {
+    onAddColumn(newColumn);
+    setNewColumn('');
   };
-
-  const handleAddColumn = async () => null;
 
   return (
     <div className={classes.root}>
@@ -75,7 +72,8 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
         <IconButton size='small' onClick={handleAddRow}>
           <AddIcon />
         </IconButton>
-        <IconButton size='small' onClick={handleAddColumn}>
+        <TextField placeholder='New column' value={newColumn} onChange={e => setNewColumn(e.target.value)} />
+        <IconButton size='small' disabled={!newColumn} onClick={handleAddColumn}>
           <AddColumnIcon />
         </IconButton>
       </Toolbar>
@@ -84,7 +82,7 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
         {(rows && rows.length > 0) ? (
           <XGrid
             rows={rows}
-            columns={columns}
+            columns={editableColumns}
             // hideFooter
             rowHeight={36}
             onCellClick={({ row, field, value }) => {
@@ -94,7 +92,7 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
         ) : (
           <div className={classes.initializeContainer}>
             <p>It is empty here. Create your first row, or:&nbsp;</p>
-            <button className={classes.initializeButton} onClick={handleInitialize}>Initialize</button>
+            <button className={classes.initializeButton} onClick={onInitialize}>Initialize</button>
           </div>
         )}
       </div>
