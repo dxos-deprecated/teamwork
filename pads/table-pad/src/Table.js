@@ -12,12 +12,14 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export default function Table () {
+export default function Table ({ items, onAdd, onUpdate }) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <span>TABLE</span>
+      <button onClick={() => onAdd({ text: 'Something' })}>Add</button>
+      <p>Items: {JSON.stringify(items.map(item => item.model.getProperty('text')))}</p>
     </div>
   );
 }
