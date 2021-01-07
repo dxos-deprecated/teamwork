@@ -43,15 +43,8 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
   const columns = useColumns({ active }, () => setActive(undefined));
-  // const [rows] = useState([]);
 
-  console.log('rows', rows);
-
-  const handleAddRow = async () => null;
-
-  const handleAddColumn = async () => null;
-
-  console.log(rows);
+  const handleAddRow = async () => onAdd({ age: null, firstName: 'Anonymous' });
 
   const handleInitialize = async () => {
     for (let i = 0; i < initialData.length; i++) {
@@ -59,6 +52,8 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
       await onAdd(initialRow);
     }
   };
+
+  const handleAddColumn = async () => null;
 
   return (
     <div className={classes.root}>
