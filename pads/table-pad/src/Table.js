@@ -42,7 +42,12 @@ const useStyles = makeStyles(() => ({
 export default function Table ({ rows, onAdd, onUpdate, title }) {
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
-  const columns = useColumns({ active }, () => setActive(undefined));
+
+  const handleFinish = async () => {
+    await onUpdate(active.id, active.field, active.value);
+    setActive(undefined);
+  };
+  const columns = useColumns({ active }, () => setActive(undefined), (value) => setActive(old => ({ ...old, value })), handleFinish);
 
   const handleAddRow = async () => onAdd({ age: null, firstName: 'Anonymous' });
 
@@ -76,8 +81,8 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
             columns={columns}
             // hideFooter
             rowHeight={36}
-            onCellClick={({ row, field }) => {
-              setActive({ id: row.id, field });
+            onCellClick={({ row, field, value }) => {
+              setActive({ id: row.id, field, value });
             }}
           />
         ) : (

@@ -10,18 +10,21 @@ import { TextField } from '@material-ui/core';
  * Custom cell renderer.
  * https://material-ui.com/components/data-grid/rendering/
  */
-const textRenderer = (active, field, onCancel) => ({ value, row: { id } }) => {
+const textRenderer = (active, field, onCancel, onChange, onFinish) => ({ value, row: { id } }) => {
   if (active.field === field && active.id === id) {
     return (
       <TextField
         autoFocus
-        value={value === null ? '' : value}
-        onBlur={onCancel}
+        value={active.value ?? ''}
+        onBlur={onFinish}
         onKeyUp={event => {
           if (event.key === 'Escape') {
             onCancel();
+          } else if (event.key === 'Enter') {
+            onFinish();
           }
         }}
+        onChange={e => onChange(e.target.value)}
       />
     );
   } else {
@@ -31,7 +34,7 @@ const textRenderer = (active, field, onCancel) => ({ value, row: { id } }) => {
   }
 };
 
-const useColumns = ({ active = {} } = {}, handleCancel) => {
+const useColumns = ({ active = {} } = {}, handleCancel, handleChange, handleFinish) => {
   return [
     {
       field: 'id',
@@ -42,7 +45,7 @@ const useColumns = ({ active = {} } = {}, handleCancel) => {
       field: 'firstName',
       headerName: 'First name',
       width: 130,
-      renderCell: textRenderer(active, 'firstName', handleCancel)
+      renderCell: textRenderer(active, 'firstName', handleCancel, handleChange, handleFinish)
       // TODO(burdon): Menu button.
       // renderHeader: ({ colDef: { headerName } }) => {
       //   return (
@@ -54,7 +57,7 @@ const useColumns = ({ active = {} } = {}, handleCancel) => {
       field: 'lastName',
       headerName: 'Last name',
       width: 130,
-      renderCell: textRenderer(active, 'lastName', handleCancel)
+      renderCell: textRenderer(active, 'lastName', handleCancel, handleChange, handleFinish)
     },
     {
       field: 'age',

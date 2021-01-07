@@ -23,11 +23,8 @@ export const Main = ({ itemId, topic }) => {
     await createRecord({ party, itemId }, props);
   };
 
-  const handleUpdate = async (item, { completed, deleted }) => {
-    await item.model.setProperty('completed', !!completed);
-
-    // TODO(burdon): Add logical delete to ECHO (not property).
-    await item.model.setProperty('deleted', !!deleted);
+  const handleUpdate = async (itemId, property, value) => {
+    records.find(item => item.id === itemId)?.model?.setProperty(property, value);
   };
 
   const title = item.model.getProperty('title') || 'Untitled';
