@@ -76,8 +76,8 @@ export default function Table ({ rows, onAdd, onUpdate, title }) {
             columns={columns}
             // hideFooter
             rowHeight={36}
-            onCellClick={({ data, field }) => {
-              setActive({ id: data.id, field });
+            onCellClick={({ row, field }) => {
+              setActive({ id: row.id, field });
             }}
           />
         ) : (
