@@ -12,6 +12,7 @@ import { TextField } from '@material-ui/core';
  */
 const textRenderer = (active, field, onCancel, onChange, onFinish) => ({ value, row: { id } }) => {
   if (active.field === field && active.id === id) {
+    console.debug('brand new textfield gets returned');
     return (
       <TextField
         autoFocus

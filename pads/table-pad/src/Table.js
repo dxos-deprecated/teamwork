@@ -2,14 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { IconButton, Toolbar, TextField, makeStyles, Typography, Divider } from '@material-ui/core';
+import { IconButton, Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import AddColumnIcon from '@material-ui/icons/PlaylistAdd';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
-import { exampleColumns, exampleRows } from './constants';
 import useEditableColumns from './useEditableColumns';
 
 LicenseInfo.setLicenseKey(
@@ -56,8 +55,6 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
     onFinish: handleFinish
   });
 
-  const handleAddRow = async () => onAddRow({ age: null, firstName: 'Anonymous' });
-
   const handleAddColumn = () => {
     onAddColumn(newColumn);
     setNewColumn('');
@@ -69,7 +66,7 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
       <Divider/>
 
       <Toolbar variant='dense' disableGutters>
-        <IconButton size='small' onClick={handleAddRow}>
+        <IconButton size='small' onClick={() => onAddRow({})}>
           <AddIcon />
         </IconButton>
         <TextField placeholder='New column' value={newColumn} onChange={e => setNewColumn(e.target.value)} />
