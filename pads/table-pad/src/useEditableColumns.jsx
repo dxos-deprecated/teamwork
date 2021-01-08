@@ -30,8 +30,9 @@ const EditableCell = ({ columnType, value, onCancel, onChange, onFinish }) => {
     return (
       <Checkbox
         checked={checked}
-        onClick={() => onChange(!checked)}
-        onBlur={() => onFinish()}
+        onClick={() => {
+          onFinish({ value: !checked });
+        }}
       />
     );
   }

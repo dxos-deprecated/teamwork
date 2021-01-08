@@ -51,8 +51,9 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
   const [newColumn, setNewColumn] = useState('');
   const [newColumnType, setNewColumnType] = useState('text');
 
-  const handleFinish = async () => {
-    await onUpdateRow(active.rowId, active.columnId, active.value);
+  const handleFinish = async (change) => {
+    const newValue = change ? change.value : active.value; // allow last minute change when calling onFinish
+    await onUpdateRow(active.rowId, active.columnId, newValue);
     setActive(undefined);
   };
 
