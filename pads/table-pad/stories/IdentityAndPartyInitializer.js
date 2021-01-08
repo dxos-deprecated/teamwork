@@ -8,7 +8,12 @@ import { createKeyPair } from '@dxos/crypto';
 import { ClientInitializer } from '@dxos/react-appkit';
 import { useClient } from '@dxos/react-client';
 
-const config = {};
+const config = {
+  swarm: {
+    signal: '',
+    ice: []
+  }
+};
 
 export const IdentityAndPartyInitializer = ({ pad, createItem }) => {
   return (
