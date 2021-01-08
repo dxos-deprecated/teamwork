@@ -4,9 +4,8 @@
 
 import React, { useState } from 'react';
 
-import { IconButton, Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@material-ui/core';
+import { Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import AddColumnIcon from '@material-ui/icons/PlaylistAdd';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
 import useEditableColumns from './useEditableColumns';
@@ -125,7 +124,7 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
             // hideFooter
             rowHeight={36}
             onCellClick={({ row, field, value }) => {
-              if (!active || !active.columnId) {
+              if (!active || active.columnId !== field || active.rowId !== row.id) {
                 setActive({ rowId: row.id, columnId: field, value });
               }
             }}
