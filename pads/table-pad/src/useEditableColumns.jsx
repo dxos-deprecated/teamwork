@@ -11,9 +11,8 @@ const EditableCell = ({ columnType, value, onCancel, onChange, onFinish }) => {
   if (columnType === 'text') {
     return (
       <TextField
-        autoFocus
         value={value ?? ''}
-        onBlur={() => onFinish({})}
+        onBlur={() => onFinish()}
         onKeyUp={event => {
           if (event.key === 'Escape') {
             onCancel();

@@ -125,7 +125,9 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
             // hideFooter
             rowHeight={36}
             onCellClick={({ row, field, value }) => {
-              setActive({ rowId: row.id, columnId: field, value });
+              if (!active || !active.columnId) {
+                setActive({ rowId: row.id, columnId: field, value });
+              }
             }}
           />
         ) : (
