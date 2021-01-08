@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react';
 
-import { IconButton, Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import { IconButton, Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import AddColumnIcon from '@material-ui/icons/PlaylistAdd';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
@@ -16,7 +16,7 @@ LicenseInfo.setLicenseKey(
 );
 
 // TODO(burdon): Standardize CSS across pads.
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -35,6 +35,13 @@ const useStyles = makeStyles(() => ({
   },
   initializeButton: {
     height: 'fit-content'
+  },
+  divider: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2)
+  },
+  toolbarItem: {
+    marginRight: theme.spacing(2)
   }
 }));
 
@@ -42,9 +49,10 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
   const [newColumn, setNewColumn] = useState('');
+  const [newColumnType, setNewColumnType] = useState('text');
 
   const handleFinish = async () => {
-    await onUpdateRow(active.id, active.field, active.value);
+    await onUpdateRow(active.rowId, active.columnId, active.value);
     setActive(undefined);
   };
 
@@ -56,24 +64,57 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
   });
 
   const handleAddColumn = () => {
-    onAddColumn(newColumn);
+    onAddColumn(newColumn, newColumnType);
     setNewColumn('');
+    setNewColumnType('text');
   };
 
   return (
     <div className={classes.root}>
       <Typography>{title}</Typography>
-      <Divider/>
+      <Divider className={classes.divider}/>
 
       <Toolbar variant='dense' disableGutters>
-        <IconButton size='small' onClick={() => onAddRow({})}>
-          <AddIcon />
-        </IconButton>
-        <TextField placeholder='New column' value={newColumn} onChange={e => setNewColumn(e.target.value)} />
-        <IconButton size='small' disabled={!newColumn} onClick={handleAddColumn}>
-          <AddColumnIcon />
-        </IconButton>
+        <Button
+          className={classes.toolbarItem}
+          variant="contained"
+          color="primary"
+          size="small"
+          startIcon={<AddIcon />}
+          disabled={!newColumn}
+          onClick={handleAddColumn}
+        >
+          Add column
+        </Button>
+
+        <TextField
+          className={classes.toolbarItem}
+          placeholder='New column'
+          value={newColumn}
+          onChange={e => setNewColumn(e.target.value)}
+        />
+        <FormControl component="fieldset" className={classes.toolbarItem}>
+          <FormLabel component="legend">Column type</FormLabel>
+          <RadioGroup value={newColumnType} onChange={e => setNewColumnType(e.target.value)}>
+            <FormControlLabel value="text" control={<Radio />} label="Text" />
+            <FormControlLabel value="checkbox" control={<Radio />} label="Checkbox" />
+          </RadioGroup>
+        </FormControl>
       </Toolbar>
+
+      <Toolbar variant='dense' disableGutters>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          startIcon={<AddIcon />}
+          onClick={() => onAddRow({})}
+        >
+        Add row
+        </Button>
+      </Toolbar>
+
+      <Divider className={classes.divider}/>
 
       <div className={classes.gridContainer}>
         {(rows && rows.length > 0) ? (
@@ -83,7 +124,7 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
             // hideFooter
             rowHeight={36}
             onCellClick={({ row, field, value }) => {
-              setActive({ id: row.id, field, value });
+              setActive({ rowId: row.id, columnId: field, value });
             }}
           />
         ) : (

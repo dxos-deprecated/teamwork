@@ -4,19 +4,15 @@
 
 import React from 'react';
 
-import { TextField } from '@material-ui/core';
+import { Checkbox, TextField } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
 
-/**
- * Custom cell renderer.
- * https://material-ui.com/components/data-grid/rendering/
- */
-const textRenderer = (active, field, onCancel, onChange, onFinish) => ({ value, row: { id } }) => {
-  if (active.field === field && active.id === id) {
-    console.debug('brand new textfield gets returned');
+const EditableCell = ({ columnType, value, onCancel, onChange, onFinish }) => {
+  if (columnType === 'text') {
     return (
       <TextField
         autoFocus
-        value={active.value ?? ''}
+        value={value ?? ''}
         onBlur={onFinish}
         onKeyUp={event => {
           if (event.key === 'Escape') {
@@ -28,10 +24,52 @@ const textRenderer = (active, field, onCancel, onChange, onFinish) => ({ value, 
         onChange={e => onChange(e.target.value)}
       />
     );
-  } else {
+  }
+  if (columnType === 'checkbox') {
+    const checked = String(value).toLowerCase() === 'true';
     return (
-      <>{value}</>
+      <Checkbox
+        checked={checked}
+        onClick={() => onChange(!checked)}
+        onBlur={() => onFinish()}
+      />
     );
+  }
+
+  // column not recognized, falling back to just a value
+  return (
+    <>{value}</>
+  );
+};
+
+const NonEditableCell = ({ columnType, value }) => {
+  if (columnType === 'checkbox') {
+    return value ? <CheckIcon /> : null;
+  }
+
+  return (
+    <>{value}</>
+  );
+};
+
+/**
+ * Custom cell renderer.
+ * https://material-ui.com/components/data-grid/rendering/
+ */
+const cellRenderer = (active, column, onCancel, onChange, onFinish) => ({ value, row: { id } }) => {
+  if (active.columnId === column.id && active.rowId === id) {
+    console.debug('brand new EditableCell gets returned');
+    return (
+      <EditableCell
+        columnType={column.columnType}
+        onCancel={onCancel}
+        onChange={onChange}
+        onFinish={onFinish}
+        value={active.value}
+      />
+    );
+  } else {
+    return <NonEditableCell columnType={column.columnType} value={value} />;
   }
 };
 
@@ -46,7 +84,7 @@ const useEditableColumns = (columns, { active = {}, onCancel, onChange, onFinish
       field: column.id,
       headerName: column.headerName,
       width: 130,
-      renderCell: textRenderer(active, column.id, onCancel, onChange, onFinish)
+      renderCell: cellRenderer(active, column, onCancel, onChange, onFinish)
     }))
   ];
 };

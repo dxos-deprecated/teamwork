@@ -2,7 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-export const exampleColumns = ['lastName', 'firstName', 'age'];
+export const exampleColumns = [
+  { headerName: 'lastName', columnType: 'text' },
+  { headerName: 'firstName', columnType: 'text' },
+  { headerName: 'age', columnType: 'text' }
+];
 
 export const exampleRows = [
   { lastName: 'Snow', firstName: 'Jon', age: 35 },

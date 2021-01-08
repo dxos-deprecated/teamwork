@@ -30,13 +30,14 @@ export const Main = ({ itemId, topic }) => {
     rowRecords.find(item => item.id === itemId)?.model?.setProperty(property, value);
   };
 
-  const handleAddColumn = async (headerName) => {
+  const handleAddColumn = async (headerName, columnType) => {
     return await party.database.createItem({
       model: ObjectModel,
       type: TABLE_TYPE_COLUMN,
       parent: itemId,
       props: {
-        headerName
+        headerName,
+        columnType
       }
     });
   };
@@ -44,8 +45,8 @@ export const Main = ({ itemId, topic }) => {
   const handleInitialize = async () => {
     const newColumnIds = {};
     for (let i = 0; i < exampleColumns.length; i++) {
-      const newColumn = await handleAddColumn(exampleColumns[i]);
-      newColumnIds[exampleColumns[i]] = newColumn.id;
+      const newColumn = await handleAddColumn(exampleColumns[i].headerName, exampleColumns[i].columnType);
+      newColumnIds[exampleColumns[i].headerName] = newColumn.id;
     }
 
     for (let i = 0; i < exampleRows.length; i++) {
@@ -58,13 +59,27 @@ export const Main = ({ itemId, topic }) => {
   };
 
   const title = item.model.getProperty('title') || 'Untitled';
-  const columns = columnRecords.map(record => ({ id: record.id, headerName: record.model.getProperty('headerName') }));
+
+  const columns = columnRecords.map(record => ({
+    id: record.id,
+    headerName: record.model.getProperty('headerName'),
+    columnType: record.model.getProperty('columnType')
+  }));
+
   const rows = rowRecords.map(record => ({
     id: record.id,
     ...columns.reduce((acc, curr) => ({ ...acc, [curr.id]: record.model.getProperty(curr.id) }), {})
   }));
 
   return (
-    <Table rows={rows} columns={columns} onUpdateRow={handleUpdateRow} onAddRow={handleAddRow} onAddColumn={handleAddColumn} title={title} onInitialize={handleInitialize} />
+    <Table
+      rows={rows}
+      columns={columns}
+      onUpdateRow={handleUpdateRow}
+      onAddRow={handleAddRow}
+      onAddColumn={handleAddColumn}
+      title={title}
+      onInitialize={handleInitialize}
+    />
   );
 };
