@@ -11,7 +11,7 @@ const EditableCell = ({ columnType, value, onCancel, onChange, onFinish }) => {
   if (columnType === 'text') {
     return (
       <TextField
-        autofocus
+        inputProps={{ autoFocus: true }} // Seems to be working more reliably than just autoFocus. // https://github.com/mui-org/material-ui/issues/7247#issuecomment-310935910
         defaultValue={value ?? ''}
         onBlur={() => onFinish()}
         onKeyUp={event => {
