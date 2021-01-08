@@ -27,7 +27,6 @@ export const Main = ({ itemId, topic }) => {
   };
 
   const handleUpdateRow = async (itemId, property, value) => {
-    console.log({ itemId, property, value });
     rowRecords.find(item => item.id === itemId)?.model?.setProperty(property, value);
   };
 
@@ -54,7 +53,6 @@ export const Main = ({ itemId, topic }) => {
       // change header to id in order to properly save the column value.
       // e.g. { id: 1, lastName: 'Snow' } => { id: 1, xdgawe123f: 'Snow' }
       const transformedRow = Object.keys(row).reduce((acc, curr) => ({ ...acc, [newColumnIds[curr]]: row[curr] }), {});
-      console.log({ transformedRow });
       await handleAddRow(transformedRow);
     }
   };
