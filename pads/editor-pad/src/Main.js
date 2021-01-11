@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flex: 1,
-    [theme.breakpoints.up('subMbp')]: {
+    [theme.breakpoints?.up('subMbp')]: {
       margin: 'auto'
     },
     maxWidth: 800,
