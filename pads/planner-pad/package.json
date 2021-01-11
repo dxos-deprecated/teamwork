@@ -17,7 +17,7 @@
     "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand --forceExit"
   },
   "peerDependencies": {
-    "@dxos/crypto": "1.0.5",
+    "@dxos/crypto": "*",
     "@dxos/react-appkit": "*",
     "@dxos/react-client": "*",
     "@material-ui/core": "^4.9.0",

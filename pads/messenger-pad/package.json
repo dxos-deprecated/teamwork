@@ -30,7 +30,7 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "@dxos/crypto": "1.0.5",
+    "@dxos/crypto": "*",
     "@dxos/react-appkit": "*",
     "@dxos/react-client": "*",
     "@material-ui/core": "^4.9.0",

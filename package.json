@@ -50,7 +50,7 @@
     "@dxos/cli": "^2.0.8",
     "@dxos/cli-app": "^2.0.8",
     "@dxos/cli-wns": "^2.0.8",
-    "@dxos/version-check": "^0.1.10",
+    "@dxos/version-check": "0.1.15",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.4",
     "c8": "^7.3.5",

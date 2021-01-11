@@ -1500,19 +1500,10 @@
     stream-to-array "^2.3.0"
     uuid "^3.3.2"
 
-"@dxos/crypto@1.0.7", "@dxos/crypto@^1.0.7", "@dxos/crypto@~1.0.7":
+"@dxos/crypto@1.0.7", "@dxos/crypto@^1.0.0-beta.1", "@dxos/crypto@^1.0.7", "@dxos/crypto@~1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-1.0.7.tgz#7f80f2712302037e0a29bb1f6d023fdab899c14b"
   integrity sha512-ED+AChA9N8hIMgTcuopNhe81xICykEAP0dKILiTJpBCqiEXyzRClLBkdIY4n6UJUpBmVvrnBLRxw8IU/+jVijg==
-  dependencies:
-    crypto-js "^3.1.9-1"
-    humanhash "^1.0.4"
-    hypercore-crypto "^1.0.0"
-
-"@dxos/crypto@^1.0.0-beta.1":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@dxos/crypto/-/crypto-1.0.5.tgz#16e884f33a2edff0eee91d6a71ed5e79631353ca"
-  integrity sha512-G2csaAHRLZMhHrNU1FP+kzAYfyWOQGq+M2uAsp0fib/k6egIM/S9BIP5hQbdGvIv0xlbkLNDtcYWef96flRJ2g==
   dependencies:
     crypto-js "^3.1.9-1"
     humanhash "^1.0.4"
@@ -2149,10 +2140,10 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/version-check@^0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@dxos/version-check/-/version-check-0.1.10.tgz#afe5cc21ce9f6c57c8d4ecb2dae8b4858b2cb061"
-  integrity sha512-WYjbAJ6BKJnyC9s0oOFaIt6gyUMEpsPGozDOpdPwKflw0X5659ymUznCnP1gsE4OX6IgUnQcoegR+HzeAY0jvw==
+"@dxos/version-check@0.1.15":
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/@dxos/version-check/-/version-check-0.1.15.tgz#779bdde904695eb2bb8ce4595d61c7888b967512"
+  integrity sha512-DKBEg81HaCl8kU9t90Fo/Teh4M3y3OvX+DVObdhxWaKFpGWBN2XX0MLB8bZ1yO4jPA0mX5un1QAV8MPqFnvKgA==
   dependencies:
     "@types/yargs" "^15.0.9"
     chalk "^4.1.0"
