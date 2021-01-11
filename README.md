@@ -12,3 +12,10 @@ Start the Teamwork app:
 ```bash
 yarn start
 ```
+
+## Developing pads
+
+```bash
+cd storybooks
+yarn storybook
+```
