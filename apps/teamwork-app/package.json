@@ -42,7 +42,7 @@
     "@dxos/table-pad": "^1.2.0-alpha.51",
     "@dxos/tasks-pad": "^1.2.0-alpha.51",
     "@material-ui/core": "^4.10.0",
-    "@material-ui/data-grid": "^4.0.0-alpha.8",
+    "@material-ui/data-grid": "~4.0.0-alpha.14",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@material-ui/pickers": "^3.2.10",
