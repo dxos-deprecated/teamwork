@@ -3480,40 +3480,21 @@
     prop-types "^15.7.2"
     react-is "^16.8.0 || ^17.0.0"
 
-"@material-ui/x-grid@4.0.0-alpha.14":
-  version "4.0.0-alpha.14"
-  resolved "https://registry.yarnpkg.com/@material-ui/x-grid/-/x-grid-4.0.0-alpha.14.tgz#19ff4858a81b0bd6bd16f9e4751d25809ce41014"
-  integrity sha512-50bQBzKmXa96LzT1C9L78hyR+50JrojXSqlGx7HH9ZqFmJ6meHRb+NgRcffWPz3+ubWEVKi/elWd4YdFrkOPdQ==
+"@material-ui/x-grid@~4.0.0-alpha.14":
+  version "4.0.0-alpha.15"
+  resolved "https://registry.yarnpkg.com/@material-ui/x-grid/-/x-grid-4.0.0-alpha.15.tgz#1dbc40790180420a456990510465f3a146a4c43e"
+  integrity sha512-POoMSNwbYs4zUlKeS+xGvN819aYkL0hwJ82eu0NM+kYMz/41s06Cx7HFEtoVR4uyQDMdYuHOdT2Wpy2CbXi9pg==
   dependencies:
     "@material-ui/utils" "^5.0.0-alpha.14"
-    "@material-ui/x-license" "^4.0.0-alpha.14"
+    "@material-ui/x-license" "^4.0.0-alpha.15"
     prop-types "^15.7.2"
     reselect "^4.0.0"
     tslib "^2.0.0"
 
-"@material-ui/x-grid@^4.0.0-alpha.8":
-  version "4.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@material-ui/x-grid/-/x-grid-4.0.0-alpha.10.tgz#a61279b108d32211e1c620955efde24891528e4f"
-  integrity sha512-P4YWBWa1MiqctINELIuISo64Y3V2/YTRUnTW3cU3LE4LGY3O48Q/dZmDLnhnM0Wz9BBwrur0PL+nowAgEosXMg==
-  dependencies:
-    "@material-ui/utils" "^5.0.0-alpha.14"
-    "@material-ui/x-license" "^4.0.0-alpha.10"
-    prop-types "^15.7.2"
-    reselect "^4.0.0"
-    tslib "^2.0.0"
-
-"@material-ui/x-license@^4.0.0-alpha.10":
-  version "4.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@material-ui/x-license/-/x-license-4.0.0-alpha.10.tgz#b13831abd0f4c3251b844359abeb15be79318c8b"
-  integrity sha512-edxjFKh9F7Z4h0P41qaL/MrUURYm5+5mq2KiWFND3pWcM+z3nrlTmtBIO9hwUesEKDO5LV+LvJ8jR6uS9o4tWg==
-  dependencies:
-    commander "^6.1.0"
-    esm "^3.2.25"
-
-"@material-ui/x-license@^4.0.0-alpha.14":
-  version "4.0.0-alpha.14"
-  resolved "https://registry.yarnpkg.com/@material-ui/x-license/-/x-license-4.0.0-alpha.14.tgz#3bd6b05ed99430207c0dff70c37d1892e7cb6908"
-  integrity sha512-QkVlw8xbNYMiyXIketJtxK95PPwMdv1tPKVcawbRHl/htLs/fPiADYgn6u6JKQsaVwt5oVvexQfl0fMqLewPEw==
+"@material-ui/x-license@^4.0.0-alpha.15":
+  version "4.0.0-alpha.15"
+  resolved "https://registry.yarnpkg.com/@material-ui/x-license/-/x-license-4.0.0-alpha.15.tgz#c0be826b7b7326adea428e9adc2fd76fc83857e7"
+  integrity sha512-WGpPhxoWsniEtuW01p927tJEormvc3w3QrdjUjv3/Ad/nZxcB/1diMVkZZMcEOrvvirz1uVVU7s+jZQb+i8rYQ==
   dependencies:
     commander "^6.1.0"
     esm "^3.2.25"

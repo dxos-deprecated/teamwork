@@ -23,7 +23,7 @@
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@material-ui/pickers": "^3.2.10",
     "@material-ui/styles": "^4.9.0",
-    "@material-ui/x-grid": "4.0.0-alpha.14",
+    "@material-ui/x-grid": "~4.0.0-alpha.14",
     "assert": "^2.0.0",
     "clsx": "^1.1.0",
     "color-hash": "^1.0.3",
