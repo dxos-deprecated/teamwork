@@ -21,6 +21,7 @@ export default {
   main: Main,
   register: async (client) => {
     await client.registerModel(TextModel);
+    await client.registerModel(MessengerModel);
   },
   create: async ({ party }, { name }) => {
     const item = await party.database.createItem({
