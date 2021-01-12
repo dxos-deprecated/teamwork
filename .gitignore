@@ -121,3 +121,4 @@ downloads/
 pads/*/public/
 .yalc
 yalc.lock
+storybook-static

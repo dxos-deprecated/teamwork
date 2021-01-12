@@ -2,12 +2,13 @@
 // Copyright 2020 DXOS.org
 //
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import { Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
+import { AddColumn } from './components';
+import TableToolbar from './components/TableToolbar';
 import useEditableColumns from './useEditableColumns';
 
 LicenseInfo.setLicenseKey(
@@ -44,11 +45,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title, onInitialize }) {
+export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title }) {
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
-  const [newColumn, setNewColumn] = useState('');
-  const [newColumnType, setNewColumnType] = useState('text');
+  const createColumnAnchor = useRef(null);
+  const [addColumnOpen, setAddColumnOpen] = useState(false);
 
   const handleFinish = async (change) => {
     const newValue = change ? change.value : active.value; // allow last minute change when calling onFinish
@@ -63,78 +64,25 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
     onFinish: handleFinish
   });
 
-  const handleAddColumn = () => {
-    onAddColumn(newColumn, newColumnType);
-    setNewColumn('');
-    setNewColumnType('text');
-  };
-
   return (
     <div className={classes.root}>
-      <Typography>{title}</Typography>
-      <Divider className={classes.divider}/>
-
-      <Toolbar variant='dense' disableGutters>
-        <Button
-          className={classes.toolbarItem}
-          variant="contained"
-          color="primary"
-          size="small"
-          startIcon={<AddIcon />}
-          disabled={!newColumn}
-          onClick={handleAddColumn}
-        >
-          Add column
-        </Button>
-
-        <TextField
-          className={classes.toolbarItem}
-          placeholder='New column'
-          value={newColumn}
-          onChange={e => setNewColumn(e.target.value)}
-        />
-        <FormControl component="fieldset" className={classes.toolbarItem}>
-          <FormLabel component="legend">Column type</FormLabel>
-          <RadioGroup value={newColumnType} onChange={e => setNewColumnType(e.target.value)}>
-            <FormControlLabel value="text" control={<Radio />} label="Text" />
-            <FormControlLabel value="checkbox" control={<Radio />} label="Checkbox" />
-          </RadioGroup>
-        </FormControl>
-      </Toolbar>
-
-      <Toolbar variant='dense' disableGutters>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          startIcon={<AddIcon />}
-          onClick={() => onAddRow({})}
-        >
-        Add row
-        </Button>
-      </Toolbar>
-
-      <Divider className={classes.divider}/>
-
       <div className={classes.gridContainer}>
-        {(rows && rows.length > 0) ? (
-          <XGrid
-            rows={rows}
-            columns={editableColumns}
-            // hideFooter
-            rowHeight={36}
-            onCellClick={({ row, field, value }) => {
-              if (!active || active.columnId !== field || active.rowId !== row.id) {
-                setActive({ rowId: row.id, columnId: field, value });
-              }
-            }}
-          />
-        ) : (
-          <div className={classes.initializeContainer}>
-            <p>It is empty here. Create your first row, or:&nbsp;</p>
-            <button className={classes.initializeButton} onClick={onInitialize}>Initialize</button>
-          </div>
-        )}
+        <XGrid
+          ref={createColumnAnchor}
+          showToolbar
+          components={{
+            header: () => <TableToolbar title={title} onAddRow={onAddRow} onAddColumn={() => setAddColumnOpen(true)} />
+          }}
+          rows={rows}
+          columns={rows && rows.length > 0 && editableColumns} // do not show the columns if there are no rows yet
+          rowHeight={36}
+          onCellClick={({ row, field, value }) => {
+            if (!active || active.columnId !== field || active.rowId !== row.id) {
+              setActive({ rowId: row.id, columnId: field, value });
+            }
+          }}
+        />
+        <AddColumn open={addColumnOpen} onClose={() => setAddColumnOpen(false)} onAddColumn={onAddColumn} />
       </div>
     </div>
   );

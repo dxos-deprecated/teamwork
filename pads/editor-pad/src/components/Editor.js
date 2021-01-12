@@ -149,7 +149,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
   const [statusData, broadcastStatus] = useDataChannel(itemId);
 
   const config = useConfig();
-  const ipfs = new IpfsHelper(config.ipfs.gateway);
+  const ipfs = config.ipfs?.gateway ? new IpfsHelper(config.ipfs.gateway) : null;
 
   const customButtons = onToggleMessenger ? [
     {
@@ -217,7 +217,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
 
         setSnackbarOpen(true);
       },
-      enabled: () => true,
+      enabled: () => !!ipfs,
       active: () => false
     },
     {
@@ -227,7 +227,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
       onClick: () => {
         setLoadFromIpfsDialogOpen(true);
       },
-      enabled: () => true,
+      enabled: () => !!ipfs,
       active: () => false
     }
   ] : [];
@@ -387,7 +387,7 @@ export const Editor = ({ topic, itemId, title, pads = [], items = [], onCreateIt
           onSelect: handleContextMenuOptionSelect,
           renderItem: handleContextMenuRenderItem
         }}
-        onImageUpload={handleImageUpload}
+        onImageUpload={ipfs && handleImageUpload}
         // imageSourceParser={imageSrcParser}
         onCreated={handleEditorCreated}
         reactElementRenderFn={handleReactElementRender}

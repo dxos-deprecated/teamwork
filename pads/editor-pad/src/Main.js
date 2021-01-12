@@ -15,6 +15,7 @@ import { useParty, useItems } from '@dxos/react-client';
 import TasksPad from '@dxos/tasks-pad';
 
 import { Editor } from './components/Editor';
+import { EDITOR_TYPE_DOCUMENT } from './model';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flex: 1,
-    [theme.breakpoints.up('subMbp')]: {
+    [theme.breakpoints?.up('subMbp')]: {
       margin: 'auto'
     },
     maxWidth: 800,
@@ -39,13 +40,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const EditorPad = ({ topic, item, itemId }) => {
+const EditorPad = ({ topic, itemId }) => {
   assert(topic);
   assert(itemId);
 
   const party = useParty(keyToBuffer(topic));
   const classes = useStyles();
   const [pads] = usePads();
+  const [item] = useItems({ partyKey: party.key, type: EDITOR_TYPE_DOCUMENT, id: itemId });
   const items = useItems({ partyKey: keyToBuffer(topic), type: pads.map(pad => pad.type) });
   const [messengerOpen, setMessengerOpen] = useState(false);
 
@@ -53,6 +55,10 @@ const EditorPad = ({ topic, item, itemId }) => {
     const pad = pads.find(p => p.type === type);
     return await pad.create({ party }, {});
   };
+
+  if (!item) {
+    return null;
+  }
 
   const embeddablePads = [PlannerPad.type, TasksPad.type, MessengerPad.type];
 

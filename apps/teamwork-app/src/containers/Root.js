@@ -20,7 +20,7 @@ import {
   Theme,
   ClientInitializer
 } from '@dxos/react-appkit';
-// import TablePad from '@dxos/table-pad';
+import TablePad from '@dxos/table-pad';
 import TasksPad from '@dxos/tasks-pad';
 // import TestingPad from '@dxos/testing-pad';
 
@@ -39,8 +39,8 @@ const pads = [
   EditorPad,
   MessengerPad,
   PlannerPad,
-  TasksPad
-  // TablePad
+  TasksPad,
+  TablePad
   // TestingPad,
 ];
 

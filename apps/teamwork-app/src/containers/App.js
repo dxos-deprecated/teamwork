@@ -52,7 +52,7 @@ const App = () => {
         onHomeNavigation={() => router.push({ path: '/home' })}
       >
         <div className={classes.main}>
-          {pad && <pad.main topic={topic} itemId={itemId} item={item} />}
+          {pad && <pad.main topic={topic} itemId={itemId} />}
         </div>
       </AppContainer>
       <Settings
