@@ -36,7 +36,7 @@ function PartyInitializer ({ pad: Pad, createItem, registerModel, createData }) 
       registerModel && await registerModel(client);
       const party = await client.echo.createParty();
       const tableItem = await createItem({ party }, { name: 'Alice\'s pad' });
-      createData && await createData({party, item: tableItem})
+      createData && await createData({ party, item: tableItem });
       setItemId(tableItem.id);
       setTopic(party.key.toHex());
       setReady(true);

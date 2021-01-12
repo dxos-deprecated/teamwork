@@ -4,11 +4,13 @@
   "version": "1.2.0-alpha.52",
   "scripts": {
     "build": "build-storybook",
-    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci"
+    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci",
+    "lint": "eslint 'stories/**/*.{js,jsx,ts,tsx}'"
   },
   "devDependencies": {
     "@dxos/crypto": "~1.0.7",
     "@dxos/editor-pad": "^1.2.0-alpha.52",
+    "@dxos/eslint-plugin": "~1.0.10",
     "@dxos/messenger-pad": "^1.2.0-alpha.52",
     "@dxos/planner-pad": "^1.2.0-alpha.52",
     "@dxos/react-appkit": "~2.7.49",
@@ -20,5 +22,12 @@
     "@storybook/addon-knobs": "^6.0.21",
     "@storybook/react": "^6.0.21"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "eslintConfig": {
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "react/prop-types": "off",
+      "react/display-name": "off"
+    }
+  }
 }

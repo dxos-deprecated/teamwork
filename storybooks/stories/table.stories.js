@@ -4,8 +4,8 @@
 
 import React from 'react';
 
-import pad from '@dxos/table-pad';
-import {createRecord, createColumn} from '@dxos/table-pad';
+import pad, { createRecord, createColumn } from '@dxos/table-pad';
+
 import StorybookInitializer from './StorybookInitializer';
 import { exampleColumns, exampleRows } from './constants';
 
@@ -23,14 +23,14 @@ export const withTableTab = () => {
 };
 
 export const withExampleTableTab = () => {
-  const createData = async ({party, item}) => {
+  const createData = async ({ party, item }) => {
     const itemId = item.id;
     const newColumnIds = {};
 
     for (let i = 0; i < exampleColumns.length; i++) {
       const newColumn = await createColumn(
-        {party, itemId},
-        {headerName: exampleColumns[i].headerName, columnType: exampleColumns[i].columnType}
+        { party, itemId },
+        { headerName: exampleColumns[i].headerName, columnType: exampleColumns[i].columnType }
       );
       newColumnIds[exampleColumns[i].headerName] = newColumn.id;
     }
@@ -40,7 +40,7 @@ export const withExampleTableTab = () => {
       // change header to id in order to properly save the column value.
       // e.g. { id: 1, lastName: 'Snow' } => { id: 1, xdgawe123f: 'Snow' }
       const transformedRow = Object.keys(row).reduce((acc, curr) => ({ ...acc, [newColumnIds[curr]]: row[curr] }), {});
-      await createRecord({party, itemId}, transformedRow);
+      await createRecord({ party, itemId }, transformedRow);
     }
   };
 

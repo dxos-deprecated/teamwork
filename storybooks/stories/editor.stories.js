@@ -5,6 +5,7 @@
 import React from 'react';
 
 import pad from '@dxos/editor-pad';
+
 import StorybookInitializer from './StorybookInitializer';
 
 export default {
