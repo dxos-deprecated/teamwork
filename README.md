@@ -10,7 +10,8 @@ Decentralized Collaborative Tools.
 Start the Teamwork app:
 
 ```bash
-yarn start
+yarn && yarn build
+cd apps/teamwork-app && yarn start
 ```
 
 ## Developing pads
