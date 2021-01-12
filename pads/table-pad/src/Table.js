@@ -4,16 +4,10 @@
 
 import React, { useRef, useState } from 'react';
 
-import { Toolbar, TextField, makeStyles, Typography, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button } from '@material-ui/core';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import AddIcon from '@material-ui/icons/Add';
+import { makeStyles } from '@material-ui/core';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
 import { AddColumn } from './components';
-import NoRows from './components/NoRows';
 import TableToolbar from './components/TableToolbar';
 import useEditableColumns from './useEditableColumns';
 
@@ -51,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title, onInitialize }) {
+export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title }) {
   const classes = useStyles();
   const [active = {}, setActive] = useState(undefined);
   const createColumnAnchor = useRef(null);
