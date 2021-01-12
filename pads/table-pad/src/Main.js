@@ -5,12 +5,10 @@
 import React from 'react';
 
 import { keyToBuffer } from '@dxos/crypto';
-import { ObjectModel } from '@dxos/object-model';
 import { useItems, useParty } from '@dxos/react-client';
 
 import Table from './Table';
-import { exampleColumns, exampleRows } from './constants';
-import { TABLE_TYPE_TABLE, TABLE_TYPE_RECORD, createRecord, TABLE_TYPE_COLUMN } from './model';
+import { TABLE_TYPE_TABLE, TABLE_TYPE_RECORD, createRecord, TABLE_TYPE_COLUMN, createColumn } from './model';
 
 export const Main = ({ itemId, topic }) => {
   const party = useParty(keyToBuffer(topic));
@@ -31,31 +29,7 @@ export const Main = ({ itemId, topic }) => {
   };
 
   const handleAddColumn = async (headerName, columnType) => {
-    return await party.database.createItem({
-      model: ObjectModel,
-      type: TABLE_TYPE_COLUMN,
-      parent: itemId,
-      props: {
-        headerName,
-        columnType
-      }
-    });
-  };
-
-  const handleInitialize = async () => {
-    const newColumnIds = {};
-    for (let i = 0; i < exampleColumns.length; i++) {
-      const newColumn = await handleAddColumn(exampleColumns[i].headerName, exampleColumns[i].columnType);
-      newColumnIds[exampleColumns[i].headerName] = newColumn.id;
-    }
-
-    for (let i = 0; i < exampleRows.length; i++) {
-      const row = exampleRows[i];
-      // change header to id in order to properly save the column value.
-      // e.g. { id: 1, lastName: 'Snow' } => { id: 1, xdgawe123f: 'Snow' }
-      const transformedRow = Object.keys(row).reduce((acc, curr) => ({ ...acc, [newColumnIds[curr]]: row[curr] }), {});
-      await handleAddRow(transformedRow);
-    }
+    return await createColumn({ party, itemId }, { headerName, columnType });
   };
 
   const title = item.model.getProperty('title') || 'Untitled';
@@ -79,7 +53,6 @@ export const Main = ({ itemId, topic }) => {
       onAddRow={() => handleAddRow({})} // Create with no data by default
       onAddColumn={handleAddColumn}
       title={title}
-      onInitialize={handleInitialize}
     />
   );
 };

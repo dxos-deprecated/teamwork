@@ -15,15 +15,15 @@ const config = {
   }
 };
 
-export const StorybookInitializer = ({ pad, createItem, registerModel }) => {
+export const StorybookInitializer = ({ pad, createItem, registerModel, createData }) => {
   return (
     <ClientInitializer config={config}>
-      <PartyInitializer createItem={createItem} pad={pad} registerModel={registerModel} />
+      <PartyInitializer createItem={createItem} pad={pad} registerModel={registerModel} createData={createData} />
     </ClientInitializer>
   );
 };
 
-function PartyInitializer ({ pad: Pad, createItem, registerModel }) {
+function PartyInitializer ({ pad: Pad, createItem, registerModel, createData }) {
   const [ready, setReady] = useState(false);
   const [topic, setTopic] = useState();
   const [itemId, setItemId] = useState();
@@ -36,6 +36,7 @@ function PartyInitializer ({ pad: Pad, createItem, registerModel }) {
       registerModel && await registerModel(client);
       const party = await client.echo.createParty();
       const tableItem = await createItem({ party }, { name: 'Alice\'s pad' });
+      createData && await createData({party, item: tableItem})
       setItemId(tableItem.id);
       setTopic(party.key.toHex());
       setReady(true);

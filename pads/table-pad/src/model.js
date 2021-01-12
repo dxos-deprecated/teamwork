@@ -17,3 +17,12 @@ export const createRecord = async ({ party, itemId }, props) => {
     props
   });
 };
+
+export const createColumn = async ({ party, itemId }, props) => {
+  return await party.database.createItem({
+    model: ObjectModel,
+    type: TABLE_TYPE_COLUMN,
+    parent: itemId,
+    props
+  });
+};
