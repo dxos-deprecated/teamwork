@@ -76,7 +76,7 @@ export const Main = ({ itemId, topic }) => {
       rows={rows}
       columns={columns}
       onUpdateRow={handleUpdateRow}
-      onAddRow={handleAddRow}
+      onAddRow={() => handleAddRow({})} // Create with no data by default
       onAddColumn={handleAddColumn}
       title={title}
       onInitialize={handleInitialize}
