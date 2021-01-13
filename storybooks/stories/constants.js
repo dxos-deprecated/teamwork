@@ -2,6 +2,8 @@
 // Copyright 2020 DXOS.org
 //
 
+// TODO(burdon): Generate using faker (see echo-demo tests).
+
 export const exampleColumns = [
   { headerName: 'protagonist', columnType: 'checkbox' },
   { headerName: 'lastName', columnType: 'text' },
