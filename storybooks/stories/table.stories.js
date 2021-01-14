@@ -33,7 +33,11 @@ const createExampleData = async ({ party, item }) => {
 };
 
 const TablePad = ({ createData } = {}) => {
-  const { topic, itemId, error } = usePadTest({ createItem: pad.create, createData });
+  const { topic, itemId, error } = usePadTest({
+    createItem: pad.create,
+    createData,
+    registerModel: pad.register
+  });
   if (error) {
     throw error;
   }
