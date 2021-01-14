@@ -21,6 +21,7 @@ export default {
   main: Channel,
   settings: MessengerSettingsDialog,
   register: async (client) => {
+    await client.registerModel(ObjectModel);
     await client.registerModel(MessengerModel);
   },
   create: async ({ party }, { name }) => {
