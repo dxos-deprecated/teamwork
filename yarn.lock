@@ -2140,10 +2140,10 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
-"@dxos/version-check@0.1.15":
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/@dxos/version-check/-/version-check-0.1.15.tgz#779bdde904695eb2bb8ce4595d61c7888b967512"
-  integrity sha512-DKBEg81HaCl8kU9t90Fo/Teh4M3y3OvX+DVObdhxWaKFpGWBN2XX0MLB8bZ1yO4jPA0mX5un1QAV8MPqFnvKgA==
+"@dxos/version-check@0.1.16":
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/@dxos/version-check/-/version-check-0.1.16.tgz#a6aa7a547395d0fb7a3c5f60448a4b1623b4f77c"
+  integrity sha512-CdEoG3F7xo770ZQy3UZPcrTEvbT+drvB9O0173Fuh1kWRNkammhEUxcFyFMz7zcoUMm95gTI0nkGiVfQTUJqEA==
   dependencies:
     "@types/yargs" "^15.0.9"
     chalk "^4.1.0"
