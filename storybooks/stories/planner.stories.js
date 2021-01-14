@@ -5,18 +5,32 @@
 import React from 'react';
 
 import pad from '@dxos/planner-pad';
+import { ClientInitializer } from '@dxos/react-appkit';
 
-import StorybookInitializer from './StorybookInitializer';
+import { config, usePadTest } from '../utils';
 
 export default {
   title: 'Planner pad'
 };
 
+const PlannerPad = () => {
+  const { topic, itemId, error } = usePadTest({ createItem: pad.create });
+  if (error) {
+    throw error;
+  }
+  if (!topic || !itemId) {
+    return null;
+  }
+
+  return (
+    <pad.main topic={topic} itemId={itemId} />
+  );
+};
+
 export const withPlannerPad = () => {
   return (
-    <StorybookInitializer
-      createItem={pad.create}
-      pad={pad.main}
-    />
+    <ClientInitializer config={config}>
+      <PlannerPad />
+    </ClientInitializer>
   );
 };
