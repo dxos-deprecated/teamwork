@@ -1,6 +1,6 @@
 {
   "name": "@dxos/testing-pad",
-  "version": "1.2.0-alpha.55",
+  "version": "1.2.0-alpha.56",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
@@ -27,11 +27,11 @@
   },
   "peerDependencies": {
     "@dxos/crypto": "*",
+    "@dxos/echo-db": "*",
     "@dxos/react-appkit": "*",
     "@dxos/react-client": "*",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
-    "@dxos/echo-db": "*",
     "react": "*"
   },
   "devDependencies": {
