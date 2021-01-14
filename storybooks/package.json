@@ -19,8 +19,8 @@
     "@dxos/react-ux": "~2.7.49",
     "@dxos/table-pad": "^1.2.0-alpha.54",
     "@dxos/tasks-pad": "^1.2.0-alpha.54",
-    "@storybook/addon-knobs": "^6.0.21",
-    "@storybook/react": "^6.0.21"
+    "@storybook/addon-knobs": "^6.1.14",
+    "@storybook/react": "^6.1.14"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/react",

@@ -4,6 +4,9 @@
 
 // TODO(burdon): Generate using faker (see echo-demo tests).
 
+export const exampleUsername = 'Alice';
+export const examplePadName = 'Alice\'s pad';
+
 export const exampleColumns = [
   { headerName: 'protagonist', columnType: 'checkbox' },
   { headerName: 'lastName', columnType: 'text' },
@@ -22,6 +25,3 @@ export const exampleRows = [
   { lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { lastName: 'Roxie', firstName: 'Harvey', age: 65 }
 ];
-
-export const exampleUsername = 'Alice';
-export const examplePadName = 'Alice\'s pad';

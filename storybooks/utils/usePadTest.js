@@ -2,32 +2,78 @@
 // Copyright 2021 DXOS.org
 //
 
-import { useEffect, useState } from 'react';
+import faker from 'faker';
+import React, { useEffect, useState } from 'react';
 
 import { createKeyPair } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 
-import { examplePadName, exampleUsername } from './constants';
+/**
+ * Data generator.
+ */
+export class Generator {
+  constructor (create) {
+    this._create = create;
+  }
 
-export const usePadTest = ({ registerModel, createItem, createData }) => {
+  get username () {
+    return 'test-user';
+  }
+
+  get title () {
+    return faker.lorem.words();
+  }
+
+  generate (party, item) {
+    this._create(party, item);
+  }
+}
+
+/**
+ * @param meta Exported Pad meta data.
+ * @param {Generator} generator Data generator.
+ */
+// TODO(burdon): Factor out and convert to TS (move to sdk).
+export const usePadTest = ({ create: createItem, register: registerModel }, generator) => {
   const client = useClient();
-  const [topic, setTopic] = useState();
-  const [itemId, setItemId] = useState();
   const [error, setError] = useState();
+  const [{ topic, itemId }, setTopic] = useState({});
 
   useEffect(() => {
     (async () => {
-      await client.createProfile({ ...createKeyPair(), username: exampleUsername });
+      await client.createProfile({ ...createKeyPair(), username: generator.username });
       registerModel && await registerModel(client);
+
       const party = await client.echo.createParty();
-      const tableItem = await createItem({ party }, { name: examplePadName });
-      createData && await createData({ party, item: tableItem });
-      setTopic(party.key.toHex());
-      setItemId(tableItem.id);
+      const item = await createItem({ party }, { name: generator.title });
+
+      generator && generator.generate(party, item);
+
+      setTopic({ topic: party.key.toHex(), itemId: item.id });
     })().catch(setError);
   }, []);
 
   return { error, topic, itemId };
+};
+
+/**
+ * Wraps the pad.
+ * @param meta Exported Pad meta data.
+ */
+export const PadContainer = ({ meta, generator }) => {
+  const { main: Pad } = meta;
+  const { topic, itemId, error } = usePadTest(meta, generator);
+  if (error) {
+    throw error;
+  }
+
+  if (!topic) {
+    return null;
+  }
+
+  return (
+    <Pad topic={topic} itemId={itemId} />
+  );
 };
 
 export default usePadTest;

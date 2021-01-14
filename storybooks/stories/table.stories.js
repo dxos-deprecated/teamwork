@@ -2,64 +2,60 @@
 // Copyright 2020 DXOS.org
 //
 
+import faker from 'faker';
 import React from 'react';
 
 import { ClientInitializer } from '@dxos/react-appkit';
-import pad, { createRecord, createColumn } from '@dxos/table-pad';
+import meta, { createColumn, createRecord } from '@dxos/table-pad';
 
-import { exampleColumns, exampleRows, usePadTest, config } from '../utils';
+import { config, PadContainer, Generator } from '../utils';
 
 export default {
-  title: 'Table pad'
+  title: 'Table'
 };
 
-const createExampleData = async ({ party, item }) => {
-  const itemId = item.id;
-  const newColumnIds = {};
-
-  for (let i = 0; i < exampleColumns.length; i++) {
-    const newColumn = await createColumn(
-      { party, itemId },
-      { headerName: exampleColumns[i].headerName, columnType: exampleColumns[i].columnType }
-    );
-    newColumnIds[exampleColumns[i].headerName] = newColumn.id;
-  }
-
-  for (let i = 0; i < exampleRows.length; i++) {
-    const row = exampleRows[i];
-    // change header to id in order to properly save the column value.
-    // e.g. { id: 1, lastName: 'Snow' } => { id: 1, xdgawe123f: 'Snow' }
-    const transformedRow = Object.keys(row).reduce((acc, curr) => ({ ...acc, [newColumnIds[curr]]: row[curr] }), {});
-    await createRecord({ party, itemId }, transformedRow);
-  }
-};
-
-const TablePad = ({ createData } = {}) => {
-  const { topic, itemId, error } = usePadTest({ createItem: pad.create, createData });
-  if (error) {
-    throw error;
-  }
-  if (!topic || !itemId) {
-    return null;
-  }
-
-  return (
-    <pad.main topic={topic} itemId={itemId} />
-  );
-};
+// TODO(burdon): Factor out (testing utils).
+const times = ({ min, max }, f) => Promise.all([...new Array(faker.random.number({ min, max })).keys()].map(f));
 
 export const withTablePad = () => {
-  return (
-    <ClientInitializer config={config}>
-      <TablePad />
-    </ClientInitializer>
-  );
-};
+  const generator = new Generator(async (party, item) => {
+    // Columns.
+    // TODO(burdon): NOTE: API will change since columns should be properties of entity item.
+    const columns = await times({ min: 1, max: 3 }, async (i) => {
+      const name = faker.lorem.word();
+      const type = faker.random.boolean() ? 'text' : 'checkbox';
+      // TODO(burdon): Rename properties (name, type).
+      await item.model.setProperty(`field.${i}.headerName`, name);
+      await item.model.setProperty(`field.${i}.columnType`, type);
+      return { name, type };
+    });
 
-export const withExampleTableTab = () => {
+    console.log(columns);
+
+    await times({ min: 3, max: 5 }, async () => {
+      const data = columns.reduce((data, { name, type }) => ({
+        ...data,
+        [name]: type === 'text' ? faker.lorem.word() : faker.random.boolean()
+      }), {});
+
+      console.log(data);
+      await createRecord({ party, itemId: item.id }, data);
+    });
+
+    /*
+    for await (const i of new Array(faker.random.number({ min: 3, max: 5 }))) {
+      const row = exampleRows[i];
+      // Change header to id in order to properly save the column value.
+      // e.g. { id: 1, lastName: 'Snow' } => { id: 1, xdgawe123f: 'Snow' }
+      const transformedRow = Object.keys(row).reduce((acc, curr) => ({ ...acc, [newColumnIds[curr]]: row[curr] }), {});
+      await createRecord({ party, itemId }, transformedRow);
+    }
+    */
+  });
+
   return (
     <ClientInitializer config={config}>
-      <TablePad createData={createExampleData} />
+      <PadContainer meta={meta} generator={generator} />
     </ClientInitializer>
   );
 };

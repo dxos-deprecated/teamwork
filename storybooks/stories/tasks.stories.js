@@ -2,36 +2,32 @@
 // Copyright 2020 DXOS.org
 //
 
+import faker from 'faker';
+import times from 'lodash/times';
 import React from 'react';
 
 import { ClientInitializer } from '@dxos/react-appkit';
-import pad from '@dxos/tasks-pad';
+import meta, { createTask } from '@dxos/tasks-pad';
 
-import { usePadTest } from '../utils';
-import config from '../utils/config';
+import { config, Generator, PadContainer } from '../utils';
 
 export default {
-  title: 'Tasks pad'
-};
-
-const TasksPad = () => {
-  const { topic, itemId, error } = usePadTest({ createItem: pad.create });
-  if (error) {
-    throw error;
-  }
-  if (!topic || !itemId) {
-    return null;
-  }
-
-  return (
-    <pad.main topic={topic} itemId={itemId} />
-  );
+  title: 'Tasks'
 };
 
 export const withTasksPad = () => {
+  const generator = new Generator((party, item) => {
+    times(faker.random.number({ min: 1, max: 10 }), () => {
+      createTask({ party, itemId: item.id }, {
+        text: faker.lorem.sentence(),
+        completed: faker.random.boolean()
+      });
+    });
+  });
+
   return (
     <ClientInitializer config={config}>
-      <TasksPad />
+      <PadContainer meta={meta} generator={generator} />
     </ClientInitializer>
   );
 };
