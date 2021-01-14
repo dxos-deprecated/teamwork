@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core';
 import * as colors from '@material-ui/core/colors';
 
 import { keyToBuffer } from '@dxos/crypto';
-import { createTestInstance, Database } from '@dxos/echo-db';
+import { createTestInstance, Database, Selection } from '@dxos/echo-db';
 import { FullScreen, SVG, useGrid } from '@dxos/gem-core';
 import {
   createSimulationDrag,
@@ -26,6 +26,7 @@ import {
 import { ObjectModel } from '@dxos/object-model';
 import { useItems, useParty } from '@dxos/react-client';
 
+import ItemList from './ItemList';
 import { GRAPH_PAD } from './model';
 
 export const OBJECT_ORG = 'wrn://dxos/object/org';
@@ -104,6 +105,35 @@ const useStyles = makeStyles(() => ({
       stroke: colors.green[700],
       strokeWidth: 1
     }
+  },
+  items: {
+    position: 'absolute',
+    zIndex: 1,
+    left: 0,
+    top: 0,
+    bottom: 0,
+    overflow: 'scroll',
+
+    color: colors.grey[700],
+    '& .org': {
+      color: colors.blue[700]
+    },
+    '& .project': {
+      color: colors.orange[700]
+    },
+    '& .task': {
+      color: colors.pink[700]
+    },
+    '& .person': {
+      color: colors.green[700]
+    }
+  },
+  info: {
+    position: 'absolute',
+    zIndex: 1,
+    right: 16,
+    fontFamily: 'monospace',
+    color: colors.grey[700]
   }
 }));
 
@@ -126,7 +156,7 @@ export function useSelection<T> (
     selection && setData(selector(selection));
   }, deps);
 
-  return data;
+  return data as any;
 }
 
 const generate = async (database, config) => {
@@ -158,10 +188,45 @@ const generate = async (database, config) => {
   }));
 };
 
+export const itemSelector = selection => {
+  return selection.items;
+};
+
+export const graphSelector = selection => {
+  const nodes: any[] = [];
+  const links: any[] = [];
+
+  selection
+    .filter({ type: OBJECT_ORG })
+    .each((item: any) => nodes.push({ id: item.id, type: OBJECT_ORG, title: item.model.getProperty('name') }))
+    .call(selection => {
+      selection.links({ type: LINK_PROJECT })
+        .each(link => {
+          nodes.push({ id: link.target.id, type: OBJECT_PROJECT, title: link.target.model.getProperty('name') });
+          links.push({ id: link.id, source: link.source.id, target: link.target.id });
+        })
+        .target()
+        .children()
+        .each(item => {
+          nodes.push({ id: item.id, type: OBJECT_TASK, title: item.model.getProperty('name') });
+          links.push({ id: `${item.parent.id}-${item.id}`, source: item.parent.id, target: item.id });
+        });
+    })
+    .links({ type: LINK_EMPLOYEE })
+    .each((link: any) => links.push({ id: link.id, source: link.source.id, target: link.target.id }))
+    .target()
+    .each((item: any) => nodes.push({ id: item.id, type: OBJECT_PERSON, title: item.model.getProperty('name') } as any));
+
+  return { nodes, links };
+};
+
 export const Main = ({ itemId, topic }) => {
   const classes = useStyles();
   const party = useParty(keyToBuffer(topic));
-  const [item] = useItems({ partyKey: party.key, type: GRAPH_PAD, id: itemId });
+  if (!party) {
+    throw new Error('Pad used outside of party context')
+  }
+  const [item] = useItems({ partyKey: party.key, type: GRAPH_PAD, id: itemId } as any);
 
   const [resizeListener, size] = useResizeAware();
   const { width, height } = size;
@@ -206,27 +271,36 @@ export const Main = ({ itemId, topic }) => {
   }
 
   return (
-    <FullScreen>
-      {resizeListener}
-      <SVG width={size.width} height={size.height}>
-        <Markers arrowSize={10}/>
-        <GraphLinker
-          grid={grid}
-          drag={drag}
-          onUpdate={mutations => handleCreate((update({ nodes: [], links: [] }, mutations)))}
-        />
-        <Graph
-          grid={grid}
-          data={data}
-          layout={layout}
-          drag={drag}
-          nodeProjector={nodeProjector}
-          linkProjector={linkProjector}
-          classes={{
-            nodes: classes.nodes
-          }}
-        />
-      </SVG>
-    </FullScreen>
+    <>
+      <div className={classes.items}>
+        <ItemList items={items} />
+      </div>
+
+      <div className={classes.info}>
+        <div>Command-drag: Org &#x2192; Person</div>
+      </div>
+      <FullScreen>
+        {resizeListener}
+        <SVG width={size.width} height={size.height}>
+          <Markers arrowSize={10}/>
+          <GraphLinker
+            grid={grid}
+            drag={drag}
+            onUpdate={mutations => handleCreate((update({ nodes: [], links: [] }, mutations)))}
+          />
+          <Graph
+            grid={grid}
+            data={data}
+            layout={layout}
+            drag={drag}
+            nodeProjector={nodeProjector}
+            linkProjector={linkProjector}
+            classes={{
+              nodes: classes.nodes
+            }}
+          />
+        </SVG>
+      </FullScreen>
+    </>
   );
 };
