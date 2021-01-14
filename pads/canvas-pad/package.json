@@ -2,23 +2,15 @@
   "name": "@dxos/canvas-pad",
   "version": "1.2.0-alpha.56",
   "private": true,
-  "description": "Canvas pad.",
-  "homepage": "https://github.com/dxos/teamwork#readme",
-  "bugs": {
-    "url": "https://github.com/dxos/teamwork/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dxos/teamwork.git"
-  },
   "license": "GPL-3.0",
   "author": "DXOS.org",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
-    "clean": "rm -rf ./dist",
+    "build-storybook": "build-storybook",
     "dist": "rollup -c",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "storybook": "start-storybook -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
   },
   "eslintConfig": {
@@ -47,11 +39,11 @@
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@dxos/app-cli": "~1.0.0-beta.68",
     "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/react-storybook": "~1.2.0-alpha.56",
     "@rollup/plugin-babel": "^5.0.3",
-    "@storybook/addon-knobs": "^6.0.21",
-    "@storybook/react": "^6.0.21",
+    "@storybook/addon-knobs": "^6.1.14",
+    "@storybook/react": "^6.1.14",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/jest": "^26.0.15",
@@ -83,6 +75,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "f29a1e902d31583c95240e2bb8afc9286eff1a76"
+  }
 }

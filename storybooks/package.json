@@ -1,5 +1,5 @@
 {
-  "name": "@dxos/teamwork-storybooks",
+  "name": "@dxos/react-storybook",
   "version": "1.2.0-alpha.56",
   "private": true,
   "license": "GPL-3.0",
@@ -7,8 +7,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
+    "chromatic": "npx chromatic --project-token empewjlqy2v",
     "lint": "eslint 'stories/**/*.{js,jsx,ts,tsx}'",
-    "storybook": "start-storybook -s ./stories/static -p 9001 -c .storybook --ci"
+    "storybook": "start-storybook -p 9001 -c .storybook --ci"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/react",
@@ -20,17 +21,13 @@
   "devDependencies": {
     "@dxos/crypto": "~1.0.7",
     "@dxos/echo-db": "~2.6.20",
-    "@dxos/editor-pad": "^1.2.0-alpha.56",
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/messenger-pad": "^1.2.0-alpha.56",
-    "@dxos/planner-pad": "^1.2.0-alpha.56",
     "@dxos/react-appkit": "~2.7.49",
     "@dxos/react-client": "~2.7.49",
     "@dxos/react-router": "~2.7.49",
     "@dxos/react-ux": "~2.7.49",
-    "@dxos/table-pad": "^1.2.0-alpha.56",
-    "@dxos/tasks-pad": "^1.2.0-alpha.56",
     "@storybook/addon-knobs": "^6.1.14",
-    "@storybook/react": "^6.1.14"
+    "@storybook/react": "^6.1.14",
+    "faker": "^4.1.0"
   }
 }

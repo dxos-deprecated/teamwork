@@ -3,6 +3,13 @@
 //
 
 module.exports = {
-  // addons: ['@storybook/addon-knobs/register'], // no knobs are used at the moment
-  stories: ['../stories/**/*.stories.js']
+  stories: [
+    '../../pads/canvas-pad/**/*.stories.js',
+    '../../pads/editor-pad/**/*.stories.js',
+    '../../pads/messenger-pad/**/*.stories.js',
+    '../../pads/planner-pad/**/*.stories.js',
+    '../../pads/table-pad/**/*.stories.js',
+    '../../pads/tasks-pad/**/*.stories.js',
+    '../stories/**/*.stories.js'
+  ],
 };

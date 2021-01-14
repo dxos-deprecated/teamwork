@@ -2,12 +2,16 @@
   "name": "@dxos/table-pad",
   "version": "1.2.0-alpha.56",
   "private": true,
+  "license": "GPL-3.0",
+  "author": "DXOS.org",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
+    "build-storybook": "build-storybook",
     "dist": "rollup -c",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
+    "storybook": "start-storybook -p 9001 -c .storybook --ci",
+    "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand --forceExit"
   },
   "eslintConfig": {
     "extends": "plugin:@dxos/react",
@@ -45,7 +49,10 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/react-storybook": "~1.2.0-alpha.56",
     "@rollup/plugin-json": "^4.0.3",
+    "@storybook/addon-knobs": "^6.1.14",
+    "@storybook/react": "^6.1.14",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/color-hash": "^1.0.0",

@@ -6,9 +6,9 @@ import faker from 'faker';
 import React from 'react';
 
 import { ClientInitializer } from '@dxos/react-appkit';
-import meta, { createRecord } from '@dxos/table-pad';
+import { times, config, PadContainer, Generator } from '@dxos/react-storybook';
 
-import { times, config, PadContainer, Generator } from '../utils';
+import meta, { createRecord } from '../src';
 
 export default {
   title: 'Table'

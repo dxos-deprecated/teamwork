@@ -3,7 +3,7 @@
   "version": "1.2.0-alpha.56",
   "private": false,
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "dist/src/index.js",
   "files": [
     "src",
     "src/proto/gen",

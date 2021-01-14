@@ -4,10 +4,10 @@
 
 import React from 'react';
 
-import meta from '@dxos/editor-pad';
 import { ClientInitializer } from '@dxos/react-appkit';
+import { config, PadContainer } from '@dxos/react-storybook';
 
-import { config, PadContainer } from '../utils';
+import meta from '../src';
 
 export default {
   title: 'Editor'

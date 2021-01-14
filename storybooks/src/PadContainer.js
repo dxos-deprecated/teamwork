@@ -28,7 +28,7 @@ export const useTest = ({ create: createItem, register: registerModel }, generat
       const party = await client.echo.createParty();
       const item = await createItem({ party }, { name: generator.title });
 
-      generator && generator.generate(party, item);
+      generator && await generator.generate(party, item);
 
       setTopic({ topic: party.key.toHex(), itemId: item.id });
     })().catch(setError);

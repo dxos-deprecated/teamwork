@@ -2,18 +2,15 @@
   "name": "@dxos/planner-pad",
   "version": "1.2.0-alpha.56",
   "private": true,
-  "description": "Dxos planner pad",
-  "keywords": [],
   "license": "GPL-3.0",
   "author": "DXOS.org",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
-    "build:watch": "babel src -d dist --watch",
-    "debug": "DOT_ENV=.env.debug webpack-dev-server --mode development",
-    "debug:localhost": "CONFIG=localhost.yml webpack-dev-server --mode development",
+    "build-storybook": "build-storybook",
     "dist": "rollup -c",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "storybook": "start-storybook -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand --forceExit"
   },
   "eslintConfig": {
@@ -58,7 +55,10 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/react-storybook": "~1.2.0-alpha.56",
     "@rollup/plugin-commonjs": "^13.0.0",
+    "@storybook/addon-knobs": "^6.1.14",
+    "@storybook/react": "^6.1.14",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/jest": "^26.0.15",
@@ -89,5 +89,8 @@
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "*"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

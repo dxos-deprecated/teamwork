@@ -31,7 +31,7 @@ export class Generator {
     return faker.lorem.words();
   }
 
-  generate (party, item) {
-    this._create && this._create(party, item);
+  async generate (party, item) {
+    this._create && await this._create(party, item);
   }
 }
