@@ -9,7 +9,6 @@ module.exports = {
     '../../pads/messenger-pad/**/*.stories.js',
     '../../pads/planner-pad/**/*.stories.js',
     '../../pads/table-pad/**/*.stories.js',
-    '../../pads/tasks-pad/**/*.stories.js',
-    '../stories/**/*.stories.js'
+    '../../pads/tasks-pad/**/*.stories.js'
   ],
 };

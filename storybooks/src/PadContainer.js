@@ -13,6 +13,7 @@ import { Generator } from './testing';
  * @param meta Exported Pad meta data.
  * @param {Generator} generator Data generator.
  */
+// TODO(burdon): Convert to storybook addon: https://www.npmjs.com/package/storybook-addon-apollo-client.
 // TODO(burdon): Factor out and convert to TS (move to sdk).
 export const useTest = ({ create: createItem, register: registerModel }, generator) => {
   const client = useClient();
