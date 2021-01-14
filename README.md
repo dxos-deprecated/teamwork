@@ -7,7 +7,7 @@ Decentralized Collaborative Tools.
 
 ## Storybooks
 
-[Chromatic Dashboard](https://www.chromatic.com/library?appId=6000854463cdbd00210345900)
+[Chromatic Storyboard](https://www.chromatic.com/library?appId=6000854463cdbd00210345900)
 
 To publish to Chromatic:
 
