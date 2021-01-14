@@ -25,7 +25,6 @@
   "dependencies": {
     "@dxos/async": "~1.0.0-beta.10",
     "@dxos/debug": "~1.0.0-beta.75",
-    "@dxos/echo-db": "~2.6.20",
     "@dxos/gem-canvas": "~1.0.0-beta.25",
     "@dxos/react-ux": "~2.7.49",
     "clsx": "^1.1.0",
@@ -39,6 +38,7 @@
     "@dxos/react-client": "*",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
+    "@dxos/echo-db": "*",
     "react": "*"
   },
   "devDependencies": {
