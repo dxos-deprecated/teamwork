@@ -14,7 +14,10 @@ export default {
 };
 
 const PlannerPad = () => {
-  const { topic, itemId, error } = usePadTest({ createItem: pad.create });
+  const { topic, itemId, error } = usePadTest({
+    createItem: pad.create,
+    registerModel: pad.register
+  });
   if (error) {
     throw error;
   }
