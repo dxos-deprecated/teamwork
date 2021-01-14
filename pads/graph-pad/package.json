@@ -29,6 +29,7 @@
     "color-hash": "^1.0.3",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
+    "react-resize-aware": "^3.1.0",
     "react-virtualized": "^9.22.2"
   },
   "peerDependencies": {
