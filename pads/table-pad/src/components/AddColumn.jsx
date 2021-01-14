@@ -61,7 +61,7 @@ export const AddColumn = ({ onAddColumn, open, onClose }) => {
         <Toolbar variant='dense' disableGutters>
           <Icon/>
           &nbsp;
-          <Typography variant='title2' className={classes.title}>Add new column</Typography>
+          <Typography variant='subtitle1' className={classes.title}>Add new column</Typography>
         </Toolbar>
       </DialogTitle>
       <div className={classes.root}>

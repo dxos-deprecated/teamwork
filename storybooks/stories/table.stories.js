@@ -5,7 +5,7 @@
 import React from 'react';
 
 import { ClientInitializer } from '@dxos/react-appkit';
-import pad, { createRecord, createColumn } from '@dxos/table-pad';
+import pad, { createRecord } from '@dxos/table-pad';
 
 import { exampleColumns, exampleRows, usePadTest, config } from '../utils';
 
@@ -18,11 +18,9 @@ const createExampleData = async ({ party, item }) => {
   const newColumnIds = {};
 
   for (let i = 0; i < exampleColumns.length; i++) {
-    const newColumn = await createColumn(
-      { party, itemId },
-      { headerName: exampleColumns[i].headerName, columnType: exampleColumns[i].columnType }
-    );
-    newColumnIds[exampleColumns[i].headerName] = newColumn.id;
+    await item.model.setProperty(`field.${i}.headerName`, exampleColumns[i].headerName);
+    await item.model.setProperty(`field.${i}.columnType`, exampleColumns[i].columnType);
+    newColumnIds[exampleColumns[i].headerName] = i;
   }
 
   for (let i = 0; i < exampleRows.length; i++) {

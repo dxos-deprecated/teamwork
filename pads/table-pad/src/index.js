@@ -26,7 +26,11 @@ export default {
     return await party.database.createItem({
       model: ObjectModel,
       type: TABLE_TYPE_TABLE,
-      props: { title: name || 'untitled' }
+      props: {
+        title: name || 'untitled'
+        // 'field.0.headerName': 'First Name',
+        // 'field.0.columnType': 'string'
+      }
     });
   }
 };
