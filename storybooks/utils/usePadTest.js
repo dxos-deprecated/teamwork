@@ -9,7 +9,7 @@ import { useClient } from '@dxos/react-client';
 
 import { examplePadName, exampleUsername } from './constants';
 
-export const usePadTest = ({ registerModel, createItem, createData }) => {
+export const usePadTest = ({ registerModel = undefined, createItem, createData = undefined }) => {
   const client = useClient();
   const [topic, setTopic] = useState();
   const [itemId, setItemId] = useState();

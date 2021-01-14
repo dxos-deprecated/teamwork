@@ -4,5 +4,5 @@
 
 module.exports = {
   // addons: ['@storybook/addon-knobs/register'], // no knobs are used at the moment
-  stories: ['../stories/**/*.stories.js']
+  stories: ['../stories/**/*.stories.{js,ts,jsx,tsx}']
 };

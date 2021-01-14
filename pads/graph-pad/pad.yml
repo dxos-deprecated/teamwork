@@ -1,0 +1,4 @@
+name: dxos.org/graph
+displayName: Graph
+build: yarn dist
+version: 1.0.0
