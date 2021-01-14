@@ -1719,7 +1719,7 @@
     react-resize-aware "^3.0.0"
     toposort "^2.0.2"
 
-"@dxos/gem-core@^1.0.0-beta.25":
+"@dxos/gem-core@^1.0.0-beta.25", "@dxos/gem-core@~1.0.0-beta.25":
   version "1.0.0-beta.25"
   resolved "https://registry.yarnpkg.com/@dxos/gem-core/-/gem-core-1.0.0-beta.25.tgz#85b551d05c32fe9162bae8882bce6c48d7d8a0f6"
   integrity sha512-F+2CUF0gAmSto++6SyTYIQwSRg2wg397olNaJYBHqfxPAHwHT1narMfxb7zbwn/DXtrbcazZRUqk5ZXjk5B+xw==
