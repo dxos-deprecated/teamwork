@@ -31,7 +31,7 @@ const EditorPad = () => {
   );
 };
 
-export const withMessengerPad = () => {
+export const withEditorPad = () => {
   return (
     <ClientInitializer config={config}>
       <EditorPad />
