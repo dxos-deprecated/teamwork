@@ -20,6 +20,7 @@ export default {
   icon: Icon,
   main: Main,
   register: async (client) => {
+    await client.registerModel(ObjectModel);
     await client.registerModel(TextModel);
     await client.registerModel(MessengerModel);
   },

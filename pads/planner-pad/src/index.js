@@ -21,6 +21,9 @@ export default {
   icon: Icon,
   main: Board,
   settings: PlannerSettingsDialog,
+  register: async (client) => {
+    await client.registerModel(ObjectModel);
+  },
   create: async ({ party }, { name }, { description = '' } = {}) => {
     const item = await party.database.createItem({
       model: ObjectModel,

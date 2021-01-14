@@ -19,6 +19,9 @@ export default {
   description: 'Task list',
   icon: Icon,
   main: Main,
+  register: async (client) => {
+    await client.registerModel(ObjectModel);
+  },
   create: async ({ party }, { name }) => {
     return await party.database.createItem({
       model: ObjectModel,
