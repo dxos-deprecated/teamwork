@@ -4,33 +4,20 @@
 
 import React from 'react';
 
-import pad from '@dxos/planner-pad';
+import meta from '@dxos/planner-pad';
 import { ClientInitializer } from '@dxos/react-appkit';
 
-import { config, usePadTest } from '../utils';
+import { config, PadContainer } from '../utils';
 
 export default {
-  title: 'Planner pad'
+  title: 'Planner'
 };
 
-const PlannerPad = () => {
-  const { topic, itemId, error } = usePadTest({ createItem: pad.create });
-  if (error) {
-    throw error;
-  }
-  if (!topic || !itemId) {
-    return null;
-  }
-
-  return (
-    <pad.main topic={topic} itemId={itemId} />
-  );
-};
-
-export const withPlannerPad = () => {
+// TODO(burdon): Generate data.
+export const withPad = () => {
   return (
     <ClientInitializer config={config}>
-      <PlannerPad />
+      <PadContainer meta={meta} />
     </ClientInitializer>
   );
 };

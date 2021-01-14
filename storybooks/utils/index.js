@@ -2,5 +2,5 @@
 // Copyright 2021 DXOS.org
 //
 
-export * from './config';
-export * from './usePadTest';
+export * from './testing';
+export { default as PadContainer } from './PadContainer';

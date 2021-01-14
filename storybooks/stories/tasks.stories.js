@@ -15,7 +15,7 @@ export default {
   title: 'Tasks'
 };
 
-export const withTasksPad = () => {
+export const withPad = () => {
   const generator = new Generator((party, item) => {
     times(faker.random.number({ min: 1, max: 10 }), () => {
       createTask({ party, itemId: item.id }, {

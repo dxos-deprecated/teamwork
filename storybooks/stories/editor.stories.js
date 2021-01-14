@@ -4,37 +4,20 @@
 
 import React from 'react';
 
-import pad from '@dxos/editor-pad';
+import meta from '@dxos/editor-pad';
 import { ClientInitializer } from '@dxos/react-appkit';
 
-import { config, usePadTest } from '../utils';
+import { config, PadContainer } from '../utils';
 
 export default {
-  title: 'Editor pad'
+  title: 'Editor'
 };
 
-const EditorPad = () => {
-  const { topic, itemId, error } = usePadTest({
-    createItem: pad.create,
-    registerModel: pad.register
-  });
-
-  if (error) {
-    throw error;
-  }
-  if (!topic || !itemId) {
-    return null;
-  }
-
-  return (
-    <pad.main topic={topic} itemId={itemId} />
-  );
-};
-
-export const withMessengerPad = () => {
+// TODO(burdon): Generate data.
+export const withPad = () => {
   return (
     <ClientInitializer config={config}>
-      <EditorPad />
+      <PadContainer meta={meta} />
     </ClientInitializer>
   );
 };
