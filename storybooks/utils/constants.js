@@ -22,3 +22,6 @@ export const exampleRows = [
   { lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { lastName: 'Roxie', firstName: 'Harvey', age: 65 }
 ];
+
+export const exampleUsername = 'Alice';
+export const examplePadName = 'Alice\'s pad';
