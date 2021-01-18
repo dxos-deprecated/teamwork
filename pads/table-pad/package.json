@@ -9,7 +9,7 @@
     "build": "babel src -d dist",
     "build-storybook": "build-storybook",
     "dist": "rollup -c",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint '{src,stories}/**/*.{js,jsx,ts,tsx}'",
     "storybook": "start-storybook -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand --forceExit"
   },
