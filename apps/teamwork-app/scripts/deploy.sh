@@ -10,4 +10,4 @@ yarn dx app register
 
 yarn dx app query --name DXOS.io/teamwork
 
-yarn run dx app serve --app wrn:app:DXOS.io/teamwork --path /teamwork --port 8080
+yarn run dx app serve --app dxn:app:dxos.org/teamwork --path /teamwork --port 8080

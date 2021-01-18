@@ -26,5 +26,5 @@ yarn dx register
 And finally test locally:
 
 ```
-yarn dx app serve --app wrn:app:DXOS.io/teamwork --path /teamwork
+yarn dx app serve --app dxn:app:dxos.org/teamwork --path /teamwork
 ```
