@@ -4,8 +4,9 @@
 
 import assert from 'assert';
 
-import { ObjectModel } from '@dxos/echo-db';
-import { useModel } from '@dxos/react-client';
+import { keyToBuffer } from '@dxos/crypto';
+import { ObjectModel } from '@dxos/object-model';
+import { useModel, useItems } from '@dxos/react-client';
 
 export const CANVAS_PAD = 'dxos.org/pad/canvas';
 export const CANVAS_TYPE_DIAGRAM = 'dxos.org/type/canvas/diagram';
@@ -53,4 +54,13 @@ export const useDocument = (topic, itemId) => {
       model.deleteItem(id);
     }
   };
+};
+
+export const useCanvasModel = (topic, itemId) => {
+  assert(topic);
+  assert(itemId);
+
+  const canvasObjects = useItems({ partyKey: keyToBuffer(topic), parent: itemId, type: CANVAS_TYPE_OBJECT });
+
+  return canvasObjects;
 };

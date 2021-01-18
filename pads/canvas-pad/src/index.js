@@ -4,6 +4,8 @@
 
 import Icon from '@material-ui/icons/Brush';
 
+import { ObjectModel } from '@dxos/object-model';
+
 import { Canvas } from './Canvas';
 import { CANVAS_PAD, CANVAS_TYPE_DIAGRAM, CANVAS_TYPE_OBJECT } from './model';
 
@@ -16,5 +18,17 @@ export default {
   displayName: 'Canvas',
   description: 'Technical diagrams',
   icon: Icon,
-  main: Canvas
+  main: Canvas,
+  register: async (client) => {
+    await client.registerModel(ObjectModel);
+  },
+  create: async ({ party }, { name }) => {
+    const item = await party.database.createItem({
+      model: ObjectModel,
+      type: CANVAS_TYPE_DIAGRAM,
+      props: { title: name || 'untitled' }
+    });
+
+    return item;
+  }
 };
