@@ -8,7 +8,7 @@
   "scripts": {
     "build": "babel src -d dist",
     "build-storybook": "build-storybook",
-    "chromatic": "npx chromatic --project-token empewjlqy2v",
+    "chromatic": "npx chromatic --project-token empewjlqy2v --auto-accept-changes",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "storybook": "start-storybook -p 9001 -c .storybook --ci"
   },
