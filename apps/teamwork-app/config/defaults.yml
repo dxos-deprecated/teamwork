@@ -28,9 +28,10 @@ ipfs:
 
 debug:
   mode: 'development'
-  # logging: '*:warn,*:error'
-  logging: 'DXOS*'
+  logging: '*:warn,*:error'
 
 sentry:
   dsn: https://296be949e8ea4f69800a4031847f205b@sentry.kube.dxos.network/2
   environment: production
+
+invitationExpiration: 240000

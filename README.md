@@ -10,5 +10,28 @@ Decentralized Collaborative Tools.
 Start the Teamwork app:
 
 ```bash
-yarn start
+yarn && yarn build
+cd apps/teamwork-app && yarn start
+```
+
+## Developing pads
+
+First, build the pads:
+
+```bash
+yarn build
+```
+
+(Optional) Run the watch command for one of the pads that you are going to continuosly develop:
+
+```bash
+cd pads/<some>-pad
+yarn build --watch
+```
+
+Then, run the storybooks:
+
+```bash
+cd storybooks
+yarn storybook
 ```

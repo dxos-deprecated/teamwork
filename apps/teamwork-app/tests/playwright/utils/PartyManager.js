@@ -12,7 +12,7 @@ const {
   listItemSelector
 } = selectors;
 
-const { attributeSelector, classSelector, containingSelector } = genericSelectors;
+const { attributeSelector, classSelector, containingSelector, followingClassSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;
@@ -21,22 +21,21 @@ export class PartyManager {
     this.page = _page;
   }
 
-  async createParty () {
+  async createParty (partyName) {
     await this.page.waitForSelector(cardsSelector);
     const initialPartyNames = await this.getPartyNames();
 
     const newPartyButtonSelector = '(//button[@name=\'new-party\'])[1]';
     await this.page.click(newPartyButtonSelector);
 
+    const partyNameInputSelector = dialogSelector + '//input';
+    await this.page.fill(partyNameInputSelector, partyName);
+    await this.page.click(textButtonSelector('Create'));
+
+    await waitUntil(this.page, async () => await this.isDialogClosed());
+
     const cardTitlesSelector = cardsSelector + '//h2';
-    while (initialPartyNames.length === (await this.page.$$(cardTitlesSelector)).length) {
-      await this.page.waitForTimeout(50);
-    }
-
-    const currentPartyNames = await this.page.$$eval(cardTitlesSelector, textTags => textTags.map(textTag => textTag.innerHTML));
-    const newCardName = currentPartyNames.filter(card => !initialPartyNames.includes(card))[0];
-
-    return newCardName;
+    await waitUntil(this.page, async () => (await this.page.$$(cardTitlesSelector)).length > initialPartyNames.length);
   }
 
   async renameParty (currentName, newName) {
@@ -45,7 +44,7 @@ export class PartyManager {
     await this.page.click(settingsButtonSelector);
 
     const inputSelector = dialogSelector + attributeSelector('input', '@type', 'text');
-    await this.page.click(inputSelector);
+    await this.page.click(inputSelector, { clickCount: 3 });
     await this.page.fill(inputSelector, newName);
     await this.page.click(textButtonSelector('Done'));
   }
@@ -313,8 +312,8 @@ export class PartyManager {
 
   async isPartyActive (partyName) {
     const partyIndex = await this.getPartyIndex(partyName);
-    const activateButtonSelector = partyCardSelector(partyIndex) + textButtonSelector('Activate');
-    return await isSelectorDeleted(this.page, activateButtonSelector);
+    const partyActionsSelector = partyCardSelector(partyIndex) + classSelector('div', 'MuiCardActions');
+    return await isSelectorExisting(this.page, partyActionsSelector);
   }
 
   async isPartyInactive (partyName) {

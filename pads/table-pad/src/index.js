@@ -19,11 +19,18 @@ export default {
   description: 'Tabular data',
   icon: Icon,
   main: Main,
+  register: async (client) => {
+    await client.registerModel(ObjectModel);
+  },
   create: async ({ party }, { name }) => {
     return await party.database.createItem({
       model: ObjectModel,
       type: TABLE_TYPE_TABLE,
-      props: { title: name || 'untitled' }
+      props: {
+        title: name || 'untitled'
+        // 'field.0.headerName': 'First Name',
+        // 'field.0.columnType': 'string'
+      }
     });
   }
 };

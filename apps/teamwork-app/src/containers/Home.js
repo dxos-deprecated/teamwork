@@ -15,9 +15,12 @@ import {
   PartyCardContainer,
   IpfsHelper,
   PartyFromFileDialog,
-  PartyFromIpfsDialog
+  PartyFromIpfsDialog,
+  PartiesSettingsDialog
 } from '@dxos/react-appkit';
 import { useClient, useParties, useConfig } from '@dxos/react-client';
+
+import NewPartyDialog from '../components/NewPartyDialog';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -54,10 +57,13 @@ const Home = () => {
   const [inProgress, setInProgress] = useState(false);
   const [partyFromFileOpen, setPartyFromFileOpen] = useState(false);
   const [partyFromIpfsOpen, setPartyFromIpfsOpen] = useState(false);
+  const [newPartyOpen, setNewPartyOpen] = useState(false);
+  const [partiesSettingsOpen, setPartiesSettingsOpen] = useState(false);
+  const [showInactiveParties, setShowInactiveParties] = useState(true);
 
   const ipfs = new IpfsHelper(config.ipfs.gateway);
 
-  const createParty = async () => {
+  const createParty = async (partyName) => {
     if (inProgress) {
       return;
     }
@@ -65,7 +71,8 @@ const Home = () => {
     setInProgress(true);
 
     try {
-      await client.echo.createParty();
+      const party = await client.echo.createParty();
+      await party.setTitle(partyName);
     } catch (err) {
       console.error(err);
       throw new Error('Unable to create a party');
@@ -94,20 +101,28 @@ const Home = () => {
     await client.createPartyFromSnapshot(decodedSnapshot);
   };
 
+  const handleInactivePartiesVisibility = () => {
+    setShowInactiveParties(currentVisibility => !currentVisibility);
+  };
+
   return (
     <AppContainer
       onPartyFromFile={() => setPartyFromFileOpen(true)}
       onPartyFromIpfs={() => setPartyFromIpfsOpen(true)}
+      onPartiesSettingsOpen={() => setPartiesSettingsOpen(true)}
     >
       <Grid container spacing={4} alignItems="stretch" className={classes.grid}>
-        {parties.sort(sortBySubscribedAndName).map((party) => (
-          <Grid key={party.key.toString()} item zeroMinWidth>
-            <PartyCardContainer party={party} ipfs={ipfs} />
-          </Grid>
-        ))}
+        {parties
+          .filter(party => showInactiveParties || party.isActive())
+          .sort(sortBySubscribedAndName)
+          .map((party) => (
+            <Grid key={party.key.toString()} item zeroMinWidth>
+              <PartyCardContainer party={party} ipfs={ipfs} />
+            </Grid>
+          ))}
         <Grid item zeroMinWidth>
           <PartyCard
-            onNewParty={createParty}
+            onNewParty={() => setNewPartyOpen(true)}
             client={client}
           />
         </Grid>
@@ -122,6 +137,18 @@ const Home = () => {
         onClose={() => setPartyFromIpfsOpen(false)}
         onImport={handleImport}
         ipfs={ipfs}
+      />
+      { newPartyOpen &&
+        <NewPartyDialog
+          onClose={() => setNewPartyOpen(false)}
+          onCreate={(partyName) => createParty(partyName)}
+        />
+      }
+      <PartiesSettingsDialog
+        open={partiesSettingsOpen}
+        showInactiveParties={showInactiveParties}
+        onClose={() => setPartiesSettingsOpen(false)}
+        onToggleInactiveParties={handleInactivePartiesVisibility}
       />
     </AppContainer>
   );

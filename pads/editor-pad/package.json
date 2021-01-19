@@ -1,6 +1,6 @@
 {
   "name": "@dxos/editor-pad",
-  "version": "1.2.0-beta.36",
+  "version": "1.2.0-alpha.56",
   "description": "DxOs editor pad",
   "private": true,
   "main": "dist/index.js",
@@ -17,10 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dxos/editor": "1.0.0-beta.33",
-    "@dxos/editor-core": "1.0.0-beta.33",
-    "@dxos/messenger-pad": "^1.2.0-beta.36",
-    "@dxos/text-model": "2.6.11-alpha.0",
+    "@dxos/editor": "~1.0.0-beta.34",
+    "@dxos/editor-core": "~1.0.0-beta.34",
+    "@dxos/messenger-pad": "^1.2.0-alpha.56",
+    "@dxos/text-model": "~2.6.20",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
     "rehype-parse": "^7.0.1",
@@ -33,8 +33,8 @@
     "yjs": "13.3.2"
   },
   "peerDependencies": {
-    "@dxos/crypto": "1.0.5",
-    "@dxos/react-client": "2.7.28-alpha.0",
+    "@dxos/crypto": "*",
+    "@dxos/react-client": "*",
     "@material-ui/core": "^4.9.0",
     "@material-ui/icons": "^4.5.1",
     "react": "^16.13.1",
@@ -48,7 +48,7 @@
     "@babel/plugin-transform-runtime": "^7.10.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@dxos/eslint-plugin": "1.0.10",
+    "@dxos/eslint-plugin": "~1.0.10",
     "@rollup/plugin-json": "^4.0.3",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",

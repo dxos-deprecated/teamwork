@@ -6,6 +6,7 @@ import { firefox } from 'playwright';
 
 import { User } from './utils/User';
 import { launchUsers } from './utils/launch-users.js';
+import { waitUntil } from './utils/util';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
@@ -45,7 +46,7 @@ describe('Perform testrun steps', () => {
     const setup = await launchUsers(browser, startUrl);
     userA = setup.userA;
     userB = setup.userB;
-    partyName = setup.defaultPartyName;
+    partyName = setup.initialPartyName;
   });
 
   const closeUser = async (user) => {
@@ -116,14 +117,12 @@ describe('Perform testrun steps', () => {
       expect(await userB.partyManager.isItemExisting(partyName, taskListName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Deactivate party', async () => {
+    it('Deactivate party', async () => {
       await userA.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // ISSUE: https://github.com/dxos/teamwork/issues/501
-    it.skip('Activate party', async () => {
+    it('Activate party', async () => {
       await userA.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
     });
@@ -157,6 +156,7 @@ describe('Perform testrun steps', () => {
       expect(await userB.tasksManager.isTaskUnchecked(taskName)).toBeTruthy();
     });
 
+    // fails randomly
     it.skip('Delete task', async () => {
       await userB.tasksManager.deleteTask(taskName);
       expect(await userA.tasksManager.isTaskDeleted(taskName)).toBeTruthy();
@@ -289,11 +289,22 @@ describe('Perform testrun steps', () => {
       await userA.editorManager.embedExistingItem(boardName);
       expect(await userB.editorManager.isBoardWithCardExisting(cardA)).toBeTruthy();
     });
+
+    it('Write in Editor Messenger', async () => {
+      const message = 'Message to write in Editor built in Messenger';
+
+      await userA.editorManager.toggleMessenger();
+      await userA.editorManager.writeInMessenger(message);
+
+      await userB.editorManager.toggleMessenger();
+      expect(await userB.editorManager.isMessageExistingInMessenger(message)).toBeTruthy();
+    });
   });
 
   describe('Test general actions', () => {
     it('Invite known member', async () => {
-      const newPartyName = await userA.partyManager.createParty();
+      const newPartyName = 'New Testing Party';
+      await userA.partyManager.createParty(newPartyName);
       const invitation = await userA.partyManager.inviteKnownUserToParty(newPartyName, userB.username);
       const initialPartyNumber = (await userB.partyManager.getPartyNames()).length;
 
@@ -301,6 +312,10 @@ describe('Perform testrun steps', () => {
       await userB.waitUntil(async () => {
         return (await userB.partyManager.getPartyNames()).length > initialPartyNumber;
       });
+
+      await userB.waitUntil(async () =>
+        !(await userB.partyManager.getPartyNames()).includes('Untitled')
+      );
 
       await userA.partyManager.closeSharePartyDialog();
 
@@ -318,7 +333,7 @@ describe('Perform testrun steps', () => {
       await newDeviceUser.partyManager.fillPasscode(passcode);
 
       await newDeviceUser.waitUntil(async () =>
-        (await newDeviceUser.partyManager.getPartyNames()).length > 0
+        (await newDeviceUser.partyManager.getPartyNames()).length === (await userA.partyManager.getPartyNames()).length
       );
 
       await newDeviceUser.waitUntil(async () =>
@@ -329,13 +344,13 @@ describe('Perform testrun steps', () => {
       expect(partyNames.includes(partyName)).toBeTruthy();
     });
 
-    // TODO(Hubert): wait as parties will be loaded with items
+    // https://github.com/dxos/teamwork/issues/530
     it.skip('Deactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.deactivateParty(partyName);
       expect(await userA.partyManager.isPartyInactive(partyName)).toBeTruthy();
     });
 
-    // TODO(Hubert): wait as parties will be loaded with items
+    // https://github.com/dxos/teamwork/issues/530
     it.skip('Reactivate party on authorized device', async () => {
       await newDeviceUser.partyManager.activateParty(partyName);
       expect(await userA.partyManager.isPartyActive(partyName)).toBeTruthy();
