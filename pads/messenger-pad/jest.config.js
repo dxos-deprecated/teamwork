@@ -8,5 +8,8 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(@dxos|lib0|y-protocols))'
   ],
-  testTimeout: 20000
+  testTimeout: 20000,
+  moduleNameMapper: {
+    '.+\\.(png|jpg)$': '<rootDir>/image.mock.js'
+  }
 };
