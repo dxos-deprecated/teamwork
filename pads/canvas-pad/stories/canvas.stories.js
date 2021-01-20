@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import React from 'react';
+// import React from 'react';
 
 // import { ClientInitializer } from '@dxos/react-appkit';
 // import { config, PadContainer } from '@dxos/react-storybook';
