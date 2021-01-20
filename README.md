@@ -5,13 +5,24 @@
 
 Decentralized Collaborative Tools.
 
+## Storybooks
+
+[Chromatic Storyboard](https://www.chromatic.com/library?appId=6000854463cdbd00210345900)
+
+To publish to Chromatic:
+
+```bash
+cd ./storybooks
+yarn chromatic
+```
+
 ## Usage
 
 Start the Teamwork app:
 
 ```bash
 yarn && yarn build
-cd apps/teamwork-app && yarn start
+cd ./apps/teamwork-app && yarn start
 ```
 
 ## Developing pads
@@ -25,13 +36,13 @@ yarn build
 (Optional) Run the watch command for one of the pads that you are going to continuosly develop:
 
 ```bash
-cd pads/<some>-pad
+cd ./pads/<some>-pad
 yarn build --watch
 ```
 
-Then, run the storybooks:
+Run the storybooks:
 
 ```bash
-cd storybooks
+cd ./storybooks
 yarn storybook
 ```

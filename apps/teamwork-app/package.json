@@ -1,12 +1,12 @@
 {
   "name": "@dxos/teamwork",
   "version": "1.2.0-alpha.56",
+  "private": true,
   "description": "DXOS Teamwork",
-  "repository": "https://github.com/dxos/teamwork",
   "keywords": [],
+  "repository": "https://github.com/dxos/teamwork",
   "license": "GPL-3.0",
   "author": "DXOS.org",
-  "private": true,
   "scripts": {
     "analyzer": "webpack --config webpack-analyzer.config.js",
     "build": "webpack -p",
@@ -19,6 +19,13 @@
     "start:public": "VERBOSE=true PUBLIC_URL=/teamwork npm run start",
     "test": "jest --rootDir ./src --verbose --passWithNoTests",
     "test:playwright": "jest --bail --verbose --forceExit --rootDir ./tests/playwright"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "react/display-name": "off",
+      "react/prop-types": "off"
+    }
   },
   "dependencies": {
     "@babel/runtime": "7.11.2",
@@ -94,6 +101,7 @@
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.0.4",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.6.1",
     "playwright": "^1.6.2",
@@ -108,12 +116,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/react",
-    "rules": {
-      "react/prop-types": "off",
-      "react/display-name": "off"
-    }
   }
 }

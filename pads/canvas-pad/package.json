@@ -1,26 +1,24 @@
 {
   "name": "@dxos/canvas-pad",
   "version": "1.2.0-alpha.56",
-  "description": "Canvas pad.",
-  "main": "dist/index.js",
   "private": true,
-  "homepage": "https://github.com/dxos/teamwork#readme",
-  "bugs": {
-    "url": "https://github.com/dxos/teamwork/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dxos/teamwork.git"
-  },
   "license": "GPL-3.0",
   "author": "DXOS.org",
-  "module": "dist/es/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
+    "build-storybook": "build-storybook",
     "dist": "rollup -c",
-    "clean": "rm -rf ./dist",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint '{src,stories}/**/*.{js,jsx,ts,tsx}'",
+    "storybook": "start-storybook -p 9001 -c .storybook --ci",
     "test": "jest --rootDir ./tests --verbose --passWithNoTests --runInBand"
+  },
+  "eslintConfig": {
+    "extends": "plugin:@dxos/react",
+    "rules": {
+      "react/display-name": "off",
+      "react/prop-types": "off"
+    }
   },
   "dependencies": {
     "@dxos/async": "~1.0.0-beta.10",
@@ -32,15 +30,6 @@
     "react": "^16.13.1",
     "react-hotkeys": "^2.0.0"
   },
-  "peerDependencies": {
-    "@dxos/crypto": "*",
-    "@dxos/echo-db": "*",
-    "@dxos/react-appkit": "*",
-    "@dxos/react-client": "*",
-    "@material-ui/core": "^4.9.0",
-    "@material-ui/icons": "^4.5.1",
-    "react": "*"
-  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
@@ -50,11 +39,11 @@
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@dxos/app-cli": "~1.0.0-beta.68",
     "@dxos/eslint-plugin": "~1.0.10",
+    "@dxos/react-storybook": "~1.2.0-alpha.56",
     "@rollup/plugin-babel": "^5.0.3",
-    "@storybook/addon-knobs": "^6.0.21",
-    "@storybook/react": "^6.0.21",
+    "@storybook/addon-knobs": "^6.1.14",
+    "@storybook/react": "^6.1.14",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/jest": "^26.0.15",
@@ -75,15 +64,16 @@
     "webpack-version-file-plugin": "^0.4.0",
     "yaml-loader": "^0.5.0"
   },
+  "peerDependencies": {
+    "@dxos/crypto": "*",
+    "@dxos/echo-db": "*",
+    "@dxos/react-appkit": "*",
+    "@dxos/react-client": "*",
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
+    "react": "*"
+  },
   "publishConfig": {
     "access": "public"
-  },
-  "eslintConfig": {
-    "extends": "plugin:@dxos/react",
-    "rules": {
-      "react/prop-types": "off",
-      "react/display-name": "off"
-    }
-  },
-  "gitHead": "f29a1e902d31583c95240e2bb8afc9286eff1a76"
+  }
 }
