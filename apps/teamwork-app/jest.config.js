@@ -9,7 +9,7 @@ module.exports = {
     'node_modules/(?!(@dxos|lib0|y-protocols))'
   ],
   transform: {
-    '^.+\\.jsx?$': 'babel-jest'
+    '^.+\\.ts?$': 'ts-jest'
   },
   moduleNameMapper: {
     '.+\\.(png|jpg)$': '<rootDir>/image.mock.js'
