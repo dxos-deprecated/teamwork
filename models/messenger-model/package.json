@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@dxos/codec-protobuf": "~1.1.1",
-    "@dxos/util": "~2.6.20",
+    "@dxos/util": "~2.6.21",
     "debug": "^4.2.0"
   },
   "devDependencies": {

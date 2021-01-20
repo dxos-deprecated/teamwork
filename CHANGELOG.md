@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Upgrade interactive.
 
-- Standardize WRN (pads, type)
+- Standardize DXN (pads, type)
   - standard file layout (e.g., components/containers)
   - remove default export for pad
   - pad.yml
