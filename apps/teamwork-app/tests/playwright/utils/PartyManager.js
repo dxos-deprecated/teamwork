@@ -12,7 +12,7 @@ const {
   listItemSelector
 } = selectors;
 
-const { attributeSelector, classSelector, containingSelector, followingClassSelector } = genericSelectors;
+const { attributeSelector, classSelector, containingSelector } = genericSelectors;
 
 export class PartyManager {
   page = null;

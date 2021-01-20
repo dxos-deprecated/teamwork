@@ -1,4 +1,0 @@
-name: dxos.org/testing
-displayName: Testing
-build: yarn dist
-version: 1.0.0
