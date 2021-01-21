@@ -131,20 +131,15 @@ export const Board = ({ topic, embedded, itemId }) => {
   };
 
   const handleMoveCard = async (id, { position, listId }) => {
-    console.log({ cards, id });
     const card = cards.find(l => l.id === id);
     const list = lists.find(l => l.id === listId);
-    if (!card || !list) {
-      console.warn('Card or list not found when moving card.');
+    const existingLinks = card.refs;
+    if (!card || !list || existingLinks.length === 0) {
+      console.warn('Card or list or previous link not found when moving card.');
       setIsDragDisabled(false);
       return;
     }
-    console.log('moving card', { card });
-    const existingLink = card.refs[0];
-    if (existingLink) {
-      existingLink.model.setProperty('deleted', true);
-    }
-    console.log('creating new link...');
+    existingLinks.forEach(existingLink => existingLink.model.setProperty('deleted', true));
     await party.database.createLink({
       source: list,
       target: card,
