@@ -14,6 +14,7 @@ import { useItems, useParty } from '@dxos/react-client';
 
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
+import { useSelection } from '../hooks/useSelection';
 import {
   defaultLabelNames,
   labelColorLookup,
@@ -25,6 +26,10 @@ import {
   PLANNER_LABELS
 } from '../model';
 import DraggableLists from './DraggableLists';
+
+export const itemSelector = selection => {
+  return selection.items;
+};
 
 const useStyles = makeStyles(theme => {
   return {
@@ -49,6 +54,17 @@ export const Board = ({ topic, embedded, itemId }) => {
   const [item] = useItems({ partyKey: party.key, type: PLANNER_TYPE_BOARD, id: itemId });
   const lists = useItems({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST });
   const cards = useItems({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD });
+
+  const graphLists = useSelection(
+    party.database.select({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST }),
+    selection => selection.items
+  );
+  const graphCards = useSelection(
+    party.database.select({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }),
+    selection => selection.items
+  );
+
+  console.log({ graphCards, graphLists });
 
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
