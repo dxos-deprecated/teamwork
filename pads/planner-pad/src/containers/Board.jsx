@@ -27,10 +27,6 @@ import {
 } from '../model';
 import DraggableLists from './DraggableLists';
 
-export const itemSelector = selection => {
-  return selection.items;
-};
-
 const useStyles = makeStyles(theme => {
   return {
     containerRoot: {
