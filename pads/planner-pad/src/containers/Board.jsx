@@ -63,7 +63,6 @@ export const Board = ({ topic, embedded, itemId }) => {
     party.database.select({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }),
     selection => selection.items
   );
-
   console.log({ graphCards, graphLists });
 
   const [selectedCard, setSelectedCard] = useState(undefined);
@@ -78,7 +77,7 @@ export const Board = ({ topic, embedded, itemId }) => {
 
   const visibleCards = cards
     .filter(c => showArchived || !c.model.getProperty('deleted'))
-    .filter(c => !filterByLabel || (c.model.getProperty('labels') && c.model.getProperty('labels')[filterByLabel]));
+    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)));
 
   const getCardsForList = listId => visibleCards
     .filter(card => card.model.getProperty('listId') === listId)
@@ -93,10 +92,20 @@ export const Board = ({ topic, embedded, itemId }) => {
     });
   };
 
-  // const handleUpdateListOrCard = (listId) => (properties) => listsModel.updateItem(listId, properties);
-  const handleUpdateListOrCard = (listId) => async (prop, value) => {
-    const listOrCard = lists.find(l => l.id === listId) || cards.find(l => l.id === listId);
+  const handleUpdateListOrCard = (id) => async (prop, value) => {
+    const listOrCard = lists.find(l => l.id === id) || cards.find(l => l.id === id);
     await listOrCard.model.setProperty(prop, value);
+  };
+
+  const handleToggleCardLabel = (id) => async (toggledLabel) => {
+    const card = cards.find(l => l.id === id);
+    const labels = card.model.getProperty('labels') ?? [];
+    const labelExists = labels.includes(toggledLabel);
+    if (!labelExists) {
+      card.model.addToSet('labels', toggledLabel);
+    } else {
+      card.model.removeFromSet('labels', toggledLabel);
+    }
   };
 
   const handleAddCard = async (title, listId) => {
@@ -167,6 +176,7 @@ export const Board = ({ topic, embedded, itemId }) => {
           onToggleArchive={handleToggleArchive}
           card={selectedCard}
           onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
+          onCardLabelToggle={handleToggleCardLabel(selectedCard?.id)}
         />
         <LabelsDialog
           open={labelsDialogOpen}
