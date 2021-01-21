@@ -19,9 +19,10 @@
       "react/prop-types": "off"
     }
   },
+  "dependencies": {},
   "devDependencies": {
     "@dxos/crypto": "~1.0.7",
-    "@dxos/echo-db": "~2.6.21",
+    "@dxos/echo-db": "~2.6.22",
     "@dxos/eslint-plugin": "~1.0.10",
     "@dxos/react-appkit": "~2.8.0",
     "@dxos/react-client": "~2.8.0",

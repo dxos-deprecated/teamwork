@@ -24,8 +24,8 @@
   "dependencies": {
     "@dxos/editor": "~1.0.0-beta.34",
     "@dxos/editor-core": "~1.0.0-beta.34",
-    "@dxos/messenger-pad": "^1.2.0-alpha.59",
-    "@dxos/text-model": "~2.6.21",
+    "@dxos/messenger-pad": "~1.2.0-alpha.56",
+    "@dxos/text-model": "~2.6.22",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
     "rehype-parse": "^7.0.1",
