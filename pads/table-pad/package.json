@@ -4,9 +4,10 @@
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "tsc",
     "build-storybook": "build-storybook",
     "dist": "rollup -c",
     "lint": "eslint '{src,stories}/**/*.{js,jsx,ts,tsx}'",
@@ -41,13 +42,6 @@
     "react-virtualized": "^9.22.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-proposal-export-default-from": "^7.10.1",
-    "@babel/plugin-transform-runtime": "^7.10.1",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
     "@dxos/eslint-plugin": "~1.0.10",
     "@dxos/react-storybook": "^1.2.0-alpha.58",
     "@rollup/plugin-json": "^4.0.3",
@@ -57,9 +51,6 @@
     "@testing-library/react": "^11.1.0",
     "@types/color-hash": "^1.0.0",
     "@types/jest": "^26.0.15",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-inline-import": "^3.0.0",
     "jest": "^26.6.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -68,7 +59,8 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-serve": "^1.0.1"
+    "rollup-plugin-serve": "^1.0.1",
+    "ts-jest": "^26.4.4"
   },
   "peerDependencies": {
     "@dxos/crypto": "*",
