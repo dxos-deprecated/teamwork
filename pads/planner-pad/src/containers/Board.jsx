@@ -70,10 +70,10 @@ export const Board = ({ topic, embedded, itemId }) => {
 
   const getCardsLinkedToList = list => list.links
     .filter(l => !l.model.getProperty('deleted'))
-    .sort(positionCompare)
     .map(link => link.target)
     .filter(c => showArchived || !c.model.getProperty('deleted'))
-    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)));
+    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)))
+    .sort(positionCompare);
 
   const handleAddList = async () => {
     await party.database.createItem({
@@ -109,12 +109,10 @@ export const Board = ({ topic, embedded, itemId }) => {
       parent: itemId,
       props: { title, position, listId: list.id }
     });
-    console.log('creating link...');
     await party.database.createLink({
       source: list,
       target: newCard,
-      type: LINK_LIST_CARD,
-      props: { position }
+      type: LINK_LIST_CARD
     });
   };
 
@@ -139,12 +137,12 @@ export const Board = ({ topic, embedded, itemId }) => {
       setIsDragDisabled(false);
       return;
     }
-    existingLink.model.setProperty('deleted', true);
+    await existingLink.model.setProperty('deleted', true);
+    await card.model.setProperty('position', position);
     await party.database.createLink({
       source: list,
       target: card,
-      type: LINK_LIST_CARD,
-      props: { position }
+      type: LINK_LIST_CARD
     });
     setIsDragDisabled(false);
   };
