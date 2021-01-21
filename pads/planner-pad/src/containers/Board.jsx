@@ -70,10 +70,10 @@ export const Board = ({ topic, embedded, itemId }) => {
 
   const getCardsLinkedToList = list => list.links
     .filter(l => !l.model.getProperty('deleted'))
+    .sort(positionCompare)
     .map(link => link.target)
     .filter(c => showArchived || !c.model.getProperty('deleted'))
-    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)))
-    .sort(positionCompare);
+    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)));
 
   const handleAddList = async () => {
     await party.database.createItem({
@@ -132,14 +132,14 @@ export const Board = ({ topic, embedded, itemId }) => {
 
   const handleMoveCard = async (id, { position, listId }) => {
     const card = cards.find(l => l.id === id);
-    const list = lists.find(l => l.id === listId);
-    const existingLinks = card.refs;
-    if (!card || !list || existingLinks.length === 0) {
+    const existingLink = card.refs.find(ref => !ref.model.getProperty('deleted'));
+    const list = listId ? lists.find(l => l.id === listId) : existingLink.source;
+    if (!card || !list || !existingLink) {
       console.warn('Card or list or previous link not found when moving card.');
       setIsDragDisabled(false);
       return;
     }
-    existingLinks.forEach(existingLink => existingLink.model.setProperty('deleted', true));
+    existingLink.model.setProperty('deleted', true);
     await party.database.createLink({
       source: list,
       target: card,
