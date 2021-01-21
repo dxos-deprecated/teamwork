@@ -168,7 +168,7 @@ const List = ({
         )}
       </Droppable>
       {!embedded && !list.model.getProperty('deleted') && (<>
-        <AddCard onAddCard={title => onAddCard(title, list.id)} />
+        <AddCard onAddCard={title => onAddCard(title, list)} />
       </>)}
       <ListSettingsMenu
         {...commonListSettingsProps}

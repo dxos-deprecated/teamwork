@@ -4,27 +4,25 @@
 
 import { useEffect, useState } from 'react';
 
-import { Selection } from '@dxos/echo-db';
+import { Database } from '@dxos/echo-db';
 
-// TODO(rzadp): Copied from ECHO-DEMO. Need to extract somewhere - echo or appkit
-export function useSelection<T> (
-  selection: Selection<any>,
-  selector: (selection: Selection<any>) => T,
-  deps: readonly any[] = []
-): T {
-  const [data, setData] = useState(() => selector(selection));
+// TODO(rzadp): Initially copied from ECHO-DEMO. Need to extract somewhere - echo or appkit
+export function useSelection (
+  database: Database,
+  selectionFilter: Parameters<Database['select']>
+) {
+  const [selection, setSelection] = useState(() => database.select(...selectionFilter));
 
-  // Subscribe to mutation events from source.
+  useEffect(() => {
+    setSelection(database.select(...selectionFilter));
+  }, [database, selectionFilter]);
+
   useEffect(() => {
     return selection.update.on(() => {
-      setData(selector(selection));
+      const newSelection = database.select(...selectionFilter);
+      setSelection(newSelection);
     });
   }, [selection]);
 
-  // Update data when deps change.
-  useEffect(() => {
-    setData(selector(selection));
-  }, deps);
-
-  return data;
+  return selection.items;
 }

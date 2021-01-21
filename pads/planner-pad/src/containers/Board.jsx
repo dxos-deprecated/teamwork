@@ -3,7 +3,7 @@
 //
 
 import assert from 'assert';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,7 +23,8 @@ import {
   PLANNER_TYPE_CARD,
   PLANNER_TYPE_LIST,
   PLANNER_TYPE_BOARD,
-  PLANNER_LABELS
+  PLANNER_LABELS,
+  LINK_LIST_CARD
 } from '../model';
 import DraggableLists from './DraggableLists';
 
@@ -48,18 +49,12 @@ export const Board = ({ topic, embedded, itemId }) => {
   const classes = useStyles();
   const party = useParty(keyToBuffer(topic));
   const [item] = useItems({ partyKey: party.key, type: PLANNER_TYPE_BOARD, id: itemId });
-  const lists = useItems({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST });
-  const cards = useItems({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD });
 
-  const graphLists = useSelection(
-    party.database.select({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST }),
-    selection => selection.items
-  );
-  const graphCards = useSelection(
-    party.database.select({ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }),
-    selection => selection.items
-  );
-  console.log({ graphCards, graphLists });
+  const listsSelectionFilter = useMemo(() => [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST }], []);
+  const lists = useSelection(party.database, listsSelectionFilter);
+
+  const cardsSelectionFilter = useMemo(() => [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }], []);
+  const cards = useSelection(party.database, cardsSelectionFilter);
 
   const [selectedCard, setSelectedCard] = useState(undefined);
   const [showArchived, setShowArchived] = useState(false);
@@ -71,12 +66,13 @@ export const Board = ({ topic, embedded, itemId }) => {
     .filter(c => showArchived || !c.model.getProperty('deleted'))
     .sort(positionCompare);
 
-  const visibleCards = cards
-    .filter(c => showArchived || !c.model.getProperty('deleted'))
-    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)));
+  const getCardsForList = listId => getCardsLinkedToList(lists.find(list => list.id === listId));
 
-  const getCardsForList = listId => visibleCards
-    .filter(card => card.model.getProperty('listId') === listId)
+  const getCardsLinkedToList = list => list.links
+    .filter(l => !l.model.getProperty('deleted'))
+    .map(link => link.target)
+    .filter(c => showArchived || !c.model.getProperty('deleted'))
+    .filter(c => !filterByLabel || (c.model.getProperty('labels' ?? []).includes(filterByLabel)))
     .sort(positionCompare);
 
   const handleAddList = async () => {
@@ -104,13 +100,21 @@ export const Board = ({ topic, embedded, itemId }) => {
     }
   };
 
-  const handleAddCard = async (title, listId) => {
-    const cardsInList = getCardsForList(listId);
-    await party.database.createItem({
+  const handleAddCard = async (title, list) => {
+    const cardsInList = getCardsLinkedToList(list);
+    const position = getLastPosition(cardsInList);
+    const newCard = await party.database.createItem({
       model: ObjectModel,
       type: PLANNER_TYPE_CARD,
       parent: itemId,
-      props: { title, position: getLastPosition(cardsInList), listId }
+      props: { title, position, listId: list.id }
+    });
+    console.log('creating link...');
+    await party.database.createLink({
+      source: list,
+      target: newCard,
+      type: LINK_LIST_CARD,
+      props: { position }
     });
   };
 
@@ -127,9 +131,26 @@ export const Board = ({ topic, embedded, itemId }) => {
   };
 
   const handleMoveCard = async (id, { position, listId }) => {
+    console.log({ cards, id });
     const card = cards.find(l => l.id === id);
-    (position !== undefined) && await card.model.setProperty('position', position);
-    (listId !== undefined) && await card.model.setProperty('listId', listId);
+    const list = lists.find(l => l.id === listId);
+    if (!card || !list) {
+      console.warn('Card or list not found when moving card.');
+      setIsDragDisabled(false);
+      return;
+    }
+    console.log('moving card', { card });
+    const existingLink = card.refs[0];
+    if (existingLink) {
+      existingLink.model.setProperty('deleted', true);
+    }
+    console.log('creating new link...');
+    await party.database.createLink({
+      source: list,
+      target: card,
+      type: LINK_LIST_CARD,
+      props: { position }
+    });
     setIsDragDisabled(false);
   };
 
