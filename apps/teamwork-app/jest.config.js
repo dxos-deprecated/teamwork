@@ -6,12 +6,20 @@ module.exports = {
   testEnvironment: 'jsdom',
   preset: 'ts-jest/presets/js-with-ts',
   transformIgnorePatterns: [
-    'node_modules/(?!(@dxos|lib0|y-protocols))'
+    'node_modules/(?!(lib0|y-protocols))'
   ],
   transform: {
     '^.+\\.ts?$': 'ts-jest'
   },
   moduleNameMapper: {
     '.+\\.(png|jpg)$': '<rootDir>/image.mock.js'
+  },
+
+  // https://stackoverflow.com/a/60905543
+  globals: {
+    'ts-jest': {
+      isolatedModules: true
+    }
   }
+
 };
