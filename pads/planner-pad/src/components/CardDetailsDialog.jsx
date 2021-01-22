@@ -20,7 +20,6 @@ import { EditableText } from '@dxos/react-ux';
 
 import { ArchiveButton, RestoreButton } from '.';
 import { useLabels } from '../hooks';
-import { toggleLabel } from '../model/labels';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,17 +43,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate }) => {
+export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCardUpdate, onCardLabelToggle }) => {
   const classes = useStyles();
   const { names, labels, colorLookup } = useLabels();
 
   if (!card) {
     return null;
   }
-
-  const handleToggleLabel = async (toggledLabel) => {
-    await onCardUpdate('labels', toggleLabel(card.model.getProperty('labels'), toggledLabel));
-  };
 
   return (
     <Dialog classes={{ paper: classes.root }} open={open} maxWidth='md' onClose={onClose}>
@@ -79,8 +74,8 @@ export const CardDetailsDialog = ({ open, onClose, onToggleArchive, card, onCard
               key={label}
               label={names[label]}
               style={{ backgroundColor: colorLookup[label] }}
-              onClick={() => handleToggleLabel(label)}
-              avatar={card.model.getProperty('labels') && (card.model.getProperty('labels')[label] ? <CheckIcon /> : <span style={{ width: '18px' }} />)}
+              onClick={() => onCardLabelToggle(label)}
+              avatar={(card.model.getProperty('labels') ?? []).includes(label) ? <CheckIcon /> : <span style={{ width: '18px' }} />}
               size="small"
             />
           ))}
