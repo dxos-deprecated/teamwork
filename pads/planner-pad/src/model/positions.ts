@@ -2,9 +2,11 @@
 // Copyright 2020 DXOS.org
 //
 
-export const positionCompare = (a, b) => a.model.getProperty('position') - b.model.getProperty('position');
+import { Item } from '@dxos/echo-db';
 
-export function getLastPosition (list) {
+export const positionCompare = (a: Item<any>, b: Item<any>) => a.model.getProperty('position') - b.model.getProperty('position');
+
+export function getLastPosition (list: Item<any>[]) {
   if (list.length === 0) {
     return 0;
   } else {
@@ -14,7 +16,7 @@ export function getLastPosition (list) {
 /**
  * Changing position when moving to a different list
  */
-export function getInsertedPositionAtIndex (list, index) {
+export function getInsertedPositionAtIndex (list: Item<any>[], index: number) {
   if (list.length === 0) {
     return 0;
   } else if (index === 0) {
@@ -28,7 +30,7 @@ export function getInsertedPositionAtIndex (list, index) {
 /**
  * Changing position within the same list / board
  */
-export function getChangedPositionAtIndex (list, index, movingDown = false) {
+export function getChangedPositionAtIndex (list: Item<any>[], index: number, movingDown = false) {
   if (list.length === 0) {
     return 0;
   } else if (index === 0) {

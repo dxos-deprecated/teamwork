@@ -4,6 +4,8 @@
 
 import Icon from '@material-ui/icons/AssignmentTurnedIn';
 
+import { Client } from '@dxos/client';
+import { Party } from '@dxos/echo-db';
 import { ObjectModel } from '@dxos/object-model';
 
 import { Board } from './containers/Board';
@@ -21,10 +23,14 @@ export default {
   icon: Icon,
   main: Board,
   settings: PlannerSettingsDialog,
-  register: async (client) => {
+  register: async (client: Client) => {
     await client.registerModel(ObjectModel);
   },
-  create: async ({ party }, { name }, { description = '' } = {}) => {
+  create: async (
+    { party }: {party: Party},
+    { name }: {name?: string},
+    { description = '' } = {}
+  ) => {
     const item = await party.database.createItem({
       model: ObjectModel,
       type: PLANNER_TYPE_BOARD,
