@@ -1,6 +1,6 @@
 {
   "name": "@dxos/messenger-pad",
-  "version": "1.2.0-alpha.60",
+  "version": "1.2.0-alpha.61",
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
@@ -26,7 +26,7 @@
     "@dxos/async": "~1.0.0-beta.10",
     "@dxos/debug": "~1.0.0-beta.75",
     "@dxos/editor": "~1.0.0-beta.34",
-    "@dxos/messenger-model": "^1.2.0-alpha.60",
+    "@dxos/messenger-model": "^1.2.0-alpha.61",
     "@dxos/model-adapter": "~2.6.11-alpha.0",
     "@dxos/react-router": "~2.8.0",
     "@dxos/react-ux": "~2.8.0",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/react-storybook": "^1.2.0-alpha.60",
+    "@dxos/react-storybook": "^1.2.0-alpha.61",
     "@rollup/plugin-json": "^4.0.3",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",
