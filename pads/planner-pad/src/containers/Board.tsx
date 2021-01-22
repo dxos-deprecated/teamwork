@@ -63,12 +63,12 @@ export const Board = ({ topic, embedded, itemId }: BoardProps) => {
   const listsSelectionFilter = useMemo<SelectionFilter>(() =>
     [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST }]
   , []);
-  const lists = useSelection(party.database, listsSelectionFilter);
+  const lists = useSelection(party.database as any, listsSelectionFilter);
 
   const cardsSelectionFilter = useMemo<SelectionFilter>(() =>
     [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }]
   , []);
-  const cards = useSelection(party.database, cardsSelectionFilter);
+  const cards = useSelection(party.database as any, cardsSelectionFilter);
 
   const [selectedCard, setSelectedCard] = useState<Item<any> | undefined>(undefined);
   const [showArchived, setShowArchived] = useState(false);
@@ -91,7 +91,7 @@ export const Board = ({ topic, embedded, itemId }: BoardProps) => {
 
   const handleAddList = async () => {
     await party.database.createItem({
-      model: ObjectModel,
+      model: ObjectModel as any,
       type: PLANNER_TYPE_LIST,
       parent: itemId,
       props: { title: 'New List', position: getLastPosition(lists) }
@@ -118,13 +118,13 @@ export const Board = ({ topic, embedded, itemId }: BoardProps) => {
     const cardsInList = getCardsLinkedToList(list);
     const position = getLastPosition(cardsInList);
     const newCard = await party.database.createItem({
-      model: ObjectModel,
+      model: ObjectModel as any,
       type: PLANNER_TYPE_CARD,
       parent: itemId,
       props: { title, position, listId: list.id }
     });
     await party.database.createLink({
-      source: list,
+      source: list as any,
       target: newCard,
       type: LINK_LIST_CARD
     });
