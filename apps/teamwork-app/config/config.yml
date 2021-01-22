@@ -9,7 +9,7 @@ storage:
   persistent: true
   path: dxos/teamwork-local
 registry:
-  server: "https://wns1.kube.moon.dxos.network/api"
+  server: "https://apollo1.kube.moon.dxos.network/dxos/wns/api"
   chainId: "devnet-2"
 sentry:
   dsn: https://296be949e8ea4f69800a4031847f205b@sentry.kube.dxos.network/2
