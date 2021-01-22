@@ -4,7 +4,7 @@
 
 import { createContext, useContext } from 'react';
 
-export const labelsContext = createContext(undefined);
+export const labelsContext = createContext<any>(undefined);
 
 export function useLabels () {
   const context = useContext(labelsContext);

@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 
 import { Database } from '@dxos/echo-db';
 
+export type SelectionFilter = Parameters<Database['select']>
+
 // TODO(rzadp): Initially copied from ECHO-DEMO. Need to extract somewhere - echo or appkit
 export function useSelection (
   database: Database,
-  selectionFilter: Parameters<Database['select']>
+  selectionFilter: SelectionFilter
 ) {
   const [selection, setSelection] = useState(() => database.select(...selectionFilter));
 

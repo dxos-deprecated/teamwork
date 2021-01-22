@@ -9,12 +9,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { keyToBuffer } from '@dxos/crypto';
+import { Item } from '@dxos/echo-db';
 import { ObjectModel } from '@dxos/object-model';
 import { useItems, useParty } from '@dxos/react-client';
 
 import { CardDetailsDialog, LabelsDialog } from '../components';
 import { labelsContext } from '../hooks';
-import { useSelection } from '../hooks/useSelection';
+import { SelectionFilter, useSelection } from '../hooks/useSelection';
 import {
   defaultLabelNames,
   labelColorLookup,
@@ -45,30 +46,43 @@ const useStyles = makeStyles(theme => {
   };
 });
 
-export const Board = ({ topic, embedded, itemId }) => {
+export interface BoardProps {
+  topic: string,
+  embedded?: boolean,
+  itemId: string
+}
+
+export const Board = ({ topic, embedded, itemId }: BoardProps) => {
   const classes = useStyles();
   const party = useParty(keyToBuffer(topic));
-  const [item] = useItems({ partyKey: party.key, type: PLANNER_TYPE_BOARD, id: itemId });
+  if (!party) {
+    throw new Error('Party not found.');
+  }
+  const [item] = useItems({ partyKey: party.key, type: PLANNER_TYPE_BOARD, id: itemId } as any);
 
-  const listsSelectionFilter = useMemo(() => [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST }], []);
+  const listsSelectionFilter = useMemo<SelectionFilter>(() =>
+    [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_LIST }]
+  , []);
   const lists = useSelection(party.database, listsSelectionFilter);
 
-  const cardsSelectionFilter = useMemo(() => [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }], []);
+  const cardsSelectionFilter = useMemo<SelectionFilter>(() =>
+    [{ partyKey: party.key, parent: itemId, type: PLANNER_TYPE_CARD }]
+  , []);
   const cards = useSelection(party.database, cardsSelectionFilter);
 
-  const [selectedCard, setSelectedCard] = useState(undefined);
+  const [selectedCard, setSelectedCard] = useState<Item<any> | undefined>(undefined);
   const [showArchived, setShowArchived] = useState(false);
   const [isDragDisabled, setIsDragDisabled] = useState(false);
   const [labelsDialogOpen, setLabelsDialogOpen] = useState(false);
-  const [filterByLabel, setFilterByLabel] = useState(undefined);
+  const [filterByLabel, setFilterByLabel] = useState<string | undefined>(undefined);
 
   const visibleLists = lists
     .filter(c => showArchived || !c.model.getProperty('deleted'))
     .sort(positionCompare);
 
-  const getCardsForList = listId => getCardsLinkedToList(lists.find(list => list.id === listId));
+  const getCardsForList = (listId: string) => getCardsLinkedToList(lists.find(list => list.id === listId));
 
-  const getCardsLinkedToList = list => list.links
+  const getCardsLinkedToList = (list: Item<any>) => list.links
     .filter(l => !l.model.getProperty('deleted'))
     .map(link => link.target)
     .filter(c => showArchived || !c.model.getProperty('deleted'))
@@ -84,12 +98,12 @@ export const Board = ({ topic, embedded, itemId }) => {
     });
   };
 
-  const handleUpdateListOrCard = (id) => async (prop, value) => {
+  const handleUpdateListOrCard = (id: string) => async (prop: string, value: any) => {
     const listOrCard = lists.find(l => l.id === id) || cards.find(l => l.id === id);
     await listOrCard.model.setProperty(prop, value);
   };
 
-  const handleToggleCardLabel = (id) => async (toggledLabel) => {
+  const handleToggleCardLabel = (id: string) => async (toggledLabel: string) => {
     const card = cards.find(l => l.id === id);
     const labels = card.model.getProperty('labels') ?? [];
     const labelExists = labels.includes(toggledLabel);
@@ -100,7 +114,7 @@ export const Board = ({ topic, embedded, itemId }) => {
     }
   };
 
-  const handleAddCard = async (title, list) => {
+  const handleAddCard = async (title: string, list: Item<any>) => {
     const cardsInList = getCardsLinkedToList(list);
     const position = getLastPosition(cardsInList);
     const newCard = await party.database.createItem({
@@ -118,19 +132,19 @@ export const Board = ({ topic, embedded, itemId }) => {
 
   const handleToggleArchive = async () => {
     assert(selectedCard);
-    await selectedCard.model.setProperty('deleted', !selectedCard.model.getProperty('deleted'));
+    await selectedCard!.model.setProperty('deleted', !selectedCard!.model.getProperty('deleted'));
     setSelectedCard(undefined);
   };
 
-  const handleMoveList = async (id, { position }) => {
+  const handleMoveList = async (id: string, { position }: {position: number}) => {
     const list = lists.find(l => l.id === id);
     (position !== undefined) && await list.model.setProperty('position', position);
     setIsDragDisabled(false);
   };
 
-  const handleMoveCard = async (id, { position, listId }) => {
+  const handleMoveCard = async (id: string, { position, listId }: {position: number, listId: string}) => {
     const card = cards.find(l => l.id === id);
-    const existingLink = card.refs.find(ref => !ref.model.getProperty('deleted'));
+    const existingLink = card.refs.find((ref: any) => !ref.model.getProperty('deleted'));
     const list = listId ? lists.find(l => l.id === listId) : existingLink.source;
     if (!card || !list || !existingLink) {
       console.warn('Card or list or previous link not found when moving card.');
@@ -156,7 +170,7 @@ export const Board = ({ topic, embedded, itemId }) => {
       value={{
         filterByLabel,
         names: item.model.getProperty('labelnames') ?? defaultLabelNames,
-        onFilterByLabel: (label) => setFilterByLabel(label),
+        onFilterByLabel: (label: string) => setFilterByLabel(label),
         onOpenLabelsDialog: () => setLabelsDialogOpen(true),
         labels: PLANNER_LABELS,
         colorLookup: labelColorLookup
@@ -173,7 +187,7 @@ export const Board = ({ topic, embedded, itemId }) => {
           onDragDisabled={() => setIsDragDisabled(true)}
           getCardsForList={getCardsForList}
           embedded={embedded}
-          onOpenCard={cardId => setSelectedCard(cards.find(c => c.id === cardId))}
+          onOpenCard={(cardId: string) => setSelectedCard(cards.find(c => c.id === cardId))}
           onAddCard={handleAddCard}
           onUpdateList={handleUpdateListOrCard}
           onAddList={handleAddList}
@@ -185,13 +199,13 @@ export const Board = ({ topic, embedded, itemId }) => {
           onClose={() => setSelectedCard(undefined)}
           onToggleArchive={handleToggleArchive}
           card={selectedCard}
-          onCardUpdate={handleUpdateListOrCard(selectedCard?.id)}
-          onCardLabelToggle={handleToggleCardLabel(selectedCard?.id)}
+          onCardUpdate={selectedCard && handleUpdateListOrCard(selectedCard?.id)}
+          onCardLabelToggle={selectedCard && handleToggleCardLabel(selectedCard?.id)}
         />
         <LabelsDialog
           open={labelsDialogOpen}
           onClose={() => setLabelsDialogOpen(false)}
-          onUpdate={(labelnames) => item.model.setProperty('labelnames', labelnames)}
+          onUpdate={(labelnames: string[]) => item.model.setProperty('labelnames', labelnames)}
         />
       </div>
     </labelsContext.Provider>
