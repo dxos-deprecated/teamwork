@@ -1598,7 +1598,44 @@
   dependencies:
     debug "^4.1.1"
 
-"@dxos/echo-db@^2.6.21", "@dxos/echo-db@~2.6.21":
+"@dxos/echo-db@^2.6.22", "@dxos/echo-db@~2.6.22":
+  version "2.6.22"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-2.6.22.tgz#89b50cb7a4432262ec7993cdb18e6e90df29a766"
+  integrity sha512-cDrarDRqMosiCbFomwzbhSplv4hMRcJ89At2MOoJ9XwzX8CWhsWnNJdbsDtrSaUL7uV36AoAmyYAa5DqQWsGCg==
+  dependencies:
+    "@dxos/async" "~1.0.0-beta.10"
+    "@dxos/codec-protobuf" "~1.1.1"
+    "@dxos/credentials" "~2.1.16-alpha.0"
+    "@dxos/crypto" "~1.0.7"
+    "@dxos/echo-protocol" "^2.6.22"
+    "@dxos/feed-store" "~1.2.0-beta.30"
+    "@dxos/model-factory" "^2.6.22"
+    "@dxos/network-manager" "~1.0.6"
+    "@dxos/object-model" "^2.6.22"
+    "@dxos/protocol-plugin-presence" "~1.1.0-beta.21"
+    "@dxos/protocol-plugin-replicator" "~1.0.6"
+    "@dxos/random-access-multi-storage" "~1.1.0-beta.8"
+    "@dxos/util" "^2.6.22"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/json-stable-stringify" "^1.0.32"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    crypto-js "^4.0.0"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    json-stable-stringify "^1.0.1"
+    lodash.merge "^4.6.2"
+    pify "^5.0.0"
+    protobufjs "^6.9.0"
+    pump "^3.0.0"
+    random-access-memory "^3.1.1"
+    source-map-support "^0.5.12"
+    stream-buffers "^3.0.2"
+
+"@dxos/echo-db@~2.6.21":
   version "2.6.21"
   resolved "https://registry.yarnpkg.com/@dxos/echo-db/-/echo-db-2.6.21.tgz#cf3aa6c7e0660fa2421bacd859d4e0a0d32ea7fe"
   integrity sha512-cajCtnQ72o9a+fkWAaII71HJfDTA81ibNZoFD8/KWyDwgGJUNbsr/S+Z7/OhyfJKTyD7JntCIe25RFcc7L92Qw==
@@ -1672,6 +1709,32 @@
     "@dxos/crypto" "~1.0.7"
     "@dxos/feed-store" "~1.2.0-beta.30"
     "@dxos/util" "^2.6.21"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/readable-stream" "^2.3.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    readable-stream "^3.6.0"
+    source-map-support "^0.5.12"
+
+"@dxos/echo-protocol@^2.6.22":
+  version "2.6.22"
+  resolved "https://registry.yarnpkg.com/@dxos/echo-protocol/-/echo-protocol-2.6.22.tgz#7df1ea1236979fbc58a1f89eb2cee69ee7e10409"
+  integrity sha512-A37DX4c7uEko05ikIoEkkK67yIQQQ8Yic5PMr9Nninxo688Yn9diaphfRb3csPMOA6lAcavwyvl8Vw+A7fAD6w==
+  dependencies:
+    "@dxos/async" "~1.0.0-beta.10"
+    "@dxos/codec-protobuf" "~1.1.1"
+    "@dxos/credentials" "~2.1.16-alpha.0"
+    "@dxos/crypto" "~1.0.7"
+    "@dxos/feed-store" "~1.2.0-beta.30"
+    "@dxos/util" "^2.6.22"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -1918,6 +1981,30 @@
     protobufjs "^6.9.0"
     source-map-support "^0.5.12"
 
+"@dxos/model-factory@^2.6.22":
+  version "2.6.22"
+  resolved "https://registry.yarnpkg.com/@dxos/model-factory/-/model-factory-2.6.22.tgz#29c5750b2b4abd10730d5e38c04c7de415cc79fd"
+  integrity sha512-AcF0jS+rCkc+C/luQHvYL0DmBr+3DBzow/PHvO2pb0ZYilTIGRKL1lRkXIOHaQW9TjQdvzTXxRYS9UMizggWhw==
+  dependencies:
+    "@dxos/async" "~1.0.0-beta.10"
+    "@dxos/codec-protobuf" "~1.1.1"
+    "@dxos/crypto" "~1.0.7"
+    "@dxos/echo-protocol" "^2.6.22"
+    "@dxos/feed-store" "~1.2.0-beta.30"
+    "@dxos/util" "^2.6.22"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
 "@dxos/network-manager@~1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@dxos/network-manager/-/network-manager-1.0.6.tgz#79cc69e24c8a1a822f3596a56be41650033c0a88"
@@ -1951,6 +2038,31 @@
     "@dxos/feed-store" "~1.2.0-beta.30"
     "@dxos/model-factory" "^2.6.21"
     "@dxos/util" "^2.6.21"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
+"@dxos/object-model@^2.6.22", "@dxos/object-model@~2.6.22":
+  version "2.6.22"
+  resolved "https://registry.yarnpkg.com/@dxos/object-model/-/object-model-2.6.22.tgz#9c006c9700542dd5a057c084cfe2aea36dcfb8c3"
+  integrity sha512-rrJXx/UtB2t8w7iu+Bk6wJ7ad2fYy6ZJyrOeoMhp5SQw0gFJT969iXK431TRKwnq6pUIVDAGq8MtRYh1jpnUFQ==
+  dependencies:
+    "@dxos/async" "~1.0.0-beta.10"
+    "@dxos/codec-protobuf" "~1.1.1"
+    "@dxos/crypto" "~1.0.7"
+    "@dxos/echo-protocol" "^2.6.22"
+    "@dxos/feed-store" "~1.2.0-beta.30"
+    "@dxos/model-factory" "^2.6.22"
+    "@dxos/util" "^2.6.22"
     "@types/debug" "^4.1.1"
     "@types/end-of-stream" "^1.4.0"
     "@types/lodash" "^4.14.159"
@@ -2189,14 +2301,14 @@
     ripemd160 "^2.0.2"
     secp256k1 "^3.6.2"
 
-"@dxos/text-model@~2.6.21":
-  version "2.6.21"
-  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-2.6.21.tgz#66b1a62f4627b826dc3a60d175298d6750047e0a"
-  integrity sha512-rcuXBC/1YVEU4syFfCl1HImV74aCaAmGBVM5rujQ4qi/S6ro7fXdjxNbHyDfrOP62VCzbc5fGVt0WddN/Iokbw==
+"@dxos/text-model@~2.6.22":
+  version "2.6.22"
+  resolved "https://registry.yarnpkg.com/@dxos/text-model/-/text-model-2.6.22.tgz#71018c19c7db068e3ef79c216d40902eb1e6994c"
+  integrity sha512-IjqYT/x448ypttF4dAy4dowqu066erk+DWFmvdEtCwJ85vAEOvLfF8M0gSxXKjZacIuYNnU7CWjYLZCjECxn0A==
   dependencies:
     "@dxos/codec-protobuf" "~1.1.1"
-    "@dxos/echo-db" "^2.6.21"
-    "@dxos/model-factory" "^2.6.21"
+    "@dxos/echo-db" "^2.6.22"
+    "@dxos/model-factory" "^2.6.22"
     "@types/node" "^14.0.9"
     yjs "^13.4.1"
 
@@ -2225,6 +2337,27 @@
   version "2.6.21"
   resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.6.21.tgz#8dd80824636e27d225169d45c4d5bffcca6cd98c"
   integrity sha512-Ox1Ie3gKQAPzrf/rjuDI+WkANBE7PhC0eTRYU6gO8dDYiSoNlKos5s2TjtjBQ1hApk+6cciEYnlF2jNyBjw37A==
+  dependencies:
+    "@dxos/async" "~1.0.0-beta.10"
+    "@dxos/codec-protobuf" "~1.1.1"
+    "@dxos/crypto" "~1.0.7"
+    "@types/debug" "^4.1.1"
+    "@types/end-of-stream" "^1.4.0"
+    "@types/lodash" "^4.14.159"
+    "@types/node" "^14.0.9"
+    "@types/stream-buffers" "^3.0.2"
+    "@types/through2" "^2.0.36"
+    debug "^4.1.1"
+    hypercore "^7.7.1"
+    js-data-structs "^1.1.2"
+    lodash.merge "^4.6.2"
+    protobufjs "^6.9.0"
+    source-map-support "^0.5.12"
+
+"@dxos/util@^2.6.22", "@dxos/util@~2.6.22":
+  version "2.6.22"
+  resolved "https://registry.yarnpkg.com/@dxos/util/-/util-2.6.22.tgz#b728ff60353557da93d4ae60a53bb5f7d2a1976b"
+  integrity sha512-XTTbh8kv5ROQnbTsZNUDRTZfQeHsbzbSrTjP2bOXBZGX4iIrK/EPqOeNrCPhHeakOIHK0LTVCesypomiyPDtlA==
   dependencies:
     "@dxos/async" "~1.0.0-beta.10"
     "@dxos/codec-protobuf" "~1.1.1"

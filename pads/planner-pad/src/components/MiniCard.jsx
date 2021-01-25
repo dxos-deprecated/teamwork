@@ -39,31 +39,28 @@ export const MiniCard = ({
   className = ''
 }) => {
   const classes = useStyles();
-  const { names, labels, colorLookup } = useLabels();
+  const { names, colorLookup } = useLabels();
   const deletedClassName = card.model.getProperty('deleted')
     ? classes.deleted
     : (listDeleted ? classes.listDeleted : '');
 
   return (
     <MuiCard className={clsx(classes.root, className, deletedClassName)} onMouseUp={onOpenCard}>
-      {card.model.getProperty('labels') && (
-        <div className={classes.labels}>
-          {labels
-            .filter(x => card.model.getProperty('labels')[x])
-            .map(label => (
-              <Tooltip key={label} title={names[label]}>
-                <Chip
-                  label='&nbsp;&nbsp;'
-                  size="small"
-                  style={{ backgroundColor: colorLookup[label] }}
-                  disabled={false}
-                  className={classes.label}
-                />
-              </Tooltip>
-            )
-            )}
-        </div>
-      )}
+      <div className={classes.labels}>
+        {(card.model.getProperty('labels') ?? [])
+          .map(label => (
+            <Tooltip key={label} title={names[label]}>
+              <Chip
+                label='&nbsp;&nbsp;'
+                size="small"
+                style={{ backgroundColor: colorLookup[label] }}
+                disabled={false}
+                className={classes.label}
+              />
+            </Tooltip>
+          )
+          )}
+      </div>
       <Typography variant="body1">{card.model.getProperty('title')}</Typography>
     </MuiCard>
   );
