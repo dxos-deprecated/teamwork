@@ -59,7 +59,6 @@ const NonEditableCell = ({ columnType, value }) => {
  */
 const cellRenderer = (active, column, onCancel, onChange, onFinish) => ({ value, row: { id } }) => {
   if (active.columnId === column.id && active.rowId === id) {
-    console.debug('brand new EditableCell gets returned');
     return (
       <EditableCell
         columnType={column.columnType}
