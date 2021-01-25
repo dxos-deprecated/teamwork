@@ -49,11 +49,8 @@ export const Canvas = ({ topic, itemId, embedded }) => {
     .filter(obj => !obj.model.getProperty('deleted'))
     .map(canvasObject => ({
       id: canvasObject.id,
-      properties: { // TODO(rzadp): Missing model API: getAllProperties.
-        type: canvasObject.model.getProperty('type'),
-        bounds: canvasObject.model.getProperty('bounds'),
-        style: canvasObject.model.getProperty('style'),
-        text: canvasObject.model.getProperty('text')
+      properties: {
+        ...canvasObject.model.toObject()
       }
     }));
 
