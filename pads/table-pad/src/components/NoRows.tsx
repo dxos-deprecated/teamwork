@@ -17,7 +17,11 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const NoRows = ({ onInitialize }) => {
+export interface NoRowsProps {
+  onInitialize?: () => void,
+}
+
+const NoRows = ({ onInitialize }: NoRowsProps) => {
   const classes = useStyles();
 
   return (

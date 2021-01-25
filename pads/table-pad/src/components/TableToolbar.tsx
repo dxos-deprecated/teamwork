@@ -22,7 +22,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TableToolbar = ({ title = '', onAddRow, onAddColumn }) => {
+export interface TableToolbarProps {
+  title?: string,
+  onAddRow: () => void,
+  onAddColumn: () => void,
+}
+
+const TableToolbar = ({ title = '', onAddRow, onAddColumn }: TableToolbarProps) => {
   const classes = useStyles();
 
   return (
