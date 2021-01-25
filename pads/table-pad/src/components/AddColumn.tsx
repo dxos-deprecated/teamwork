@@ -29,7 +29,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const AddColumn = ({ onAddColumn, open, onClose }) => {
+export interface AddColumnProps {
+  onAddColumn?: (title: string, type: string) => void,
+  open: boolean,
+  onClose?: () => {},
+}
+
+export const AddColumn = ({ onAddColumn, open, onClose }: AddColumnProps) => {
   const classes = useStyles();
   const [title, setTitle] = useState('');
   const [type, setType] = useState('text');
@@ -37,17 +43,17 @@ export const AddColumn = ({ onAddColumn, open, onClose }) => {
   const titleIsEmpty = title.trim().length === 0;
 
   const handleCancel = () => {
-    onClose();
+    onClose?.();
     setTitle('');
     setType('text');
   };
 
   const handleAdd = () => {
-    onAddColumn(title, type);
+    onAddColumn?.(title, type);
     handleCancel();
   };
 
-  const handleKeyDown = (ev) => {
+  const handleKeyDown = (ev: any) => {
     if (ev.key === 'Enter') {
       handleAdd();
     } else if (ev.key === 'Escape') {
@@ -61,7 +67,7 @@ export const AddColumn = ({ onAddColumn, open, onClose }) => {
         <Toolbar variant='dense' disableGutters>
           <Icon/>
           &nbsp;
-          <Typography variant='subtitle1' className={classes.title}>Add new column</Typography>
+          <Typography variant='subtitle1'>Add new column</Typography>
         </Toolbar>
       </DialogTitle>
       <div className={classes.root}>
@@ -75,7 +81,7 @@ export const AddColumn = ({ onAddColumn, open, onClose }) => {
             onChange={ev => setTitle(ev.target.value)}
           />
           <div className={classes.typeContainer}>
-            <FormControl component="fieldset" className={classes.toolbarItem}>
+            <FormControl component="fieldset">
               <FormLabel component="legend">Column type</FormLabel>
               <RadioGroup value={type} onChange={e => setType(e.target.value)}>
                 <FormControlLabel value="text" control={<Radio />} label="Text" />
