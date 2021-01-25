@@ -4,6 +4,8 @@
 
 import Icon from '@material-ui/icons/ViewColumn';
 
+import { Client } from '@dxos/client';
+import { Party } from '@dxos/echo-db';
 import { ObjectModel } from '@dxos/object-model';
 
 import { Main } from './Main';
@@ -19,17 +21,18 @@ export default {
   description: 'Tabular data',
   icon: Icon,
   main: Main,
-  register: async (client) => {
+  register: async (client: Client) => {
     await client.registerModel(ObjectModel);
   },
-  create: async ({ party }, { name }) => {
+  create: async (
+    { party }: {party: Party},
+    { name }: {name?: string}
+  ) => {
     return await party.database.createItem({
       model: ObjectModel,
       type: TABLE_TYPE_TABLE,
       props: {
         title: name || 'untitled'
-        // 'field.0.headerName': 'First Name',
-        // 'field.0.columnType': 'string'
       }
     });
   }
