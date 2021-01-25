@@ -75,10 +75,20 @@ export const Canvas = ({ topic, itemId, embedded }) => {
     begin: () => {},
     commit: async () => {},
     createObject: async (properties) => {
+      // This gets rid of any 'undefined' properties, which case object creation to fail.
+      const props = Object.keys(properties).reduce(
+        (prev, curr) => {
+          if (properties[curr] !== undefined) {
+            prev[curr] = properties[curr];
+          }
+          return prev;
+        },
+        {});
+
       await party.database.createItem({
         model: ObjectModel,
         type: CANVAS_TYPE_OBJECT,
-        props: properties,
+        props,
         parent: itemId
       });
     },
