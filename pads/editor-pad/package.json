@@ -1,12 +1,13 @@
 {
   "name": "@dxos/editor-pad",
-  "version": "1.2.0-alpha.56",
+  "version": "1.2.0-alpha.60",
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
-    "build": "babel src -d dist",
+    "build": "tsc",
     "build-storybook": "build-storybook",
     "dist": "rollup -c",
     "lint": "eslint '{src,stories}/**/*.{js,jsx,ts,tsx}'",
@@ -23,8 +24,8 @@
   "dependencies": {
     "@dxos/editor": "~1.0.0-beta.34",
     "@dxos/editor-core": "~1.0.0-beta.34",
-    "@dxos/messenger-pad": "^1.2.0-alpha.56",
-    "@dxos/text-model": "~2.6.20",
+    "@dxos/messenger-pad": "^1.2.0-alpha.60",
+    "@dxos/text-model": "~2.6.21",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
     "rehype-parse": "^7.0.1",
@@ -37,24 +38,14 @@
     "yjs": "13.3.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-proposal-export-default-from": "^7.10.1",
-    "@babel/plugin-transform-runtime": "^7.10.1",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/preset-react": "^7.10.4",
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/react-storybook": "~1.2.0-alpha.56",
+    "@dxos/react-storybook": "^1.2.0-alpha.60",
     "@rollup/plugin-json": "^4.0.3",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@types/jest": "^26.0.15",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "babel-plugin-file-loader": "^2.0.0",
-    "babel-plugin-inline-import": "^3.0.0",
     "jest": "^26.6.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -66,7 +57,8 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
-    "rollup-plugin-serve": "^1.0.1"
+    "rollup-plugin-serve": "^1.0.1",
+    "ts-jest": "^26.4.4"
   },
   "peerDependencies": {
     "@dxos/crypto": "*",
