@@ -25,25 +25,27 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const Canvas = ({ topic, itemId, embedded }) => {
+export interface CanvasProps {
+  topic: string,
+  embedded?: boolean,
+  itemId: string
+}
+
+export const Canvas = ({ topic, itemId, embedded }: CanvasProps) => {
   assert(topic);
   assert(itemId);
-  const [transaction, setTransaction] = useState(undefined);
+  const [transaction, setTransaction] = useState<Record<string, any>[] | undefined>(undefined);
   const party = useParty(keyToBuffer(topic));
 
   const classes = useStyles();
 
   const canvasObjects = useCanvasModel(topic, itemId);
 
-  if (!canvasObjects) {
+  if (!canvasObjects || !party) {
     return null;
   }
 
   // TODO(burdon): Bug: create object, move it, then when revisit document it's in the original position...
-  // Since the messages are out of order.
-  // TODO(burdon): Hack to ensure objects are well formed (if messages processed out of order).
-
-  // const objects = canvas.model.objects.filter(o => !!(o.properties.type && o.properties.bounds));
 
   const objects = canvasObjects
     .filter(obj => !obj.model.getProperty('deleted'))
@@ -54,9 +56,9 @@ export const Canvas = ({ topic, itemId, embedded }) => {
       }
     }));
 
-  const updateObject = async (id, properties) => {
+  const updateObject = async (id: string, properties: Record<string, any>) => {
     if (transaction !== undefined) {
-      setTransaction(old => [...old, { id, properties }]);
+      setTransaction(old => [...(old ?? []), { id, properties }]);
     }
     const updatedObject = canvasObjects.find(canvasObject => canvasObject.id === id);
     if (!updatedObject) {
@@ -71,9 +73,9 @@ export const Canvas = ({ topic, itemId, embedded }) => {
   const model = {
     begin: () => {},
     commit: async () => {},
-    createObject: async (properties) => {
+    createObject: async (properties: Record<string, any>) => {
       // This gets rid of any 'undefined' properties, which case object creation to fail.
-      const props = Object.keys(properties).reduce(
+      const props = Object.keys(properties).reduce<Record<string, any>>(
         (prev, curr) => {
           if (properties[curr] !== undefined) {
             prev[curr] = properties[curr];
@@ -82,10 +84,10 @@ export const Canvas = ({ topic, itemId, embedded }) => {
         },
         {});
 
-      const maxOrder = [...new Set(objects.map(obj => obj.properties.order ?? 1))].sort()[0] ?? 1
+      const maxOrder = [...new Set(objects.map(obj => obj.properties.order ?? 1))].sort()[0] ?? 1;
 
       await party.database.createItem({
-        model: ObjectModel,
+        model: ObjectModel as any,
         type: CANVAS_TYPE_OBJECT,
         props: {
           ...props,
@@ -95,7 +97,7 @@ export const Canvas = ({ topic, itemId, embedded }) => {
       });
     },
     updateObject,
-    deleteObject: (id) => updateObject(id, { deleted: true })
+    deleteObject: (id: string) => updateObject(id, { deleted: true })
   };
 
   return (
