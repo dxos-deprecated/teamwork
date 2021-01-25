@@ -7,9 +7,9 @@ import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
-import { AddColumn } from './components';
-import TableToolbar from './components/TableToolbar';
-import useEditableColumns from './useEditableColumns';
+import { AddColumn } from '../components';
+import TableToolbar from '../components/TableToolbar';
+import useEditableColumns from '../hooks/useEditableColumns';
 
 LicenseInfo.setLicenseKey(
   '8e409f224dbe0bc80df0fa59e719666fT1JERVI6MTg0NDIsRVhQSVJZPTE2MzU4NjkyOTYwMDAsS0VZVkVSU0lPTj0x'

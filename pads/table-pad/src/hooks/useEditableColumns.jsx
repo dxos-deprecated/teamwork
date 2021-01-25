@@ -5,7 +5,8 @@
 import React from 'react';
 
 import { Checkbox, TextField } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
+
+import { NonEditableCell } from '../components/NonEditableCell';
 
 const EditableCell = ({ columnType, value, onCancel, onChange, onFinish }) => {
   if (columnType === 'text') {
@@ -38,16 +39,6 @@ const EditableCell = ({ columnType, value, onCancel, onChange, onFinish }) => {
   }
 
   // column not recognized, falling back to just a value
-  return (
-    <>{value}</>
-  );
-};
-
-const NonEditableCell = ({ columnType, value }) => {
-  if (columnType === 'checkbox') {
-    return value ? <CheckIcon /> : null;
-  }
-
   return (
     <>{value}</>
   );

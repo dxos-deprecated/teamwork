@@ -7,7 +7,7 @@ import React from 'react';
 import { keyToBuffer } from '@dxos/crypto';
 import { useItems, useParty } from '@dxos/react-client';
 
-import Table from './Table';
+import { Table } from './containers';
 import { TABLE_TYPE_TABLE, TABLE_TYPE_RECORD, createRecord } from './model';
 
 export const Main = ({ itemId, topic }) => {
