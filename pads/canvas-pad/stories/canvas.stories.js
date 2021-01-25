@@ -2,12 +2,12 @@
 // Copyright 2020 DXOS.org
 //
 
-// import React from 'react';
+import React from 'react';
 
-// import { ClientInitializer } from '@dxos/react-appkit';
-// import { config, PadContainer } from '@dxos/react-storybook';
+import { ClientInitializer } from '@dxos/react-appkit';
+import { config, PadContainer } from '@dxos/react-storybook';
 
-// import meta from '../src';
+import meta from '../src';
 
 export default {
   title: 'Canvas'
@@ -15,10 +15,9 @@ export default {
 
 // TODO(burdon): Generate data.
 export const withPad = () => {
-  return null;
-  // return (
-  //   <ClientInitializer config={config}>
-  //     <PadContainer meta={meta} />
-  //   </ClientInitializer>
-  // );
+  return (
+    <ClientInitializer config={config}>
+      <PadContainer meta={meta} />
+    </ClientInitializer>
+  );
 };
