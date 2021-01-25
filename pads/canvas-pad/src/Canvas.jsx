@@ -82,10 +82,15 @@ export const Canvas = ({ topic, itemId, embedded }) => {
         },
         {});
 
+      const maxOrder = [...new Set(objects.map(obj => obj.properties.order ?? 1))].sort()[0] ?? 1
+
       await party.database.createItem({
         model: ObjectModel,
         type: CANVAS_TYPE_OBJECT,
-        props,
+        props: {
+          ...props,
+          order: maxOrder + 1
+        },
         parent: itemId
       });
     },
