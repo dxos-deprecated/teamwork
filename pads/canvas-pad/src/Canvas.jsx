@@ -44,7 +44,9 @@ export const Canvas = ({ topic, itemId, embedded }) => {
 
   // const objects = canvas.model.objects.filter(o => !!(o.properties.type && o.properties.bounds));
 
-  const objects = canvasObjects.map(canvasObject => ({
+  const objects = canvasObjects
+    .filter(obj => !obj.model.getProperty('deleted'))
+    .map(canvasObject => ({
     id: canvasObject.id,
     properties: { // TODO(rzadp): Missing model API: getAllProperties.
       type: canvasObject.model.getProperty('type'),
@@ -73,6 +75,14 @@ export const Canvas = ({ topic, itemId, embedded }) => {
       Object.keys(properties).forEach(propertyKey => {
         updatedObject.model.setProperty(propertyKey, properties[propertyKey]);
       });
+    },
+    deleteObject: (id) => {
+      const deletedObject = canvasObjects.find(canvasObject => canvasObject.id === id);
+      if (!deletedObject) {
+        console.warn(`Could not find object with id '${id}' to update.`);
+        return;
+      }
+      deletedObject.model.setProperty('deleted', true);
     }
   };
 
