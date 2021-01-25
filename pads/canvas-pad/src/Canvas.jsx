@@ -4,7 +4,7 @@
 
 import assert from 'assert';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
 export const Canvas = ({ topic, itemId, embedded }) => {
   assert(topic);
   assert(itemId);
+  const [transaction, setTransaction] = useState(undefined);
   const party = useParty(keyToBuffer(topic));
 
   const classes = useStyles();
@@ -47,16 +48,32 @@ export const Canvas = ({ topic, itemId, embedded }) => {
   const objects = canvasObjects
     .filter(obj => !obj.model.getProperty('deleted'))
     .map(canvasObject => ({
-    id: canvasObject.id,
-    properties: { // TODO(rzadp): Missing model API: getAllProperties.
-      type: canvasObject.model.getProperty('type'),
-      bounds: canvasObject.model.getProperty('bounds'),
-      style: canvasObject.model.getProperty('style'),
-      text: canvasObject.model.getProperty('text')
+      id: canvasObject.id,
+      properties: { // TODO(rzadp): Missing model API: getAllProperties.
+        type: canvasObject.model.getProperty('type'),
+        bounds: canvasObject.model.getProperty('bounds'),
+        style: canvasObject.model.getProperty('style'),
+        text: canvasObject.model.getProperty('text')
+      }
+    }));
+
+  const updateObject = async (id, properties) => {
+    if (transaction !== undefined) {
+      setTransaction(old => [...old, { id, properties }]);
     }
-  }));
+    const updatedObject = canvasObjects.find(canvasObject => canvasObject.id === id);
+    if (!updatedObject) {
+      console.warn(`Could not find object with id '${id}' to update.`);
+      return;
+    }
+    for (const propertyKey of Object.keys(properties)) {
+      await updatedObject.model.setProperty(propertyKey, properties[propertyKey]);
+    }
+  };
 
   const model = {
+    begin: () => {},
+    commit: async () => {},
     createObject: async (properties) => {
       await party.database.createItem({
         model: ObjectModel,
@@ -65,25 +82,8 @@ export const Canvas = ({ topic, itemId, embedded }) => {
         parent: itemId
       });
     },
-    updateObject: (id, properties) => {
-      console.log('UpdateObject', {properties})
-      const updatedObject = canvasObjects.find(canvasObject => canvasObject.id === id);
-      if (!updatedObject) {
-        console.warn(`Could not find object with id '${id}' to update.`);
-        return;
-      }
-      Object.keys(properties).forEach(propertyKey => {
-        updatedObject.model.setProperty(propertyKey, properties[propertyKey]);
-      });
-    },
-    deleteObject: (id) => {
-      const deletedObject = canvasObjects.find(canvasObject => canvasObject.id === id);
-      if (!deletedObject) {
-        console.warn(`Could not find object with id '${id}' to update.`);
-        return;
-      }
-      deletedObject.model.setProperty('deleted', true);
-    }
+    updateObject,
+    deleteObject: (id) => updateObject(id, { deleted: true })
   };
 
   return (
