@@ -7,9 +7,9 @@ import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { XGrid, LicenseInfo } from '@material-ui/x-grid';
 
-import { AddColumn } from './components';
-import TableToolbar from './components/TableToolbar';
-import useEditableColumns from './useEditableColumns';
+import { AddColumn } from '../components';
+import TableToolbar from '../components/TableToolbar';
+import useEditableColumns from '../hooks/useEditableColumns';
 
 LicenseInfo.setLicenseKey(
   '8e409f224dbe0bc80df0fa59e719666fT1JERVI6MTg0NDIsRVhQSVJZPTE2MzU4NjkyOTYwMDAsS0VZVkVSU0lPTj0x'
@@ -45,13 +45,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title }) {
+export interface TableProps {
+  rows: any,
+  columns: any,
+  onAddRow: any,
+  onAddColumn: any,
+  onUpdateRow: any,
+  title: string,
+}
+
+export const Table = ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title }: TableProps) => {
   const classes = useStyles();
-  const [active = {}, setActive] = useState(undefined);
+  const [active = {}, setActive] = useState<any>(undefined);
   const createColumnAnchor = useRef(null);
   const [addColumnOpen, setAddColumnOpen] = useState(false);
 
-  const handleFinish = async (change) => {
+  const handleFinish = async (change: any) => {
     const newValue = change ? change.value : active.value; // allow last minute change when calling onFinish
     await onUpdateRow(active.rowId, active.columnId, newValue);
     setActive(undefined);
@@ -60,7 +69,7 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
   const editableColumns = useEditableColumns(columns, {
     active,
     onCancel: () => setActive(undefined),
-    onChange: (value) => setActive(old => ({ ...old, value })),
+    onChange: (value: any) => setActive((old: any) => ({ ...old, value })),
     onFinish: handleFinish
   });
 
@@ -74,7 +83,7 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
             header: () => <TableToolbar title={title} onAddRow={onAddRow} onAddColumn={() => setAddColumnOpen(true)} />
           }}
           rows={rows}
-          columns={rows && rows.length > 0 && editableColumns} // do not show the columns if there are no rows yet
+          columns={(rows && rows.length > 0 && editableColumns) || []} // do not show the columns if there are no rows yet
           rowHeight={36}
           onCellClick={({ row, field, value }) => {
             if (!active || active.columnId !== field || active.rowId !== row.id) {
@@ -86,4 +95,6 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
       </div>
     </div>
   );
-}
+};
+
+export default Table;
