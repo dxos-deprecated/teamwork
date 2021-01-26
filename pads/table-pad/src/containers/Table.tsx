@@ -83,7 +83,7 @@ export const Table = ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title
             header: () => <TableToolbar title={title} onAddRow={onAddRow} onAddColumn={() => setAddColumnOpen(true)} />
           }}
           rows={rows}
-          columns={rows && rows.length > 0 && editableColumns} // do not show the columns if there are no rows yet
+          columns={(rows && rows.length > 0 && editableColumns) || []} // do not show the columns if there are no rows yet
           rowHeight={36}
           onCellClick={({ row, field, value }) => {
             if (!active || active.columnId !== field || active.rowId !== row.id) {

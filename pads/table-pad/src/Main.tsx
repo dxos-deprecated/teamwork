@@ -10,6 +10,12 @@ import { useItems, useParty } from '@dxos/react-client';
 import { Table } from './containers';
 import { TABLE_TYPE_TABLE, TABLE_TYPE_RECORD, createRecord } from './model';
 
+export interface Column {
+  id: string,
+  headerName: string,
+  columnType: string
+}
+
 export interface MainProps {
   topic: string,
   itemId: string
@@ -48,7 +54,7 @@ export const Main = ({ itemId, topic }: MainProps) => {
         columnType: itemProperties[`field.${curr}.columnType`]
       }
     ];
-  }, [] as any[]);
+  }, [] as Column[]);
 
   const handleAddRow = async (props: any) => {
     return await createRecord({ party, itemId } as any, props);
