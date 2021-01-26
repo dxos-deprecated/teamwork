@@ -45,13 +45,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title }) {
+export interface TableProps {
+  rows: any,
+  columns: any,
+  onAddRow: any,
+  onAddColumn: any,
+  onUpdateRow: any,
+  title: string,
+}
+
+export const Table = ({ rows, columns, onAddRow, onAddColumn, onUpdateRow, title }: TableProps) => {
   const classes = useStyles();
-  const [active = {}, setActive] = useState(undefined);
+  const [active = {}, setActive] = useState<any>(undefined);
   const createColumnAnchor = useRef(null);
   const [addColumnOpen, setAddColumnOpen] = useState(false);
 
-  const handleFinish = async (change) => {
+  const handleFinish = async (change: any) => {
     const newValue = change ? change.value : active.value; // allow last minute change when calling onFinish
     await onUpdateRow(active.rowId, active.columnId, newValue);
     setActive(undefined);
@@ -60,7 +69,7 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
   const editableColumns = useEditableColumns(columns, {
     active,
     onCancel: () => setActive(undefined),
-    onChange: (value) => setActive(old => ({ ...old, value })),
+    onChange: (value: any) => setActive((old: any) => ({ ...old, value })),
     onFinish: handleFinish
   });
 
@@ -86,4 +95,6 @@ export default function Table ({ rows, columns, onAddRow, onAddColumn, onUpdateR
       </div>
     </div>
   );
-}
+};
+
+export default Table;

@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 export interface AddColumnProps {
   onAddColumn?: (title: string, type: string) => void,
   open: boolean,
-  onClose?: () => {},
+  onClose?: () => void,
 }
 
 export const AddColumn = ({ onAddColumn, open, onClose }: AddColumnProps) => {

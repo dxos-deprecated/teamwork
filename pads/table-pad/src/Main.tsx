@@ -10,10 +10,18 @@ import { useItems, useParty } from '@dxos/react-client';
 import { Table } from './containers';
 import { TABLE_TYPE_TABLE, TABLE_TYPE_RECORD, createRecord } from './model';
 
-export const Main = ({ itemId, topic }) => {
+export interface MainProps {
+  topic: string,
+  itemId: string
+}
+
+export const Main = ({ itemId, topic }: MainProps) => {
   const party = useParty(keyToBuffer(topic));
-  const [item] = useItems({ partyKey: party.key, type: TABLE_TYPE_TABLE, id: itemId });
-  const rowRecords = useItems({ partyKey: party.key, parent: itemId, type: TABLE_TYPE_RECORD });
+  if (!party) {
+    throw new Error('Party not found.');
+  }
+  const [item] = useItems({ partyKey: party.key, type: TABLE_TYPE_TABLE, id: itemId } as any);
+  const rowRecords = useItems({ partyKey: party.key, parent: itemId, type: TABLE_TYPE_RECORD } as any);
 
   if (!item) {
     return null;
@@ -40,17 +48,17 @@ export const Main = ({ itemId, topic }) => {
         columnType: itemProperties[`field.${curr}.columnType`]
       }
     ];
-  }, []);
+  }, [] as any[]);
 
-  const handleAddRow = async (props) => {
-    return await createRecord({ party, itemId }, props);
+  const handleAddRow = async (props: any) => {
+    return await createRecord({ party, itemId } as any, props);
   };
 
-  const handleUpdateRow = async (itemId, property, value) => {
+  const handleUpdateRow = async (itemId: string, property: string, value: any) => {
     rowRecords.find(item => item.id === itemId)?.model?.setProperty(property, value);
   };
 
-  const handleAddColumn = async (headerName, columnType) => {
+  const handleAddColumn = async (headerName: string, columnType: string) => {
     const highestColumnId = columnIndexes.length === 0
       ? -1
       : parseInt(columnIndexes.sort()[columnIndexes.length - 1]);
