@@ -17,7 +17,7 @@
     "target": "ES2018"
   },
   "exclude": [
-    "/node_modules/",
-    "/dist/"
+    "**/node_modules",
+    "**/dist"
   ]
 }
