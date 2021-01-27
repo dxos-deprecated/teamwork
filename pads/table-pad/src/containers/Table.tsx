@@ -12,10 +12,10 @@ import TableToolbar from '../components/TableToolbar';
 import useEditableColumns from '../hooks/useEditableColumns';
 
 if (!process.env.XGRID_LICENCE && !process.env.STORYBOOK_XGRID_LICENCE) {
-  throw new Error('Please provide XGRID_LICENCE environment variable for XGrid.');
+  console.warn('Please provide XGRID_LICENCE environment variable for XGrid.');
 }
 
-LicenseInfo.setLicenseKey(process.env.XGRID_LICENCE ?? process.env.STORYBOOK_XGRID_LICENCE as string);
+LicenseInfo.setLicenseKey(process.env.XGRID_LICENCE ?? process.env.STORYBOOK_XGRID_LICENCE ?? '');
 
 // TODO(burdon): Standardize CSS across pads.
 const useStyles = makeStyles(theme => ({

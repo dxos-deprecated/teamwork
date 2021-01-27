@@ -88,7 +88,8 @@ module.exports = {
     // https://webpack.js.org/plugins/environment-plugin
     new webpack.EnvironmentPlugin({
       PUBLIC_URL: '',
-      DEBUG: ''
+      DEBUG: '',
+      XGRID_LICENCE: ''
     }),
 
     // https://www.npmjs.com/package/webpack-version-file-plugin
