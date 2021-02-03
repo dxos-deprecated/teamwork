@@ -1,6 +1,6 @@
 {
   "name": "@dxos/planner-pad",
-  "version": "1.2.0-alpha.67",
+  "version": "1.2.0-alpha.68",
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/react-storybook": "^1.2.0-alpha.67",
+    "@dxos/react-storybook": "^1.2.0-alpha.68",
     "@rollup/plugin-commonjs": "^13.0.0",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",
