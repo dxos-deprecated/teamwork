@@ -10,7 +10,7 @@ import { Message, schema } from './proto';
 
 export class MessengerModel extends Model<Message> {
   static meta: ModelMeta = {
-    type: 'dxn://protocol.dxos.org/teamwork/messenger',
+    type: 'wrn://protocol.dxos.org/teamwork/messenger',
     mutation: schema.getCodecForType('dxos.teamwork.messenger.Message')
   };
 
