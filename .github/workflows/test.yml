@@ -5,12 +5,15 @@ on: [push]
 jobs:
   build_test:
     runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     timeout-minutes: 18
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
       - name: Build and test
         run: |
           yarn install --frozen-lockfile
