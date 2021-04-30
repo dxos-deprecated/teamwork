@@ -75,7 +75,7 @@ const Root = ({ clientConfig, sentry }) => {
 
   return (
     <Theme base={themeBase}>
-      <ClientInitializer config={clientConfig} preInitialize={preInit}>
+      <ClientInitializer config={clientConfig} preInitialize={preInit} loader={null}>
         <AppKitProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
