@@ -26,6 +26,7 @@ import TasksPad from '@dxos/tasks-pad';
 
 import App from './App';
 import Home from './Home';
+import { Loader } from '../components/Loader';
 
 const initialState = {
   [SET_LAYOUT]: {
@@ -75,7 +76,7 @@ const Root = ({ clientConfig, sentry }) => {
 
   return (
     <Theme base={themeBase}>
-      <ClientInitializer config={clientConfig} preInitialize={preInit} loader={null}>
+      <ClientInitializer config={clientConfig} preInitialize={preInit} loader={Loader}>
         <AppKitProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
