@@ -77,6 +77,7 @@ export const Board = ({ topic, embedded, itemId }: BoardProps) => {
   const [filterByLabel, setFilterByLabel] = useState<string | undefined>(undefined);
 
   const visibleLists = lists
+    .filter(list => list.parent.id === itemId) // TODO(rzadp): The Database Selection in ECHO DB is not supporting filtering by parent ID.
     .filter(c => showArchived || !c.model.getProperty('deleted'))
     .sort(positionCompare);
 
