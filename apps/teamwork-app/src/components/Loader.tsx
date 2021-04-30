@@ -2,8 +2,9 @@
 // Copyright 2020 DXOS.org
 //
 
-import { CircularProgress, Grid } from '@material-ui/core';
 import React from 'react';
+
+import { CircularProgress, Grid } from '@material-ui/core';
 
 export const Loader = () => {
   return (
@@ -15,5 +16,5 @@ export const Loader = () => {
     >
       <CircularProgress />
     </Grid>
-  )
-}
+  );
+};
