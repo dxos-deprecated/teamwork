@@ -24,6 +24,7 @@ import TablePad from '@dxos/table-pad';
 import TasksPad from '@dxos/tasks-pad';
 // import TestingPad from '@dxos/testing-pad';
 
+import { Loader } from '../components/Loader';
 import App from './App';
 import Home from './Home';
 
@@ -75,7 +76,7 @@ const Root = ({ clientConfig, sentry }) => {
 
   return (
     <Theme base={themeBase}>
-      <ClientInitializer config={clientConfig} preInitialize={preInit}>
+      <ClientInitializer config={clientConfig} preInitialize={preInit} loader={Loader}>
         <AppKitProvider
           initialState={initialState}
           errorHandler={new ErrorHandler()}
