@@ -36,7 +36,7 @@
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
     "test:coverage": "c8 yarn test",
-    "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream"
+    "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork-app' --stream"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
