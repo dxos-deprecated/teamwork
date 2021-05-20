@@ -24,7 +24,6 @@ import TablePad from '@dxos/table-pad';
 import TasksPad from '@dxos/tasks-pad';
 // import TestingPad from '@dxos/testing-pad';
 
-import { Loader } from '../components/Loader';
 import App from './App';
 import Home from './Home';
 
