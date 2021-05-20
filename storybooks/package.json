@@ -26,7 +26,7 @@
     "@dxos/react-appkit": "~2.9.0",
     "@dxos/react-client": "~2.10.6",
     "@dxos/react-router": "~2.9.0",
-    "@dxos/react-ux": "~2.9.0",
+    "@dxos/react-ux": "~2.10.6",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",
     "faker": "^4.1.0"

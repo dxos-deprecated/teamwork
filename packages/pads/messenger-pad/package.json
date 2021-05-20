@@ -29,7 +29,7 @@
     "@dxos/messenger-model": "^1.2.0-alpha.68",
     "@dxos/model-adapter": "~2.6.11-alpha.0",
     "@dxos/react-router": "~2.9.0",
-    "@dxos/react-ux": "~2.9.0",
+    "@dxos/react-ux": "~2.10.6",
     "@geut/discovery-swarm-webrtc": "^4.0.2",
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@material-ui/pickers": "^3.2.10",
