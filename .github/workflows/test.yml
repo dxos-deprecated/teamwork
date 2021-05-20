@@ -19,7 +19,7 @@ jobs:
           yarn lint
           yarn lint:lockfile
           yarn version:check
-          yarn dist --scope '@dxos/teamwork'
+          yarn dist --scope '@dxos/teamwork-app'
       - run: |
           yarn test:coverage
           # The c8 tool leaves tmp folder which is large, we don't want it uploaded to artifacts
