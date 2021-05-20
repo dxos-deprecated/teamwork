@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@date-io/moment": "^1.3.11",
-    "@dxos/async": "~1.0.0-beta.10",
-    "@dxos/debug": "~1.0.0-beta.75",
+    "@dxos/async": "~2.10.6",
+    "@dxos/debug": "~2.10.6",
     "@dxos/editor": "~1.0.0-beta.34",
     "@dxos/messenger-model": "^1.2.0-alpha.68",
     "@dxos/model-adapter": "~2.6.11-alpha.0",

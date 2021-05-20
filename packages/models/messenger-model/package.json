@@ -14,8 +14,8 @@
     "build:protobuf": "mkdir -p src/proto/gen && build-protobuf src/proto/defs/messenger.proto -o src/proto/gen"
   },
   "dependencies": {
-    "@dxos/codec-protobuf": "~1.1.1",
-    "@dxos/util": "~2.6.22",
+    "@dxos/codec-protobuf": "~2.10.6",
+    "@dxos/util": "~2.10.6",
     "debug": "^4.2.0"
   },
   "devDependencies": {
