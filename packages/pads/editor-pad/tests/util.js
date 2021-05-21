@@ -7,16 +7,16 @@ import { createKeyPair } from '@dxos/crypto';
 
 export const config = {
   swarm: {
-    signal: 'wss://apollo2.kube.moon.dxos.network/dxos/signal',
+    signal: 'wss://apollo1.kube.moon.dxos.network/dxos/signal',
     ice: {
-      urls: 'turn:apollo2.kube.moon.dxos.network:3478',
+      urls: 'turn:apollo1.kube.moon.dxos.network:3478',
       username: 'dxos',
       credential: 'dxos'
     }
   },
   ipfs: {
-    server: 'https://apollo2.kube.moon.dxos.network/dxos/ipfs/api',
-    gateway: 'https://apollo2.kube.moon.dxos.network/dxos/ipfs/gateway/'
+    server: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/api',
+    gateway: 'https://apollo1.kube.moon.dxos.network/dxos/ipfs/gateway/'
   }
 };
 
