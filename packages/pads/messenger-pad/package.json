@@ -26,7 +26,7 @@
     "@dxos/async": "~2.10.6",
     "@dxos/debug": "~2.10.6",
     "@dxos/editor": "~1.0.0-beta.34",
-    "@dxos/messenger-model": "^1.2.0-alpha.68",
+    "@dxos/messenger-model": "~2.10.6",
     "@dxos/model-adapter": "~2.6.11-alpha.0",
     "@dxos/react-router": "~2.9.0",
     "@dxos/react-ux": "~2.10.6",

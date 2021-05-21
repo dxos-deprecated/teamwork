@@ -26,7 +26,7 @@
     "@dxos/async": "~2.10.6",
     "@dxos/debug": "~2.10.6",
     "@dxos/gem-spore": "~1.0.0-beta.26",
-    "@dxos/object-model": "~2.6.22",
+    "@dxos/object-model": "~2.10.6",
     "@dxos/react-router": "~2.9.0",
     "@dxos/react-ux": "~2.10.6",
     "@material-ui/data-grid": "~4.0.0-alpha.14",
