@@ -17,13 +17,15 @@ describe('Test useDocumentUpdateModel()', () => {
   let party;
   let documentId;
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
     await EditorPad.register(client);
     await MessengerPad.register(client);
     documentId = (await createItem(party, EditorPad, 'testing-editor')).id;
+
+    done();
   });
 
   afterAll(async () => {

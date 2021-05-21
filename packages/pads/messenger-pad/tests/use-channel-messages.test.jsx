@@ -16,11 +16,13 @@ describe('Test useChannelMessages()', () => {
   let party;
   let channelId;
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
     channelId = (await createItem(party, MessengerPad, client, 'testing-messenger')).id;
+
+    done();
   });
 
   afterAll(async () => {

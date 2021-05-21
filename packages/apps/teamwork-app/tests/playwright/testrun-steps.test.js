@@ -6,7 +6,6 @@ import { firefox } from 'playwright';
 
 import { User } from './utils/User';
 import { launchUsers } from './utils/launch-users.js';
-import { waitUntil } from './utils/util';
 
 const browser = firefox;
 const startUrl = 'localhost:8080';
@@ -41,12 +40,14 @@ describe('Perform testrun steps', () => {
     }
   };
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     jest.setTimeout(100 * 1000);
     const setup = await launchUsers(browser, startUrl);
     userA = setup.userA;
     userB = setup.userB;
     partyName = setup.initialPartyName;
+
+    done();
   });
 
   const closeUser = async (user) => {
@@ -131,9 +132,11 @@ describe('Perform testrun steps', () => {
   describe('Test TaskList', () => {
     const { taskListName, taskName } = store.taskList;
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
       await userA.partyManager.enterItemInParty(partyName, taskListName);
       await userB.partyManager.enterItemInParty(partyName, taskListName);
+
+      done();
     });
 
     afterAll(async () => {
@@ -166,9 +169,11 @@ describe('Perform testrun steps', () => {
   describe('Test Messenger', () => {
     const { messengerName, message } = store.messenger;
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
       await userA.partyManager.enterItemInParty(partyName, messengerName);
       await userB.partyManager.enterItemInParty(partyName, messengerName);
+
+      done();
     });
 
     afterAll(async () => {
@@ -186,9 +191,11 @@ describe('Perform testrun steps', () => {
     const { boardName, newColumnName, cardA, cardB, cardC } = store.board;
     let { firstColumnName } = store.board;
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
       await userA.partyManager.enterItemInParty(partyName, boardName);
       await userB.partyManager.enterItemInParty(partyName, boardName);
+
+      done();
     });
 
     afterAll(async () => {
@@ -252,13 +259,15 @@ describe('Perform testrun steps', () => {
     const { editorName } = store.editor;
     const { taskListName, taskName } = store.taskList;
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
       await userA.partyManager.enterItemInParty(partyName, taskListName);
       await userA.tasksManager.addTask(taskName);
       await userA.goToHomePage();
 
       await userA.partyManager.enterItemInParty(partyName, editorName);
       await userB.partyManager.enterItemInParty(partyName, editorName);
+
+      done();
     });
 
     afterAll(async () => {

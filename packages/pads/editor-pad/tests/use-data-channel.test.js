@@ -2,7 +2,7 @@
 // Copyright 2020 DXOS.org
 //
 
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
 import MessengerPad from '@dxos/messenger-pad';
@@ -17,13 +17,15 @@ describe('Test useDataChannel()', () => {
   let party;
   let documentId;
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
     await EditorPad.register(client);
     await MessengerPad.register(client);
     documentId = (await createItem(party, EditorPad, 'testing-editor')).id;
+
+    done();
   });
 
   afterAll(async () => {

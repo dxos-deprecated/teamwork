@@ -27,7 +27,7 @@ describe('Test Editor', () => {
   let documentId;
   let messengerItem;
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
@@ -35,6 +35,8 @@ describe('Test Editor', () => {
     await MessengerPad.register(client);
     documentId = (await createItem(party, EditorPad, 'testing-editor')).id;
     messengerItem = await createItem(party, MessengerPad, 'testing-messenger');
+
+    done();
   });
 
   afterAll(async () => {

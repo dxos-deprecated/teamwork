@@ -12,10 +12,12 @@ describe('Smoke test.', () => {
   const startUrl = 'http://localhost:9001';
   let user;
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     jest.setTimeout(30000);
     user = new Browser();
     await user.launchBrowser(browser, startUrl);
+
+    done();
   });
 
   afterAll(async () => {

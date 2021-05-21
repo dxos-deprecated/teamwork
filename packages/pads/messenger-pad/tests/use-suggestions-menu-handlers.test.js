@@ -30,13 +30,15 @@ describe('Test useSuggestionsMenuHandler', () => {
 
   const editor = { current: null };
 
-  beforeAll(async () => {
+  beforeAll(async (done) => {
     const setup = await setupClient();
     client = setup.client;
     party = setup.party;
 
     channelId = (await createItem(party, MessengerPad, client, 'testing-messenger')).id;
     item = await createItem(party, EditorPad, client, itemName);
+
+    done();
   });
 
   afterAll(async () => {
