@@ -16,11 +16,11 @@
   "author": "DXOS.org",
   "workspaces": {
     "packages": [
-      "apps/*",
-      "pads/*",
-      "bots/*",
-      "packages/*",
-      "models/*",
+      "packages/apps/*",
+      "packages/bots/*",
+      "packages/models/*",
+      "packages/pads/*",
+      "packages/sdk/*",
       "storybooks"
     ]
   },
@@ -32,11 +32,11 @@
     "lint:fix": "lerna run lint -- --fix && yarn run lint:lockfile",
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn npm codeload.github.com --validate-https",
     "version:check": "version-check",
-    "playwright": "cd apps/teamwork-app && yarn playwright && cd ../..",
+    "playwright": "cd packages/apps/teamwork-app && yarn playwright && cd ../..",
     "sort-package-json": "lerna exec npx sort-package-json",
     "test": "lerna run test --stream",
     "test:coverage": "c8 yarn test",
-    "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork' --stream"
+    "start": "yarn && yarn build && lerna run start --scope '@dxos/teamwork-app' --stream"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -47,9 +47,9 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@babel/register": "^7.0.0",
-    "@dxos/cli": "^2.0.8",
-    "@dxos/cli-app": "^2.0.8",
-    "@dxos/cli-wns": "^2.0.8",
+    "@dxos/cli": "^2.0.32",
+    "@dxos/cli-app": "^2.0.32",
+    "@dxos/cli-wns": "^2.0.32",
     "@dxos/version-check": "0.1.16",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.4",
