@@ -30,7 +30,7 @@
   "dependencies": {
     "@date-io/moment": "^1.3.11",
     "@dxos/async": "~2.10.6",
-    "@dxos/botkit-client": "~2.9.0",
+    "@dxos/botkit-client": "~2.10.6",
     "@dxos/canvas-pad": "^1.2.0-alpha.68",
     "@dxos/config": "~1.0.0-beta.74",
     "@dxos/credentials": "~2.1.16-alpha.0",
