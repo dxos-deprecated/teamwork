@@ -22,10 +22,10 @@
     }
   },
   "dependencies": {
-    "@dxos/async": "~2.10.6",
-    "@dxos/debug": "~2.10.6",
+    "@dxos/async": "~2.10.7",
+    "@dxos/debug": "~2.10.7",
     "@dxos/gem-canvas": "~1.0.0-beta.26",
-    "@dxos/react-ux": "~2.10.6",
+    "@dxos/react-ux": "~2.10.7",
     "clsx": "^1.1.0",
     "debug": "^4.2.0",
     "react": "^16.13.1",

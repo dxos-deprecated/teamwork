@@ -20,13 +20,13 @@
     }
   },
   "devDependencies": {
-    "@dxos/crypto": "~2.10.6",
-    "@dxos/echo-db": "~2.10.6",
+    "@dxos/crypto": "~2.10.7",
+    "@dxos/echo-db": "~2.10.7",
     "@dxos/eslint-plugin": "~1.0.10",
     "@dxos/react-appkit": "~2.9.0",
-    "@dxos/react-client": "~2.10.6",
+    "@dxos/react-client": "~2.10.7",
     "@dxos/react-router": "~2.9.0",
-    "@dxos/react-ux": "~2.10.6",
+    "@dxos/react-ux": "~2.10.7",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",
     "faker": "^4.1.0"
