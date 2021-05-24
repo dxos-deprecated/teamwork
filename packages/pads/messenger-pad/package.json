@@ -1,6 +1,6 @@
 {
   "name": "@dxos/messenger-pad",
-  "version": "1.2.0-alpha.68",
+  "version": "1.2.0-alpha.69",
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/react-storybook": "^1.2.0-alpha.68",
+    "@dxos/react-storybook": "^1.2.0-alpha.69",
     "@rollup/plugin-json": "^4.0.3",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",

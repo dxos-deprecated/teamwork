@@ -1,6 +1,6 @@
 {
   "name": "@dxos/editor-pad",
-  "version": "1.2.0-alpha.68",
+  "version": "1.2.0-alpha.69",
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
@@ -24,7 +24,7 @@
   "dependencies": {
     "@dxos/editor": "~1.0.0-beta.34",
     "@dxos/editor-core": "~1.0.0-beta.34",
-    "@dxos/messenger-pad": "^1.2.0-alpha.68",
+    "@dxos/messenger-pad": "^1.2.0-alpha.69",
     "@dxos/text-model": "~2.10.8",
     "clsx": "^1.1.0",
     "hast-util-to-html": "^7.1.1",
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/react-storybook": "^1.2.0-alpha.68",
+    "@dxos/react-storybook": "^1.2.0-alpha.69",
     "@rollup/plugin-json": "^4.0.3",
     "@storybook/addon-knobs": "^6.1.14",
     "@storybook/react": "^6.1.14",
