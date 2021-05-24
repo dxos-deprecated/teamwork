@@ -43,7 +43,7 @@ describe('Test useSuggestionsMenuHandler', () => {
     await client.destroy();
   });
 
-  it('Get options', async () => {
+  it.skip('Get options', async () => {
     const wrapper = ({ children }) => (
       <ClientProvider client={client}>
         {children}
