@@ -13,8 +13,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16.1
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
       - name: Build and test
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
