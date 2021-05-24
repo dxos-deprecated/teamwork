@@ -52,7 +52,6 @@
     "@dxos/version-check": "0.1.16",
     "babel-eslint": "^10.0.3",
     "babel-plugin-add-module-exports": "^1.0.4",
-    "c8": "^7.7.2",
     "eslint": "^7.5.0",
     "eslint-config-semistandard": "^15.0.0",
     "eslint-config-standard": "^14.1.1",
