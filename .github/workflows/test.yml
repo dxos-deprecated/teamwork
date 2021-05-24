@@ -6,6 +6,8 @@ jobs:
   build_test:
     runs-on: ubuntu-latest
     timeout-minutes: 18
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -15,7 +17,7 @@ jobs:
         uses: lhotari/action-upterm@v1
       - name: Build and test
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
           yarn install --frozen-lockfile
           yarn build
           yarn lint
