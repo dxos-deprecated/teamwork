@@ -1,6 +1,6 @@
 {
   "name": "@dxos/react-storybook",
-  "version": "1.2.0-alpha.69",
+  "version": "1.2.0-alpha.70",
   "private": true,
   "license": "GPL-3.0",
   "author": "DXOS.org",
@@ -23,7 +23,7 @@
     "@dxos/crypto": "~2.10.8",
     "@dxos/echo-db": "~2.10.8",
     "@dxos/eslint-plugin": "~1.0.10",
-    "@dxos/react-appkit": "^1.2.0-alpha.69",
+    "@dxos/react-appkit": "^1.2.0-alpha.70",
     "@dxos/react-client": "~2.10.8",
     "@dxos/react-router": "~2.9.0",
     "@dxos/react-ux": "~2.10.8",
