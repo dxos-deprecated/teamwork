@@ -8,7 +8,6 @@ import { createKeyPair } from '@dxos/crypto';
 import { useClient } from '@dxos/react-client';
 
 import { ClientInitializer } from '../../src';
-
 import { config } from '../common';
 
 export const WithClientAndIdentity = (story) => {

@@ -9,7 +9,6 @@ import DebugIcon from '@material-ui/icons/BugReport';
 import ConnectedIcon from '@material-ui/icons/Wifi';
 
 import { createKeyPair, PublicKey } from '@dxos/crypto';
-import { OpenProgress } from '@dxos/echo-db';
 
 import { MemberAvatar, useAssets, StatusBar, NewItemCreationMenu, InitializeLoader } from '../src';
 import { pads } from './common';
@@ -109,7 +108,7 @@ const useAsyncReference = (value) => {
   const ref = useRef(value);
   const [, forceRender] = useState(false);
 
-  function updateState(newState) {
+  function updateState (newState) {
     ref.current = newState;
     forceRender(s => !s);
   }

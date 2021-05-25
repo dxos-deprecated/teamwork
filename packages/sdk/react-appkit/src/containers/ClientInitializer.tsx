@@ -20,7 +20,6 @@ export interface ClientInitializerProps {
   preInitialize?: (client: Client) => Promise<void> | void
 }
 
-
 /**
  * ClientInitializer - Provides Client initialization abstraction with error handling
  */
