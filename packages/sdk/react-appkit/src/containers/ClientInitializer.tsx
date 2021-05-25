@@ -28,7 +28,7 @@ export interface ClientInitializerProps {
 // ISSUE: https://github.com/dxos/echo/issues/329
 export const ClientInitializer = ({ config, loader, children, preInitialize }: ClientInitializerProps) => {
   const [client] = useState(() => new Client(config));
-  const [clientReady, setClientReady] = useState(false);
+  const [ready, setReady] = useState(false);
   const [error, setError] = useState<undefined | Error | string>(undefined);
 
   // TODO(burdon): Compute process.
@@ -46,7 +46,7 @@ export const ClientInitializer = ({ config, loader, children, preInitialize }: C
       try {
         // TODO(burdon): Options param.
         await client.initialize(setProgress);
-        setClientReady(true);
+        setReady(true);
       } catch (ex) {
         // It's important to print the error to the console here so sentry can report it.
         console.error(ex);
@@ -79,7 +79,7 @@ export const ClientInitializer = ({ config, loader, children, preInitialize }: C
       onReset={handleReset}
     >
       <ClientProvider client={client}>
-        {clientReady ? children : (
+        {ready ? children : (
           Loader && <Loader value={progressValue} />
         )}
       </ClientProvider>
