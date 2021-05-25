@@ -13,31 +13,38 @@ import { InitializeLoader } from '../components';
 
 export interface ClientInitializerProps {
   config?: ClientConfig
-  children?: ReactNode,
-  /**
-   * @deprecated
-   */
-  preInitialize?: (client: Client) => Promise<void> | void,
-  loader?: React.ComponentType<{ progress: OpenProgress }>
+  loader?: React.ComponentType<{ value: number }>
+  children?: ReactNode
+
+  /** @deprecated */
+  preInitialize?: (client: Client) => Promise<void> | void
 }
 
 /**
  * ClientInitializer - Provides Client initialization abstraction with error handling
- * @param preInitialize - Callback for any pre-initialization logic required for client before initializing it, e.g. model registration.
  */
 // TODO(burdon): Bad abstraction -- hides client construction. Replace with ErrorWrapper.
 // TODO(rzadp): removing preInitialize is blocked on:
 // ISSUE: https://github.com/dxos/echo/issues/329
-export const ClientInitializer = ({ config, children, preInitialize, loader }: ClientInitializerProps) => {
+export const ClientInitializer = ({ config, loader, children, preInitialize }: ClientInitializerProps) => {
   const [client] = useState(() => new Client(config));
   const [clientReady, setClientReady] = useState(false);
   const [error, setError] = useState<undefined | Error | string>(undefined);
+
+  // TODO(burdon): Compute process.
   const [progress, setProgress] = useState<OpenProgress>({ haloOpened: false });
+  const [progressValue, setProgressValue] = useState(0);
+  useEffect(() => {
+    const { partiesOpened = 0, totalParties } = progress;
+    const value = totalParties ? (partiesOpened / totalParties) * 100 : 100;
+    setProgressValue(value);
+  }, [progress]);
 
   useEffect(() => {
     (async () => {
       await preInitialize?.(client);
       try {
+        // TODO(burdon): Options param.
         await client.initialize(setProgress);
         setClientReady(true);
       } catch (ex) {
@@ -73,7 +80,7 @@ export const ClientInitializer = ({ config, children, preInitialize, loader }: C
     >
       <ClientProvider client={client}>
         {clientReady ? children : (
-          Loader && <Loader progress={progress} />
+          Loader && <Loader value={progressValue} />
         )}
       </ClientProvider>
     </ErrorBoundary>
