@@ -9,6 +9,7 @@ import DebugIcon from '@material-ui/icons/BugReport';
 import ConnectedIcon from '@material-ui/icons/Wifi';
 
 import { createKeyPair, PublicKey } from '@dxos/crypto';
+import { OpenProgress } from '@dxos/echo-db';
 
 import { MemberAvatar, useAssets, StatusBar, NewItemCreationMenu, InitializeLoader } from '../src';
 import { pads } from './common';
@@ -103,10 +104,34 @@ export const withNewItemCreationMenu = () => {
   );
 };
 
+// TODO(burdon): Factor out.
+const useAsyncReference = (value) => {
+  const ref = useRef(value);
+  const [, forceRender] = useState(false);
+
+  function updateState(newState) {
+    ref.current = newState;
+    forceRender(s => !s);
+  }
+
+  return [ref, updateState];
+};
+
 export const withInitializeLoader = () => {
+  const [value, setValue] = useAsyncReference(10);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValue(value.current + Math.random() * 10);
+      if (value.current >= 100) {
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <Box m={2}>
-      <InitializeLoader progress={{ haloOpened: false }} />
-    </Box>
+    <InitializeLoader value={value.current} />
   );
 };
