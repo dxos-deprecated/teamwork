@@ -16,7 +16,10 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
 
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js'
+    // loader: './src/loader.js'
+  },
 
   devtool: isDevelopment ? 'eval-source-map' : false,
 
@@ -101,8 +104,12 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './public/index.html',
       templateParameters: {
-        title: 'Teamwork'
-      }
+        title: 'TEAMWORK' // TODO(burdon): Config.
+      },
+      chunks: [
+        // 'loader', // TODO(burdon): Inline loader if main is slow to load.
+        'main'
+      ]
     })
   ].filter(Boolean),
 

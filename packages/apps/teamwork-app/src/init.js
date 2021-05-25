@@ -8,14 +8,14 @@ import ReactDOM from 'react-dom';
 
 import Root from './containers/Root';
 
-export async function initApp (cfg, sentry) {
-  debug.enable(cfg.get('debug.logging'));
+export async function initApp (config, sentry) {
+  debug.enable(config.get('debug.logging'));
 
   ReactDOM.render(
     <Root
-      clientConfig={cfg.values}
+      clientConfig={config.values}
       sentry={sentry}
     />,
-    document.getElementById(cfg.get('app.rootElement'))
+    document.getElementById(config.get('app.rootElement'))
   );
 }
